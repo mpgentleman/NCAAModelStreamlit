@@ -187,8 +187,8 @@ if st.button('Run'):
         Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
     if 'Alphabetical' in Tables_Choice:
         Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
-     if 'Regression_Difference' in Tables_Choice:   
-    Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
+     if 'Regression_Difference' in Tables_Choice: 
+        Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
     
 
     import plotly.graph_objects as go

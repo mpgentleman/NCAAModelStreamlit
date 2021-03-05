@@ -8,6 +8,14 @@ import requests
 import time
 from bs4 import BeautifulSoup
 import streamlit as st
+
+def GetThisTeamInfoFromCsv(ThisTeam,WhichFile):
+
+
+    TeamInfo=pd.read_csv("Data/"+WhichFile+"/"+ThisTeam+"Data.csv")
+    return(TeamInfo)
+
+
 def calculate_to_numeric(price):
     taxes = pd.to_numeric(price,errors='coerce')
     return taxes
@@ -248,9 +256,9 @@ st.title('NCAA Game Matchup')
 
 
 
-test1=NF.GetThisTeamInfoFromCsv(AwayTeam,"TeamDataFiles2021")
+test1=GetThisTeamInfoFromCsv(AwayTeam,"TeamDataFiles2021")
 
-test2=NF.GetThisTeamInfoFromCsv(HomeTeam,"TeamDataFiles2021")
+test2=GetThisTeamInfoFromCsv(HomeTeam,"TeamDataFiles2021")
 AwayTeamB=TeamDatabase.loc[AwayTeam,"UpdatedTRankName"]
 HomeTeamB=TeamDatabase.loc[HomeTeam,"UpdatedTRankName"]
 

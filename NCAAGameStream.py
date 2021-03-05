@@ -181,8 +181,15 @@ if st.button('Run'):
     WhichFile='TeamDataFiles2021'
     pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
     Dailyschedule=pd.read_csv("Data/DailySchedules2021/"+dateToday+"Schedule.csv")
-    Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
     st.header('Games Today')
+    Tables_Choice=st.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference'])
+    if 'Alphabetical'in  Tables_Choice:
+        Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
+    if 'Alphabetical' in Tables_Choice:
+        Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
+     if 'Regression_Difference' in Tables_Choice:   
+    Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
+    
 
     import plotly.graph_objects as go
     import pandas as pd

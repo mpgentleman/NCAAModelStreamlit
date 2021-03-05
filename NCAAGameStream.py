@@ -184,8 +184,8 @@ if st.button('Run'):
     st.header('Games Today')
     
     if 'Alphabetical'in  Tables_Choice:
-        Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
-    if 'Alphabetical' in Tables_Choice:
+        Dailyschedule=Dailyschedule.sort_values(by=['Away'])
+    if 'Time' in Tables_Choice:
         Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
     if 'Regression_Difference' in Tables_Choice: 
         Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])

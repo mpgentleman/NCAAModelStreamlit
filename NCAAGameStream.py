@@ -164,7 +164,9 @@ d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-
 #dateToday='20210227'
 dateforRankings=dateToday
 dateforRankings5=d2
-
+AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
+HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
+#whereIsGame = st.sidebar.selectbox('Neutral Site',['Yes', 'No'])
 #dateToday=dateToGetNowWrite[0]
 #dateforRankings=dateToGetNowWrite[0]
 #dateforRankings5=datesUnderlineAdd[0]
@@ -214,9 +216,7 @@ if st.button('Run'):
     AwayList=list(Dailyschedule['AWAY'])
     HomeList=list(Dailyschedule['HOME'])
 
-    AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
-    HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
-    whereIsGame = st.sidebar.selectbox('Neutral Site',['Yes', 'No'])
+
 
 
     TeamDatabase=pd.read_csv("Data/TeamDatabase.csv")

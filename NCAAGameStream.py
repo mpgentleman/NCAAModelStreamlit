@@ -312,18 +312,24 @@ if st.button('Run'):
     st.text('MG Rankings by game Line in Green')
     #GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating",'AdjEM_MG','AdjEM_MG',"ATS")
     GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"EMRating","PomAdjEMCurrent","ATS")
+    
     st.subheader('Team Playing Over its Ranking')
-    st.text('Positive bars are positive if the team played over its rating')
+    st.text('Blue bars are positive if the team played over its rating')
     st.text('The green and blue lines are cumulative moving averages')
     getOverplayingChartBothTeamsDec4(pp,test1,test2,AwayTeam,HomeTeam)
+    
     st.subheader('Adjusted Offense and the ATS spread')
     GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"AdjO","PomAdjOECurrent","ATS")
+    
     st.subheader('Adjusted Defense against the Over/Under')
     GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"AdjD","PomAdjDECurrent","OverUnder")
+    
     st.subheader('Estimated Pace against the Over/Under')
     GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Pace","PomTempo","OverUnder")
+    
     st.subheader('Points per Possesion against the ATS')
     GetTwoTeamChartsTogether(test1,test2,AwayTeam,HomeTeam,"PPP","ATS")
+    
     st.subheader('Defensive Points per Possesion against the Over/Under')
     GetTwoTeamChartsTogether(test1,test2,AwayTeam,HomeTeam,"PPP1","OverUnder")
 

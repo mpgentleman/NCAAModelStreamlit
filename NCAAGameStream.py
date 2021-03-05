@@ -8,6 +8,10 @@ import requests
 import time
 from bs4 import BeautifulSoup
 import streamlit as st
+def calculate_to_numeric(price):
+    taxes = pd.to_numeric(price,errors='coerce')
+    return taxes
+
 def update_type(t1, t2, dropna=False):
     return t1.map(t2).dropna() if dropna else t1.map(t2).fillna(t1)
 
@@ -201,8 +205,8 @@ TeamDatabase=pd.read_csv("Data/TeamDatabase.csv")
 #TeamDatabase.set_index("University", inplace=True)
 #TeamList=list(TeamDatabase1["OldTRankName"])
 TeamDatabase.set_index("OldTRankName", inplace=True)
-Dailyschedule['VegasSpread'] = Dailyschedule.VegasSpread.apply(NF.calculate_to_numeric)
-Dailyschedule['Total'] = Dailyschedule.VegasTotal.apply(NF.calculate_to_numeric)   
+Dailyschedule['VegasSpread'] = Dailyschedule.VegasSpread.apply(calculate_to_numeric)
+Dailyschedule['Total'] = Dailyschedule.VegasTotal.apply(calculate_to_numeric)   
 #PomeroyDF1=GetPomeroyData()
 PomeroyDF1=pd.read_csv("Data/PomeroyDailyRankings2021/PomeroyRankings"+dateforRankings+".csv")
 #PomeroyDF1=sanitizeEntireColumn(PomeroyDF1,"Team")

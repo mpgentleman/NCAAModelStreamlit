@@ -150,7 +150,7 @@ import numpy as np
 from datetime import datetime,date,time
 
 st.title('NCAA Head to Head Matchup')
-Tables_Choice=st.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference'])
+Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference'])
 add_selectbox = st.sidebar.header("Select Todays Date")
 add_selectbox_start =st.sidebar.date_input('Pick date')
 #add_selectbox_finish =st.sidebar.date_input('end_date')
@@ -165,6 +165,12 @@ d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-
 dateforRankings=dateToday
 dateforRankings5=d2
 Dailyschedule=pd.read_csv("Data/DailySchedules2021/"+dateToday+"Schedule.csv")
+if 'Alphabetical'in  Tables_Choice:
+    Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
+if 'Time' in Tables_Choice:
+    Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
+if 'Regression_Difference' in Tables_Choice: 
+    Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
 AwayList=list(Dailyschedule['AWAY'])
 HomeList=list(Dailyschedule['HOME'])
 
@@ -186,15 +192,10 @@ if st.button('Run'):
     from matplotlib.backends.backend_pdf import PdfPages
     WhichFile='TeamDataFiles2021'
     pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
-    Dailyschedule=pd.read_csv("Data/DailySchedules2021/"+dateToday+"Schedule.csv")
+    #Dailyschedule=pd.read_csv("Data/DailySchedules2021/"+dateToday+"Schedule.csv")
     st.header('Games Today')
     
-    if 'Alphabetical'in  Tables_Choice:
-        Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
-    if 'Time' in Tables_Choice:
-        Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
-    if 'Regression_Difference' in Tables_Choice: 
-        Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
+
     
 
     import plotly.graph_objects as go

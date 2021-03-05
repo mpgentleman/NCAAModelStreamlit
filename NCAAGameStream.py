@@ -150,7 +150,7 @@ import numpy as np
 from datetime import datetime,date,time
 
 st.title('NCAA Head to Head Matchup')
-
+Tables_Choice=st.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference'])
 add_selectbox = st.sidebar.header("Select Todays Date")
 add_selectbox_start =st.sidebar.date_input('Pick date')
 #add_selectbox_finish =st.sidebar.date_input('end_date')
@@ -182,7 +182,7 @@ if st.button('Run'):
     pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
     Dailyschedule=pd.read_csv("Data/DailySchedules2021/"+dateToday+"Schedule.csv")
     st.header('Games Today')
-    Tables_Choice=st.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference'])
+    
     if 'Alphabetical'in  Tables_Choice:
         Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
     if 'Alphabetical' in Tables_Choice:

@@ -260,11 +260,11 @@ if st.button('Run'):
 
 
 
-    st.title('NCAA Game Matchup')
+    st.header('Team Matchup')
 
     #### Sidebar Creation #######
 
-
+    
 
     test1=GetThisTeamInfoFromCsv(AwayTeam,"TeamDataFiles2021")
 
@@ -295,12 +295,20 @@ if st.button('Run'):
     fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1)
     fig2=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test1,order=2, ax=ax1)
     fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=2, ax=ax2)
-    fig4=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test2,order=2, ax=ax2)   
+    fig4=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test2,order=2, ax=ax2)
+    st.subheader('Polynomial Regression Line in Blue')
+    st.subheader('Pomeroy Rankings by game Line in Green')
     st.pyplot(fig)
-
+    st.subheader('Blue bars are poitive if the team covered the ATS spread')
+    st.subheader('Pomeroy Rankings by game Line in Green')
+    
     GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","PomAdjEMCurrent","PomAdjEMCurrent","ATS")
+    st.subheader('Blue bars are poitive if the team covered the ATS spread')
+    st.subheader('MG Rankings by game Line in Green')
     #GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating",'AdjEM_MG','AdjEM_MG',"ATS")
     GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"EMRating","PomAdjEMCurrent","ATS")
+    st.subheader('Positive bars are positive if the team played over its rating')
+    st.subheader('The green and blue lines are cumulative moving averages')
     getOverplayingChartBothTeamsDec4(pp,test1,test2,AwayTeam,HomeTeam)
     GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"AdjO","PomAdjOECurrent","ATS")
     GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"AdjD","PomAdjDECurrent","OverUnder")

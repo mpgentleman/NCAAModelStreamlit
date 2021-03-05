@@ -148,16 +148,19 @@ def get_team_reg_dif(teamname):
     return(a3[-1])
 import numpy as np
 from datetime import datetime,date,time
-add_selectbox = st.sidebar.header("Date Range Picker")
-add_selectbox_start =st.sidebar.date_input('start date')
+
+st.title('NCAA Head to Head Matchup')
+
+add_selectbox = st.sidebar.header("Select Todays Date")
+add_selectbox_start =st.sidebar.date_input('Pick date')
 #add_selectbox_finish =st.sidebar.date_input('end_date')
-st.header(add_selectbox_start)
+#st.header(add_selectbox_start)
 dateString=str(add_selectbox_start)
 #s1.replace('-', '')
 dateToday=dateString.replace('-', '')
 d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
-st.header(d2)
-st.header(dateToday)
+#st.header(d2)
+#st.header(dateToday)
 #dateToday='20210227'
 dateforRankings=dateToday
 dateforRankings5=d2
@@ -176,10 +179,10 @@ MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
 MG_DF1.set_index("updated", inplace=True)
 from matplotlib.backends.backend_pdf import PdfPages
 WhichFile='TeamDataFiles2021'
-#pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
+pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
 Dailyschedule=pd.read_csv("Data/DailySchedules2021/"+dateToday+"Schedule.csv")
 Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
-
+st.header('Games Today')
 
 import plotly.graph_objects as go
 import pandas as pd

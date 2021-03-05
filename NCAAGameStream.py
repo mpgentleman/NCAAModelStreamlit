@@ -164,9 +164,10 @@ d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-
 #dateToday='20210227'
 dateforRankings=dateToday
 dateforRankings5=d2
+Dailyschedule=pd.read_csv("Data/DailySchedules2021/"+dateToday+"Schedule.csv")
 AwayList=list(Dailyschedule['AWAY'])
 HomeList=list(Dailyschedule['HOME'])
-Dailyschedule=pd.read_csv("Data/DailySchedules2021/"+dateToday+"Schedule.csv")
+
 AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
 HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
 #whereIsGame = st.sidebar.selectbox('Neutral Site',['Yes', 'No'])

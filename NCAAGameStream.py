@@ -8,6 +8,8 @@ import requests
 import time
 from bs4 import BeautifulSoup
 import streamlit as st
+def update_type(t1, t2, dropna=False):
+    return t1.map(t2).dropna() if dropna else t1.map(t2).fillna(t1)
 
 def GetTwoChartsTogether_EMA(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,FirstStat,SecondStat,PomStatHome,PomStatAway,VegasStat):
     HomeTeamInfo["EM3"]=HomeTeamInfo['AdjO3ExpMA']-HomeTeamInfo['AdjD3ExpMA']
@@ -158,7 +160,7 @@ dateforRankings5=d2
 TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
 TeamDatabase2.set_index("OldTRankName", inplace=True)
 MG_DF1=pd.read_csv("Data/MGRankings/tm_seasons_stats_ranks"+dateforRankings5+".csv")
-MG_DF1["updated"]=NF.update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
+MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
 MG_DF1.set_index("updated", inplace=True)
 from matplotlib.backends.backend_pdf import PdfPages
 WhichFile='TeamDataFiles2021'
@@ -204,7 +206,7 @@ Dailyschedule['Total'] = Dailyschedule.VegasTotal.apply(NF.calculate_to_numeric)
 #PomeroyDF1=GetPomeroyData()
 PomeroyDF1=pd.read_csv("Data/PomeroyDailyRankings2021/PomeroyRankings"+dateforRankings+".csv")
 #PomeroyDF1=sanitizeEntireColumn(PomeroyDF1,"Team")
-PomeroyDF1["updated"]=NF.update_type(PomeroyDF1.Team,TeamDatabase.set_index('PomeroyName').UpdatedTRankName)
+PomeroyDF1["updated"]=update_type(PomeroyDF1.Team,TeamDatabase.set_index('PomeroyName').UpdatedTRankName)
 PomeroyDF1["updated"]=PomeroyDF1["updated"].str.rstrip()
    
 PomeroyDF1.set_index("updated", inplace=True)
@@ -212,7 +214,7 @@ PomeroyDF1.set_index("updated", inplace=True)
 BartDF1=pd.read_csv("Data/TRankDailyRankings2021/"+dateforRankings+".csv")
 #getBartDataTest()
 #print(BartDF1)  
-BartDF1["updated"]=NF.update_type(BartDF1.Team,TeamDatabase.set_index('TRankName').UpdatedTRankName)
+BartDF1["updated"]=update_type(BartDF1.Team,TeamDatabase.set_index('TRankName').UpdatedTRankName)
 
 BartDF1.set_index("updated", inplace=True)
 

@@ -433,7 +433,7 @@ HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
 #dateforRankings=dateToGetNowWrite[0]
 #dateforRankings5=datesUnderlineAdd[0]
 
-results=dailyOddsNCAAMar3(theday, themont, theyear, ".csv", True)
+results=dailyOddsNCAAMar3(theday, themonth, theyear, ".csv", True)
 st.write(results)
 
 if st.button('Run'):

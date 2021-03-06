@@ -13,6 +13,10 @@ import re
 import requests
 import pandas as pd
 import numpy as np
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+
+
 def dailyOddsNCAAMar3(day, month, year, odds_file, first_run = False):
     
     #Add leading zero to day & month to match sports book review url format

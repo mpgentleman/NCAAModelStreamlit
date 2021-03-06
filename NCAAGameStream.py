@@ -13,6 +13,7 @@ import re
 import requests
 import pandas as pd
 import numpy as np
+import selenium
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 

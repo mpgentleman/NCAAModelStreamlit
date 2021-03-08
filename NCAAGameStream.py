@@ -220,7 +220,7 @@ if st.button('Run'):
     rowOddColor = 'white'
     fig = go.Figure(data=[go.Table(
         header=dict(values=list(Dailyschedule.columns),
-                    fill_color='grey,
+                    fill_color='grey',
                     align='left'),
         cells=dict(values=[Dailyschedule.AWAY, Dailyschedule.HOME, Dailyschedule.VegasSpread, Dailyschedule.VegasTotal, Dailyschedule.Court, Dailyschedule.Time,Dailyschedule.Reg_dif],
         fill_color = [[rowOddColor,rowEvenColor]*lengthrows],

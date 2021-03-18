@@ -158,48 +158,60 @@ def get_team_reg_dif(teamname):
     return(a3[-1])
 import numpy as np
 from datetime import datetime,date,time
+TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
+ 
+AwayTeamAll=list(TeamDatabase2['OldTRankName'])
+HomeTeamAll=list(TeamDatabase2['OldTRankName'])
+
 
 st.title('NCAA Head to Head Matchup')
-Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference'])
 add_selectbox = st.sidebar.header("Select Todays Date")
 add_selectbox_start =st.sidebar.date_input('Pick date')
-#add_selectbox_finish =st.sidebar.date_input('end_date')
-#st.header(add_selectbox_start)
+
 dateString=str(add_selectbox_start)
-#s1.replace('-', '')
+
 dateToday=dateString.replace('-', '')
+Dailyschedule=pd.read_csv("Data/DailySchedules2021/"+dateToday+"Schedule.csv")
+
 d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
 themonth=int(dateString.split('-')[1])
 theday=int(dateString.split('-')[2])
 theyear=dateString.split('-')[0]
-#st.header(d2)
-#st.header(dateToday)
-#dateToday='20210227'
-dateforRankings=dateToday
-dateforRankings5=d2
-Dailyschedule=pd.read_csv("Data/DailySchedules2021/"+dateToday+"Schedule.csv")
-if 'Alphabetical'in  Tables_Choice:
-    Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
-if 'Time' in Tables_Choice:
-    Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
-if 'Regression_Difference' in Tables_Choice: 
-    Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
-AwayList=list(Dailyschedule['AWAY'])
-HomeList=list(Dailyschedule['HOME'])
 
-AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
-HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
-#whereIsGame = st.sidebar.selectbox('Neutral Site',['Yes', 'No'])
-#dateToday=dateToGetNowWrite[0]
-#dateforRankings=dateToGetNowWrite[0]
-#dateforRankings5=datesUnderlineAdd[0]
+Tables_Selection=st.sidebar.selectbox('Any or Scheduled',['Any', 'Todays Games'])
+if 'Any' in  Tables_Selection:
+    AwayTeam = st.sidebar.selectbox('Away Team',AwayTeamAll)
+    HomeTeam = st.sidebar.selectbox('Home Team',HomeTeamAll)
+if 'Todays Games' in  Tables_Selection:
 
-#results=dailyOddsNCAAMar3(theday, themonth, theyear, ".csv", True)
-#st.write(results)
+    Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference'])
+    
+
+
+    
+
+    if 'Alphabetical'in  Tables_Choice:
+        Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
+    if 'Time' in Tables_Choice:
+        Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
+    if 'Regression_Difference' in Tables_Choice: 
+        Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
+    AwayList=list(Dailyschedule['AWAY'])
+    HomeList=list(Dailyschedule['HOME'])
+
+    AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
+    HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
+
+
+
+    
+
 
 if st.button('Run'):
+    dateforRankings=dateToday
+    dateforRankings5=d2
 
-    TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
+    #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
     TeamDatabase2.set_index("OldTRankName", inplace=True)
     MG_DF1=pd.read_csv("Data/MGRankings/tm_seasons_stats_ranks"+dateforRankings5+".csv")
     MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
@@ -207,32 +219,36 @@ if st.button('Run'):
     from matplotlib.backends.backend_pdf import PdfPages
     WhichFile='TeamDataFiles2021'
     pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
-    #Dailyschedule=pd.read_csv("Data/DailySchedules2021/"+dateToday+"Schedule.csv")
-    st.header('Games Today')
+    if 'Todays Games' in  Tables_Selection:
+        st.header('Games Today')
     
 
     
 
-    import plotly.graph_objects as go
-    import pandas as pd
-    lengthrows=int(len(Dailyschedule)/2)
-    rowEvenColor = 'lightgrey'
-    rowOddColor = 'white'
-    fig = go.Figure(data=[go.Table(
-        header=dict(values=list(Dailyschedule.columns),
+
+        lengthrows=int(len(Dailyschedule)/2)
+        rowEvenColor = 'lightgrey'
+        rowOddColor = 'white'
+        fig = go.Figure(data=[go.Table(
+            header=dict(values=list(Dailyschedule.columns),
                     fill_color='grey',
                     align='left'),
-        cells=dict(values=[Dailyschedule.AWAY, Dailyschedule.HOME, Dailyschedule.VegasSpread, Dailyschedule.VegasTotal, Dailyschedule.Court, Dailyschedule.Time,Dailyschedule.Reg_dif],
-        fill_color = [[rowOddColor,rowEvenColor]*lengthrows],
+            cells=dict(values=[Dailyschedule.AWAY, Dailyschedule.HOME, Dailyschedule.VegasSpread, Dailyschedule.VegasTotal, Dailyschedule.Court, Dailyschedule.Time,Dailyschedule.Reg_dif],
+            fill_color = [[rowOddColor,rowEvenColor]*lengthrows],
                 align='left',
-        font_size=12,
-        height=30))
-    ])
+            font_size=12,
+            height=30))
+        ])
 
 
-    fig.update_layout(width=1200, height=800)
-#fig.show()
-    st.plotly_chart(fig)
+        fig.update_layout(width=1200, height=800)
+
+        st.plotly_chart(fig)
+    
+
+    
+
+    
 
 
 

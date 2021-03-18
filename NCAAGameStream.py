@@ -158,6 +158,10 @@ def get_team_reg_dif(teamname):
     return(a3[-1])
 import numpy as np
 from datetime import datetime,date,time
+
+import plotly.graph_objects as go
+import pandas as pd
+
 TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
  
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])

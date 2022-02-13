@@ -49,7 +49,7 @@ cycler==0.10.0
 dacite==1.5.1
 datacommons==1.4.3
 datacommons-pandas==0.0.3
-datapane==0.12.3
+
 decorator==4.4.2
 defusedxml==0.6.0
 descartes==1.1.0

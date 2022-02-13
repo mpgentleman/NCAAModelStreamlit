@@ -16,7 +16,108 @@ import numpy as np
 #import selenium
 #from selenium import webdriver
 #from webdriver_manager.chrome import ChromeDriverManager
+from st_aggrid import AgGrid,JsCode,DataReturnMode,GridUpdateMode
+from st_aggrid.grid_options_builder import GridOptionsBuilder
+import random
+from joypy import joyplot
+import numpy as np
+from datetime import datetime,date,time
 
+import plotly.graph_objects as go
+import pandas as pd
+
+def cellStyleDynamic(data: pd.Series):
+
+    datNeg = data[data < 0]
+    datPos = data[data > 0]
+
+    if len(datNeg) > 0 and len(datPos) > 0:
+        _, binsN = pd.cut(datNeg, bins=4, retbins=True, precision=0)
+        _, binsP = pd.cut(datPos, bins=4, retbins=True, precision=0)
+        code = """
+            function(params) {
+              if (isNaN(params.value) || params.value === 0) return {'color': 'black', 'backgroundColor': '#e9edf5'};
+              if (params.value < %d) return {'color': 'white','backgroundColor':  '#ff0000'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#ff4c4c'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#ff9999'};
+              if (params.value < 0) return {'color': 'white', 'backgroundColor': '#ffb2b2'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#a8bad9'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#7d97c6'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#3c64aa'};
+              
+              return {'color': 'white', 'backgroundColor': '#2753a1'};
+            };
+            """ % (binsN[1], binsN[2], binsN[3], binsP[1], binsP[2], binsP[3])
+
+    elif len(datNeg) > 0:
+        dat, bins = pd.cut(datNeg, bins=4, retbins=True, precision=0)
+        code = """
+            function(params) {
+              if (isNaN(params.value) || params.value === 0) return {'color': 'black', 'backgroundColor': '#e9edf5'};
+              if (params.value < %d) return {'color': 'white','backgroundColor':  '#ff0000'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#ff4c4c'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#ff9999'};
+              if (params.value < 0) return {'color': 'white', 'backgroundColor': '#ffb2b2'};
+              
+              return {'color': 'white', 'backgroundColor': '#2753a1'};
+            };
+            """ % (bins[1], bins[2], bins[3])
+
+    elif len(datPos) > 0:
+        dat, bins = pd.cut(datPos, bins=4, retbins=True, precision=0)
+        code = """
+            function(params) {
+              if (isNaN(params.value) || params.value === 0) return {'color': 'black', 'backgroundColor': '#e9edf5'};
+              if (params.value < 0) return {'color': 'white', 'backgroundColor': '#ffb2b2'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#a8bad9'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#7d97c6'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#3c64aa'};
+              
+              return {'color': 'white', 'backgroundColor': '#2753a1'};
+            };
+            """ % (bins[1], bins[2], bins[3])
+    else:
+        code = """
+            function(params) {
+              return {'color': 'white', 'backgroundColor': '#a8bad9'};
+            };
+            """
+
+    return JsCode(code)
+cellStyle = JsCode("""
+            function(params) {
+                return {'color': 'black','backgroundColor':  '#e8f4f8'};
+            };
+            """)
+def numberFormat(precision: int, comma: bool = True):
+    if comma:
+        jscript = """
+        function(params) {
+          if (isNaN(params.value)) {
+            return "";
+          }
+          return params.value.toFixed(%d).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        };
+        """ % precision
+    else:
+        jscript = """
+        function(params) {
+          if (isNaN(params.value)) {
+            return "";
+          }
+          return params.value.toFixed(%d);
+        };
+        """ % precision
+
+    return JsCode(jscript)
+
+def cellStyleGrey():
+    j = """
+    function(params) {
+      return {'color': 'black', 'backgroundColor': '#ececec'};
+    };
+    """
+    return JsCode(j)
 
 
 def GetThisTeamInfoFromCsv(ThisTeam,WhichFile):
@@ -156,12 +257,173 @@ def get_team_reg_dif(teamname):
     plt.plot(a3)
     plt.show()
     return(a3[-1])
-import numpy as np
-from datetime import datetime,date,time
 
-import plotly.graph_objects as go
-import pandas as pd
+def getDistributionMatchupCharts(AwayTeam,HomeTeam):
+    
+    teamname1=AwayTeam
+    test1=GetThisTeamInfoFromCsv(teamname1,"TeamDataFilesStarter2022")
+    teamname2=HomeTeam
+    test2=GetThisTeamInfoFromCsv(teamname2,"TeamDataFilesStarter2022")
 
+    test2EFG=test2['EFG%']
+    test2TO=test2['TO%']
+    test2OR=test2['OR%']
+    test2FTR=test2['FTR%']
+    test2ADJO=test2['AdjO']
+    test2ADJD=test2['AdjD']
+    test2ADJEM=test2['EMRating']
+
+
+    test1EFG=random.choices(list(test1['EFG%']), k=len(test2['EFG%']))
+    test1TO=random.choices(list(test1['TO%']), k=len(test2['TO%']))
+    test1OR=random.choices(list(test1['OR%']), k=len(test2['OR%']))
+    test1FTR=random.choices(list(test1['FTR%']), k=len(test2['FTR%']))
+    test1ADJO=random.choices(list(test1['AdjO']), k=len(test2['AdjO']))
+    test1ADJD=random.choices(list(test1['AdjD']), k=len(test2['AdjD']))
+    test1ADJEM=random.choices(list(test1['EMRating']), k=len(test2['EMRating']))
+
+    data = pd.DataFrame({teamname1:test1EFG,teamname2:test2EFG})
+
+    data['Stat']='EFG%'
+
+    data2 = pd.DataFrame({teamname1:test1TO,teamname2:test2TO})
+    data2['Stat']='TO%'
+    #data2['Base']=1
+    data3 = pd.DataFrame({teamname1:test1OR,teamname2:test2OR})
+    data3['Stat']='OR%'
+    #data2['Base']=1
+    data5 = pd.DataFrame({teamname1:test1FTR,teamname2:test2FTR})
+    data5['Stat']='FTR%'
+    data6 = pd.DataFrame({teamname1:test1ADJO,teamname2:test2ADJO})
+    data6['Stat']='AdjO'
+    data7 = pd.DataFrame({teamname1:test1ADJD,teamname2:test2ADJD})
+    data7['Stat']='AdjD'
+    data8 = pd.DataFrame({teamname1:test1ADJEM,teamname2:test2ADJEM})
+    data8['Stat']='AdjEM'
+
+
+    dataOne=pd.concat([data6,data7])
+    data4=pd.concat([data,data2,data3,data5])
+    #st.dataframe(dataOne)
+    #st.dataframe(data4)
+    plt.figure(figsize=(5,5), dpi= 80)
+
+    #plt.figure(dpi= 380)
+    #ax1, fig =joyplot(data8[[teamname1,teamname2,'Stat']],
+    #   by='Stat',column=[teamname1, teamname2],alpha=.70,legend=True )
+    #st.pyplot(ax1)
+    ax2, fig2 =joyplot(dataOne[[teamname1,teamname2,'Stat']],
+       by='Stat',column=[teamname1, teamname2],alpha=.70,legend=True ,figsize=(5, 8))
+    
+    plt.title('Efficiency Matchup Stats', fontsize=10)
+    plt.show()
+    st.pyplot(ax2)
+    ax3, fig3 =joyplot(data4[[teamname1,teamname2,'Stat']],
+    by='Stat',column=[teamname1, teamname2],alpha=.70,legend=True ,figsize=(15, 15))
+    
+    plt.title('Four Factors Matchup Stats', fontsize=20)
+    plt.show()
+    st.pyplot(ax3)
+#data4
+def getDistributionMatchupChartsNew(AwayTeam,HomeTeam):
+    
+    teamname1=AwayTeam
+    test1=GetThisTeamInfoFromCsv(teamname1,"TeamDataFilesStarter2022")
+    teamname2=HomeTeam
+    test2=GetThisTeamInfoFromCsv(teamname2,"TeamDataFilesStarter2022")
+
+    test2EFG=test2['EFG%']
+    test2TO=test2['TO%']
+    test2OR=test2['OR%']
+    test2FTR=test2['FTR%']
+    test2ADJO=test2['AdjO']
+    test2ADJD=test2['AdjD']
+    test2ADJEM=test2['EMRating']
+
+
+    test1EFG=random.choices(list(test1['EFG%']), k=len(test2['EFG%']))
+    test1TO=random.choices(list(test1['TO%']), k=len(test2['TO%']))
+    test1OR=random.choices(list(test1['OR%']), k=len(test2['OR%']))
+    test1FTR=random.choices(list(test1['FTR%']), k=len(test2['FTR%']))
+    test1ADJO=random.choices(list(test1['AdjO']), k=len(test2['AdjO']))
+    test1ADJD=random.choices(list(test1['AdjD']), k=len(test2['AdjD']))
+    test1ADJEM=random.choices(list(test1['EMRating']), k=len(test2['EMRating']))
+
+    data = pd.DataFrame({teamname1:test1EFG,teamname2:test2EFG})
+
+    data['Stat']='EFG%'
+
+    data2 = pd.DataFrame({teamname1:test1TO,teamname2:test2TO})
+    data2['Stat']='TO%'
+    #data2['Base']=1
+    data3 = pd.DataFrame({teamname1:test1OR,teamname2:test2OR})
+    data3['Stat']='OR%'
+    #data2['Base']=1
+    data5 = pd.DataFrame({teamname1:test1FTR,teamname2:test2FTR})
+    data5['Stat']='FTR%'
+    data6 = pd.DataFrame({teamname1:test1ADJO,teamname2:test2ADJO})
+    data6['Stat']='AdjO'
+    data7 = pd.DataFrame({teamname1:test1ADJD,teamname2:test2ADJD})
+    data7['Stat']='AdjD'
+    data8 = pd.DataFrame({teamname1:test1ADJEM,teamname2:test2ADJEM})
+    data8['Stat']='AdjEM'
+
+
+    dataOne=pd.concat([data6,data7,data8])
+    data4=pd.concat([data,data2,data3,data5])
+    c1,c2= st.columns(2)
+    #with c1:
+    #    c1.subheader('Four Factor Matchup') 
+    #    ax1, fig =joyplot(data4[[teamname1,teamname2,'Stat']],
+    #       by='Stat',column=[teamname1, teamname2],alpha=.70,legend=True,range_style='own', 
+    #                      grid="y", linewidth=1,figsize=(4, 4) )
+    #    plt.title('Four Factor Matchup Stats', fontsize=10)
+    #    st.pyplot(ax1)
+
+    #    plt.show()
+    #with c2:
+    #    c2.subheader('Efficiency Matchup Stats') 
+    #    ax2, fig2 =joyplot(dataOne[[teamname1,teamname2,'Stat']],
+    #       by='Stat',column=[teamname1, teamname2],alpha=.70,legend=True ,figsize=(4, 4))
+    
+    #    plt.title('Efficiency Matchup Stats', fontsize=10)
+    #    plt.show()
+    #    st.pyplot(ax2)
+    #st.dataframe(data8)
+    st.subheader('Four Factor Matchup') 
+    ax4, fig =joyplot(data4[[teamname1,teamname2,'Stat']],
+           by='Stat',column=[teamname1, teamname2],alpha=.70,legend=True, 
+                          grid="y", linewidth=1,figsize=(15, 6) )
+    plt.title('Four Factor Matchup Stats', fontsize=10)
+    st.pyplot(ax4)
+    st.subheader('Efficiency Matchup Stats') 
+    ax3, fig2 =joyplot(dataOne[[teamname1,teamname2,'Stat']],
+           by='Stat',column=[teamname1, teamname2],alpha=.70,legend=True ,figsize=(15, 6))
+    
+    plt.title('Efficiency Matchup Stats', fontsize=10)
+    #plt.show()
+    st.pyplot(ax3)
+
+def getTeamDFTable(team1,teamname):
+    colsM=['Date','Op Rank','Opponent','Result','Pace','ATSVegas','OverUnderVegas','ATS','EMRating','PlayingOverRating']
+    numeric=['numericColumn','numberColumnFilter']
+    team1=team1[colsM]
+    allcols=team1.columns
+    header1=teamname+' Game History'
+    st.subheader(header1)
+    csTotal=cellStyleDynamic(team1.PlayingOverRating)
+    gb = GridOptionsBuilder.from_dataframe(team1)
+    #gb.configure_columns('PlayingOverRating', type=numeric, valueFormatter=numberFormat(1))
+    gb.configure_columns(allcols, cellStyle=cellStyle)
+    gb.configure_column('PlayingOverRating',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    gridOptions = gb.build()
+
+    AgGrid(team1, gridOptions=gridOptions, enable_enterprise_modules=True,height=800,allow_unsafe_jscode=True)
+
+
+st.set_page_config(layout="wide")
 TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
  
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
@@ -175,7 +437,7 @@ add_selectbox_start =st.sidebar.date_input('Pick date')
 dateString=str(add_selectbox_start)
 
 dateToday=dateString.replace('-', '')
-Dailyschedule=pd.read_csv("Data/DailySchedules2021/"+dateToday+"Schedule.csv")
+Dailyschedule=pd.read_csv("Data/DailySchedules2022/"+dateToday+"Schedule.csv")
 
 d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
 themonth=int(dateString.split('-')[1])
@@ -217,7 +479,7 @@ if st.button('Run'):
 
     #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
     TeamDatabase2.set_index("OldTRankName", inplace=True)
-    MG_DF1=pd.read_csv("Data/MGRankings/tm_seasons_stats_ranks"+dateforRankings5+".csv")
+    MG_DF1=pd.read_csv("Data/MGRankings2022/tm_seasons_stats_ranks"+dateforRankings5+".csv")
     MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
     MG_DF1.set_index("updated", inplace=True)
     from matplotlib.backends.backend_pdf import PdfPages
@@ -248,7 +510,18 @@ if st.button('Run'):
         fig.update_layout(width=1200, height=800)
 
         st.plotly_chart(fig)
-    
+        allcols=Dailyschedule.columns
+        gb = GridOptionsBuilder.from_dataframe(Dailyschedule)
+        gb.configure_columns(allcols, cellStyle=cellStyle)
+        csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
+        gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+        #gb.configure_pagination()
+        gb.configure_side_bar()
+        gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        gridOptions = gb.build()
+
+        AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True)
+
 
     
 
@@ -265,14 +538,14 @@ if st.button('Run'):
     Dailyschedule['VegasSpread'] = Dailyschedule.VegasSpread.apply(calculate_to_numeric)
     Dailyschedule['Total'] = Dailyschedule.VegasTotal.apply(calculate_to_numeric)   
     #PomeroyDF1=GetPomeroyData()
-    PomeroyDF1=pd.read_csv("Data/PomeroyDailyRankings2021/PomeroyRankings"+dateforRankings+".csv")
+    PomeroyDF1=pd.read_csv("Data/PomeroyDailyRankings2022/PomeroyRankings"+dateforRankings+".csv")
     #PomeroyDF1=sanitizeEntireColumn(PomeroyDF1,"Team")
     PomeroyDF1["updated"]=update_type(PomeroyDF1.Team,TeamDatabase.set_index('PomeroyName').UpdatedTRankName)
     PomeroyDF1["updated"]=PomeroyDF1["updated"].str.rstrip()
    
     PomeroyDF1.set_index("updated", inplace=True)
 
-    BartDF1=pd.read_csv("Data/TRankDailyRankings2021/"+dateforRankings+".csv")
+    BartDF1=pd.read_csv("Data/TRankDailyRankings2022/"+dateforRankings+".csv")
     #getBartDataTest()
     #print(BartDF1)  
     BartDF1["updated"]=update_type(BartDF1.Team,TeamDatabase.set_index('TRankName').UpdatedTRankName)
@@ -305,9 +578,9 @@ if st.button('Run'):
 
     
 
-    test1=GetThisTeamInfoFromCsv(AwayTeam,"TeamDataFiles2021")
+    test1=GetThisTeamInfoFromCsv(AwayTeam,"TeamDataFiles2022")
 
-    test2=GetThisTeamInfoFromCsv(HomeTeam,"TeamDataFiles2021")
+    test2=GetThisTeamInfoFromCsv(HomeTeam,"TeamDataFiles2022")
     AwayTeamB=TeamDatabase.loc[AwayTeam,"UpdatedTRankName"]
     HomeTeamB=TeamDatabase.loc[HomeTeam,"UpdatedTRankName"]
 
@@ -341,6 +614,13 @@ if st.button('Run'):
     st.text('Polynomial Regression of actual game performance in blue for each game ')
     st.text('If the blue line is above the green then the team is playing better than its ranking ')
     st.pyplot(fig)
+
+
+
+
+
+
+
     
     st.subheader('Pomeroy Ranking and ATS Record')
     st.text('Pomeroy Rankings by game Line in Green')
@@ -371,7 +651,11 @@ if st.button('Run'):
     
     st.subheader('Defensive Points per Possesion against the Over/Under')
     GetTwoTeamChartsTogether(test1,test2,AwayTeam,HomeTeam,"PPP1","OverUnder")
+    getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
 
+    #getDistributionMatchupCharts(AwayTeam,HomeTeam)
+    getTeamDFTable(test1,AwayTeam)
+    getTeamDFTable(test2,HomeTeam)
 #st.pyplot(fig2)
 
 

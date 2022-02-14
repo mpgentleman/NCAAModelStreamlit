@@ -438,7 +438,8 @@ add_selectbox_start =st.sidebar.date_input('Pick date')
 dateString=str(add_selectbox_start)
 
 dateToday=dateString.replace('-', '')
-Dailyschedule=pd.read_csv("DailySchedules2022/"+dateToday+"Schedule.csv")
+#Dailyschedule=pd.read_csv("DailySchedules2022/"+dateToday+"Schedule.csv")
+Dailyschedule=pd.read_csv("Data/DailySchedules2022/"+dateToday+"Schedule.csv")
 
 d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
 themonth=int(dateString.split('-')[1])

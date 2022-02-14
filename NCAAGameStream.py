@@ -425,45 +425,32 @@ def getTeamDFTable(team1,teamname):
 
 
 st.set_page_config(layout="wide")
-TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
+TeamDatabase2=pd.read_csv("TeamDatabase.csv")
  
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 
 
 st.title('NCAA Head to Head Matchup')
+add_selectbox = st.sidebar.header("Select Todays Date")
+add_selectbox_start =st.sidebar.date_input('Pick date')
 
+dateString=str(add_selectbox_start)
 
+dateToday=dateString.replace('-', '')
+Dailyschedule=pd.read_csv("DailySchedules2022/"+dateToday+"Schedule.csv")
 
-from datetime import date
-
-today = date.today()
-
-dT = today.strftime("%m/%d/%Y")
-dateforRankings5=dT.replace("/", " ")
-dT2 = today.strftime("%Y/%m/%d")
-dateforRankings=dT2.replace("/", "")
+d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
+themonth=int(dateString.split('-')[1])
+theday=int(dateString.split('-')[2])
+theyear=dateString.split('-')[0]
 
 Tables_Selection=st.sidebar.selectbox('Any or Scheduled',['Any', 'Todays Games'])
 if 'Any' in  Tables_Selection:
     AwayTeam = st.sidebar.selectbox('Away Team',AwayTeamAll)
     HomeTeam = st.sidebar.selectbox('Home Team',HomeTeamAll)
-    add_selectbox = st.sidebar.header("Select Todays Date")
-    add_selectbox_start =st.sidebar.date_input('Pick date')
+if 'Todays Games' in  Tables_Selection:
 
-else:
-    add_selectbox = st.sidebar.header("Select Todays Date")
-    add_selectbox_start =st.sidebar.date_input('Pick date')
-    st.header('Games Today')
-    dateString=str(add_selectbox_start)
-
-    dateToday=dateString.replace('-', '')
-    Dailyschedule=pd.read_csv("Data/DailySchedules2022/"+dateToday+"Schedule.csv")
-
-    d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
-    themonth=int(dateString.split('-')[1])
-    theday=int(dateString.split('-')[2])
-    theyear=dateString.split('-')[0]
     Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
     
 
@@ -483,7 +470,6 @@ else:
 
     AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
     HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
-    
 
 
 
@@ -502,7 +488,10 @@ if st.button('Run'):
     WhichFile='TeamDataFiles2021'
     pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
     if 'Todays Games' in  Tables_Selection:
-        
+        st.header('Sortable NCAA Game Schedule')
+        st.text('Games can be sorted by columns. Click on column header to sort')
+        st.text('To sort by game time click the Time column.  ')
+        st.text('Low Negative values in the Reg Dif and Overplaying column mean the Home team is the pick  ')  
     
 
 

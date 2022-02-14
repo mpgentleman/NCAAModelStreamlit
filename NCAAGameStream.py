@@ -329,9 +329,9 @@ def getDistributionMatchupCharts(AwayTeam,HomeTeam):
 def getDistributionMatchupChartsNew(AwayTeam,HomeTeam):
     
     teamname1=AwayTeam
-    test1=GetThisTeamInfoFromCsv(teamname1,"TeamDataFilesStarter2022")
+    test1=GetThisTeamInfoFromCsv(teamname1,"TeamDataFiles2022")
     teamname2=HomeTeam
-    test2=GetThisTeamInfoFromCsv(teamname2,"TeamDataFilesStarter2022")
+    test2=GetThisTeamInfoFromCsv(teamname2,"TeamDataFiles2022")
 
     test2EFG=test2['EFG%']
     test2TO=test2['TO%']
@@ -451,7 +451,7 @@ if 'Any' in  Tables_Selection:
     HomeTeam = st.sidebar.selectbox('Home Team',HomeTeamAll)
 if 'Todays Games' in  Tables_Selection:
 
-    Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference'])
+    Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
     
 
 
@@ -463,6 +463,8 @@ if 'Todays Games' in  Tables_Selection:
         Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
     if 'Regression_Difference' in Tables_Choice: 
         Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
+    if 'OverPlaying' in Tables_Choice: 
+        Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
     AwayList=list(Dailyschedule['AWAY'])
     HomeList=list(Dailyschedule['HOME'])
 
@@ -510,7 +512,7 @@ if st.button('Run'):
 
         fig.update_layout(width=1200, height=800)
 
-        st.plotly_chart(fig)
+        #st.plotly_chart(fig)
         allcols=Dailyschedule.columns
         gb = GridOptionsBuilder.from_dataframe(Dailyschedule)
         gb.configure_columns(allcols, cellStyle=cellStyle)

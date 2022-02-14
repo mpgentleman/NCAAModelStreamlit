@@ -617,7 +617,28 @@ if st.button('Run'):
     st.text('Polynomial Regression of actual game performance in blue for each game ')
     st.text('If the blue line is above the green then the team is playing better than its ranking ')
     st.pyplot(fig)
+#############################################
+    test1['New_ID'] = range(0, 0+len(test1))
+    test2['New_ID'] = range(0, 0+len(test2))
+    #p=sns.regplot(x="New_ID", y="EMRating", data=DftoChange,order=2);
+    fig_dims = (15,10)
 
+    fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
+    #fig, axs = plt.subplots(ncols=2,figsize=fig_dims)
+    plt.figure(figsize=(20, 12))
+    ax1.set_title(AwayTeam)
+    ax2.set_title(HomeTeam)
+    fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1)
+    fig2=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test1,order=2, ax=ax1)
+    fig5=sns.regplot(x='New_ID', y='AdjEM_MG', data=test1,order=2, ax=ax1)
+    fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=2, ax=ax2)
+    fig4=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test2,order=2, ax=ax2)
+    fig6=sns.regplot(x='New_ID', y='AdjEM_MG', data=test2,order=2, ax=ax2)
+    st.subheader('Polynomial Regression Charts')
+    st.text('Daily Pomeroy Rankings line in green for each game')
+    st.text('Polynomial Regression of actual game performance in blue for each game ')
+    st.text('If the blue line is above the green then the team is playing better than its ranking ')
+    st.pyplot(fig)
 
 
 

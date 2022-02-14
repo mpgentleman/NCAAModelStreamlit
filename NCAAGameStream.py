@@ -436,7 +436,7 @@ add_selectbox = st.sidebar.header("Select Todays Date")
 add_selectbox_start =st.sidebar.date_input('Pick date')
 
 
-Dailyschedule=pd.read_csv("Data/DailySchedules2022/"+dateToday+"Schedule.csv")
+
 Tables_Selection=st.sidebar.selectbox('Any or Scheduled',['Any', 'Todays Games'])
 if 'Any' in  Tables_Selection:
     AwayTeam = st.sidebar.selectbox('Away Team',AwayTeamAll)
@@ -467,7 +467,7 @@ if st.button('Run'):
         dateString=str(add_selectbox_start)
 
         dateToday=dateString.replace('-', '')
-        
+        Dailyschedule=pd.read_csv("Data/DailySchedules2022/"+dateToday+"Schedule.csv")
 
         d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
         themonth=int(dateString.split('-')[1])

@@ -473,25 +473,25 @@ if st.button('Run'):
         themonth=int(dateString.split('-')[1])
         theday=int(dateString.split('-')[2])
         theyear=dateString.split('-')[0]
-     Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
+        Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
     
 
 
     
 
-    if 'Alphabetical'in  Tables_Choice:
-        Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
-    if 'Time' in Tables_Choice:
-        Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
-    if 'Regression_Difference' in Tables_Choice: 
-        Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
-    if 'OverPlaying' in Tables_Choice: 
-        Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
-    AwayList=list(Dailyschedule['AWAY'])
-    HomeList=list(Dailyschedule['HOME'])
+        if 'Alphabetical'in  Tables_Choice:
+            Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
+        if 'Time' in Tables_Choice:
+            Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
+        if 'Regression_Difference' in Tables_Choice: 
+            Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
+        if 'OverPlaying' in Tables_Choice: 
+            Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
+        AwayList=list(Dailyschedule['AWAY'])
+        HomeList=list(Dailyschedule['HOME'])
 
-    AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
-    HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
+        AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
+        HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
     
 
 

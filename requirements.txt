@@ -112,7 +112,6 @@ sportsreference==0.5.2
 stats==0.1.2a0
 statsmodels==0.12.0
 streamlit==1.1.0
-streamlit-aggrid==0.2.2.post4
-streamlit-echarts==0.4.0
+
 
 

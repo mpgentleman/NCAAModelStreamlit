@@ -96,7 +96,7 @@ plotly==4.10.0
 
 
 
-prettytable==3.0.0
+
 
 
 

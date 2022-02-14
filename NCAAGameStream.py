@@ -479,7 +479,8 @@ if 'Todays Games' in  Tables_Selection:
 
 if st.button('Run'):
 
-
+    dateforRankings=dateToday
+    dateforRankings5=d2
     #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
     TeamDatabase2.set_index("OldTRankName", inplace=True)
     MG_DF1=pd.read_csv("Data/MGRankings2022/tm_seasons_stats_ranks"+dateforRankings5+" .csv")

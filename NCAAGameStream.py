@@ -435,6 +435,14 @@ st.title('NCAA Head to Head Matchup')
 
 
 
+from datetime import date
+
+today = date.today()
+
+dT = today.strftime("%m/%d/%Y")
+dateforRankings5=dT.replace("/", " ")
+dT2 = today.strftime("%Y/%m/%d")
+dateforRankings=dT2.replace("/", "")
 
 Tables_Selection=st.sidebar.selectbox('Any or Scheduled',['Any', 'Todays Games'])
 if 'Any' in  Tables_Selection:
@@ -442,8 +450,7 @@ if 'Any' in  Tables_Selection:
     HomeTeam = st.sidebar.selectbox('Home Team',HomeTeamAll)
     add_selectbox = st.sidebar.header("Select Todays Date")
     add_selectbox_start =st.sidebar.date_input('Pick date')
-    dateforRankings=dateToday
-    dateforRankings5=d2
+
 else:
     add_selectbox = st.sidebar.header("Select Todays Date")
     add_selectbox_start =st.sidebar.date_input('Pick date')
@@ -484,8 +491,7 @@ else:
 
 
 if st.button('Run'):
-    dateforRankings=dateToday
-    dateforRankings5=d2
+
 
     #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
     TeamDatabase2.set_index("OldTRankName", inplace=True)

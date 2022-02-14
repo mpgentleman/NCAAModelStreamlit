@@ -435,15 +435,7 @@ st.title('NCAA Head to Head Matchup')
 add_selectbox = st.sidebar.header("Select Todays Date")
 add_selectbox_start =st.sidebar.date_input('Pick date')
 
-dateString=str(add_selectbox_start)
 
-dateToday=dateString.replace('-', '')
-Dailyschedule=pd.read_csv("Data/DailySchedules2022/"+dateToday+"Schedule.csv")
-
-d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
-themonth=int(dateString.split('-')[1])
-theday=int(dateString.split('-')[2])
-theyear=dateString.split('-')[0]
 
 Tables_Selection=st.sidebar.selectbox('Any or Scheduled',['Any', 'Todays Games'])
 if 'Any' in  Tables_Selection:
@@ -490,7 +482,15 @@ if st.button('Run'):
     pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
     if 'Todays Games' in  Tables_Selection:
         st.header('Games Today')
-    
+        dateString=str(add_selectbox_start)
+
+        dateToday=dateString.replace('-', '')
+        Dailyschedule=pd.read_csv("Data/DailySchedules2022/"+dateToday+"Schedule.csv")
+
+        d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
+        themonth=int(dateString.split('-')[1])
+        theday=int(dateString.split('-')[2])
+        theyear=dateString.split('-')[0]
 
     
 

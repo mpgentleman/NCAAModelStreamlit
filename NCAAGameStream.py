@@ -406,7 +406,7 @@ def getDistributionMatchupChartsNew(AwayTeam,HomeTeam):
     st.pyplot(ax3)
 
 def getTeamDFTable(team1,teamname):
-    colsM=['Date','Op Rank','Opponent','Result','Pace','ATSVegas','OverUnderVegas','ATS','EMRating','PlayingOverRating']
+    colsM=['DateNew','Op Rank','Opponent','Result','Pace','ATSVegas','OverUnderVegas','ATS','EMRating','PlayingOverRating']
     numeric=['numericColumn','numberColumnFilter']
     team1=team1[colsM]
     allcols=team1.columns
@@ -421,7 +421,7 @@ def getTeamDFTable(team1,teamname):
     gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
     gridOptions = gb.build()
 
-    AgGrid(team1, gridOptions=gridOptions, enable_enterprise_modules=True,height=800,allow_unsafe_jscode=True)
+    AgGrid(team1, gridOptions=gridOptions, enable_enterprise_modules=True,height=1000,allow_unsafe_jscode=True)
 
 
 st.set_page_config(layout="wide")
@@ -523,7 +523,7 @@ if st.button('Run'):
         gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
         gridOptions = gb.build()
 
-        AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True)
+        AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
 
 
     
@@ -637,7 +637,8 @@ if st.button('Run'):
     st.subheader('Polynomial Regression Charts')
     st.text('Daily Pomeroy Rankings line in green for each game')
     st.text('Polynomial Regression of actual game performance in blue for each game ')
-    st.text('If the blue line is above the green then the team is playing better than its ranking ')
+    st.text('If the blue line is above the green line(Pomeroy) then the team is playing better than its ranking ')
+    st.text('The red line is MG rankings ')
     st.pyplot(fig)
 
 

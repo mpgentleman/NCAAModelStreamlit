@@ -425,8 +425,8 @@ def getTeamDFTable(team1,teamname):
 
 
 st.set_page_config(layout="wide")
-TeamDatabase2=pd.read_csv("TeamDatabase.csv")
- 
+#TeamDatabase2=pd.read_csv("TeamDatabase.csv")
+TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 

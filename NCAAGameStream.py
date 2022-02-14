@@ -432,8 +432,7 @@ HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 
 
 st.title('NCAA Head to Head Matchup')
-add_selectbox = st.sidebar.header("Select Todays Date")
-add_selectbox_start =st.sidebar.date_input('Pick date')
+
 
 
 
@@ -441,8 +440,42 @@ Tables_Selection=st.sidebar.selectbox('Any or Scheduled',['Any', 'Todays Games']
 if 'Any' in  Tables_Selection:
     AwayTeam = st.sidebar.selectbox('Away Team',AwayTeamAll)
     HomeTeam = st.sidebar.selectbox('Home Team',HomeTeamAll)
+    add_selectbox = st.sidebar.header("Select Todays Date")
+    add_selectbox_start =st.sidebar.date_input('Pick date')
+    dateforRankings=dateToday
+    dateforRankings5=d2
+else:
+    add_selectbox = st.sidebar.header("Select Todays Date")
+    add_selectbox_start =st.sidebar.date_input('Pick date')
+    st.header('Games Today')
+    dateString=str(add_selectbox_start)
+
+    dateToday=dateString.replace('-', '')
+    Dailyschedule=pd.read_csv("Data/DailySchedules2022/"+dateToday+"Schedule.csv")
+
+    d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
+    themonth=int(dateString.split('-')[1])
+    theday=int(dateString.split('-')[2])
+    theyear=dateString.split('-')[0]
+    Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
+    
 
 
+    
+
+    if 'Alphabetical'in  Tables_Choice:
+        Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
+    if 'Time' in Tables_Choice:
+        Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
+    if 'Regression_Difference' in Tables_Choice: 
+        Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
+    if 'OverPlaying' in Tables_Choice: 
+        Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
+    AwayList=list(Dailyschedule['AWAY'])
+    HomeList=list(Dailyschedule['HOME'])
+
+    AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
+    HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
     
 
 
@@ -463,35 +496,7 @@ if st.button('Run'):
     WhichFile='TeamDataFiles2021'
     pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
     if 'Todays Games' in  Tables_Selection:
-        st.header('Games Today')
-        dateString=str(add_selectbox_start)
-
-        dateToday=dateString.replace('-', '')
-        Dailyschedule=pd.read_csv("Data/DailySchedules2022/"+dateToday+"Schedule.csv")
-
-        d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
-        themonth=int(dateString.split('-')[1])
-        theday=int(dateString.split('-')[2])
-        theyear=dateString.split('-')[0]
-        Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
-    
-
-
-    
-
-        if 'Alphabetical'in  Tables_Choice:
-            Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
-        if 'Time' in Tables_Choice:
-            Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
-        if 'Regression_Difference' in Tables_Choice: 
-            Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
-        if 'OverPlaying' in Tables_Choice: 
-            Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
-        AwayList=list(Dailyschedule['AWAY'])
-        HomeList=list(Dailyschedule['HOME'])
-
-        AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
-        HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
+        
     
 
 

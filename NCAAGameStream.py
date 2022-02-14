@@ -654,7 +654,7 @@ if st.button('Run'):
     st.subheader('MG Rankings and ATS spread')
     st.text('MG Rankings by game Line in Green')
     #GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating",'AdjEM_MG','AdjEM_MG',"ATS")
-    GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"EMRating","PomAdjEMCurrent","ATS")
+    GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"EMRating","Adj_Margin_EM_MG","MG_SpreadWinATS")
     
     st.subheader('Team Playing Over its Ranking')
     st.text('Blue bars are positive if the team played over its rating')

@@ -480,7 +480,7 @@ if st.button('Run'):
 
     #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
     TeamDatabase2.set_index("OldTRankName", inplace=True)
-    MG_DF1=pd.read_csv("Data/MGRankings2022/tm_seasons_stats_ranks"+dateforRankings5+".csv")
+    MG_DF1=pd.read_csv("Data/MGRankings2022/tm_seasons_stats_ranks"+dateforRankings5+" .csv")
     MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
     MG_DF1.set_index("updated", inplace=True)
     from matplotlib.backends.backend_pdf import PdfPages

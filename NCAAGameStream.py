@@ -26,7 +26,11 @@ from datetime import datetime,date,time
 
 import plotly.graph_objects as go
 import pandas as pd
-
+def getMGWinRecord(s):
+    if (s['MG_SpreadWinATS'] == 1):
+        return 1
+    else:
+        return -1
 def cellStyleDynamic(data: pd.Series):
 
     datNeg = data[data < 0]
@@ -622,6 +626,7 @@ if st.button('Run'):
 #############################################
     test1['New_ID'] = range(0, 0+len(test1))
     test2['New_ID'] = range(0, 0+len(test2))
+
     #p=sns.regplot(x="New_ID", y="EMRating", data=DftoChange,order=2);
     fig_dims = (15,10)
 
@@ -656,8 +661,15 @@ if st.button('Run'):
     
     st.subheader('MG Rankings and ATS spread')
     st.text('MG Rankings by game Line in Green')
+    test1['MG_SpreadWinATSResult'] = test1.apply(getMGWinRecord, axis=1)
+    test2['MG_SpreadWinATSResult'] = test2.apply(getMGWinRecord, axis=1)
+    col1, col2 = st.columns(2)
+    with col1:
+        st.write('MG W-L',test1['MG_SpreadWinATS'].sum(),'-',test1['MG_SpreadWinATS'].sum())
+    with col2:
+        st.write('MG W-L',test2['MG_SpreadWinATS'].sum(),'-',test2['MG_SpreadWinATS'].sum())
     #GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating",'AdjEM_MG','AdjEM_MG',"ATS")
-    GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"EMRating","Adj_Margin_EM_MG","MG_SpreadWinATS")
+    GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"EMRating","Adj_Margin_EM_MG","MG_SpreadWinATSResult")
     
     st.subheader('Team Playing Over its Ranking')
     st.text('Blue bars are positive if the team played over its rating')

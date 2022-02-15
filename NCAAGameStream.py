@@ -28,9 +28,9 @@ import plotly.graph_objects as go
 import pandas as pd
 def getMGWinRecord(s):
     if (s['MG_SpreadWinATS'] == 1):
-        return 1
+        return 3
     else:
-        return -1
+        return -3
 def cellStyleDynamic(data: pd.Series):
 
     datNeg = data[data < 0]
@@ -660,14 +660,16 @@ if st.button('Run'):
     GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","PomAdjEMCurrent","PomAdjEMCurrent","ATS")
     
     st.subheader('MG Rankings and ATS spread')
-    st.text('MG Rankings by game Line in Green')
+    st.text('MG Rankings by game is the Blue Line')
     test1['MG_SpreadWinATSResult'] = test1.apply(getMGWinRecord, axis=1)
     test2['MG_SpreadWinATSResult'] = test2.apply(getMGWinRecord, axis=1)
     col1, col2 = st.columns(2)
     with col1:
-        st.write('MG W-L',test1['MG_SpreadWinATS'].sum(),'-',test1['MG_SpreadWinATS'].sum())
+        st.write('MG Rankings ATS W-L',test1['MG_SpreadWinATS'].sum(),'-',test1['MG_SpreadLossATS'].sum())
+        st.write('MG Rankings Win %',test1['MG_SpreadWinATS'].sum()/test1['MG_SpreadLossATS'].count())
     with col2:
-        st.write('MG W-L',test2['MG_SpreadWinATS'].sum(),'-',test2['MG_SpreadWinATS'].sum())
+        st.write('MG Rankings ATS W-L',test2['MG_SpreadWinATS'].sum(),'-',test2['MG_SpreadLossATS'].sum())
+        st.write('MG Rankings Win %',test2['MG_SpreadWinATS'].sum()/test2['MG_SpreadLossATS'].count())
     #GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating",'AdjEM_MG','AdjEM_MG',"ATS")
     GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"EMRating","Adj_Margin_EM_MG","MG_SpreadWinATSResult")
     

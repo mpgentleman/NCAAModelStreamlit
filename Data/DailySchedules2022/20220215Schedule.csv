@@ -1,39 +1,39 @@
-AWAY,HOME,VegasSpread,VegasTotal,Court,Time
-Kentucky,Tennessee,1,141,H,08:00 PM
-Texas,Oklahoma,-1,121,H,06:00 PM
-Memphis,Cincinnati,1,143,H,06:00 PM
-Villanova,Providence,2,126,H,07:00 PM
-Florida,Texas A&M,-1,135,H,06:00 PM
-Iowa St.,TCU,-2,124,H,08:00 PM
-Wisconsin,Indiana,-4,130,H,08:00 PM
-Wake Forest,Duke,-10,146,H,06:00 PM
-Michigan St.,Penn St.,2,128,H,05:30 PM
-Utah St.,San Diego St.,-3,123,H,09:00 PM
-Iona,Saint Peter's,2,134,H,06:00 PM
-Clemson,Florida St.,-3,139,H,06:00 PM
-Wyoming,New Mexico,4,154,H,08:00 PM
-Bradley,Southern Illinois,1,121,H,07:00 PM
-Arkansas,Missouri,6,140,H,08:00 PM
-Northern Iowa,Illinois St.,2,150,H,07:00 PM
-North Carolina St.,Georgia Tech,-2,140,H,07:00 PM
-Buffalo,Bowling Green,3,167,H,06:00 PM
-VCU,Fordham,4,120,H,06:00 PM
-South Carolina,Mississippi,-6,132,H,06:00 PM
-Colorado,Oregon St.,3,137,H,08:00 PM
-Butler,DePaul,-5,129,H,08:00 PM
-Minnesota,Ohio St.,-11,141,H,07:30 PM
-Tulane,South Florida,6,126,H,06:00 PM
-Kent St.,Toledo,-10,140,H,05:00 PM
-UC Irvine,UC San Diego,3,131,H,09:00 PM
-Hofstra,Elon,6,142,H,06:00 PM
-Eastern Michigan,Central Michigan,2,144,H,06:00 PM
-Liberty,North Florida,7,137,H,06:00 PM
-George Washington,Duquesne,-3,137,H,06:00 PM
-Indiana St.,Missouri St.,-13,143,H,07:00 PM
-San Francisco,Pacific,13,133,H,09:00 PM
-High Point,Longwood,-8,134,H,05:00 PM
-Merrimack,Sacred Heart,-1,129,H,06:00 PM
-Miami OH,Ohio,-15,141,H,06:00 PM
-San Jose St.,Nevada,-13,145,H,10:00 PM
-Akron,Western Michigan,6,130,H,05:00 PM
-Northern Illinois,Ball St.,-10,144,H,06:00 PM
+AWAY,HOME,VegasSpread,VegasTotal,Court,Time,Reg_dif,Over_dif
+Kentucky,Tennessee,-1,143,H,08:00 PM,3.9,3.5
+Texas,Oklahoma,1,121,H,06:00 PM,5.1,-10.1
+Memphis,Cincinnati,-1,143,H,06:00 PM,6.5,19.5
+Florida,Texas A&M,-1,135,H,06:00 PM,8.9,5.6
+Villanova,Providence,3,127,H,07:00 PM,1.6,-1.5
+Iowa St.,TCU,-2,124,H,08:00 PM,-17.0,-13.6
+Wisconsin,Indiana,-4,130,H,08:00 PM,0.8,-0.8
+Wake Forest,Duke,-10,148,H,06:00 PM,1.7,0.1
+Utah St.,San Diego St.,-3,123,H,09:00 PM,4.5,-1.5
+Michigan St.,Penn St.,3,127,H,05:30 PM,-2.2,-0.3
+Clemson,Florida St.,-3,139,H,06:00 PM,0.9,4.0
+Bradley,Southern Illinois,1,123,H,07:00 PM,8.4,11.2
+Wyoming,New Mexico,5,155,H,08:00 PM,1.4,-2.7
+Iona,Saint Peter's,2,134,H,06:00 PM,-13.3,-2.7
+Northern Iowa,Illinois St.,2,150,H,07:00 PM,3.4,-3.3
+North Carolina St.,Georgia Tech,-3,141,H,07:00 PM,-7.6,-6.5
+Buffalo,Bowling Green,3,167,H,06:00 PM,4.5,3.5
+Arkansas,Missouri,6,140,H,08:00 PM,-6.1,-9.8
+VCU,Fordham,3,119,H,06:00 PM,-4.8,1.6
+South Carolina,Mississippi,-6,132,H,06:00 PM,-10.2,1.0
+Colorado,Oregon St.,3,137,H,08:00 PM,3.4,5.4
+Minnesota,Ohio St.,-10,140,H,07:30 PM,-6.8,-9.6
+Butler,DePaul,-5,129,H,08:00 PM,5.2,9.1
+Tulane,South Florida,5,125,H,06:00 PM,8.5,0.8
+Kent St.,Toledo,-10,140,H,05:00 PM,9.7,2.4
+UC Irvine,UC San Diego,4,130,H,09:00 PM,-3.3,-3.9
+Indiana St.,Missouri St.,-14,144,H,07:00 PM,-2.8,-3.8
+Liberty,North Florida,7,137,H,06:00 PM,-10.1,-8.1
+Hofstra,Elon,8,144,H,06:00 PM,6.0,16.0
+Eastern Michigan,Central Michigan,1,145,H,06:00 PM,-10.0,0.6
+George Washington,Duquesne,-4,136,H,06:00 PM,12.6,2.9
+San Francisco,Pacific,13,133,H,09:00 PM,-1.5,3.7
+High Point,Longwood,-8,134,H,05:00 PM,0.9,2.8
+Merrimack,Sacred Heart,-2,128,H,06:00 PM,7.5,14.7
+Miami OH,Ohio,-14,142,H,06:00 PM,-13.1,4.2
+San Jose St.,Nevada,-12,146,H,10:00 PM,-1.2,-8.4
+Akron,Western Michigan,6,130,H,05:00 PM,-6.1,-17.0
+Northern Illinois,Ball St.,-10,144,H,06:00 PM,-2.7,-7.7

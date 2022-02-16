@@ -46,7 +46,7 @@ import mechanicalsoup
 import kenpompy
 from kenpompy.utils import login
 import requests
-from selenium import webdriver
+#from selenium import webdriver
 import webdriver_manager
 from webdriver_manager.chrome import ChromeDriverManager
 import time

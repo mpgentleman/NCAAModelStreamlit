@@ -47,8 +47,8 @@ import kenpompy
 from kenpompy.utils import login
 import requests
 #from selenium import webdriver
-import webdriver_manager
-from webdriver_manager.chrome import ChromeDriverManager
+#import webdriver_manager
+#from webdriver_manager.chrome import ChromeDriverManager
 import time
 from bs4 import BeautifulSoup
 import datetime
@@ -61,7 +61,7 @@ from sportsreference.ncaab.boxscore import Boxscore
 import scipy.stats
 
 # Import linear model and pre-processing modules from scikit-learn
-from sklearn import linear_model, preprocessing
+#from sklearn import linear_model, preprocessing
 
 # Import warnings package, set to suppress warnings throughout this Colab
 import warnings

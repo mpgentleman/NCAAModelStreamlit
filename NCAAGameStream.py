@@ -1,4 +1,4 @@
-#import NCAA_Functions as NF
+import NCAA_Functions as NF
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -427,6 +427,174 @@ def getTeamDFTable(team1,teamname):
 
     AgGrid(team1, gridOptions=gridOptions, enable_enterprise_modules=True,height=1000,allow_unsafe_jscode=True)
 
+    
+def getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1):
+    
+    MonteCarloNumberofGames=5
+    SecondMonteCarloNumberofGames=10
+    LeagueTempo=70.2
+    LeagueOE=102.2
+    LeagueOE=102.9
+    OverplayingList=[]
+    OverplayingList2=[]
+    appendTeamList=[]
+    appended_data1=[]
+    appended_dataExtra=[]
+    appended_dataTime=[]
+    appendTeam_OU_List=[]
+
+    appended_data1MG=[]
+    appendTeamListMG=[]
+    for x in range(len(Dailyschedule.index)):
+    
+        AwayTeam=Dailyschedule['AWAY'].iloc[x]
+        HomeTeam=Dailyschedule['HOME'].iloc[x]
+        TimeGame=Dailyschedule['Time'].iloc[x]
+        whereisGame=Dailyschedule['Court'].iloc[x]
+        test1=NF.GetThisTeamInfoFromCsv(AwayTeam,"TeamDataFiles2022")
+        test2=NF.GetThisTeamInfoFromCsv(HomeTeam,"TeamDataFiles2022")
+
+        AwayTeamB=TeamDatabase.loc[AwayTeam,"UpdatedTRankName"]
+        HomeTeamB=TeamDatabase.loc[HomeTeam,"UpdatedTRankName"]
+
+        AwayTeamP=TeamDatabase.loc[AwayTeam,"UpdatedTRankName"]
+        HomeTeamP=TeamDatabase.loc[HomeTeam,"UpdatedTRankName"]
+    
+        AwayTeamM=TeamDatabase.loc[AwayTeam,"SportsReference"]
+        HomeTeamM=TeamDatabase.loc[HomeTeam,"SportsReference"]
+        test1['AdjEM_MG']=test1['AdjOE_MG']-test1['AdjDE_MG']
+        test2['AdjEM_MG']=test2['AdjOE_MG']-test2['AdjDE_MG']
+
+        team2Signals=list(test2["SignalSum"])
+        team1Signals=list(test1["SignalSum"])
+
+        if len(test2)>0:
+        
+            HomeTeamSignalScore=team2Signals[-1]
+            team2Play=list(test2["PlayingOverRating"])
+            HomeTeamSignalPlay=team2Play[-1]
+            team2PlaySum=list(test2["DifCumSum"])
+            HomeTeamSignalPlayOver=team2PlaySum[-1]
+
+            OverplayingList.append([HomeTeamB,HomeTeamSignalPlay,HomeTeamSignalPlayOver])
+        else:
+            HomeTeamSignalPlay=0
+            HomeTeamSignalPlayOver=0
+            test2=test1
+
+        if len(test1)>0:
+
+            AwayTeamSignalScore=team1Signals[-1]   
+            team1Play=list(test1["PlayingOverRating"])
+            AwayTeamSignalPlay=team1Play[-1]
+            team1PlayOver=list(test1["DifCumSum"])
+            AwayTeamSignalPlayOver=team1PlayOver[-1]
+        
+            OverplayingList.append([AwayTeamB,AwayTeamSignalPlay,AwayTeamSignalPlayOver])
+
+        else:
+        
+            AwayTeamSignalPlayOver=0
+            AwayTeamSignalPlay=0  
+            test1=test2
+
+    
+        if whereisGame =="N":
+
+            PAwayTeamScore,PHomeTeamScore,PTotalPoints,PHomeTeamSpread,thePGameTempo=NF.SetPomeroyDataNeutral2020(PomeroyDF1,AwayTeamP,HomeTeamP)
+            BAwayTeamScore,BHomeTeamScore,BTotalPoints,BHomeTeamSpread,theBGameTempo=NF.SetBartDataNeutral(BartDF1,AwayTeamB,HomeTeamB,thePGameTempo)
+            MAwayTeamScore,MHomeTeamScore,MTotalPoints,MHomeTeamSpread,theMGameTempo=NF.Set_MG_Data_Neutral(MG_DF1,AwayTeamM,HomeTeamM,thePGameTempo)
+
+            B3GAwayTeamScore,B3GHomeTeamScore,B3GTotalPoints,B3GHomeTeamSpread,theB3GGameTempo=NF.NewgetGamePredictionBartNeutralCourt(test1.iloc[len(test1.index)-1]["AdjO3ExpMAS"],test1.iloc[len(test1.index)-1]["AdjD3ExpMAS"],test2.iloc[len(test2.index)-1]["AdjO3ExpMAS"],test2.iloc[len(test2.index)-1]["AdjD3ExpMAS"],thePGameTempo,LeagueOE)
+
+            r,r1,theEstimatedTotal,theEstimatedSpread=NF.getMonteCarloGameScoreNeutralCourt(test1,test2,MonteCarloNumberofGames,10000,thePGameTempo)
+            Total10G,Spread10G,theEstimatedTotal10G,theEstimatedSpread10G=NF.getMonteCarloGameScoreNeutralCourt(test1,test2,SecondMonteCarloNumberofGames,10000,thePGameTempo)
+            MG_Rank_Score_Dif=NF.get_MG_Margin_Dif_Neutral(MG_DF1,AwayTeamM,HomeTeamM,thePGameTempo)
+        else:
+            if whereisGame =="A":
+                PAwayTeamScore,PHomeTeamScore,PTotalPoints,PHomeTeamSpread,thePGameTempo=NF.SetPomeroyData2020(PomeroyDF1,HomeTeamP,AwayTeamP)
+                BAwayTeamScore,BHomeTeamScore,BTotalPoints,BHomeTeamSpread,theBGameTempo=NF.SetBartData(BartDF1,HomeTeamB,AwayTeamB,thePGameTempo)
+        
+                MAwayTeamScore,MHomeTeamScore,MTotalPoints,MHomeTeamSpread,theMGameTempo=NF.Set_MG_Data(MG_DF1,HomeTeamM,AwayTeamM,thePGameTempo)
+
+                B3GAwayTeamScore,B3GHomeTeamScore,B3GTotalPoints,B3GHomeTeamSpread,theB3GGameTempo=NF.NewgetGamePredictionBart(test1.iloc[len(test1.index)-1]["AdjO3ExpMAS"],test1.iloc[len(test1.index)-1]["AdjD3ExpMAS"],test2.iloc[len(test2.index)-1]["AdjO3ExpMAS"],test2.iloc[len(test2.index)-1]["AdjD3ExpMAS"],thePGameTempo,LeagueOE)
+
+                r,r1,theEstimatedTotal,theEstimatedSpread=NF.getMonteCarloGameScore(test2,test1,MonteCarloNumberofGames,10000,thePGameTempo)
+                Total10G,Spread10G,theEstimatedTotal10G,theEstimatedSpread10G=NF.getMonteCarloGameScore(test2,test1,SecondMonteCarloNumberofGames,10000,thePGameTempo)
+                MG_Rank_Scoree_Dif=NF.get_MG_Margin_Dif_Ratio(MG_DF1,HomeTeamM,AwayTeamM,thePGameTempo)
+            else:
+                PAwayTeamScore,PHomeTeamScore,PTotalPoints,PHomeTeamSpread,thePGameTempo=NF.SetPomeroyData2020(PomeroyDF1,AwayTeamP,HomeTeamP)
+                BAwayTeamScore,BHomeTeamScore,BTotalPoints,BHomeTeamSpread,theBGameTempo=NF.SetBartData(BartDF1,AwayTeamB,HomeTeamB,thePGameTempo)
+                MAwayTeamScore,MHomeTeamScore,MTotalPoints,MHomeTeamSpread,theMGameTempo=NF.Set_MG_Data(MG_DF1,AwayTeamM,HomeTeamM,thePGameTempo)
+                B3GAwayTeamScore,B3GHomeTeamScore,B3GTotalPoints,B3GHomeTeamSpread,theB3GGameTempo=NF.NewgetGamePredictionBart(test2.iloc[len(test2.index)-1]["AdjO3ExpMAS"],test2.iloc[len(test2.index)-1]["AdjD3ExpMAS"],test1.iloc[len(test1.index)-1]["AdjO3ExpMAS"],test1.iloc[len(test1.index)-1]["AdjD3ExpMAS"],thePGameTempo,LeagueOE)
+
+                r,r1,theEstimatedTotal,theEstimatedSpread=NF.getMonteCarloGameScore(test1,test2,MonteCarloNumberofGames,10000,thePGameTempo)
+                Total10G,Spread10G,theEstimatedTotal10G,theEstimatedSpread10G=NF.getMonteCarloGameScore(test1,test2,SecondMonteCarloNumberofGames,10000,thePGameTempo)
+                MG_Rank_Score_Dif=NF.get_MG_Margin_Dif_Ratio(MG_DF1,AwayTeamM,HomeTeamM,thePGameTempo)
+        if whereisGame != "H":
+            B3GHomeTeamSpread=B3GHomeTeamSpread*-1
+            PHomeTeamSpread=PHomeTeamSpread*-1
+            BHomeTeamSpread=BHomeTeamSpread*-1
+            MHomeTeamSpread=MHomeTeamSpread*-1
+            theEstimatedSpread=theEstimatedSpread*-1
+            theEstimatedSpread10G=theEstimatedSpread10G*-1  
+        MG_Rank_Score_Dif=MG_Rank_Score_Dif*-1
+        B3GHomeTeamSpread=B3GHomeTeamSpread*-1
+    
+    
+    
+    
+        AwayVScore,HomeVScore=NF.GetVegasProjectedScore(Dailyschedule['VegasTotal'].iloc[x],Dailyschedule['VegasSpread'].iloc[x])
+
+    
+        edgeAgainstVegasTotal=NF.stats.percentileofscore(r, Dailyschedule['VegasTotal'].iloc[x])
+        edgeAgainstVegasSpread=NF.stats.percentileofscore(r1, Dailyschedule['VegasSpread'].iloc[x])
+        edgeAgainstVegasTotal10G=NF.stats.percentileofscore(Total10G, Dailyschedule['VegasTotal'].iloc[x])
+        edgeAgainstVegasSpread10G=NF.stats.percentileofscore(Spread10G, Dailyschedule['VegasSpread'].iloc[x])
+    
+        theSpreads=[BHomeTeamSpread,MHomeTeamSpread,theEstimatedSpread,theEstimatedSpread10G,PHomeTeamSpread]
+        theSpreadsMG=[BHomeTeamSpread,MHomeTeamSpread,MG_Rank_Score_Dif,theEstimatedSpread,theEstimatedSpread10G,PHomeTeamSpread]
+        theOUs=[BTotalPoints,MTotalPoints,theEstimatedTotal,theEstimatedTotal10G,PTotalPoints]
+    
+
+        theSpreadTeamPicks=NF.getDailyPredictionTeamsAgainstSpreadDec18(theSpreads,Dailyschedule['VegasSpread'].iloc[x],round(MHomeTeamSpread,2),round(theEstimatedSpread,2),HomeTeam,AwayTeam,AwayTeamSignalScore, HomeTeamSignalScore,AwayTeamSignalPlay,HomeTeamSignalPlay)
+        the_OU_TeamPicks=NF.getDailyPredictionTeams_OU_Dec18(theOUs,Dailyschedule['VegasTotal'].iloc[x],MTotalPoints,theEstimatedTotal,HomeTeam,TimeGame)
+        theSpreadTeamPicksMG=NF.getDailyPredictionTeamsAgainstSpreadDec18(theSpreadsMG,Dailyschedule['VegasSpread'].iloc[x],round(MHomeTeamSpread,2),round(theEstimatedSpread,2),HomeTeam,AwayTeam,AwayTeamSignalScore, HomeTeamSignalScore,AwayTeamSignalPlay,HomeTeamSignalPlay)
+   
+
+        theSpreadTeamPicks.append(TimeGame)
+        theSpreadTeamPicksMG.append(round(MG_Rank_Score_Dif,2))
+        theSpreadTeamPicksMG.append(theEstimatedSpread10G)
+        theSpreadTeamPicksMG.append(TimeGame)
+    
+        appendTeamList.append(theSpreadTeamPicks)
+        appendTeamListMG.append(theSpreadTeamPicksMG)
+
+        appendTeam_OU_List.append(the_OU_TeamPicks)
+
+        TestFrame2 = [(AwayTeam, Dailyschedule['VegasTotal'].iloc[x],round(MTotalPoints,2),round(PTotalPoints,2),round(BTotalPoints,2),round(B3GTotalPoints,2),round(theEstimatedTotal,2),round(theEstimatedTotal10G,2)), (HomeTeam, Dailyschedule['VegasSpread'].iloc[x],round(MHomeTeamSpread,2),round(PHomeTeamSpread,2),round(BHomeTeamSpread,2),round(B3GHomeTeamSpread,2),round(theEstimatedSpread,2),round(theEstimatedSpread10G,2))]
+        TestFrame=[(AwayTeam, AwayTeamSignalScore,AwayVScore,round(PAwayTeamScore,2),AwayTeamSignalPlay,edgeAgainstVegasTotal,edgeAgainstVegasTotal10G), (HomeTeam, HomeTeamSignalScore,HomeVScore,round(PHomeTeamScore,2),HomeTeamSignalPlay,edgeAgainstVegasSpread,edgeAgainstVegasSpread10G)]
+        TestFrameMG = [(AwayTeam, Dailyschedule['VegasTotal'].iloc[x],round(MTotalPoints,2),0,round(theEstimatedTotal,2),round(B3GTotalPoints,2),round(BTotalPoints,2),round(theEstimatedTotal10G,2)), (HomeTeam, Dailyschedule['VegasSpread'].iloc[x],round(MHomeTeamSpread,2),round(MG_Rank_Score_Dif,2),round(theEstimatedSpread,2),round(B3GHomeTeamSpread,2),round(BHomeTeamSpread,2),round(theEstimatedSpread10G,2))]
+
+        j=pd.DataFrame.from_records(TestFrame2, columns=['Teams', 'Vegas','MG','Pom','TR','3G','MC5','MC10'])
+        j1=pd.DataFrame.from_records(TestFrame, columns=['Teams', 'Trend','VScore','PomScore','PlayingO','Edge5','Edge10'])
+        j3=pd.DataFrame.from_records(TestFrameMG, columns=['Teams', 'Vegas','MG','MG_Margin','MC5','3G','TR','MC10'])
+
+        OverplayingList2.append([HomeTeamB,HomeTeamSignalPlay,HomeTeamSignalPlayOver,HomeTeamSignalScore,AwayTeamB,AwayTeamSignalPlay,AwayTeamSignalPlayOver,AwayTeamSignalScore,TimeGame,round(PHomeTeamSpread,2)])
+    
+        appended_data1.append(j)
+        appended_data1MG.append(j3)
+        appended_dataExtra.append(j1)
+
+        TestFrameTime = [(AwayTeam, Dailyschedule['VegasTotal'].iloc[x],round(MTotalPoints,2),round(PTotalPoints,2),round(BTotalPoints,2),round(B3GTotalPoints,2),round(theEstimatedTotal,2),round(theEstimatedTotal10G,2),TimeGame), (HomeTeam, Dailyschedule['VegasSpread'].iloc[x],round(MHomeTeamSpread,2),round(PHomeTeamSpread,2),round(BHomeTeamSpread,2),round(B3GHomeTeamSpread,2),round(theEstimatedSpread,2),round(theEstimatedSpread10G,2),TimeGame)]
+
+        jTime=pd.DataFrame.from_records(TestFrameTime, columns=['Teams', 'Vegas','MG','Pom','TR','3G','MC5','MC10','Time'])
+        appended_dataTime.append(jTime)
+
+    appended_data2=pd.concat(appended_data1,axis=0)
+    labels=["TRank","TG3","MC5","MC10","Pom","HomeTeam","SignalScoreTotal","OverPlay","Spread","MC10Spread","MCEdge"]
+    return(appended_data2,appended_dataTime,appended_dataExtra,appended_data1MG,appendTeam_OU_List,appendTeamListMG,appendTeamList,theSpreadTeamPicksMG,theSpreadTeamPicks)
+
 
 st.set_page_config(layout="wide")
 #TeamDatabase2=pd.read_csv("TeamDatabase.csv")
@@ -563,22 +731,8 @@ if st.button('Run'):
 
 
     import seaborn
-    MonteCarloNumberofGames=5
-    SecondMonteCarloNumberofGames=10
-    LeagueTempo=70.2
-    LeagueOE=102.2
-    LeagueOE=102.9
-    OverplayingList=[]
-    OverplayingList2=[]
-    appendTeamList=[]
-    appended_data1=[]
-    appended_dataExtra=[]
-    appended_dataTime=[]
-    appendTeam_OU_List=[]
-
-    appended_data1MG=[]
-    appendTeamListMG=[]
-
+    
+    appended_data2,appended_dataTime,appended_dataExtra,appended_data1MG,appendTeam_OU_List,appendTeamListMG,appendTeamList,theSpreadTeamPicksMG,theSpreadTeamPicks=getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1)
 
 
     st.header('Team Matchup')

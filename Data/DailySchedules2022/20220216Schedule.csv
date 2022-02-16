@@ -1,52 +1,52 @@
-AWAY,HOME,VegasSpread,VegasTotal,Court,Time
-Baylor,Texas Tech,-1,133,H,08:00 PM
-Purdue,Northwestern,5,149,H,08:00 PM
-Miami FL,Louisville,1,145,H,06:00 PM
-Seton Hall,Connecticut,-5,139,H,07:30 PM
-Mississippi St.,Alabama,-6,152,H,06:00 PM
-St. John's,Xavier,-9,155,H,05:30 PM
-Illinois,Rutgers,6,132,H,06:00 PM
-SMU,Temple,3,137,H,08:00 PM
-George Mason,Saint Joseph's,-2,140,H,06:00 PM
-Vanderbilt,Auburn,-14,138,H,08:00 PM
-Utah Valley,Tarleton St.,1,125,H,07:00 PM
-Longwood,High Point,1,135,H,11:00 PM
-Grand Canyon,Cal Baptist,3,133,H,09:00 PM
-Gonzaga,Pepperdine,28,162,H,10:00 PM
-Jacksonville St.,Lipscomb,2,148,H,07:00 PM
-UNLV,Fresno St.,-7,123,H,09:30 PM
-East Tennessee St.,Mercer,-3,143,H,06:00 PM
-Seattle,UT Rio Grande Valley,5,153,H,07:00 PM
-Wofford,The Citadel,4,148,H,06:00 PM
-Colgate,Army,4,142,H,05:00 PM
-Stony Brook,UMBC,-3,151,H,06:00 PM
-Georgetown,Marquette,-16,158,H,07:00 PM
-Georgia,LSU,-16,142,H,06:00 PM
-Kennesaw St.,Florida Gulf Coast,-6,148,H,06:00 PM
-Boston College,Notre Dame,-11,129,H,06:00 PM
-Vermont,New Hampshire,5,133,H,06:00 PM
-Winthrop,Gardner Webb,-8,136,H,06:00 PM
-Loyola Chicago,Valparaiso,8,130,H,07:00 PM
-Pittsburgh,North Carolina,-15,141,H,07:00 PM
-Loyola MD,Lafayette,-1,127,H,06:00 PM
-Albany,Binghamton,-1,123,H,06:00 PM
-Bellarmine,Central Arkansas,5,149,H,07:00 PM
-Massachusetts,St. Bonaventure,-11,155,H,06:00 PM
-UMass Lowell,NJIT,2,128,H,06:00 PM
-Boise St.,Air Force,8,114,H,09:00 PM
-Morehead St.,Tennessee Martin,7,135,H,08:00 PM
-Jacksonville,Stetson,2,118,H,06:00 PM
-La Salle,Saint Louis,-17,143,H,07:00 PM
-Campbell,Radford,4,120,H,05:30 PM
-Furman,Western Carolina,11,143,H,06:00 PM
-North Carolina A&T,Hampton,3,129,H,06:00 PM
-North Alabama,Eastern Kentucky,-7,141,H,06:30 PM
-Presbyterian,USC Upstate,-4,138,H,05:00 PM
-Dixie St.,New Mexico St.,-15,145,H,08:00 PM
-Manhattan,Fairfield,-8,138,H,12:00 PM
-Austin Peay,Murray St.,-18,130,H,06:00 PM
-UNC Asheville,Charleston Southern,6,138,H,06:00 PM
-Evansville,Drake,-14,124,H,07:00 PM
-Navy,American,9,121,H,06:00 PM
-Boston University,Holy Cross,9,137,H,06:00 PM
-Chicago St.,Stephen F. Austin,-18,136,H,02:00 PM
+AWAY,HOME,VegasSpread,VegasTotal,Court,Time,Reg_dif,Over_dif
+Baylor,Texas Tech,-1,133,H,08:00 PM,-11.7,4.2
+Purdue,Northwestern,5,149,H,08:00 PM,-5.0,-13.8
+Mississippi St.,Alabama,-6,152,H,06:00 PM,4.5,-1.2
+Seton Hall,Connecticut,-5,139,H,07:30 PM,0.1,10.0
+Miami FL,Louisville,1,145,H,06:00 PM,4.8,3.7
+Illinois,Rutgers,5,131,H,06:00 PM,-4.8,-10.0
+SMU,Temple,2,136,H,08:00 PM,-4.1,0.7
+St. John's,Xavier,-8,154,H,05:30 PM,23.9,5.5
+George Mason,Saint Joseph's,-1,139,H,06:00 PM,2.2,-8.8
+Vanderbilt,Auburn,-14,138,H,08:00 PM,5.2,4.8
+Utah Valley,Tarleton St.,1,125,H,07:00 PM,1.6,6.8
+UNLV,Fresno St.,-7,123,H,09:30 PM,11.2,15.6
+Grand Canyon,Cal Baptist,4,132,H,09:00 PM,-3.3,-5.8
+Gonzaga,Pepperdine,28,162,H,10:00 PM,11.5,3.6
+Jacksonville St.,Lipscomb,2,148,H,07:00 PM,-10.0,-16.8
+East Tennessee St.,Mercer,-4,144,H,06:00 PM,-0.6,-9.1
+Seattle,UT Rio Grande Valley,6,152,H,07:00 PM,8.7,5.4
+Wofford,The Citadel,5,147,H,06:00 PM,-5.7,-4.6
+Colgate,Army,3,141,H,05:00 PM,3.1,-0.9
+Georgetown,Marquette,-18,158,H,07:00 PM,-10.8,4.7
+Stony Brook,UMBC,-3,151,H,06:00 PM,-7.1,0.7
+Kennesaw St.,Florida Gulf Coast,-5,147,H,06:00 PM,-7.1,-7.8
+Georgia,LSU,-16,142,H,06:00 PM,18.7,7.7
+George Washington,Duquesne,-4,136,H,06:30 PM,11.9,3.2
+Loyola Chicago,Valparaiso,8,130,H,07:00 PM,8.6,8.0
+Albany,Binghamton,-1,123,H,06:00 PM,3.3,0.8
+Bellarmine,Central Arkansas,5,149,H,07:00 PM,-2.2,-9.9
+Pittsburgh,North Carolina,-15,141,H,07:00 PM,-5.7,-5.9
+Winthrop,Gardner Webb,-8,134,H,06:00 PM,-5.9,-4.2
+Boston College,Notre Dame,-12,128,H,06:00 PM,-4.2,-12.0
+Loyola MD,Lafayette,-1,129,H,06:00 PM,-8.1,-10.7
+Jacksonville,Stetson,3,119,H,06:00 PM,0.1,-0.6
+Massachusetts,St. Bonaventure,-12,152,H,06:00 PM,-9.1,-10.4
+Vermont,New Hampshire,6,134,H,06:00 PM,3.3,-6.0
+Boise St.,Air Force,9,115,H,09:00 PM,3.4,-1.0
+La Salle,Saint Louis,-16,142,H,07:00 PM,1.9,7.2
+UMass Lowell,NJIT,2,128,H,06:00 PM,13.1,8.8
+Campbell,Radford,3,121,H,05:30 PM,5.2,6.2
+Morehead St.,Tennessee Martin,8,134,H,08:00 PM,13.3,19.5
+North Carolina A&T,Hampton,3,129,H,06:00 PM,3.3,6.3
+North Alabama,Eastern Kentucky,-6,142,H,06:30 PM,-3.0,2.2
+Furman,Western Carolina,11,141,H,06:00 PM,6.1,-3.3
+Manhattan,Fairfield,-7,137,H,12:00 PM,-0.4,5.4
+Dixie St.,New Mexico St.,-15,143,H,08:00 PM,2.8,6.6
+Presbyterian,USC Upstate,-5,139,H,05:00 PM,-1.2,8.0
+Austin Peay,Murray St.,-17,129,H,06:00 PM,10.9,10.3
+UNC Asheville,Charleston Southern,6,138,H,06:00 PM,-8.6,4.1
+Evansville,Drake,-14,124,H,07:00 PM,-5.1,6.7
+Boston University,Holy Cross,8,136,H,06:00 PM,-9.0,-4.3
+Navy,American,9,121,H,06:00 PM,-7.3,-2.4
+Chicago St.,Stephen F. Austin,-18,138,H,06:30 PM,0.5,-7.3

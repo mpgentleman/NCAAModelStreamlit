@@ -451,8 +451,8 @@ def getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1):
         HomeTeam=Dailyschedule['HOME'].iloc[x]
         TimeGame=Dailyschedule['Time'].iloc[x]
         whereisGame=Dailyschedule['Court'].iloc[x]
-        test1=NF.GetThisTeamInfoFromCsv(AwayTeam,"TeamDataFiles2022")
-        test2=NF.GetThisTeamInfoFromCsv(HomeTeam,"TeamDataFiles2022")
+        test1=GetThisTeamInfoFromCsv(AwayTeam,"TeamDataFiles2022")
+        test2=GetThisTeamInfoFromCsv(HomeTeam,"TeamDataFiles2022")
 
         AwayTeamB=TeamDatabase.loc[AwayTeam,"UpdatedTRankName"]
         HomeTeamB=TeamDatabase.loc[HomeTeam,"UpdatedTRankName"]

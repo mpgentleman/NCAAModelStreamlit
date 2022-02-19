@@ -850,7 +850,7 @@ if st.button('Run'):
     #getDistributionMatchupCharts(AwayTeam,HomeTeam)
     getTeamDFTable(test1,AwayTeam)
     getTeamDFTable(test2,HomeTeam)
-    appended_data2,appended_dataTime,appended_dataExtra,appended_data1MG,appendTeam_OU_List,appendTeamListMG,appendTeamList,theSpreadTeamPicksMG,theSpreadTeamPicks=getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1)
+    #appended_data2,appended_dataTime,appended_dataExtra,appended_data1MG,appendTeam_OU_List,appendTeamListMG,appendTeamList,theSpreadTeamPicksMG,theSpreadTeamPicks=getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1)
 
 #st.pyplot(fig2)
 

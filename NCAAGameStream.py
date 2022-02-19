@@ -457,8 +457,8 @@ def getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1):
         AwayTeamB=TeamDatabase.loc[AwayTeam,"UpdatedTRankName"]
         HomeTeamB=TeamDatabase.loc[HomeTeam,"UpdatedTRankName"]
 
-        AwayTeamP=TeamDatabase.loc[AwayTeam,"OldTRankName"]
-        HomeTeamP=TeamDatabase.loc[HomeTeam,"OldTRankName"]
+        AwayTeamP=TeamDatabase.loc[AwayTeam,"UpdatedTRankName"]
+        HomeTeamP=TeamDatabase.loc[HomeTeam,"UpdatedTRankName"]
     
         AwayTeamM=TeamDatabase.loc[AwayTeam,"SportsReference"]
         HomeTeamM=TeamDatabase.loc[HomeTeam,"SportsReference"]

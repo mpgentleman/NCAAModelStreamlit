@@ -751,8 +751,8 @@ if st.button('Run'):
     
     AwayTeamM=TeamDatabase2.loc[AwayTeam,"SportsReference"]
     HomeTeamM=TeamDatabase2.loc[HomeTeam,"SportsReference"]
-    test1['AdjEM_MG']=(test1['AdjOE_MG']-test1['AdjDE_MG'])+10
-    test2['AdjEM_MG']=(test2['AdjOE_MG']-test2['AdjDE_MG'])+10
+    test1['AdjEM_MG']=(test1['AdjOE_MG']-test1['AdjDE_MG'])
+    test2['AdjEM_MG']=(test2['AdjOE_MG']-test2['AdjDE_MG'])
 
     #NF.GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","PomAdjEMCurrent","PomAdjEMCurrent","ATS")
     plt.style.use('seaborn')

@@ -26,6 +26,12 @@ from datetime import datetime,date,time
 
 import plotly.graph_objects as go
 import pandas as pd
+
+import requests
+import io
+from pandas.api.types import is_numeric_dtype
+
+
 def getMGWinRecord(s):
     if (s['MG_SpreadWinATS'] == 1):
         return 3

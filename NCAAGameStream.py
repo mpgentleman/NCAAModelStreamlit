@@ -227,10 +227,7 @@ def gridOptionsFromDataFrame(df: pd.DataFrame, **default_column_parameters) -> G
     return gb
 
 
-def createCsvExportParams(name: str, dateInfo: DateInfo):
-    n = name.replace(' ', '_')
-    fname = f'{n}_{dateInfo.cobDateInt}.csv'
-    return {'defaultCsvExportParams': {'fileName': fname}}
+
 
 
 DEFAULT_GRID_OPTIONS = dict(

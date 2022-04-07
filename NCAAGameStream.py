@@ -917,7 +917,7 @@ def getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1):
 st.set_page_config(layout="wide")
 #TeamDatabase2=pd.read_csv("TeamDatabase.csv")
 TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
-AllGames=pd.read_csv("Data/Season_Games_All.csv")
+AllGames=pd.read_csv("Data/Season_GamesAll.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 

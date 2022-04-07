@@ -917,6 +917,7 @@ def getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1):
 st.set_page_config(layout="wide")
 #TeamDatabase2=pd.read_csv("TeamDatabase.csv")
 TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
+AllGames=pd.read_csv("Data/Season_Games_All.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 
@@ -936,7 +937,22 @@ themonth=int(dateString.split('-')[1])
 theday=int(dateString.split('-')[2])
 theyear=dateString.split('-')[0]
 
-Tables_Selection=st.sidebar.selectbox('Any or Scheduled',['Any', 'Todays Games'])
+Tables_Selection=st.sidebar.selectbox('Any or Scheduled',['Any', 'Todays Games','All Games'])
+if 'All Games' in  Tables_Selection:
+    allcols=AllGames.columns
+    gb = GridOptionsBuilder.from_dataframe(AllGames,groupable=True)
+    gb.configure_columns(allcols, cellStyle=cellStyle)
+    csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
+    #gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    #gb.configure_pagination()
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    #gridOptions = gb.build()
+    opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+    gb.configure_grid_options(**opts)
+    keyname='Test All'
+    g = _displayGrid(AllGames, gb, key=keyname, height=1200)
 if 'Any' in  Tables_Selection:
     AwayTeam = st.sidebar.selectbox('Away Team',AwayTeamAll)
     HomeTeam = st.sidebar.selectbox('Home Team',HomeTeamAll)

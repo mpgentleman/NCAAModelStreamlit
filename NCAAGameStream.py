@@ -131,6 +131,321 @@ def cellStyleGrey():
     return JsCode(j)
 
 
+
+agContextMenuItemsDeluxe = JsCode(
+    """
+    function getContextMenuItems(params) {
+      const result = [
+        'copy',
+        'copyWithHeaders',
+        'paste',
+        'separator',
+        'autoSizeAll',
+        'expandAll',
+        'contractAll',
+        'resetColumns',
+        'separator',
+        'export',
+      ];
+      
+      return result;
+    }
+    """
+)
+
+agContextMenuItemsBasic = JsCode(
+    """
+    function getContextMenuItems(params) {
+      const result = [
+        'copy',
+        'copyWithHeaders',
+        'paste',
+        'separator',
+        'autoSizeAll',
+        'resetColumns',
+        'separator',
+        'export',
+      ];
+      
+      return result;
+    }
+    """
+)
+
+
+_type_mapper = {
+    "b": ["textColumn"],
+    "i": ["numericColumn", "numberColumnFilter"],
+    "u": ["numericColumn", "numberColumnFilter"],
+    "f": ["numericColumn", "numberColumnFilter"],
+    "c": [],
+    "m": ['timedeltaFormat'],
+    "M": ["dateColumnFilter", "customDateTimeFormat"],
+    "O": [],
+    "S": [],
+    "U": [],
+    "V": [],
+}
+
+
+
+DEFAULT_COL_PARAMS = dict(
+    filterParams=dict(buttons=['apply', 'reset'], closeOnApply=True),
+    groupable=False,
+    enableValue=True,
+    enableRowGroup=True,
+    enablePivot=False,
+    editable=False
+)
+
+
+DEFAULT_STATUS_BAR = {
+    'statusPanels': [dict(statusPanel='agTotalAndFilteredRowCountComponent', align='left')]
+}
+
+
+def gridOptionsFromDataFrame(df: pd.DataFrame, **default_column_parameters) -> GridOptionsBuilder():
+
+    gb = GridOptionsBuilder()
+
+    params = {**DEFAULT_COL_PARAMS, **default_column_parameters}
+    gb.configure_default_column(**params)
+
+    if any('.' in col for col in df.columns):
+        gb.configure_grid_options(suppressFieldDotNotation=True)
+
+    for col, col_type in zip(df.columns, df.dtypes):
+        if col in FIELD_CONFIG:
+            conf = FIELD_CONFIG.get(col)
+            if 'type' not in conf:
+                gb.configure_column(field=col, type=_type_mapper.get(col_type.kind, []), **conf)
+            else:
+                gb.configure_column(field=col, **conf)
+        else:
+            gb.configure_column(field=col, type=_type_mapper.get(col_type.kind, []), custom_format_string='yyyy-MM-dd HH:mm')
+
+    return gb
+
+
+def createCsvExportParams(name: str, dateInfo: DateInfo):
+    n = name.replace(' ', '_')
+    fname = f'{n}_{dateInfo.cobDateInt}.csv'
+    return {'defaultCsvExportParams': {'fileName': fname}}
+
+
+DEFAULT_GRID_OPTIONS = dict(
+    domLayout='normal',
+    # rowGroupPanelShow='always',
+    statusBar=DEFAULT_STATUS_BAR,
+    autoGroupColumnDef=dict(pinned='left'),
+    getContextMenuItems=agContextMenuItemsBasic,
+    pivotPanelShow='onlyWhenPivoting',
+    # pivotMode=False,
+    # pivotPanelShow='always',
+    # pivotColumnGroupTotals='before',
+    # rowSelection='multiple',
+    enableRangeSelection=True,
+    suppressMultiRangeSelection=True,
+    # defaultCsvExportParams=dict(fileName='testExport.csv'),
+    suppressExcelExport=True,
+)
+
+def displayGrid(df: pd.DataFrame, key: str, reloadData: bool, updateMode: GridUpdateMode=GridUpdateMode.VALUE_CHANGED):
+
+    gb = gridOptionsFromDataFrame(df)
+    gb.configure_side_bar()
+    gb.configure_grid_options(**DEFAULT_GRID_OPTIONS)
+    gridOptions = gb.build()
+
+    # updateMode = GridUpdateMode.FILTERING_CHANGED | GridUpdateMode.VALUE_CHANGED
+    dataReturnMode = DataReturnMode.FILTERED_AND_SORTED
+
+    g = AgGrid(df, gridOptions=gridOptions, height=700, key=key, editable=True,
+               enable_enterprise_modules=True,
+               allow_unsafe_jscode=True,
+               fit_columns_on_grid_load=False,
+               reload_data=reloadData,
+               # theme='streamlit',
+               update_mode=updateMode,
+               data_return_mode=dataReturnMode,
+               )
+
+    return g
+
+def numberSort():
+    jscript = """
+        function(num1, num2) {
+          return num1 - num2;
+        };
+        """
+
+    return JsCode(jscript)
+
+def numberFormat(precision: int, comma: bool = True):
+    if comma:
+        jscript = """
+        function(params) {
+          if (params.value === null || isNaN(params.value)) {
+            return "";
+          }
+          return params.value.toFixed(%d).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        };
+        """ % precision
+    else:
+        jscript = """
+        function(params) {
+          if (params.value === null || isNaN(params.value)) {
+            return "";
+          }
+          return params.value.toFixed(%d);
+        };
+        """ % precision
+
+    return JsCode(jscript)
+
+
+def cellStyleFromDict(d):
+    dd = json.dumps(d)
+    return JsCode("""
+    function(params) {
+      return %s;
+    };
+    """ % dd)
+
+def cellStyleBrown(bold: bool = False):
+    if not bold:
+        j = """
+        function(params) {
+          return {'color': 'black', 'backgroundColor': '#e4d2ba'};
+        };
+        """
+    else:
+        j = """
+        function(params) {
+          return {'color': 'black', 'backgroundColor': '#e4d2ba', 'fontWeight': 'bold'};
+        };
+        """
+    return JsCode(j)
+
+
+def cellStyleGrey():
+    j = """
+    function(params) {
+      return {'color': 'black', 'backgroundColor': '#ececec'};
+    };
+    """
+    return JsCode(j)
+
+
+def cellStyleBig():
+    cellsytle_jscode105 = JsCode("""
+      function(params) {
+      switch (true ) {
+        case (params.value < -100000): return {'color': 'white', 'backgroundColor': '#ff0000'};
+        case (params.value < -50000 && params.value >= -100000): return {'color': 'white', 'backgroundColor': '#ff4c4c'};
+        case (params.value < -5000 && params.value>= -50000): return {'color': 'white', 'backgroundColor': '#ff9999'};
+        case (params.value < 0 && params.value >= -5000): return {'color': 'white', 'backgroundColor': '#ffb2b2'};
+        case (params.value > 100000): return {'color': 'white', 'backgroundColor': '#2753a1'};
+        case (params.value < 100000 && params.value >= 50000): return {'color': 'white', 'backgroundColor': '#3c64aa'};
+        case (params.value < 50000 && params.value >= 5000): return {'color': 'white', 'backgroundColor': '#7d97c6'};
+        case (params.value < 5000 && params.value > 0): return {'color': 'white', 'backgroundColor': '#a8bad9'};
+         }
+      };
+         """)
+    return cellsytle_jscode105
+
+
+def getBigSeriesFromColumns(df: pd.DataFrame, columns: list = None):
+    l = []
+    cols = columns if columns is not None else df.columns
+    for col in cols:
+        if is_numeric_dtype(df[col]):
+            l.extend(df[col].values.tolist())
+
+    return pd.Series(l)
+
+
+def cellStyleDynamic(data: pd.Series):
+
+    datNeg = data[data < 0]
+    datPos = data[data > 0]
+
+    if len(datNeg) > 0 and len(datPos) > 0:
+        _, binsN = pd.cut(datNeg, bins=4, retbins=True, precision=0)
+        _, binsP = pd.cut(datPos, bins=4, retbins=True, precision=0)
+        code = """
+            function(params) {
+              if (isNaN(params.value) || params.value === 0) return {'color': 'black', 'backgroundColor': '#e9edf5'};
+              if (params.value < %d) return {'color': 'white','backgroundColor':  '#ff0000'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#ff4c4c'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#ff9999'};
+              if (params.value < 0) return {'color': 'white', 'backgroundColor': '#ffb2b2'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#a8bad9'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#7d97c6'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#3c64aa'};
+              
+              return {'color': 'white', 'backgroundColor': '#2753a1'};
+            };
+            """ % (binsN[1], binsN[2], binsN[3], binsP[1], binsP[2], binsP[3])
+
+    elif len(datNeg) > 0:
+        dat, bins = pd.cut(datNeg, bins=4, retbins=True, precision=0)
+        code = """
+            function(params) {
+              if (isNaN(params.value) || params.value === 0) return {'color': 'black', 'backgroundColor': '#e9edf5'};
+              if (params.value < %d) return {'color': 'white','backgroundColor':  '#ff0000'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#ff4c4c'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#ff9999'};
+              if (params.value < 0) return {'color': 'white', 'backgroundColor': '#ffb2b2'};
+              
+              return {'color': 'white', 'backgroundColor': '#2753a1'};
+            };
+            """ % (bins[1], bins[2], bins[3])
+
+    elif len(datPos) > 0:
+        dat, bins = pd.cut(datPos, bins=4, retbins=True, precision=0)
+        code = """
+            function(params) {
+              if (isNaN(params.value) || params.value === 0) return {'color': 'black', 'backgroundColor': '#e9edf5'};
+              if (params.value < 0) return {'color': 'white', 'backgroundColor': '#ffb2b2'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#a8bad9'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#7d97c6'};
+              if (params.value < %d) return {'color': 'white', 'backgroundColor': '#3c64aa'};
+              
+              return {'color': 'white', 'backgroundColor': '#2753a1'};
+            };
+            """ % (bins[1], bins[2], bins[3])
+    else:
+        code = """
+            function(params) {
+              return {'color': 'white', 'backgroundColor': '#a8bad9'};
+            };
+            """
+
+    return JsCode(code)
+
+def _displayGrid(df: pd.DataFrame, gb: GridOptionsBuilder,
+                 key: str, reloadData: bool=False, updateMode: GridUpdateMode=GridUpdateMode.VALUE_CHANGED,
+                 height=700, fit_columns_on_grid_load=True):
+
+    gridOptions = gb.build()
+
+    # updateMode = GridUpdateMode.FILTERING_CHANGED | GridUpdateMode.VALUE_CHANGED
+    dataReturnMode = DataReturnMode.FILTERED_AND_SORTED
+
+    g = AgGrid(df, gridOptions=gridOptions, height=height, key=key, editable=True,
+               enable_enterprise_modules=True,
+               allow_unsafe_jscode=True,
+               fit_columns_on_grid_load=fit_columns_on_grid_load,
+               reload_data=reloadData,
+               # theme='streamlit',
+               update_mode=updateMode,
+               data_return_mode=dataReturnMode,
+               )
+
+    return g
+
+
 def GetThisTeamInfoFromCsv(ThisTeam,WhichFile):
 
 
@@ -701,9 +1016,10 @@ if st.button('Run'):
         #gb.configure_pagination()
         gb.configure_side_bar()
         gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-        gridOptions = gb.build()
-
-        AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
+        #gridOptions = gb.build()
+        keyname='Test'
+        g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
+        #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
 
 
     

@@ -1006,7 +1006,7 @@ if st.button('Run'):
 
         #st.plotly_chart(fig)
         allcols=Dailyschedule.columns
-        gb = GridOptionsBuilder.from_dataframe(Dailyschedule)
+        gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
         gb.configure_columns(allcols, cellStyle=cellStyle)
         csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
         gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
@@ -1014,6 +1014,9 @@ if st.button('Run'):
         gb.configure_side_bar()
         gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
         #gridOptions = gb.build()
+        opts= {**grid.DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=grid.agContextMenuItemsDeluxe,)}
+        gb.configure_grid_options(**opts)
         keyname='Test'
         g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
         #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)

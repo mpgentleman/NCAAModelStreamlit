@@ -1014,8 +1014,8 @@ if st.button('Run'):
         gb.configure_side_bar()
         gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
         #gridOptions = gb.build()
-        opts= {**grid.DEFAULT_GRID_OPTIONS,
-               **dict(rowGroupPanelShow='always',getContextMenuItems=grid.agContextMenuItemsDeluxe,)}
+        opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
         gb.configure_grid_options(**opts)
         keyname='Test'
         g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)

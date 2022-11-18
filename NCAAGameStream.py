@@ -916,7 +916,7 @@ def getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1):
 
 st.set_page_config(layout="wide")
 #TeamDatabase2=pd.read_csv("TeamDatabase.csv")
-TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
+TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
 AllGames=pd.read_csv("Data/Season_GamesAll.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
@@ -929,8 +929,8 @@ add_selectbox_start =st.sidebar.date_input('Pick date')
 dateString=str(add_selectbox_start)
 
 dateToday=dateString.replace('-', '')
-#Dailyschedule=pd.read_csv("DailySchedules2022/"+dateToday+"Schedule.csv")
-Dailyschedule=pd.read_csv("Data/DailySchedules2022/"+dateToday+"Schedule.csv")
+#Dailyschedule=pd.read_csv("DailySchedules2023/"+dateToday+"Schedule.csv")
+Dailyschedule=pd.read_csv("Data/DailySchedules2023/"+dateToday+"Schedule.csv")
 
 d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
 themonth=int(dateString.split('-')[1])
@@ -989,11 +989,11 @@ if st.button('Run'):
     dateforRankings5=d2
     #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
     TeamDatabase2.set_index("OldTRankName", inplace=True)
-    MG_DF1=pd.read_csv("Data/MGRankings2022/tm_seasons_stats_ranks"+dateforRankings5+" .csv")
+    MG_DF1=pd.read_csv("Data/MGRankings2023/tm_seasons_stats_ranks"+dateforRankings5+" .csv")
     MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
     MG_DF1.set_index("updated", inplace=True)
     from matplotlib.backends.backend_pdf import PdfPages
-    WhichFile='TeamDataFiles2021'
+    WhichFile='TeamDataFiles2023'
     pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
     if 'Todays Games' in  Tables_Selection:
         st.header('Sortable NCAA Game Schedule')
@@ -1046,21 +1046,21 @@ if st.button('Run'):
 
 
 
-    TeamDatabase=pd.read_csv("Data/TeamDatabase.csv")
+    TeamDatabase=pd.read_csv("Data/TeamDatabase2023.csv")
     #TeamDatabase.set_index("University", inplace=True)
     #TeamList=list(TeamDatabase1["OldTRankName"])
     TeamDatabase.set_index("OldTRankName", inplace=True)
     Dailyschedule['VegasSpread'] = Dailyschedule.VegasSpread.apply(calculate_to_numeric)
     Dailyschedule['Total'] = Dailyschedule.VegasTotal.apply(calculate_to_numeric)   
     #PomeroyDF1=GetPomeroyData()
-    PomeroyDF1=pd.read_csv("Data/PomeroyDailyRankings2022/PomeroyRankings"+dateforRankings+".csv")
+    PomeroyDF1=pd.read_csv("Data/PomeroyDailyRankings2023/PomeroyRankings"+dateforRankings+".csv")
     #PomeroyDF1=sanitizeEntireColumn(PomeroyDF1,"Team")
     PomeroyDF1["updated"]=update_type(PomeroyDF1.Team,TeamDatabase.set_index('PomeroyName').UpdatedTRankName)
     PomeroyDF1["updated"]=PomeroyDF1["updated"].str.rstrip()
    
     PomeroyDF1.set_index("updated", inplace=True)
 
-    BartDF1=pd.read_csv("Data/TRankDailyRankings2022/"+dateforRankings+".csv")
+    BartDF1=pd.read_csv("Data/TRankDailyRankings2023/"+dateforRankings+".csv")
     #getBartDataTest()
     #print(BartDF1)  
     BartDF1["updated"]=update_type(BartDF1.Team,TeamDatabase.set_index('TRankName').UpdatedTRankName)
@@ -1078,9 +1078,9 @@ if st.button('Run'):
 
     
 
-    test1=GetThisTeamInfoFromCsv(AwayTeam,"TeamDataFiles2022")
+    test1=GetThisTeamInfoFromCsv(AwayTeam,"TeamDataFiles2023")
 
-    test2=GetThisTeamInfoFromCsv(HomeTeam,"TeamDataFiles2022")
+    test2=GetThisTeamInfoFromCsv(HomeTeam,"TeamDataFiles2023")
     AwayTeamB=TeamDatabase.loc[AwayTeam,"UpdatedTRankName"]
     HomeTeamB=TeamDatabase.loc[HomeTeam,"UpdatedTRankName"]
 

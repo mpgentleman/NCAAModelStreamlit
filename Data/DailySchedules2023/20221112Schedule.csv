@@ -1,39 +1,39 @@
-AWAY,HOME,VegasSpread,VegasTotal,Court,Time
-Washington St.,Boise St.,-2,130,H,06:00 PM
-Georgia Tech,Georgia St.,2,138,H,06:00 PM
-Grand Canyon,Nevada,-1,147,H,03:00 PM
-Texas St.,Rhode Island,-4,134,H,03:00 PM
-New Mexico St.,UTEP,-3,135,H,08:00 PM
-Middle Tennessee,Winthrop,7,143,H,03:00 PM
-James Madison,Buffalo,3,159,H,12:00 PM
-St. Bonaventure,Canisius,3,141,H,06:00 PM
-Sacramento St.,UC San Diego,-4,144,H,09:00 PM
-Illinois St.,Northwestern St.,2,148,H,07:00 PM
-Binghamton,Marist,-1,137,H,06:00 PM
-Ball St.,Indiana St.,-7,145,H,01:00 PM
-UC Davis,Loyola Marymount,-7,145,H,09:00 PM
-Wright St.,Louisville,-11,143,H,12:00 PM
-Cleveland St.,Ohio,-6,140,H,12:00 PM
-Wofford,High Point,-3,135,H,03:00 PM
-SIU Edwardsville,Fort Wayne,-9,145,H,12:00 PM
-Bellarmine,Morehead St.,-2,128,H,07:00 PM
-UMass Lowell,Rutgers,-15,135,H,01:00 PM
-Northeastern,Providence,-9,129,H,07:00 PM
-Wagner,La Salle,-8,138,H,02:00 PM
-Saint Peter's,Seton Hall,-13,125,H,11:00 AM
-Morgan St.,VCU,-17,143,H,06:00 PM
-Arkansas St.,LSU,-16,138,H,05:00 PM
-Lafayette,St. John's,-24,154,H,05:00 PM
-Niagara,Bucknell,-4,138,H,03:00 PM
-Jackson St.,Tulsa,-10,132,H,02:00 PM
-Presbyterian,East Carolina,-7,133,H,03:00 PM
-Albany,Siena,-6,134,H,06:30 PM
-Evansville,Saint Louis,-23,145,H,06:00 PM
-Northern Arizona,Utah Valley,-13,139,H,03:00 PM
-Alcorn St.,Wichita St.,-16,142,H,03:00 PM
-Cal St. Northridge,Utah Tech,-10,146,H,08:00 PM
-South Carolina St.,Tennessee St.,-9,149,H,11:00 AM
-Incarnate Word,UNLV,-19,139,H,05:00 PM
-Green Bay,Georgetown,-17,147,H,10:00 AM
-Hartford,St. Francis PA,-14,140,H,06:00 PM
-Stonehill,Army,-19,147,H,12:00 PM
+AWAY,HOME,VegasSpread,VegasTotal,Court,Time,Reg_dif,Over_dif
+Washington St.,Boise St.,-2,130,H,06:00 PM,2.2,3.5
+Georgia Tech,Georgia St.,2,138,H,06:00 PM,-3.6,-3.6
+Grand Canyon,Nevada,-1,147,H,03:00 PM,-15.8,-15.8
+Texas St.,Rhode Island,-4,134,H,03:00 PM,3.9,1.3
+New Mexico St.,UTEP,-3,135,H,08:00 PM,-4.9,-10.9
+Middle Tennessee,Winthrop,7,143,H,03:00 PM,-1.1,1.5
+James Madison,Buffalo,3,159,H,12:00 PM,29.5,27.2
+St. Bonaventure,Canisius,3,141,H,06:00 PM,-1.4,1.1
+Sacramento St.,UC San Diego,-4,144,H,09:00 PM,9.4,5.7
+Illinois St.,Northwestern St.,2,148,H,07:00 PM,-20.1,-21.3
+Binghamton,Marist,-1,137,H,06:00 PM,1.5,1.3
+Ball St.,Indiana St.,-7,145,H,01:00 PM,-8.9,-9.1
+UC Davis,Loyola Marymount,-7,145,H,09:00 PM,9.8,11.5
+Wright St.,Louisville,-11,143,H,12:00 PM,22.6,23.0
+Cleveland St.,Ohio,-6,140,H,12:00 PM,8.6,12.5
+Wofford,High Point,-3,135,H,03:00 PM,-12.3,-26.9
+SIU Edwardsville,Fort Wayne,-9,145,H,12:00 PM,7.8,7.8
+Bellarmine,Morehead St.,-2,128,H,07:00 PM,8.5,9.4
+UMass Lowell,Rutgers,-15,135,H,01:00 PM,-2.5,-1.0
+Northeastern,Providence,-9,129,H,07:00 PM,5.6,8.1
+Wagner,La Salle,-8,138,H,02:00 PM,8.4,8.8
+Saint Peter's,Seton Hall,-13,125,H,11:00 AM,-0.1,6.1
+Morgan St.,VCU,-17,143,H,06:00 PM,3.0,2.7
+Arkansas St.,LSU,-16,138,H,05:00 PM,6.7,13.5
+Lafayette,St. John's,-24,154,H,05:00 PM,17.0,13.6
+Niagara,Bucknell,-4,138,H,03:00 PM,-20.0,-20.0
+Jackson St.,Tulsa,-10,132,H,02:00 PM,-1.8,-3.4
+Presbyterian,East Carolina,-7,133,H,03:00 PM,-4.2,-3.5
+Albany,Siena,-6,134,H,06:30 PM,-1.6,-1.9
+Evansville,Saint Louis,-23,145,H,06:00 PM,5.5,2.2
+Northern Arizona,Utah Valley,-13,139,H,03:00 PM,-2.3,-2.0
+Alcorn St.,Wichita St.,-16,142,H,03:00 PM,20.1,16.0
+Cal St. Northridge,Utah Tech,-10,146,H,08:00 PM,-1.4,0.3
+South Carolina St.,Tennessee St.,-9,149,H,11:00 AM,-4.9,-2.1
+Incarnate Word,UNLV,-19,139,H,05:00 PM,-10.0,-9.8
+Green Bay,Georgetown,-17,147,H,10:00 AM,11.4,14.2
+Hartford,St. Francis PA,-14,140,H,06:00 PM,-10.8,-9.3
+Stonehill,Army,-19,147,H,12:00 PM,21.3,19.4

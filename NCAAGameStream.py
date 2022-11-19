@@ -1104,10 +1104,18 @@ if st.button('Run'):
     plt.figure(figsize=(20, 12))
     ax1.set_title(AwayTeam)
     ax2.set_title(HomeTeam)
-    fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1)
-    fig2=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test1,order=2, ax=ax1)
-    fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=2, ax=ax2)
-    fig4=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test2,order=2, ax=ax2)
+    try:
+        fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1)
+        fig2=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test1,order=2, ax=ax1)
+    except:
+        fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=1, ax=ax1)
+        fig2=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test1,order=1, ax=ax1)
+    try: 
+        fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=2, ax=ax2)
+        fig4=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test2,order=2, ax=ax2)
+    except:
+        fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=1, ax=ax2)
+        fig4=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test2,order=1, ax=ax2)        
     
     st.subheader('Polynomial Regression Charts')
     st.text('Daily Pomeroy Rankings line in green for each game')
@@ -1126,12 +1134,25 @@ if st.button('Run'):
     plt.figure(figsize=(20, 12))
     ax1.set_title(AwayTeam)
     ax2.set_title(HomeTeam)
-    fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1)
-    fig2=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test1,order=2, ax=ax1)
-    fig5=sns.regplot(x='New_ID', y='AdjEM_MG', data=test1,order=2, ax=ax1)
-    fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=2, ax=ax2)
-    fig4=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test2,order=2, ax=ax2)
-    fig6=sns.regplot(x='New_ID', y='AdjEM_MG', data=test2,order=2, ax=ax2)
+    try:
+        
+        fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1)
+        fig2=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test1,order=2, ax=ax1)
+    except:
+        fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=1, ax=ax1)
+        fig2=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test1,order=1, ax=ax1)
+    try:
+        fig5=sns.regplot(x='New_ID', y='AdjEM_MG', data=test1,order=2, ax=ax1)
+        fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=2, ax=ax2)
+    except:
+        fig5=sns.regplot(x='New_ID', y='AdjEM_MG', data=test1,order=1, ax=ax1)
+        fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=1, ax=ax2)
+    try:
+        fig4=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test2,order=2, ax=ax2)
+        fig6=sns.regplot(x='New_ID', y='AdjEM_MG', data=test2,order=2, ax=ax2)
+    except:
+        fig4=sns.regplot(x='New_ID', y='PomAdjEMCurrent', data=test2,order=1, ax=ax2)
+        fig6=sns.regplot(x='New_ID', y='AdjEM_MG', data=test2,order=1, ax=ax2)    
     st.subheader('Polynomial Regression Charts')
     st.text('Daily Pomeroy Rankings line in green for each game')
     st.text('Polynomial Regression of actual game performance in blue for each game ')

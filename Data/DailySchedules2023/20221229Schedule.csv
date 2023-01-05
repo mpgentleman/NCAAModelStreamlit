@@ -1,0 +1,82 @@
+AWAY,HOME,VegasSpread,VegasTotal,Court,Time,Date,Reg_dif,Over_dif
+Iowa,Nebraska,3,147,H,6:00 PM,20221229,-16.9,-27.6
+Colorado,Stanford,-3,141,H,10:00 PM,20221229,-3.1,-2.3
+Florida Atlantic,North Texas,-1,119,H,7:00 PM,20221229,9.5,5.1
+Providence,Butler,-6,144,H,5:30 PM,20221229,19.3,28.7
+San Francisco,Santa Clara,-2,152,H,9:00 PM,20221229,2.7,-4.8
+Loyola Marymount,Portland,-2,152,H,8:00 PM,20221229,19.6,24.3
+Sam Houston St.,Utah Valley,-1,127,H,7:00 PM,20221229,-18.4,-19.7
+Tulane,Cincinnati,-5,151,H,8:00 PM,20221229,-5.7,-8.0
+Hofstra,Delaware,-1,149,H,6:00 PM,20221229,4.4,11.9
+Fort Wayne,Robert Morris,1,131,H,6:00 PM,20221229,0.5,-4.5
+Louisiana Lafayette,Coastal Carolina,3,149,H,6:00 PM,20221229,-3.4,-6.3
+South Alabama,Georgia Southern,2,128,H,7:00 PM,20221229,-7.8,-16.9
+Georgetown,DePaul,-2,156,H,7:00 PM,20221229,13.5,9.1
+Southern Illinois,Murray St.,2,126,H,7:00 PM,20221229,11.7,7.9
+BYU,Pacific,2,158,H,8:00 PM,20221229,2.3,7.8
+Radford,UNC Asheville,-2,150,H,3:00 PM,20221229,4.9,5.6
+Milwaukee,Oakland,2,154,H,6:00 PM,20221229,-9.0,-16.4
+Troy,Southern Miss,-6,142,H,7:00 PM,20221229,-5.5,-7.0
+Northern Colorado,Weber St.,1,145,H,8:00 PM,20221229,-12.3,-11.5
+Middle Tennessee,Charlotte,-4,120,H,5:00 PM,20221229,-10.8,-9.3
+James Madison,Georgia St.,3,141,H,6:00 PM,20221229,1.2,3.2
+Tennessee Martin,Little Rock,2,162,H,7:30 PM,20221229,-5.4,-12.0
+UTEP,UAB,-14,146,H,6:30 PM,20221229,7.3,11.1
+Rice,Western Kentucky,-6,154,H,6:00 PM,20221229,29.4,20.0
+UC Santa Barbara,Cal St. Fullerton,3,121,H,8:00 PM,20221229,4.6,3.2
+UC Davis,Hawaii,-7,137,H,10:59 PM,20221229,-0.9,0.3
+Cleveland St.,Youngstown St.,-4,140,H,7:00 PM,20221229,-6.5,-6.4
+South Florida,Memphis,-17,141,H,7:00 PM,20221229,10.1,15.3
+La Salle,Howard,-2,136,H,1:00 PM,20221229,-16.0,-8.7
+Winthrop,USC Upstate,1,147,H,4:00 PM,20221229,-8.0,-13.5
+High Point,Longwood,-7,153,H,2:00 PM,20221229,-5.4,-8.2
+Campbell,Presbyterian,2,126,H,4:00 PM,20221229,-7.5,-11.3
+Southeast Missouri St.,Southern Indiana,-4,152,H,7:30 PM,20221229,0.3,-1.1
+St. Thomas,South Dakota,4,148,H,7:00 PM,20221229,0.1,-5.6
+Morehead St.,Tennessee St.,-4,138,H,8:00 PM,20221229,8.6,11.0
+Eastern Washington,Montana,-6,138,H,8:00 PM,20221229,7.9,6.3
+Abilene Christian,Stephen F. Austin,-5,145,H,6:30 PM,20221229,-1.3,-6.6
+Wright St.,Northern Kentucky,-2,130,H,6:00 PM,20221229,-8.8,-14.5
+Oral Roberts,Nebraska Omaha,12,156,H,7:00 PM,20221229,8.8,0.1
+Chattanooga,The Citadel,7,143,H,6:00 PM,20221229,1.4,-6.0
+San Diego,Saint Mary's,-19,139,H,8:00 PM,20221229,-1.3,-8.0
+UMBC,Maryland,-18,148,H,6:00 PM,20221229,21.4,14.9
+Appalachian St.,Marshall,-13,143,H,6:00 PM,20221229,-2.9,-7.8
+Brown,Northwestern,-12,118,H,12:00 PM,20221229,-0.7,5.1
+North Carolina A&T,Northeastern,-5,135,H,6:00 PM,20221229,-9.1,-11.0
+Cal Baptist,Grand Canyon,-7,119,H,7:00 PM,20221229,1.7,-0.7
+Stonehill,Sacred Heart,-6,154,H,1:00 PM,20221229,5.0,13.8
+UC San Diego,Long Beach St.,-10,142,H,9:00 PM,20221229,4.5,10.5
+UMKC,Denver,-5,135,H,8:00 PM,20221229,1.7,1.5
+East Tennessee St.,Wofford,-7,137,H,6:00 PM,20221229,13.8,9.9
+Liberty,Bellarmine,6,124,H,5:30 PM,20221229,8.1,11.9
+UNC Greensboro,Western Carolina,4,134,H,1:00 PM,20221229,12.1,12.8
+Alabama A&M,Ohio St.,-26,150,H,2:00 PM,20221229,3.9,5.4
+Austin Peay,Queens,-8,134,H,5:00 PM,20221229,-4.9,1.1
+Central Michigan,Michigan,-20,150,H,6:00 PM,20221229,2.6,14.8
+Northern Arizona,Idaho St.,-2,140,H,8:00 PM,20221229,-13.4,-25.3
+Utah,California,12,122,H,9:00 PM,20221229,-4.3,-2.8
+Hampton,College of Charleston,-26,158,H,6:00 PM,20221229,-9.4,-9.3
+Western Illinois,South Dakota St.,-8,142,H,7:00 PM,20221229,22.2,13.7
+Evansville,Indiana St.,-17,149,H,7:00 PM,20221229,-2.4,-7.5
+UT Arlington,Tarleton St.,-10,134,H,7:00 PM,20221229,1.9,-5.7
+Cal St. Northridge,Cal Poly,-4,122,H,9:00 PM,20221229,7.6,2.6
+UTSA,Louisiana Tech,-13,143,H,6:00 PM,20221229,6.6,-0.6
+Tennessee Tech,SIU Edwardsville,-10,142,H,7:30 PM,20221229,-5.1,-5.8
+Valparaiso,Drake,-17,137,H,8:00 PM,20221229,12.5,13.9
+Arkansas St.,Old Dominion,-10,122,H,6:00 PM,20221229,8.7,16.0
+Bethune Cookman,Illinois,-28,148,H,7:30 PM,20221229,4.6,-1.0
+UT Rio Grande Valley,Utah Tech,-18,160,H,8:00 PM,20221229,-13.2,-10.0
+Cal St. Bakersfield,UC Riverside,-9,121,H,7:00 PM,20221229,0.1,2.9
+Charleston Southern,Gardner Webb,-8,132,H,4:00 PM,20221229,-12.1,-14.4
+Idaho,Montana St.,-15,141,H,8:00 PM,20221229,-10.3,-8.0
+Central Connecticut,St. Francis PA,-8,142,H,6:00 PM,20221229,-12.7,-12.3
+Louisiana Monroe,Texas St.,-11,135,H,7:00 PM,20221229,13.3,13.8
+Wagner,LIU Brooklyn,6,134,H,12:00 PM,20221229,3.0,2.1
+Merrimack,Fairleigh Dickinson,-6,136,H,6:00 PM,20221229,7.4,7.2
+VMI,Furman,-19,153,H,6:00 PM,20221229,11.7,5.3
+Binghamton,Cornell,-21,157,H,6:00 PM,20221229,-13.2,-10.5
+Lindenwood,Eastern Illinois,-7,137,H,7:30 PM,20221229,-21.4,-13.3
+Delaware St.,Penn St.,-29,137,H,1:00 PM,20221229,4.4,12.4
+Elon,Drexel,-12,132,H,3:00 PM,20221229,1.3,-0.5
+Green Bay,Detroit,-16,144,H,6:00 PM,20221229,0.7,0.2

@@ -1,0 +1,151 @@
+AWAY,HOME,VegasSpread,VegasTotal,Court,Time,Date,Reg_dif,Over_dif
+Alabama,Auburn,4,150,H,1:00 PM,20230211,1.7,-1.0
+Connecticut,Creighton,-2,144,H,1:00 PM,20230211,-19.5,-8.4
+Baylor,TCU,-2,152,H,3:00 PM,20230211,12.9,6.2
+Indiana,Michigan,-1,149,H,5:00 PM,20230211,8.2,3.0
+Rutgers,Illinois,-1,131,H,1:00 PM,20230211,-2.1,-0.9
+Kansas St.,Texas Tech,1,143,H,6:00 PM,20230211,6.4,2.9
+West Virginia,Texas,-4,152,H,11:00 AM,20230211,1.8,10.0
+Kansas,Oklahoma,2,138,H,12:00 PM,20230211,-5.5,3.5
+Providence,St. John's,3,155,H,11:00 AM,20230211,1.1,9.3
+UCLA,Oregon,5,133,H,9:00 PM,20230211,-7.8,-2.8
+Oklahoma St.,Iowa St.,-5,123,H,5:00 PM,20230211,-1.8,5.7
+Seton Hall,Villanova,-1,127,H,7:00 PM,20230211,5.6,3.0
+Utah St.,San Jose St.,2,142,H,9:00 PM,20230211,-4.6,-3.5
+Cornell,Brown,-1,159,H,1:00 PM,20230211,-9.0,-12.4
+Kentucky,Georgia,2,142,H,11:00 AM,20230211,15.2,18.3
+Arizona,Stanford,9,155,H,7:00 PM,20230211,-1.9,-4.0
+Colorado,Utah,-5,133,H,9:00 PM,20230211,-6.4,-2.3
+Wisconsin,Nebraska,1,121,H,3:00 PM,20230211,4.2,8.6
+Clemson,North Carolina,-6,144,H,1:00 PM,20230211,-4.1,-1.6
+Louisiana Lafayette,Troy,1,147,H,4:00 PM,20230211,21.5,12.9
+Penn St.,Maryland,-5,135,H,11:00 AM,20230211,-8.4,-16.5
+BYU,Gonzaga,-11,157,H,9:00 PM,20230211,1.5,3.0
+Missouri,Tennessee,-13,145,H,5:00 PM,20230211,9.7,8.3
+Duke,Virginia,-6,124,H,3:00 PM,20230211,2.3,7.3
+Loyola Marymount,Santa Clara,-5,151,H,6:00 PM,20230211,-7.8,-13.0
+Mississippi St.,Arkansas,-6,124,H,5:00 PM,20230211,4.7,7.1
+Indiana St.,Northern Iowa,3,147,H,1:00 PM,20230211,-2.3,8.2
+UNLV,San Diego St.,-12,144,H,3:00 PM,20230211,-11.8,-13.7
+Grand Canyon,Seattle,-2,138,H,9:00 PM,20230211,-4.3,4.3
+Pittsburgh,Florida St.,5,149,H,11:00 AM,20230211,0.3,4.0
+Penn,Harvard,-1,133,H,1:00 PM,20230211,12.7,14.1
+Virginia Tech,Notre Dame,4,142,H,1:00 PM,20230211,3.1,4.3
+Sam Houston St.,Abilene Christian,4,138,H,6:00 PM,20230211,-10.3,-22.5
+North Carolina St.,Boston College,6,142,H,11:00 AM,20230211,0.3,-0.9
+Southern Utah,Utah Valley,-8,152,H,7:00 PM,20230211,6.6,-3.9
+Texas A&M,LSU,7,137,H,7:30 PM,20230211,27.2,13.8
+Vanderbilt,Florida,-7,139,H,2:30 PM,20230211,-7.1,-6.5
+Bryant,UMBC,-3,165,H,12:00 PM,20230211,4.2,14.1
+Tarleton St.,Utah Tech,-4,144,H,8:00 PM,20230211,6.2,-3.7
+Rice,FIU,-3,155,H,6:00 PM,20230211,-18.5,-15.0
+Marquette,Georgetown,10,156,H,11:00 AM,20230211,-6.9,-11.5
+Lipscomb,North Alabama,1,149,H,7:15 PM,20230211,-3.4,-1.2
+Stephen F. Austin,UT Rio Grande Valley,5,155,H,6:30 PM,20230211,1.2,-10.4
+Middle Tennessee,UAB,-9,151,H,3:00 PM,20230211,1.8,1.3
+Montana,Weber St.,-1,125,H,8:00 PM,20230211,-12.5,-8.2
+Massachusetts,La Salle,-3,149,H,1:00 PM,20230211,-7.6,-14.3
+Cal St. Fullerton,Hawaii,-3,121,H,10:59 PM,20230211,10.4,5.4
+Appalachian St.,South Alabama,-3,125,H,5:00 PM,20230211,-4.1,-11.1
+Nicholls St.,Southeastern Louisiana,-1,155,H,3:30 PM,20230211,-0.2,5.2
+Towson,Drexel,-2,124,H,1:00 PM,20230211,10.8,10.6
+Washington,Washington St.,-8,136,H,9:30 PM,20230211,3.0,5.4
+Norfolk St.,Maryland Eastern Shore,-1,139,H,3:00 PM,20230211,0.9,-9.1
+UMass Lowell,Vermont,-6,138,H,6:00 PM,20230211,-3.5,-0.4
+UC Davis,UC Santa Barbara,-5,143,H,9:00 PM,20230211,6.9,14.6
+Morehead St.,Southeast Missouri St.,-1,143,H,4:00 PM,20230211,12.2,17.2
+South Florida,Cincinnati,-12,146,H,6:00 PM,20230211,-6.7,-7.5
+Stetson,North Florida,2,152,H,1:00 PM,20230211,2.1,-5.0
+San Diego,Pacific,-6,164,H,9:00 PM,20230211,-8.6,-2.9
+Fordham,Davidson,-5,137,H,1:30 PM,20230211,-1.1,-2.9
+Saint Mary's,Portland,12,134,H,5:00 PM,20230211,5.1,-4.3
+George Washington,Saint Joseph's,-5,155,H,12:00 PM,20230211,-10.1,-21.6
+Portland St.,Northern Arizona,-4,154,H,3:00 PM,20230211,-7.7,-12.1
+Southern Illinois,Drake,-7,125,H,1:00 PM,20230211,-11.8,-3.9
+Old Dominion,Texas St.,-3,125,H,4:00 PM,20230211,1.6,3.3
+Army,Navy,-3,143,H,12:30 PM,20230211,-9.2,-8.4
+USC,Oregon St.,7,129,H,5:00 PM,20230211,4.5,5.3
+St. Bonaventure,Duquesne,-8,136,H,11:30 AM,20230211,-1.6,2.0
+Montana St.,Idaho St.,5,133,H,7:00 PM,20230211,-2.9,0.6
+Pepperdine,San Francisco,-12,158,H,9:00 PM,20230211,-13.9,-6.2
+Louisiana Tech,Florida Atlantic,-12,142,H,1:00 PM,20230211,6.0,3.1
+Long Beach St.,Cal St. Bakersfield,4,138,H,9:00 PM,20230211,13.7,3.2
+Maine,NJIT,1,135,H,3:00 PM,20230211,11.1,17.3
+Princeton,Dartmouth,6,140,H,1:00 PM,20230211,-10.1,3.3
+UTEP,UTSA,2,132,H,3:00 PM,20230211,-0.2,-2.9
+UC Riverside,UC Irvine,-10,144,H,9:30 PM,20230211,-15.4,-5.5
+Radford,Charleston Southern,3,139,H,4:30 PM,20230211,-0.3,-0.6
+Eastern Kentucky,Liberty,-13,137,H,6:00 PM,20230211,8.2,5.1
+James Madison,Coastal Carolina,7,151,H,1:00 PM,20230211,9.4,14.0
+Rhode Island,George Mason,-6,132,H,1:00 PM,20230211,5.2,2.9
+Marshall,Georgia St.,10,142,H,1:00 PM,20230211,2.5,-1.0
+Florida Gulf Coast,Jacksonville,-2,126,H,3:00 PM,20230211,1.1,0.7
+Wyoming,Boise St.,-14,134,H,7:00 PM,20230211,8.2,10.7
+Arizona St.,California,6,126,H,7:00 PM,20230211,-7.2,-4.6
+Charlotte,North Texas,-6,106,H,5:00 PM,20230211,2.8,-9.0
+Eastern Washington,Idaho,6,154,H,5:30 PM,20230211,5.7,3.9
+Georgia Tech,Wake Forest,-14,148,H,4:00 PM,20230211,-19.4,-8.4
+Tennessee Tech,Tennessee St.,-3,145,H,3:30 PM,20230211,-3.8,-2.5
+Oakland,Milwaukee,-7,153,H,6:00 PM,20230211,0.7,2.9
+Colgate,Bucknell,7,145,H,11:00 AM,20230211,-5.2,-10.4
+Prairie View A&M,Southern,-5,135,H,5:30 PM,20230211,-1.0,2.8
+Longwood,High Point,6,146,H,6:00 PM,20230211,2.8,9.8
+Toledo,Eastern Michigan,12,176,H,6:30 PM,20230211,-1.9,-4.9
+McNeese St.,New Orleans,1,147,H,4:00 PM,20230211,2.9,8.0
+North Carolina A&T,Stony Brook,-1,139,H,1:00 PM,20230211,5.2,-1.1
+Illinois St.,Valparaiso,-3,133,H,6:00 PM,20230211,-4.1,-8.2
+USC Upstate,Winthrop,-5,143,H,4:00 PM,20230211,-10.0,-4.1
+Oral Roberts,Western Illinois,12,156,H,2:00 PM,20230211,8.3,16.1
+Bowling Green,Ball St.,-9,151,H,1:00 PM,20230211,11.5,-2.2
+Sacramento St.,Northern Colorado,-5,141,H,7:00 PM,20230211,2.6,-4.2
+Bellarmine,Queens,-5,141,H,12:00 PM,20230211,5.8,7.8
+Murray St.,Bradley,-12,138,H,1:00 PM,20230211,8.1,-8.8
+Loyola Chicago,Richmond,-7,133,H,3:00 PM,20230211,10.6,20.8
+Mercer,Chattanooga,-7,139,H,2:30 PM,20230211,7.8,13.2
+Austin Peay,Central Arkansas,-3,147,H,3:30 PM,20230211,-13.5,-2.2
+Western Carolina,Furman,-15,153,H,1:00 PM,20230211,-12.9,-2.5
+Alcorn St.,Bethune Cookman,4,144,H,3:00 PM,20230211,-1.3,-10.4
+UNC Asheville,Presbyterian,4,132,H,1:00 PM,20230211,3.9,-4.5
+Morgan St.,North Carolina Central,-7,139,H,3:00 PM,20230211,-4.6,-0.0
+William & Mary,Elon,-4,138,H,1:00 PM,20230211,-23.8,-20.5
+Louisiana Monroe,Southern Miss,-13,137,H,2:30 PM,20230211,5.4,3.9
+Alabama A&M,Mississippi Valley St.,2,138,H,6:00 PM,20230211,1.6,10.4
+Illinois Chicago,Belmont,-12,146,H,1:00 PM,20230211,-0.8,-1.9
+UMKC,St. Thomas,-6,134,H,7:00 PM,20230211,-2.0,-8.6
+Merrimack,St. Francis PA,-3,129,H,3:00 PM,20230211,8.5,12.3
+Louisville,Miami FL,-24,150,H,6:00 PM,20230211,-0.5,-4.2
+Tulsa,UCF,-16,138,H,6:00 PM,20230211,17.6,7.9
+Little Rock,Tennessee Martin,-8,162,H,3:30 PM,20230211,5.8,8.9
+Jackson St.,Florida A&M,1,131,H,3:00 PM,20230211,-13.7,-21.9
+Howard,Delaware St.,5,139,H,3:00 PM,20230211,1.3,4.9
+Coppin St.,South Carolina St.,-6,172,H,3:00 PM,20230211,-9.1,-3.0
+Jacksonville St.,Kennesaw St.,-11,135,H,4:00 PM,20230211,-0.5,-0.5
+Denver,North Dakota St.,-9,149,H,1:00 PM,20230211,-1.1,3.2
+Cal Poly,Cal St. Northridge,-3,117,H,3:00 PM,20230211,-11.6,-12.4
+South Carolina,Mississippi,-11,131,H,12:00 PM,20230211,4.9,8.8
+College of Charleston,Hampton,18,154,H,3:00 PM,20230211,-1.2,-2.6
+Campbell,Gardner Webb,-9,125,H,1:00 PM,20230211,-3.2,-12.5
+Nebraska Omaha,North Dakota,-6,146,H,1:00 PM,20230211,-3.3,-5.0
+Northeastern,UNC Wilmington,-11,131,H,6:00 PM,20230211,1.4,-5.5
+Texas Southern,Grambling St.,-11,135,H,4:30 PM,20230211,0.2,-8.1
+Central Michigan,Miami OH,-7,141,H,2:30 PM,20230211,-8.0,-8.8
+Western Michigan,Northern Illinois,-8,148,H,3:00 PM,20230211,-12.9,-17.9
+South Dakota,South Dakota St.,-10,140,H,6:00 PM,20230211,-12.3,-8.2
+Boston University,Lafayette,-6,118,H,12:00 PM,20230211,-11.2,-4.3
+Hofstra,Monmouth,13,137,H,1:00 PM,20230211,-4.0,-10.6
+Central Connecticut,Fairleigh Dickinson,-6,150,H,4:00 PM,20230211,-4.9,-3.3
+Columbia,Yale,-19,137,H,6:00 PM,20230211,-8.5,-8.0
+Houston Christian,Incarnate Word,-5,153,H,4:00 PM,20230211,-1.4,-6.0
+Alabama St.,Arkansas Pine Bluff,-8,136,H,3:00 PM,20230211,-22.3,-13.0
+Texas A&M Commerce,Northwestern St.,-11,139,H,3:30 PM,20230211,-2.2,-2.8
+The Citadel,Samford,-15,147,H,2:00 PM,20230211,-7.5,-10.4
+Arkansas St.,Georgia Southern,-10,126,H,2:00 PM,20230211,-0.5,-0.2
+Lindenwood,Southern Indiana,-10,146,H,8:00 PM,20230211,-10.7,3.6
+Holy Cross,American,-9,131,H,1:00 PM,20230211,16.8,7.2
+Loyola MD,Lehigh,-9,135,H,6:00 PM,20230211,-5.7,-5.5
+Eastern Illinois,SIU Edwardsville,-13,139,H,3:30 PM,20230211,1.7,-5.8
+Albany,Binghamton,-8,140,H,1:00 PM,20230211,-12.6,-10.9
+St. Francis NY,Stonehill,-8,128,H,1:00 PM,20230211,-2.2,-3.7
+Lamar,Texas A&M Corpus Chris,-17,149,H,3:30 PM,20230211,10.8,0.0
+Detroit,Green Bay,11,145,H,6:00 PM,20230211,10.1,20.6
+LIU Brooklyn,Wagner,-13,133,H,12:00 PM,20230211,-1.0,2.0

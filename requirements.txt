@@ -1,3 +1,4 @@
+python==3.11.2
 adjustText==0.7.3
 altair==4.1.0
 appdirs==1.4.4

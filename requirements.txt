@@ -32,7 +32,7 @@ joypy==0.2.4
 kenpompy==0.2.1
 
 marshmallow==3.14.1
-matplotlib==3.3.2
+matplotlib==3.5.0
 MechanicalSoup==0.12.0
 
 

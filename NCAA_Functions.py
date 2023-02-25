@@ -14,7 +14,7 @@ from bs4 import BeautifulSoup
 from scipy import stats
 import math
 #import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
+#from matplotlib.backends.backend_pdf import PdfPages
 import random
 import pandas as pd
 import requests

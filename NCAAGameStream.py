@@ -461,11 +461,11 @@ def GetTwoChartsTogether_EMA(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,FirstSt
     HomeTeamInfo["EM3"]=HomeTeamInfo['AdjO3ExpMA']-HomeTeamInfo['AdjD3ExpMA']
     HomeTeamInfo["EM5"]=HomeTeamInfo['AdjO5ExpMA']-HomeTeamInfo['AdjD5ExpMA']
     HomeTeamInfo["EM10"]=HomeTeamInfo['AdjO10ExpMA']-HomeTeamInfo['AdjD10ExpMA']
-    HomeTeamInfo["EMOver"]=HomeTeamInfo['PlayingOverRating].rolling(5).mean()
+    HomeTeamInfo["EMOver"]=HomeTeamInfo['PlayingOverRating'].rolling(5).mean()
     AwayTeamInfo["EM3"]=AwayTeamInfo['AdjO3ExpMA']-AwayTeamInfo['AdjD3ExpMA']
     AwayTeamInfo["EM5"]=AwayTeamInfo['AdjO5ExpMA']-AwayTeamInfo['AdjD5ExpMA']
     AwayTeamInfo["EM10"]=AwayTeamInfo['AdjO10ExpMA']-AwayTeamInfo['AdjD10ExpMA']
-    AwayTeamInfo["EMOver"]=AwayTeamInfo['PlayingOverRating].rolling(5).mean()
+    AwayTeamInfo["EMOver"]=AwayTeamInfo['PlayingOverRating'].rolling(5).mean()
     
     f,(ax1, ax2) = plt.subplots(1, 2, figsize=(15,5))
     ChartTitleName=AwayTeam+" "+SecondStat+ " and "+VegasStat

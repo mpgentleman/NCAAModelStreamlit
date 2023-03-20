@@ -1170,7 +1170,7 @@ if st.button('Run'):
     st.text('Pomeroy Rankings by game Line in Green')
     st.text('Blue bars are positive if the team won against the spread')
     GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","PomAdjEMCurrent","PomAdjEMCurrent","ATS")
-    
+    GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"PlayingOverRating","PlayingOverRating","PomAdjEMCurrent","PomAdjEMCurrent","ATS")
     st.subheader('MG Rankings and ATS spread')
     st.text('MG Rankings by game is the Blue Line')
     test1['MG_SpreadWinATSResult'] = test1.apply(getMGWinRecord, axis=1)

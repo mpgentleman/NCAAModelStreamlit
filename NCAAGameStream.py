@@ -488,7 +488,38 @@ def GetTwoChartsTogether_EMA(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,FirstSt
     ax2.bar(HomeTeamInfo.index,HomeTeamInfo[VegasStat],color='dodgerblue')
     st.pyplot(f)
     #plt.show()
+
+def GetTwoChartsTogether_EMA_2023(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,FirstStat,SecondStat,PomStatHome,PomStatAway,VegasStat):
+    HomeTeamInfo["EM3"]=HomeTeamInfo['AdjO3ExpMA']-HomeTeamInfo['AdjD3ExpMA']
+    HomeTeamInfo["EM5"]=HomeTeamInfo['AdjO5ExpMA']-HomeTeamInfo['AdjD5ExpMA']
+    HomeTeamInfo["EM10"]=HomeTeamInfo['AdjO10ExpMA']-HomeTeamInfo['AdjD10ExpMA']
+    HomeTeamInfo["EMOver"]=HomeTeamInfo['PlayingOverRating'].rolling(5).mean()
+    AwayTeamInfo["EM3"]=AwayTeamInfo['AdjO3ExpMA']-AwayTeamInfo['AdjD3ExpMA']
+    AwayTeamInfo["EM5"]=AwayTeamInfo['AdjO5ExpMA']-AwayTeamInfo['AdjD5ExpMA']
+    AwayTeamInfo["EM10"]=AwayTeamInfo['AdjO10ExpMA']-AwayTeamInfo['AdjD10ExpMA']
+    AwayTeamInfo["EMOver"]=AwayTeamInfo['PlayingOverRating'].rolling(5).mean()
     
+    f,(ax1, ax2) = plt.subplots(1, 2, figsize=(15,5))
+    ChartTitleName=AwayTeam+" "+SecondStat+ " and "+VegasStat
+    ax1.set_title(ChartTitleName)
+    ax1.plot(AwayTeamInfo.index,AwayTeamInfo[SecondStat],color='black')
+    ax1.plot(AwayTeamInfo[PomStatAway],color='green')
+    ax1.plot(AwayTeamInfo["EMOver"],color='red')
+    #ax1.plot(AwayTeamInfo["EM5"],color='black')
+    ax1.plot(AwayTeamInfo["EM10"],color='purple')
+    
+    ax1.bar(AwayTeamInfo.index,AwayTeamInfo[VegasStat],color='dodgerblue')
+    ChartTitleName=HomeTeam+" "+FirstStat+ " and "+VegasStat
+    ax2.set_title(ChartTitleName)
+    ax2.plot(HomeTeamInfo.index,HomeTeamInfo[FirstStat],color='black')
+    ax2.plot(HomeTeamInfo[PomStatHome],color='green')
+    ax2.plot(HomeTeamInfo["EMOver"],color='red')
+    #ax2.plot(HomeTeamInfo["EM5"],color='black')
+    ax2.plot(HomeTeamInfo["EM10"],color='purple')
+
+    ax2.bar(HomeTeamInfo.index,HomeTeamInfo[VegasStat],color='dodgerblue')
+    st.pyplot(f)
+    #plt.show()    
 def GetTwoTeamChartsTogetherDec6(pp,AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,FirstStat,PomStat,VegasStat):
     HomeTeamInfo["First 3 Game"]=HomeTeamInfo[FirstStat].rolling(3).mean()
     HomeTeamInfo["First 5 Game"]=HomeTeamInfo[FirstStat].rolling(5).mean()
@@ -1170,7 +1201,7 @@ if st.button('Run'):
     st.text('Pomeroy Rankings by game Line in Green')
     st.text('Blue bars are positive if the team won against the spread')
     GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","PomAdjEMCurrent","PomAdjEMCurrent","ATS")
-    GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"PlayingOverRating","PlayingOverRating","PomAdjEMCurrent","PomAdjEMCurrent","ATS")
+    GetTwoChartsTogether_EMA_2023(test1,test2,AwayTeam,HomeTeam,"PlayingOverRating","PlayingOverRating","PomAdjEMCurrent","PomAdjEMCurrent","ATS")
     st.subheader('MG Rankings and ATS spread')
     st.text('MG Rankings by game is the Blue Line')
     test1['MG_SpreadWinATSResult'] = test1.apply(getMGWinRecord, axis=1)

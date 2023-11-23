@@ -958,6 +958,14 @@ page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games'])
 
 if page == 'MG Rankings':
     st.write('MG Rankings')
+    import streamlit.components.v1 as components
+
+    st.header("test html import")
+
+    HtmlFile = open("Data/tableOct12T.html", 'r', encoding='utf-8')
+    source_code = HtmlFile.read() 
+    #print(source_code)
+    components.html(source_code)
 if page == 'Todays Games':             
     add_selectbox = st.sidebar.header("Select Todays Date")
     add_selectbox_start =st.sidebar.date_input('Pick date')

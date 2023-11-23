@@ -1092,7 +1092,7 @@ if page == 'Todays Games':
         test2['AdjEM_MG']=(test2['AdjOE_MG']-test2['AdjDE_MG'])
 
         #NF.GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","PomAdjEMCurrent","PomAdjEMCurrent","ATS")
-       plt.style.use('seaborn')
+        plt.style.use('seaborn')
     
         test1['New_ID'] = range(0, 0+len(test1))
         test2['New_ID'] = range(0, 0+len(test2))

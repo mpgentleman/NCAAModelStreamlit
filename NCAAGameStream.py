@@ -965,7 +965,7 @@ if page == 'MG Rankings':
     HtmlFile = open("Data/tableOct12T.html", 'r', encoding='utf-8')
     source_code = HtmlFile.read() 
     #print(source_code)
-    components.html(source_code)
+    components.html(source_code, height = 1000)
 if page == 'Todays Games':             
     add_selectbox = st.sidebar.header("Select Todays Date")
     add_selectbox_start =st.sidebar.date_input('Pick date')

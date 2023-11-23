@@ -957,7 +957,7 @@ st.title('NCAA Head to Head Matchup')
 page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games'])
 
 if page == 'MG Rankings':
-    st.write("MG Rankings')
+    st.write('MG Rankings')
 if page == 'Todays Games':             
     add_selectbox = st.sidebar.header("Select Todays Date")
     add_selectbox_start =st.sidebar.date_input('Pick date')

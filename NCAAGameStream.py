@@ -968,7 +968,7 @@ if page == 'MG Rankings':
     components.html(source_code, height = 3000)
 if page == 'Todays Games':
     st.title('NCAA Head to Head Matchup')
-    season = st.sidebar.selectbox('Season Selection',['2024','2023']
+    season = st.sidebar.selectbox('Season Selection',['2024','2023'])
     if season == '2024':
         st.write('2024')
     else:

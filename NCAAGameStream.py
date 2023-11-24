@@ -1172,10 +1172,10 @@ if page == 'Todays Games':
             col1, col2 = st.columns(2)
             with col1:
                 st.write('MG Rankings ATS W-L',test1['MG_SpreadWinATS'].sum(),'-',test1['MG_SpreadLossATS'].sum())
-               st.write('MG Rankings Win %',test1['MG_SpreadWinATS'].sum()/test1['MG_SpreadLossATS'].count())
-           with col2:
-               st.write('MG Rankings ATS W-L',test2['MG_SpreadWinATS'].sum(),'-',test2['MG_SpreadLossATS'].sum())
-               st.write('MG Rankings Win %',test2['MG_SpreadWinATS'].sum()/test2['MG_SpreadLossATS'].count())
+                st.write('MG Rankings Win %',test1['MG_SpreadWinATS'].sum()/test1['MG_SpreadLossATS'].count())
+            with col2:
+                st.write('MG Rankings ATS W-L',test2['MG_SpreadWinATS'].sum(),'-',test2['MG_SpreadLossATS'].sum())
+                st.write('MG Rankings Win %',test2['MG_SpreadWinATS'].sum()/test2['MG_SpreadLossATS'].count())
             #GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating",'AdjEM_MG','AdjEM_MG',"ATS")
             GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"EMRating","Adj_Margin_EM_MG","MG_SpreadWinATSResult")
             st.subheader('Team Playing Over its Ranking')

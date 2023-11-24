@@ -944,57 +944,11 @@ def getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1):
     labels=["TRank","TG3","MC5","MC10","Pom","HomeTeam","SignalScoreTotal","OverPlay","Spread","MC10Spread","MCEdge"]
     return(appended_data2,appended_dataTime,appended_dataExtra,appended_data1MG,appendTeam_OU_List,appendTeamListMG,appendTeamList,theSpreadTeamPicksMG,theSpreadTeamPicks)
 
-
-st.set_page_config(page_title="MG Rankings",layout="wide")
-#TeamDatabase2=pd.read_csv("TeamDatabase.csv")
-TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
-AllGames=pd.read_csv("Data/Season_GamesAll.csv")
-AwayTeamAll=list(TeamDatabase2['OldTRankName'])
-HomeTeamAll=list(TeamDatabase2['OldTRankName'])
-
-
-#st.title('NCAA Head to Head Matchup')
-page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games'])
-
-if page == 'MG Rankings':
-    #st.write('MG Rankings')
-    import streamlit.components.v1 as components
-
-    #st.header("test html import")
-
-    HtmlFile = open("Data/MGNov23_.html", 'r', encoding='utf-8')
-    source_code = HtmlFile.read() 
-    #print(source_code)
-    components.html(source_code, height = 3000)
-if page == 'Todays Games':
-    st.title('NCAA Head to Head Matchup')
-    season = st.sidebar.selectbox('Season Selection',['2024','2023'])
-    if season == '2024':
-        #st.write('2024')
-        add_selectbox = st.sidebar.header("Select Todays Date")
-        add_selectbox_start =st.sidebar.date_input('Pick date')
-        dateString=str(add_selectbox_start)
-        dateToday=dateString.replace('-', '')
-        #Dailyschedule=pd.read_csv("DailySchedules2023/"+dateToday+"Schedule.csv")
-        Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+dateToday+"Schedule.csv")
-        d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
-        themonth=int(dateString.split('-')[1])
-        theday=int(dateString.split('-')[2])
-        theyear=dateString.split('-')[0]
-
-        
-    else:
-        add_selectbox = st.sidebar.header("Select Todays Date")
-        add_selectbox_start =st.sidebar.date_input('Pick date')
-        dateString=str(add_selectbox_start)
-        dateToday=dateString.replace('-', '')
-        #Dailyschedule=pd.read_csv("DailySchedules2023/"+dateToday+"Schedule.csv")
-        Dailyschedule=pd.read_csv("Data/DailySchedules2023/"+dateToday+"Schedule.csv")
-        d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
-        themonth=int(dateString.split('-')[1])
-        theday=int(dateString.split('-')[2])
-        theyear=dateString.split('-')[0]
-
+def get2023Display(Dailyschedule,dateToday,d2,season):
+    TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
+    AllGames=pd.read_csv("Data/Season_GamesAll.csv")
+    AwayTeamAll=list(TeamDatabase2['OldTRankName'])
+    HomeTeamAll=list(TeamDatabase2['OldTRankName'])
     Tables_Selection=st.sidebar.selectbox('Any or Scheduled ',['Any', 'Todays Games','All Games'])
     if 'All Games' in  Tables_Selection:
         allcols=AllGames.columns
@@ -1209,6 +1163,54 @@ if page == 'Todays Games':
         #getDistributionMatchupCharts(AwayTeam,HomeTeam)
         getTeamDFTable(test1,AwayTeam)
         getTeamDFTable(test2,HomeTeam)
-            #appended_data2,appended_dataTime,appended_dataExtra,appended_data1MG,appendTeam_OU_List,appendTeamListMG,appendTeamList,theSpreadTeamPicksMG,theSpreadTeamPicks=getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1)
+st.set_page_config(page_title="MG Rankings",layout="wide")
+#TeamDatabase2=pd.read_csv("TeamDatabase.csv")
+TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
+AllGames=pd.read_csv("Data/Season_GamesAll.csv")
+AwayTeamAll=list(TeamDatabase2['OldTRankName'])
+HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 
 
+#st.title('NCAA Head to Head Matchup')
+page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games'])
+
+if page == 'MG Rankings':
+    #st.write('MG Rankings')
+    import streamlit.components.v1 as components
+
+    #st.header("test html import")
+
+    HtmlFile = open("Data/MGNov23_.html", 'r', encoding='utf-8')
+    source_code = HtmlFile.read() 
+    #print(source_code)
+    components.html(source_code, height = 3000)
+if page == 'Todays Games':
+    st.title('NCAA Head to Head Matchup')
+    season = st.sidebar.selectbox('Season Selection',['2024','2023'])
+    if season == '2024':
+        #st.write('2024')
+        add_selectbox = st.sidebar.header("Select Todays Date")
+        add_selectbox_start =st.sidebar.date_input('Pick date')
+        dateString=str(add_selectbox_start)
+        dateToday=dateString.replace('-', '')
+        #Dailyschedule=pd.read_csv("DailySchedules2023/"+dateToday+"Schedule.csv")
+        Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+dateToday+"Schedule.csv")
+        d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
+        themonth=int(dateString.split('-')[1])
+        theday=int(dateString.split('-')[2])
+        theyear=dateString.split('-')[0]
+
+        
+    else:
+        add_selectbox = st.sidebar.header("Select Todays Date")
+        add_selectbox_start =st.sidebar.date_input('Pick date')
+        dateString=str(add_selectbox_start)
+        dateToday=dateString.replace('-', '')
+        #Dailyschedule=pd.read_csv("DailySchedules2023/"+dateToday+"Schedule.csv")
+        Dailyschedule=pd.read_csv("Data/DailySchedules2023/"+dateToday+"Schedule.csv")
+        d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
+        themonth=int(dateString.split('-')[1])
+        theday=int(dateString.split('-')[2])
+        theyear=dateString.split('-')[0]
+        get2023Display(Dailyschedule,dateToday,d2,season)
+    

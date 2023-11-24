@@ -1034,11 +1034,11 @@ if page == 'Todays Games':
         dateforRankings5=d2
         #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
         TeamDatabase2.set_index("OldTRankName", inplace=True)
-        MG_DF1=pd.read_csv("Data/MGRankings2023/tm_seasons_stats_ranks"+dateforRankings5+" .csv")
+        MG_DF1=pd.read_csv("Data/MGRankings"+season+"/tm_seasons_stats_ranks"+dateforRankings5+" .csv")
         MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
         MG_DF1.set_index("updated", inplace=True)
         from matplotlib.backends.backend_pdf import PdfPages
-        WhichFile='TeamDataFiles2023'
+        WhichFile='TeamDataFiles'+season
         pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
         if 'Todays Games' in  Tables_Selection:
             st.header('Sortable NCAA Game Schedule')
@@ -1076,17 +1076,17 @@ if page == 'Todays Games':
             g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
             #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
 
-        TeamDatabase=pd.read_csv("Data/TeamDatabase2023.csv")
+        TeamDatabase=pd.read_csv("Data/TeamDatabase"+season+".csv")
         TeamDatabase.set_index("OldTRankName", inplace=True)
         Dailyschedule['VegasSpread'] = Dailyschedule.VegasSpread.apply(calculate_to_numeric)
         Dailyschedule['Total'] = Dailyschedule.VegasTotal.apply(calculate_to_numeric)   
-        PomeroyDF1=pd.read_csv("Data/PomeroyDailyRankings2023/PomeroyRankings"+dateforRankings+".csv")
+        PomeroyDF1=pd.read_csv("Data/PomeroyDailyRankings"+season+"/PomeroyRankings"+dateforRankings+".csv")
         PomeroyDF1["updated"]=update_type(PomeroyDF1.Team,TeamDatabase.set_index('PomeroyName').UpdatedTRankName)
         PomeroyDF1["updated"]=PomeroyDF1["updated"].str.rstrip()
    
         PomeroyDF1.set_index("updated", inplace=True)
 
-        BartDF1=pd.read_csv("Data/TRankDailyRankings2023/"+dateforRankings+".csv")
+        BartDF1=pd.read_csv("Data/TRankDailyRankings"+season+"/"+dateforRankings+".csv")
         BartDF1["updated"]=update_type(BartDF1.Team,TeamDatabase.set_index('TRankName').UpdatedTRankName)
         BartDF1.set_index("updated", inplace=True)
         import seaborn
@@ -1096,8 +1096,8 @@ if page == 'Todays Games':
 
     
 
-        test1=GetThisTeamInfoFromCsv(AwayTeam,"TeamDataFiles2023")
-        test2=GetThisTeamInfoFromCsv(HomeTeam,"TeamDataFiles2023")
+        test1=GetThisTeamInfoFromCsv(AwayTeam,"TeamDataFiles"+season)
+        test2=GetThisTeamInfoFromCsv(HomeTeam,"TeamDataFiles"+season)
         AwayTeamB=TeamDatabase.loc[AwayTeam,"UpdatedTRankName"]
         HomeTeamB=TeamDatabase.loc[HomeTeam,"UpdatedTRankName"]
 

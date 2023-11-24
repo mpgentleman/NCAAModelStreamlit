@@ -962,7 +962,7 @@ if page == 'MG Rankings':
 
     st.header("test html import")
 
-    HtmlFile = open("Data/tableOct12T.html", 'r', encoding='utf-8')
+    HtmlFile = open("Data/MGNov23_.html", 'r', encoding='utf-8')
     source_code = HtmlFile.read() 
     #print(source_code)
     components.html(source_code, height = 1000)

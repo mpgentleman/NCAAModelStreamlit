@@ -970,7 +970,34 @@ if page == 'Todays Games':
     st.title('NCAA Head to Head Matchup')
     season = st.sidebar.selectbox('Season Selection',['2024','2023'])
     if season == '2024':
-        st.write('2024')
+        #st.write('2024')
+        add_selectbox = st.sidebar.header("Select Todays Date")
+        add_selectbox_start =st.sidebar.date_input('Pick date')
+        dateString=str(add_selectbox_start)
+        dateToday=dateString.replace('-', '')
+        #Dailyschedule=pd.read_csv("DailySchedules2023/"+dateToday+"Schedule.csv")
+        Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+dateToday+"Schedule.csv")
+        d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
+        themonth=int(dateString.split('-')[1])
+        theday=int(dateString.split('-')[2])
+        theyear=dateString.split('-')[0]
+
+        Tables_Selection=st.sidebar.selectbox('Any or Scheduled',['Any', 'Todays Games','All Games'])
+        if 'All Games' in  Tables_Selection:
+            allcols=AllGames.columns
+            gb = GridOptionsBuilder.from_dataframe(AllGames,groupable=True)
+            gb.configure_columns(allcols, cellStyle=cellStyle)
+            csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
+            #gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+            #gb.configure_pagination()
+            gb.configure_side_bar()
+            gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            #gridOptions = gb.build()
+            opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+            gb.configure_grid_options(**opts)
+            keyname='Test All'
+            g = _displayGrid(AllGames, gb, key=keyname, height=1200)
     else:
         add_selectbox = st.sidebar.header("Select Todays Date")
         add_selectbox_start =st.sidebar.date_input('Pick date')

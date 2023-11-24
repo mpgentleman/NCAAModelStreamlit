@@ -953,20 +953,21 @@ AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 
 
-st.title('NCAA Head to Head Matchup')
+#st.title('NCAA Head to Head Matchup')
 page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games'])
 
 if page == 'MG Rankings':
-    st.write('MG Rankings')
+    #st.write('MG Rankings')
     import streamlit.components.v1 as components
 
-    st.header("test html import")
+    #st.header("test html import")
 
     HtmlFile = open("Data/MGNov23_.html", 'r', encoding='utf-8')
     source_code = HtmlFile.read() 
     #print(source_code)
-    components.html(source_code, height = 1000)
-if page == 'Todays Games':             
+    components.html(source_code, height = 2000)
+if page == 'Todays Games':
+    st.title('NCAA Head to Head Matchup')
     add_selectbox = st.sidebar.header("Select Todays Date")
     add_selectbox_start =st.sidebar.date_input('Pick date')
     dateString=str(add_selectbox_start)

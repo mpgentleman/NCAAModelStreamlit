@@ -965,7 +965,7 @@ if page == 'MG Rankings':
     HtmlFile = open("Data/MGNov23_.html", 'r', encoding='utf-8')
     source_code = HtmlFile.read() 
     #print(source_code)
-    components.html(source_code, height = 2000)
+    components.html(source_code, height = 3000)
 if page == 'Todays Games':
     st.title('NCAA Head to Head Matchup')
     add_selectbox = st.sidebar.header("Select Todays Date")

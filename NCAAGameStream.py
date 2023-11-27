@@ -1030,7 +1030,7 @@ def get2023Display(Dailyschedule,dateToday,d2,season):
             g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
             #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
 
-        TeamDatabase=pd.read_csv("Data/TeamDatabase"+season+".csv")
+        TeamDatabase=pd.read_csv("Data/TeamDatabase"+season+"T.csv")
         TeamDatabase.set_index("OldTRankName", inplace=True)
         Dailyschedule['VegasSpread'] = Dailyschedule.VegasSpread.apply(calculate_to_numeric)
         Dailyschedule['Total'] = Dailyschedule.VegasTotal.apply(calculate_to_numeric)   
@@ -1223,15 +1223,15 @@ if page == 'Todays Games':
         if 'Todays Games' in  Tables_Selection:
             Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
             if 'Alphabetical'in  Tables_Choice:
-                Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
+                Dailyschedule=Dailyschedule.sort_values(by=['Away'])
             if 'Time' in Tables_Choice:
                 Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
             if 'Regression_Difference' in Tables_Choice: 
                 Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
             if 'OverPlaying' in Tables_Choice: 
                 Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
-            AwayList=list(Dailyschedule['AWAY'])
-            HomeList=list(Dailyschedule['HOME'])
+            AwayList=list(Dailyschedule['Away'])
+            HomeList=list(Dailyschedule['Home'])
             AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
             HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
 
@@ -1258,7 +1258,7 @@ if page == 'Todays Games':
                 header=dict(values=list(Dailyschedule.columns),
                     fill_color='grey',
                     align='left'),
-                cells=dict(values=[Dailyschedule.AWAY, Dailyschedule.HOME, Dailyschedule.VegasSpread, Dailyschedule.VegasTotal, Dailyschedule.Court, Dailyschedule.Time,Dailyschedule.Reg_dif],
+                cells=dict(values=[Dailyschedule.Away, Dailyschedule.Home, Dailyschedule.ATSVegas, Dailyschedule.OverUnderVegas, Dailyschedule.HomeAway,Dailyschedule.Reg_dif],
                 fill_color = [[rowOddColor,rowEvenColor]*lengthrows],
                     align='left',
                 font_size=12,

@@ -1199,7 +1199,88 @@ if page == 'Todays Games':
         themonth=int(dateString.split('-')[1])
         theday=int(dateString.split('-')[2])
         theyear=dateString.split('-')[0]
+        
+        TeamDatabase2=pd.read_csv("Data/TeamDatabase2024T.csv")
+        AllGames=pd.read_csv("Data/Season_GamesAll2024.csv")
+        AwayTeamAll=list(TeamDatabase2['OldTRankName'])
+        HomeTeamAll=list(TeamDatabase2['OldTRankName'])
+        Tables_Selection=st.sidebar.selectbox('Any or Scheduled ',['Any', 'Todays Games','All Games'])
+        if 'All Games' in  Tables_Selection:
+            allcols=AllGames.columns
+            gb = GridOptionsBuilder.from_dataframe(AllGames,groupable=True)
+            gb.configure_columns(allcols, cellStyle=cellStyle)
+            csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
+            gb.configure_side_bar()
+            gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+            opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+            gb.configure_grid_options(**opts)
+            keyname='Test All 2024'
+            g = _displayGrid(AllGames, gb, key=keyname, height=1200)
+        if 'Any' in  Tables_Selection:
+            AwayTeam = st.sidebar.selectbox('Away Team',AwayTeamAll)
+            HomeTeam = st.sidebar.selectbox('Home Team',HomeTeamAll)
+        if 'Todays Games' in  Tables_Selection:
+            Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
+            if 'Alphabetical'in  Tables_Choice:
+                Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
+            if 'Time' in Tables_Choice:
+                Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
+            if 'Regression_Difference' in Tables_Choice: 
+                Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
+            if 'OverPlaying' in Tables_Choice: 
+                Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
+            AwayList=list(Dailyschedule['AWAY'])
+            HomeList=list(Dailyschedule['HOME'])
+            AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
+            HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
 
+        if st.button('Run'):
+            dateforRankings=dateToday
+            dateforRankings5=d2
+            #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
+            TeamDatabase2.set_index("OldTRankName", inplace=True)
+            MG_DF1=pd.read_csv("Data/MGRankings"+season+"/tm_seasons_stats_ranks"+dateforRankings5+" .csv")
+            MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
+            MG_DF1.set_index("updated", inplace=True)
+            from matplotlib.backends.backend_pdf import PdfPages
+            WhichFile='TeamDataFiles'+season
+            pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
+            if 'Todays Games' in  Tables_Selection:
+                st.header('Sortable NCAA Game Schedule')
+                st.text('Games can be sorted by columns. Click on column header to sort')
+                st.text('To sort by game time click the Time column.  ')
+                st.text('Low Negative values in the Reg Dif and Overplaying column mean the Home team is the pick  ')  
+                lengthrows=int(len(Dailyschedule)/2)
+                rowEvenColor = 'lightgrey'
+                rowOddColor = 'white'
+                fig = go.Figure(data=[go.Table(
+                header=dict(values=list(Dailyschedule.columns),
+                    fill_color='grey',
+                    align='left'),
+                cells=dict(values=[Dailyschedule.AWAY, Dailyschedule.HOME, Dailyschedule.VegasSpread, Dailyschedule.VegasTotal, Dailyschedule.Court, Dailyschedule.Time,Dailyschedule.Reg_dif],
+                fill_color = [[rowOddColor,rowEvenColor]*lengthrows],
+                    align='left',
+                font_size=12,
+                height=30))
+                ])
+                fig.update_layout(width=1200, height=800)
+                #st.plotly_chart(fig)
+                allcols=Dailyschedule.columns
+                gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
+                gb.configure_columns(allcols, cellStyle=cellStyle)
+                csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
+                gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+                #gb.configure_pagination()
+                gb.configure_side_bar()
+                gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+                #gridOptions = gb.build()
+                opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+                gb.configure_grid_options(**opts)
+                keyname='Test'
+                g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
+                #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
         
     else:
         add_selectbox = st.sidebar.header("Select Todays Date")

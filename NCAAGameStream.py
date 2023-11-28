@@ -1188,9 +1188,9 @@ if page == 'MG Rankings':
     # Create a dictionary with the last 8 characters in the filename as the key and the filename as the value
     file_dict = {file[-8:]: file for file in files}
     #st.header("test html import")
-    if dateToday_str in file_dict:
+    if dateToday in file_dict:
         # If the date is in the dictionary, select the corresponding filename
-        myfilestring = file_dict[dateToday_str]
+        myfilestring = file_dict[dateToday]
     else:
         # If the date is not in the dictionary, select the filename with the latest date
         latest_date = max(file_dict.keys())

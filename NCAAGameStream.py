@@ -945,7 +945,7 @@ def getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1):
     return(appended_data2,appended_dataTime,appended_dataExtra,appended_data1MG,appendTeam_OU_List,appendTeamListMG,appendTeamList,theSpreadTeamPicksMG,theSpreadTeamPicks)
 def plot_line_chart(df, teams):
     # Filter the dataframe for the selected teams
-    df = df[df['Team'].isin(teams)]
+    df = df[df['Tm_'].isin(teams)]
 
     # Convert the 'Date_zero' column to datetime
     df['Date_zero'] = pd.to_datetime(df['Date_zero'])
@@ -959,7 +959,7 @@ def plot_line_chart(df, teams):
     # Create the line chart
     fig, ax = plt.subplots(figsize=(10, 6))
     for team in teams:
-        df_team = df[df['Team'] == team]
+        df_team = df[df['Tm_'] == team]
         sns.lineplot(x='Date_zero', y='tm_margin_net_eff', data=df_team, ax=ax, label=team)
 
     # Make x-axis labels bigger and rotate them if necessary
@@ -1200,7 +1200,7 @@ AllGames=pd.read_csv("Data/Season_GamesAll.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 MG_Rank=pd.read_csv("Data/MGRankings_2024_DB.csv")
-teams = df['Team'].unique()
+teams = MG_Rank['Tm_'].unique()
 #st.title('NCAA Head to Head Matchup')
 page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games'])
 

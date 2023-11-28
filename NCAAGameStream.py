@@ -30,7 +30,7 @@ import pandas as pd
 import requests
 import io
 from pandas.api.types import is_numeric_dtype
-
+import os
 
 def getMGWinRecord(s):
     if (s['MG_SpreadWinATS'] == 1):

@@ -943,7 +943,37 @@ def getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1):
     appended_data2=pd.concat(appended_data1,axis=0)
     labels=["TRank","TG3","MC5","MC10","Pom","HomeTeam","SignalScoreTotal","OverPlay","Spread","MC10Spread","MCEdge"]
     return(appended_data2,appended_dataTime,appended_dataExtra,appended_data1MG,appendTeam_OU_List,appendTeamListMG,appendTeamList,theSpreadTeamPicksMG,theSpreadTeamPicks)
+def plot_line_chart(df, teams):
+    # Filter the dataframe for the selected teams
+    df = df[df['Team'].isin(teams)]
 
+    # Convert the 'Date_zero' column to datetime
+    df['Date_zero'] = pd.to_datetime(df['Date_zero'])
+
+    # Sort the dataframe by date
+    df = df.sort_values('Date_zero')
+
+    # Set the style of seaborn to fivethirtyeight
+    plt.style.use('fivethirtyeight')
+
+    # Create the line chart
+    fig, ax = plt.subplots(figsize=(10, 6))
+    for team in teams:
+        df_team = df[df['Team'] == team]
+        sns.lineplot(x='Date_zero', y='tm_margin_net_eff', data=df_team, ax=ax, label=team)
+
+    # Make x-axis labels bigger and rotate them if necessary
+    #ax.xaxis.set_major_locator(mdates.MonthLocator())  # to ensure a tick every month
+    #ax.xaxis.set_major_formatter(mdates.DateFormatter('%b %Y'))  # to format the date as 'Month Year'
+    plt.xticks(rotation=45, fontsize=10)  # rotate x-axis labels and make them bigger
+
+    # Set the title and labels
+    plt.title('Margin Net Over Time', fontsize=20)
+    plt.xlabel('Date', fontsize=15)
+    plt.ylabel('Margin Net', fontsize=15)
+
+    # Show the plot
+    st.pyplot(fig)
 def get2023Display(Dailyschedule,dateToday,d2,season):
     TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
     AllGames=pd.read_csv("Data/Season_GamesAll.csv")
@@ -1169,15 +1199,17 @@ TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
 AllGames=pd.read_csv("Data/Season_GamesAll.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
-
-
+MG_Rank=pd.read_csv("Data/MGRankings_2024_DB.csv")
+teams = df['Team'].unique()
 #st.title('NCAA Head to Head Matchup')
 page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games'])
 
 if page == 'MG Rankings':
     #st.write('MG Rankings')
+    
     import streamlit.components.v1 as components
     add_selectbox_start =st.sidebar.date_input('Pick date')
+    selected_teams = st.multiselect('Select teams:', teams)
     dateString=str(add_selectbox_start)
     dateToday=dateString.replace('-', '')
     files = os.listdir('Data/MGRankings2024')
@@ -1200,7 +1232,11 @@ if page == 'MG Rankings':
     source_code = HtmlFile.read() 
     #print(source_code)
     if st.button('Run'):
-        components.html(source_code, height = 3000)
+        col1, col2 = st.columns(2)
+        with col1:
+            components.html(source_code, height = 3000)
+        with col2:
+            plot_line_chart(MG_Rank, selected_teams)
 if page == 'Todays Games':
     st.title('NCAA Head to Head Matchup')
     season = st.sidebar.selectbox('Season Selection',['2024','2023'])

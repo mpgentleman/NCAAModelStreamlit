@@ -1266,7 +1266,7 @@ if page == 'Todays Games':
                 ])
                 fig.update_layout(width=1200, height=800)
                 #st.plotly_chart(fig)
-                Dailyschedule = Dailyschedule[['Away','Home','HomeAway','Result_x','ATS','ATSVegas','OverUnderVegas','RegDif','Over_dif']]
+                Dailyschedule = Dailyschedule[['Away','Home','HomeAway','Result_x','ATS','ATSVegas','OverUnderVegas','Reg_Dif','Over_dif']]
                 allcols=Dailyschedule.columns
                 gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
                 gb.configure_columns(allcols, cellStyle=cellStyle)

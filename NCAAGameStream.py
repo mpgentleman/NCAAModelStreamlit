@@ -1180,8 +1180,22 @@ if page == 'MG Rankings':
     add_selectbox_start =st.sidebar.date_input('Pick date')
     dateString=str(add_selectbox_start)
     dateToday=dateString.replace('-', '')
+    files = os.listdir('Data/MGRankings2024')
+
+    # Filter the list to include only files that start with 'MG'
+    files = [file for file in files if file.startswith('MG')]
+
+    # Create a dictionary with the last 8 characters in the filename as the key and the filename as the value
+    file_dict = {file[-8:]: file for file in files}
     #st.header("test html import")
-    myfile = "Data/MGRankings2024/MGRankings_"+dateToday+".html"
+    if dateToday_str in file_dict:
+        # If the date is in the dictionary, select the corresponding filename
+        myfilestring = file_dict[dateToday_str]
+    else:
+        # If the date is not in the dictionary, select the filename with the latest date
+        latest_date = max(file_dict.keys())
+        myfilestring = file_dict[latest_date]
+    myfile = "Data/MGRankings2024/MGRankings_"+myfilestring+".html"
     HtmlFile = open(myfile, 'r', encoding='utf-8')
     source_code = HtmlFile.read() 
     #print(source_code)

@@ -1002,9 +1002,10 @@ def plot_line_chartLetsPlot(df, teams):
             theme(axis_text_x=element_text(angle=45, hjust=1))
         #st.write(p)
         #st_letsplot(p)
-        st.pyplot(p)
+        #st.pyplot(p)
     ggplot(df, aes(x='Date_zero', y='tm_margin_net_eff', group='Tm_')) + \
-    geom_line(aes(color='Tm_'), size=1, alpha=0.5)
+    geom_line(aes(color='Tm_'), size=1, alpha=0.5)+ggtitle("AT Net Rating") + \
+    ggsize(1000, 800)
     st_letsplot(p)
 def get2023Display(Dailyschedule,dateToday,d2,season):
     TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")

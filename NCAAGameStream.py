@@ -1003,7 +1003,7 @@ def plot_line_chartLetsPlot(df, teams):
         #st.write(p)
         #st_letsplot(p)
         #st.pyplot(p)
-    ggplot(df, aes(x='Date_zero', y='tm_margin_net_eff', group='Tm_')) + \
+    p = ggplot(df, aes(x='Date_zero', y='tm_margin_net_eff', group='Tm_')) + \
     geom_line(aes(color='Tm_'), size=1, alpha=0.5)+ggtitle("AT Net Rating") + \
     ggsize(1000, 800)
     st_letsplot(p)
@@ -1239,17 +1239,7 @@ page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games'])
 
 if page == 'MG Rankings':
     #st.write('MG Rankings')
-    np.random.seed(12)
-    data = dict(
-    cond=np.repeat(['A','B'], 200),
-    rating=np.concatenate((np.random.normal(0, 1, 200), np.random.normal(1, 1.5, 200)))
-)
 
-    a = ggplot(data, aes(x='rating', fill='cond')) + ggsize(500, 250) \
-    + geom_density(color='dark_green', alpha=.7) + scale_fill_brewer(type='seq') \
-    + theme(axis_line_y='blank')
-
-    st_letsplot(a)
     import streamlit.components.v1 as components
     add_selectbox_start =st.sidebar.date_input('Pick date')
     selected_teams = st.multiselect('Select teams:', teams)

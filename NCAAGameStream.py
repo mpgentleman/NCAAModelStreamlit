@@ -983,7 +983,7 @@ def plot_line_chart(df, teams):
 
 def plot_line_chartLetsPlot(df, teams):
     # Filter the dataframe for the selected teams
-    df = df[df['Team'].isin(teams)]
+    df = df[df['Tm_'].isin(teams)]
 
     # Convert the 'Date_zero' column to datetime
     df['Date_zero'] = pd.to_datetime(df['Date_zero'])
@@ -993,8 +993,8 @@ def plot_line_chartLetsPlot(df, teams):
 
     # Create the line chart
     for team in teams:
-        df_team = df[df['Team'] == team]
-        p = ggplot(df_team, aes(x='Date_zero', y='margin_net')) + \
+        df_team = df[df['Tm_'] == team]
+        p = ggplot(df_team, aes(x='Date_zero', y='tm_margin_net_eff')) + \
             geom_line(color='red', size=1.5) + \
             ggtitle('Margin Net Over Time') + \
             xlab('Date') + \
@@ -1003,6 +1003,7 @@ def plot_line_chartLetsPlot(df, teams):
         st.write(p)
         st_letsplot(p)
         st.pyplot(p)
+    #st_letsplot(p)
 def get2023Display(Dailyschedule,dateToday,d2,season):
     TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
     AllGames=pd.read_csv("Data/Season_GamesAll.csv")

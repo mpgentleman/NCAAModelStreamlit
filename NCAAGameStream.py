@@ -1000,10 +1000,10 @@ def plot_line_chartLetsPlot(df, teams):
             xlab('Date') + \
             ylab('Margin Net') + \
             theme(axis_text_x=element_text(angle=45, hjust=1))
-        st.write(p)
-        st_letsplot(p)
+        #st.write(p)
+        #st_letsplot(p)
         st.pyplot(p)
-    #st_letsplot(p)
+    st_letsplot(p)
 def get2023Display(Dailyschedule,dateToday,d2,season):
     TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
     AllGames=pd.read_csv("Data/Season_GamesAll.csv")

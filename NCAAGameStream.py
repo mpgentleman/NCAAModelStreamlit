@@ -31,6 +31,8 @@ import requests
 import io
 from pandas.api.types import is_numeric_dtype
 import os
+from lets_plot import *
+LetsPlot.setup_html()
 
 def getMGWinRecord(s):
     if (s['MG_SpreadWinATS'] == 1):
@@ -974,6 +976,28 @@ def plot_line_chart(df, teams):
 
     # Show the plot
     st.pyplot(fig)
+
+
+def plot_line_chartLetsPlot(df, teams):
+    # Filter the dataframe for the selected teams
+    df = df[df['Team'].isin(teams)]
+
+    # Convert the 'Date_zero' column to datetime
+    df['Date_zero'] = pd.to_datetime(df['Date_zero'])
+
+    # Sort the dataframe by date
+    df = df.sort_values('Date_zero')
+
+    # Create the line chart
+    for team in teams:
+        df_team = df[df['Team'] == team]
+        p = ggplot(df_team, aes(x='Date_zero', y='margin_net')) + \
+            geom_line(color='red', size=1.5) + \
+            ggtitle('Margin Net Over Time') + \
+            xlab('Date') + \
+            ylab('Margin Net') + \
+            theme(axis_text_x=element_text(angle=45, hjust=1))
+        st.write(p)
 def get2023Display(Dailyschedule,dateToday,d2,season):
     TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
     AllGames=pd.read_csv("Data/Season_GamesAll.csv")
@@ -1237,6 +1261,7 @@ if page == 'MG Rankings':
             components.html(source_code, height = 3000)
         with col2:
             plot_line_chart(MG_Rank, selected_teams)
+            plot_line_chartLetsPlot(MG_Rank, selected_teams)
 if page == 'Todays Games':
     st.title('NCAA Head to Head Matchup')
     season = st.sidebar.selectbox('Season Selection',['2024','2023'])

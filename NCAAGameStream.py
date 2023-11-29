@@ -1003,6 +1003,8 @@ def plot_line_chartLetsPlot(df, teams):
         #st.write(p)
         #st_letsplot(p)
         st.pyplot(p)
+    ggplot(df, aes(x='Date_zero', y='tm_margin_net_eff', group='Tm_')) + \
+    geom_line(aes(color='Tm_'), size=1, alpha=0.5)
     st_letsplot(p)
 def get2023Display(Dailyschedule,dateToday,d2,season):
     TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")

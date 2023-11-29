@@ -1269,7 +1269,7 @@ if page == 'MG Rankings':
         with col1:
             components.html(source_code, height = 3000)
         with col2:
-            plot_line_chart(MG_Rank, selected_teams)
+            #plot_line_chart(MG_Rank, selected_teams)
             plot_line_chartLetsPlot(MG_Rank, selected_teams)
 if page == 'Todays Games':
     st.title('NCAA Head to Head Matchup')

@@ -30,7 +30,7 @@ fuzzywuzzy==0.18.0
 joypy==0.2.4
 
 kenpompy==0.2.1
-lets-plot==4.0.0
+#lets-plot==4.0.0
 marshmallow==3.14.1
 matplotlib==3.5.0
 MechanicalSoup==0.12.0

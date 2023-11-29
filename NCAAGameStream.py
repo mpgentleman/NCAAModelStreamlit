@@ -33,6 +33,9 @@ from pandas.api.types import is_numeric_dtype
 import os
 from lets_plot import *
 LetsPlot.setup_html()
+from streamlit_letsplot import st_letsplot
+import lets_plot
+from lets_plot import *
 
 def getMGWinRecord(s):
     if (s['MG_SpreadWinATS'] == 1):
@@ -998,6 +1001,7 @@ def plot_line_chartLetsPlot(df, teams):
             ylab('Margin Net') + \
             theme(axis_text_x=element_text(angle=45, hjust=1))
         st.write(p)
+        st_letsplot(p)
 def get2023Display(Dailyschedule,dateToday,d2,season):
     TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
     AllGames=pd.read_csv("Data/Season_GamesAll.csv")

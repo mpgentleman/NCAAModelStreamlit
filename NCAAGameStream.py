@@ -1004,7 +1004,7 @@ def plot_line_chartLetsPlot(df, teams):
         #st_letsplot(p)
         #st.pyplot(p)
     p = ggplot(df, aes(x='Date_zero', y='tm_margin_net_eff', group='Tm_')) + \
-    geom_line(aes(color='Tm_'), size=1, alpha=0.5)+ggtitle("AT Net Rating") + \
+    geom_line(aes(color='Tm_'), size=1, alpha=0.5)+ggtitle("ATS Net Rating") + \
     ggsize(1000, 800)
     st_letsplot(p)
 def get2023Display(Dailyschedule,dateToday,d2,season):
@@ -1093,7 +1093,7 @@ def get2023Display(Dailyschedule,dateToday,d2,season):
             g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
             #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
 
-        TeamDatabase=pd.read_csv("Data/TeamDatabase"+season+"T.csv")
+        TeamDatabase=pd.read_csv("Data/TeamDatabase"+season+".csv")
         TeamDatabase.set_index("OldTRankName", inplace=True)
         Dailyschedule['VegasSpread'] = Dailyschedule.VegasSpread.apply(calculate_to_numeric)
         Dailyschedule['Total'] = Dailyschedule.VegasTotal.apply(calculate_to_numeric)   
@@ -1270,6 +1270,7 @@ if page == 'MG Rankings':
             components.html(source_code, height = 3000)
         with col2:
             #plot_line_chart(MG_Rank, selected_teams)
+            st.header('NCAA ATS Net Rating Comp')
             plot_line_chartLetsPlot(MG_Rank, selected_teams)
 if page == 'Todays Games':
     st.title('NCAA Head to Head Matchup')

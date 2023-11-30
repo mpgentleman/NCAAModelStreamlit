@@ -1282,7 +1282,8 @@ if page == 'Todays Games':
         dateString=str(add_selectbox_start)
         dateToday=dateString.replace('-', '')
         #Dailyschedule=pd.read_csv("DailySchedules2023/"+dateToday+"Schedule.csv")
-        Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+dateToday+"Schedule.csv")
+        #Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+dateToday+"Schedule.csv")
+        Dailyschedule=pd.read_csv("Data/DailySchedules2024/SkedHistory.csv")
         d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
         themonth=int(dateString.split('-')[1])
         theday=int(dateString.split('-')[2])
@@ -1311,15 +1312,15 @@ if page == 'Todays Games':
         if 'Todays Games' in  Tables_Selection:
             Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
             if 'Alphabetical'in  Tables_Choice:
-                Dailyschedule=Dailyschedule.sort_values(by=['Away'])
+                Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
             if 'Time' in Tables_Choice:
                 Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
             if 'Regression_Difference' in Tables_Choice: 
                 Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
             if 'OverPlaying' in Tables_Choice: 
                 Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
-            AwayList=list(Dailyschedule['Away'])
-            HomeList=list(Dailyschedule['Home'])
+            AwayList=list(Dailyschedule['AWAY'])
+            HomeList=list(Dailyschedule['HOME'])
             AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
             HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
 
@@ -1346,7 +1347,7 @@ if page == 'Todays Games':
                 header=dict(values=list(Dailyschedule.columns),
                     fill_color='grey',
                     align='left'),
-                cells=dict(values=[Dailyschedule.Away, Dailyschedule.Home, Dailyschedule.ATSVegas, Dailyschedule.OverUnderVegas, Dailyschedule.HomeAway,Dailyschedule.Reg_dif],
+                cells=dict(values=[Dailyschedule.AWAY, Dailyschedule.HOME, Dailyschedule.VegasSpread, Dailyschedule.VegasTotal, Dailyschedule.HomeAway,Dailyschedule.Reg_dif],
                 fill_color = [[rowOddColor,rowEvenColor]*lengthrows],
                     align='left',
                 font_size=12,
@@ -1354,7 +1355,7 @@ if page == 'Todays Games':
                 ])
                 fig.update_layout(width=1200, height=800)
                 #st.plotly_chart(fig)
-                Dailyschedule = Dailyschedule[['Away','Home','HomeAway','Result_x','ATS','ATSVegas','OverUnderVegas','Reg_dif','Over_dif']]
+                Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','VegasSpread','VegasTotal','Reg_dif','Over_dif']]
                 allcols=Dailyschedule.columns
                 gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
                 gb.configure_columns(allcols, cellStyle=cellStyle)

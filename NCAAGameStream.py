@@ -1329,10 +1329,10 @@ if page == 'Todays Games':
                 Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
             if 'OverPlaying' in Tables_Choice: 
                 Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
-            AwayList=list(Dailyschedule['AWAY'])
-            HomeList=list(Dailyschedule['HOME'])
-            AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
-            HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
+        AwayList=list(Dailyschedule['AWAY'])
+        HomeList=list(Dailyschedule['HOME'])
+        AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
+        HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
 
         if st.button('Run'):
             dateforRankings=dateToday
@@ -1406,6 +1406,16 @@ if page == 'Todays Games':
                 fig4=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test2,order=1, ax=ax2, color = 'green')
             #plt.show(fig)
             st.pyplot(fig)
+            st.subheader('Polynomial Regression Charts')
+            st.text('Daily Pomeroy Rankings line in green for each game')
+            st.text('Polynomial Regression of actual game performance in blue for each game ')
+            st.text('If the blue line is above the green then the team is playing better than its ranking ')
+            st.pyplot(fig)
+            st.subheader('Pomeroy Ranking and ATS Record')
+            st.text('Pomeroy Rankings by game Line in Green')
+            st.text('Blue bars are positive if the team won against the spread')
+            GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","PomAdjEMCurrent","PomAdjEMCurrent","ATS")
+            GetTwoChartsTogether_EMA_2023(test1,test2,AwayTeam,HomeTeam,"PlayingOverRating","PlayingOverRating","PomAdjEMCurrent","PomAdjEMCurrent","ATS")
         
     else:
         add_selectbox = st.sidebar.header("Select Todays Date")

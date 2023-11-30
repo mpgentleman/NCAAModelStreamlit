@@ -1329,10 +1329,10 @@ if page == 'Todays Games':
                 Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
             if 'OverPlaying' in Tables_Choice: 
                 Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
-        AwayList=list(Dailyschedule['AWAY'])
-        HomeList=list(Dailyschedule['HOME'])
-        AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
-        HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
+            AwayList=list(Dailyschedule['AWAY'])
+            HomeList=list(Dailyschedule['HOME'])
+            AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
+            HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
 
         if st.button('Run'):
             dateforRankings=dateToday

@@ -1293,7 +1293,8 @@ if page == 'Todays Games':
         #Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+dateToday+"Schedule.csv")
         Dailyschedule=pd.read_csv("Data/DailySchedules2024/SkedHistory.csv")
         Gamesdf = pd.read_csv("Data/DailySchedules2024/GamesDf"+dateToday+".csv")
-        Dailyschedule = Dailyschedule[Dailyschedule['DateNew']==dateToday]
+        Dailyschedule = Dailyschedule[Dailyschedule['DateNew']==int(dateToday)]
+        st.dataframe(Dailyschedule)
         d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
         themonth=int(dateString.split('-')[1])
         theday=int(dateString.split('-')[2])

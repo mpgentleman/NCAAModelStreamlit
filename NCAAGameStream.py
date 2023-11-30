@@ -1007,6 +1007,14 @@ def plot_line_chartLetsPlot(df, teams):
     geom_line(aes(color='Tm_'), size=1, alpha=0.5)+ggtitle("ATS Net Rating") + \
     ggsize(1000, 800)
     st_letsplot(p)
+
+def get_team_info_from_gamesdf(df,Team):
+    AF = df[df['Tm']==Team].sort_values('DateNew')
+    
+    AF["EMRating5GameExpMA"]=AF["EMRating"].ewm(span=5,adjust=False).mean()
+    AF["PlayingOverRating"]=AF["EMRating5GameExpMA"] - AF["Pomeroy_Tm_AdjEM"]
+    #AF.reset.index()
+    return(AF)
 def get2023Display(Dailyschedule,dateToday,d2,season):
     TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
     AllGames=pd.read_csv("Data/Season_GamesAll.csv")
@@ -1284,6 +1292,8 @@ if page == 'Todays Games':
         #Dailyschedule=pd.read_csv("DailySchedules2023/"+dateToday+"Schedule.csv")
         #Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+dateToday+"Schedule.csv")
         Dailyschedule=pd.read_csv("Data/DailySchedules2024/SkedHistory.csv")
+        Gamesdf = pd.read_csv("Data/DailySchedules2024/GamesDf"+dateToday+."csv")
+        Dailyschedule = Dailyschedule[Dailyschedule['DateNew']==dateToday]
         d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
         themonth=int(dateString.split('-')[1])
         theday=int(dateString.split('-')[2])
@@ -1371,6 +1381,31 @@ if page == 'Todays Games':
                 keyname='Test'
                 g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
                 #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
+            st.header('Team Matchup')
+            plt.style.use('seaborn')
+            fig_dims = (15,10)
+            fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
+            plt.figure(figsize=(20, 12))
+            ax1.set_title(AwayTeam)
+            ax2.set_title(HomeTeam)
+            test1=get_team_info_from_gamesdf(Gamesdf,AwayTeam)
+            test2=get_team_info_from_gamesdf(Gamesdf,HomeTeam)
+            test1['New_ID'] = range(0, 0+len(test1))
+            test2['New_ID'] = range(0, 0+len(test2))
+            try:
+                fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
+                fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green')
+            except:
+                fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=1, ax=ax1, color = 'blue')
+                fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=1, ax=ax1, color = 'green')
+            try: 
+                fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=2, ax=ax2, color = 'blue')
+                fig4=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test2,order=2, ax=ax2, color = 'green')
+            except:
+                fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=1, ax=ax2, color = 'blue')
+                fig4=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test2,order=1, ax=ax2, color = 'green')
+            #plt.show(fig)
+            st.pyplot(fig)
         
     else:
         add_selectbox = st.sidebar.header("Select Todays Date")

@@ -1457,8 +1457,8 @@ if page == 'Todays Games':
             st.subheader('Pomeroy Ranking and ATS Record')
             st.text('Pomeroy Rankings by game Line in Green')
             st.text('Blue bars are positive if the team won against the spread')
-            GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","PomAdjEMCurrent","PomAdjEMCurrent","ATS")
-            GetTwoChartsTogether_EMA_2023(test1,test2,AwayTeam,HomeTeam,"PlayingOverRating","PlayingOverRating","PomAdjEMCurrent","PomAdjEMCurrent","ATS")
+            GetTwoChartsTogether_EMA(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
+            GetTwoChartsTogether_EMA_2024(test1,test2,AwayTeam,HomeTeam,"PlayingOverRating","PlayingOverRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
         
     else:
         add_selectbox = st.sidebar.header("Select Todays Date")

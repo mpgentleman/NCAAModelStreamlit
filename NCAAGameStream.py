@@ -502,7 +502,7 @@ def GetTwoChartsTogether_EMA_2024(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,Fi
     #AwayTeamInfo["EM5"]=AwayTeamInfo['AdjO5ExpMA']-AwayTeamInfo['AdjD5ExpMA']
     #AwayTeamInfo["EM10"]=AwayTeamInfo['AdjO10ExpMA']-AwayTeamInfo['AdjD10ExpMA']
     AwayTeamInfo["EMOver"]=AwayTeamInfo['PlayingOverRating'].rolling(5).mean()
-
+    st.dataframe(HomeTeamInfo)
     f,(ax1, ax2) = plt.subplots(1, 2, figsize=(15,5))
     ChartTitleName=AwayTeam+" "+SecondStat+ " and "+VegasStat
     ax1.set_title(ChartTitleName)
@@ -511,7 +511,7 @@ def GetTwoChartsTogether_EMA_2024(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,Fi
     ax1.plot(AwayTeamInfo["EMOver"],color='red')
     #ax1.plot(AwayTeamInfo["EMRating5GameExpMA"],color='black')
     ax1.plot(AwayTeamInfo["EMRating10GameExpMA"],color='purple')
-    
+    st.dataframe(AwayTeamInfo)
     ax1.bar(AwayTeamInfo.index,AwayTeamInfo[VegasStat],color='dodgerblue')
     ChartTitleName=HomeTeam+" "+FirstStat+ " and "+VegasStat
     ax2.set_title(ChartTitleName)

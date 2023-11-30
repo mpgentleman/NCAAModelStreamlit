@@ -493,7 +493,36 @@ def GetTwoChartsTogether_EMA(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,FirstSt
     ax2.bar(HomeTeamInfo.index,HomeTeamInfo[VegasStat],color='dodgerblue')
     st.pyplot(f)
     #plt.show()
+def GetTwoChartsTogether_EMA_2024(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,FirstStat,SecondStat,PomStatHome,PomStatAway,VegasStat):
+    #HomeTeamInfo["EM3"]=HomeTeamInfo['AdjO3ExpMA']-HomeTeamInfo['AdjD3ExpMA']
+    #HomeTeamInfo["EM5"]=HomeTeamInfo['AdjO5ExpMA']-HomeTeamInfo['AdjD5ExpMA']
+    #HomeTeamInfo["EM10"]=HomeTeamInfo['AdjO10ExpMA']-HomeTeamInfo['AdjD10ExpMA']
+    HomeTeamInfo["EMOver"]=HomeTeamInfo['PlayingOverRating'].rolling(5).mean()
+    #AwayTeamInfo["EM3"]=AwayTeamInfo['AdjO3ExpMA']-AwayTeamInfo['AdjD3ExpMA']
+    #AwayTeamInfo["EM5"]=AwayTeamInfo['AdjO5ExpMA']-AwayTeamInfo['AdjD5ExpMA']
+    #AwayTeamInfo["EM10"]=AwayTeamInfo['AdjO10ExpMA']-AwayTeamInfo['AdjD10ExpMA']
+    AwayTeamInfo["EMOver"]=AwayTeamInfo['PlayingOverRating'].rolling(5).mean()
 
+    f,(ax1, ax2) = plt.subplots(1, 2, figsize=(15,5))
+    ChartTitleName=AwayTeam+" "+SecondStat+ " and "+VegasStat
+    ax1.set_title(ChartTitleName)
+    ax1.plot(AwayTeamInfo.index,AwayTeamInfo[SecondStat],color='black')
+    ax1.plot(AwayTeamInfo[PomStatAway],color='green')
+    ax1.plot(AwayTeamInfo["EMOver"],color='red')
+    #ax1.plot(AwayTeamInfo["EMRating5GameExpMA"],color='black')
+    ax1.plot(AwayTeamInfo["EMRating10GameExpMA"],color='purple')
+    
+    ax1.bar(AwayTeamInfo.index,AwayTeamInfo[VegasStat],color='dodgerblue')
+    ChartTitleName=HomeTeam+" "+FirstStat+ " and "+VegasStat
+    ax2.set_title(ChartTitleName)
+    ax2.plot(HomeTeamInfo.index,HomeTeamInfo[FirstStat],color='black')
+    ax2.plot(HomeTeamInfo[PomStatHome],color='green')
+    ax2.plot(HomeTeamInfo["EMOver"],color='red')
+    #ax2.plot(HomeTeamInfo["EMRating5GameExpMA"],color='black')
+    ax2.plot(HomeTeamInfo["EMRating10GameExpMA"],color='purple')
+
+    ax2.bar(HomeTeamInfo.index,HomeTeamInfo[VegasStat],color='dodgerblue')
+    st.pyplot(f)
 def GetTwoChartsTogether_EMA_2023(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,FirstStat,SecondStat,PomStatHome,PomStatAway,VegasStat):
     HomeTeamInfo["EM3"]=HomeTeamInfo['AdjO3ExpMA']-HomeTeamInfo['AdjD3ExpMA']
     HomeTeamInfo["EM5"]=HomeTeamInfo['AdjO5ExpMA']-HomeTeamInfo['AdjD5ExpMA']
@@ -1011,7 +1040,20 @@ def plot_line_chartLetsPlot(df, teams):
 def get_team_info_from_gamesdf(df,Team):
     AF = df[df['Tm']==Team].sort_values('DateNew')
     
+
+
+    AF["EMRating3GameExpMA"]=AF["EMRating"].ewm(span=3,adjust=False).mean()
     AF["EMRating5GameExpMA"]=AF["EMRating"].ewm(span=5,adjust=False).mean()
+    AF["EMRating10GameExpMA"]=AF["EMRating"].ewm(span=10,adjust=False).mean()
+
+    AF["AdjO3GameExpMA"]=AF["Tm_AdjO"].ewm(span=3,adjust=False).mean()
+    AF["AdjO5GameExpMA"]=AF["Tm_AdjO"].ewm(span=5,adjust=False).mean()
+    AF["AdjO10GameExpMA"]=AF["Tm_AdjO"].ewm(span=10,adjust=False).mean()
+
+    AF["AdjD3GameExpMA"]=AF["Tm_AdjD"].ewm(span=3,adjust=False).mean()
+    AF["AdjD5GameExpMA"]=AF["Tm_AdjD"].ewm(span=5,adjust=False).mean()
+    AF["AdjD10GameExpMA"]=AF["Tm_AdjD"].ewm(span=10,adjust=False).mean()
+    
     AF["PlayingOverRating"]=AF["EMRating5GameExpMA"] - AF["Pomeroy_Tm_AdjEM"]
     #AF.reset.index()
     return(AF)
@@ -1294,7 +1336,7 @@ if page == 'Todays Games':
         Dailyschedule=pd.read_csv("Data/DailySchedules2024/SkedHistory.csv")
         Gamesdf = pd.read_csv("Data/DailySchedules2024/GamesDf"+dateToday+".csv")
         Dailyschedule = Dailyschedule[Dailyschedule['DateNew']==int(dateToday)]
-        st.dataframe(Dailyschedule)
+        #st.dataframe(Dailyschedule)
         d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
         themonth=int(dateString.split('-')[1])
         theday=int(dateString.split('-')[2])

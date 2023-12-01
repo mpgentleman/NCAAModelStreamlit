@@ -717,8 +717,8 @@ def getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2):
 
     dataOne=pd.concat([data6,data7])
     data4=pd.concat([data,data2,data3,data5])
-    #st.dataframe(dataOne)
-    #st.dataframe(data4)
+    st.dataframe(dataOne)
+    st.dataframe(data4)
     plt.figure(figsize=(5,5), dpi= 80)
 
     #plt.figure(dpi= 380)

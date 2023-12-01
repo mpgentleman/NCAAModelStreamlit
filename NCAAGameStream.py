@@ -1534,7 +1534,7 @@ if page == 'Todays Games':
                 csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
                 gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
                 csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
-                gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1)
+                gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
                 gb.configure_column('VegasSpread',valueFormatter=numberFormat(1))
                 gb.configure_column('VegasTotal',valueFormatter=numberFormat(1))
                 #gb.configure_pagination()

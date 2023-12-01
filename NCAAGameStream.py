@@ -1242,15 +1242,13 @@ def get2023Display(Dailyschedule,dateToday,d2,season):
                 ])
             fig.update_layout(width=1200, height=800)
                 #st.plotly_chart(fig)
-            Dailyschedule.VegasSpread = Dailyschedule.VegasSpread.astype(float).round(1)
-            Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
+
             allcols=Dailyschedule.columns
             gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
             gb.configure_columns(allcols, cellStyle=cellStyle)
             csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
             gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
-            gb.configure_column('VegasSpread',valueFormatter=numberFormat(1))
-            gb.configure_column('VegasTotal',valueFormatter=numberFormat(1))
+
             #gb.configure_pagination()
             gb.configure_side_bar()
             gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
@@ -1528,11 +1526,17 @@ if page == 'Todays Games':
                 fig.update_layout(width=1200, height=800)
                 #st.plotly_chart(fig)
                 Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','VegasSpread','VegasTotal','Reg_dif','Over_dif']]
+                Dailyschedule.VegasSpread = Dailyschedule.VegasSpread.astype(float).round(1)
+                Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
                 allcols=Dailyschedule.columns
                 gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
                 gb.configure_columns(allcols, cellStyle=cellStyle)
                 csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
                 gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+                csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
+                gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1)
+                gb.configure_column('VegasSpread',valueFormatter=numberFormat(1))
+                gb.configure_column('VegasTotal',valueFormatter=numberFormat(1))
                 #gb.configure_pagination()
                 gb.configure_side_bar()
                 gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)

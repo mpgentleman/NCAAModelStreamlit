@@ -1242,8 +1242,8 @@ def get2023Display(Dailyschedule,dateToday,d2,season):
                 ])
             fig.update_layout(width=1200, height=800)
                 #st.plotly_chart(fig)
-            Dailyschedule.VegasSpread = Dailyschedule.VegasSpread.round(1)
-            Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.round(1)
+            Dailyschedule.VegasSpread = Dailyschedule.VegasSpread.astype(float).round(1)
+            Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
             allcols=Dailyschedule.columns
             gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
             gb.configure_columns(allcols, cellStyle=cellStyle)

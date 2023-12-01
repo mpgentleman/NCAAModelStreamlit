@@ -901,6 +901,24 @@ def getTeamDFTable(team1,teamname):
 
     AgGrid(team1, gridOptions=gridOptions, enable_enterprise_modules=True,height=1000,allow_unsafe_jscode=True)
 
+def getTeamDFTable2024(team1,teamname):
+    colsM=['DateNew','Opp','Result_x','pace','ATSVegas','OverUnderVegas','ATS','EMRating','PlayingOverRating']
+    numeric=['numericColumn','numberColumnFilter']
+    team1=team1[colsM]
+    allcols=team1.columns
+    header1=teamname+' Game History'
+    st.subheader(header1)
+    csTotal=cellStyleDynamic(team1.PlayingOverRating)
+    gb = GridOptionsBuilder.from_dataframe(team1)
+    #gb.configure_columns('PlayingOverRating', type=numeric, valueFormatter=numberFormat(1))
+    gb.configure_columns(allcols, cellStyle=cellStyle)
+    gb.configure_column('PlayingOverRating',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    gridOptions = gb.build()
+
+    AgGrid(team1, gridOptions=gridOptions, enable_enterprise_modules=True,height=1000,allow_unsafe_jscode=True)
+
     
 def getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1):
     
@@ -1573,9 +1591,9 @@ if page == 'Todays Games':
             st.subheader('Defensive Points per Possesion against the Over/Under')
             GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_D_PPP","OverUnder")
             #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
-            getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
-            getTeamDFTable(test1,AwayTeam)
-            getTeamDFTable(test2,HomeTeam)
+            #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
+            getTeamDFTable2024(test1,AwayTeam)
+            getTeamDFTable2024(test2,HomeTeam)
         
     else:
         add_selectbox = st.sidebar.header("Select Todays Date")

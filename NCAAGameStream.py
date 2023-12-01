@@ -502,7 +502,7 @@ def GetTwoChartsTogether_EMA_2024(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,Fi
     #AwayTeamInfo["EM5"]=AwayTeamInfo['AdjO5ExpMA']-AwayTeamInfo['AdjD5ExpMA']
     #AwayTeamInfo["EM10"]=AwayTeamInfo['AdjO10ExpMA']-AwayTeamInfo['AdjD10ExpMA']
     AwayTeamInfo["EMOver"]=AwayTeamInfo['PlayingOverRating'].rolling(5).mean()
-    st.dataframe(HomeTeamInfo)
+    #st.dataframe(HomeTeamInfo)
     f,(ax1, ax2) = plt.subplots(1, 2, figsize=(15,5))
     ChartTitleName=AwayTeam+" "+SecondStat+ " and "+VegasStat
     ax1.set_title(ChartTitleName)
@@ -511,7 +511,7 @@ def GetTwoChartsTogether_EMA_2024(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,Fi
     ax1.plot(AwayTeamInfo["EMOver"],color='red')
     #ax1.plot(AwayTeamInfo["EMRating5GameExpMA"],color='black')
     ax1.plot(AwayTeamInfo["EMRating10GameExpMA"],color='purple')
-    st.dataframe(AwayTeamInfo)
+    #st.dataframe(AwayTeamInfo)
     ax1.bar(AwayTeamInfo.index,AwayTeamInfo[VegasStat],color='dodgerblue')
     ChartTitleName=HomeTeam+" "+FirstStat+ " and "+VegasStat
     ax2.set_title(ChartTitleName)
@@ -630,7 +630,32 @@ def GetTwoTeamChartsTogether(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,FirstSt
     ax2.bar(HomeTeamInfo.index,HomeTeamInfo[VegasStat],color='blue')
     st.pyplot(f)
     #plt.show() 
+def GetTwoTeamChartsTogether2024(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,FirstStat,VegasStat):
+    HomeTeamInfo["First 3 Game"]=HomeTeamInfo[FirstStat].rolling(3).mean()
+    HomeTeamInfo["First 5 Game"]=HomeTeamInfo[FirstStat].rolling(5).mean()
+    HomeTeamInfo["First 10 Game"]=HomeTeamInfo[FirstStat].rolling(10).mean()
     
+    AwayTeamInfo["Second 3 Game"]=AwayTeamInfo[FirstStat].rolling(3).mean()
+    AwayTeamInfo["Second 5 Game"]=AwayTeamInfo[FirstStat].rolling(5).mean()
+    AwayTeamInfo["Second 10 Game"]=AwayTeamInfo[FirstStat].rolling(10).mean()
+    
+    f, (ax1, ax2) = plt.subplots(1, 2, figsize=(15,5))
+    ChartTitleName=AwayTeam+" "+FirstStat+ " and "+VegasStat
+    ax1.set_title(ChartTitleName)
+    ax1.scatter(AwayTeamInfo.index,AwayTeamInfo[FirstStat])
+    ax1.plot(AwayTeamInfo["Pomeroy_Tm_AdjEM"])
+    ax1.plot(AwayTeamInfo["Second 10 Game"],color='green')
+    ax1.plot(AwayTeamInfo["Second 3 Game"],color='red')
+    ax1.bar(AwayTeamInfo.index,AwayTeamInfo[VegasStat],color='blue')
+    ChartTitleName=HomeTeam+" "+FirstStat+ " and "+VegasStat
+    ax2.set_title(ChartTitleName)
+    ax2.scatter(HomeTeamInfo.index,HomeTeamInfo[FirstStat])
+    ax2.plot(HomeTeamInfo["Pomeroy_Tm_AdjEM"])
+    ax2.plot(HomeTeamInfo["First 10 Game"],color='green')
+    ax2.plot(HomeTeamInfo["First 3 Game"],color='red')
+    ax2.bar(HomeTeamInfo.index,HomeTeamInfo[VegasStat],color='blue')
+    st.pyplot(f)
+    #plt.show()     
 def get_team_reg_dif(teamname):
     test1=NF.GetThisTeamInfoFromCsv(teamname,"TeamDataFiles2021")
     test1
@@ -1478,9 +1503,9 @@ if page == 'Todays Games':
             #GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Pace","PomTempo","OverUnder")
     
             st.subheader('Points per Possesion against the ATS')
-            GetTwoTeamChartsTogether(test1,test2,AwayTeam,HomeTeam,"Tm_O_PPP","ATS")
+            GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_O_PPP","ATS")
             st.subheader('Defensive Points per Possesion against the Over/Under')
-            GetTwoTeamChartsTogether(test1,test2,AwayTeam,HomeTeam,"Tm_D_PPP","OverUnder")
+            GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_D_PPP","OverUnder")
             #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
             getDistributionMatchupCharts(AwayTeam,HomeTeam)
             getTeamDFTable(test1,AwayTeam)

@@ -671,6 +671,72 @@ def get_team_reg_dif(teamname):
     plt.show()
     return(a3[-1])
 
+def getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2):
+    
+    teamname1=AwayTeam
+    #test1=GetThisTeamInfoFromCsv(teamname1,"TeamDataFilesStarter2022")
+    teamname2=HomeTeam
+    #test2=GetThisTeamInfoFromCsv(teamname2,"TeamDataFilesStarter2022")
+
+    test2EFG=test2['Tm_O_EFG']
+    test2TO=test2['Tm_O_TO']
+    test2OR=test2['Tm_O_OR']
+    test2FTR=test2['Tm_O_FTR']
+    test2ADJO=test2['Tm_AdjO']
+    test2ADJD=test2['Tm_AdjD']
+    test2ADJEM=test2['EMRating']
+
+
+    test1EFG=random.choices(list(test1['Tm_O_EFG']), k=len(test2['Tm_O_EFG']))
+    test1TO=random.choices(list(test1['Tm_O_TO']), k=len(test2['Tm_O_TO']))
+    test1OR=random.choices(list(test1['Tm_O_OR']), k=len(test2['Tm_O_OR']))
+    test1FTR=random.choices(list(test1['Tm_O_FTR']), k=len(test2['Tm_O_FTR']))
+    test1ADJO=random.choices(list(test1['Tm_AdjO']), k=len(test2['Tm_AdjO']))
+    test1ADJD=random.choices(list(test1['Tm_AdjD']), k=len(test2['Tm_AdjD']))
+    test1ADJEM=random.choices(list(test1['EMRating']), k=len(test2['EMRating']))
+
+    data = pd.DataFrame({teamname1:test1EFG,teamname2:test2EFG})
+
+    data['Stat']='Tm_O_EFG'
+
+    data2 = pd.DataFrame({teamname1:test1TO,teamname2:test2TO})
+    data2['Stat']='Tm_O_TO'
+    #data2['Base']=1
+    data3 = pd.DataFrame({teamname1:test1OR,teamname2:test2OR})
+    data3['Stat']='Tm_O_OR'
+    #data2['Base']=1
+    data5 = pd.DataFrame({teamname1:test1FTR,teamname2:test2FTR})
+    data5['Stat']='Tm_O_FTR'
+    data6 = pd.DataFrame({teamname1:test1ADJO,teamname2:test2ADJO})
+    data6['Stat']='Tm_AdjO'
+    data7 = pd.DataFrame({teamname1:test1ADJD,teamname2:test2ADJD})
+    data7['Stat']='Tm_AdjD'
+    data8 = pd.DataFrame({teamname1:test1ADJEM,teamname2:test2ADJEM})
+    data8['Stat']='AdjEM'
+
+
+    dataOne=pd.concat([data6,data7])
+    data4=pd.concat([data,data2,data3,data5])
+    #st.dataframe(dataOne)
+    #st.dataframe(data4)
+    plt.figure(figsize=(5,5), dpi= 80)
+
+    #plt.figure(dpi= 380)
+    #ax1, fig =joyplot(data8[[teamname1,teamname2,'Stat']],
+    #   by='Stat',column=[teamname1, teamname2],alpha=.70,legend=True )
+    #st.pyplot(ax1)
+    ax2, fig2 =joyplot(dataOne[[teamname1,teamname2,'Stat']],
+       by='Stat',column=[teamname1, teamname2],alpha=.70,legend=True ,figsize=(5, 8))
+    
+    plt.title('Efficiency Matchup Stats', fontsize=10)
+    plt.show()
+    st.pyplot(ax2)
+    ax3, fig3 =joyplot(data4[[teamname1,teamname2,'Stat']],
+    by='Stat',column=[teamname1, teamname2],alpha=.70,legend=True ,figsize=(15, 15))
+    
+    plt.title('Four Factors Matchup Stats', fontsize=20)
+    plt.show()
+    st.pyplot(ax3)
 def getDistributionMatchupCharts(AwayTeam,HomeTeam):
     
     teamname1=AwayTeam
@@ -1507,7 +1573,7 @@ if page == 'Todays Games':
             st.subheader('Defensive Points per Possesion against the Over/Under')
             GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_D_PPP","OverUnder")
             #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
-            getDistributionMatchupCharts(AwayTeam,HomeTeam)
+            getDistributionMatchupCharts2024(AwayTeam,HomeTeam)
             getTeamDFTable(test1,AwayTeam)
             getTeamDFTable(test2,HomeTeam)
         

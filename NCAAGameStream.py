@@ -1055,7 +1055,7 @@ def get_team_info_from_gamesdf(df,Team):
     AF["AdjD10GameExpMA"]=AF["Tm_AdjD"].ewm(span=10,adjust=False).mean()
     
     AF["PlayingOverRating"]=AF["EMRating5GameExpMA"] - AF["Pomeroy_Tm_AdjEM"]
-    AF["GameDifRating"]=AF["EMRating"]-TeamData["tm_net_eff"]
+    AF["GameDifRating"]=AF["EMRating"]-AF["tm_net_eff"]
     AF["DifCumSum"]=AF["GameDifRating"].cumsum()
     AF["DifCumSumEMA"]=AF["DifCumSum"].ewm(span=5,adjust=False).mean()
     AF["DifCumSum"]=AF["DifCumSum"].shift(1).fillna(0)

@@ -1573,7 +1573,7 @@ if page == 'Todays Games':
             st.subheader('Defensive Points per Possesion against the Over/Under')
             GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_D_PPP","OverUnder")
             #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
-            getDistributionMatchupCharts2024(AwayTeam,HomeTeam)
+            getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
             getTeamDFTable(test1,AwayTeam)
             getTeamDFTable(test2,HomeTeam)
         

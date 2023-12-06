@@ -1453,6 +1453,9 @@ if page == 'Todays Games':
         #Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+dateToday+"Schedule.csv")
         Dailyschedule=pd.read_csv("Data/DailySchedules2024/SkedHistory.csv")
         Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+dateToday+".csv")
+        Gamesdf = Gamesdf.reset_index(drop=True)
+        Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
+        Gamesdf = Gamesdf.drop_duplicates()
         Dailyschedule = Dailyschedule[Dailyschedule['DateNew']==int(dateToday)]
         #st.dataframe(Dailyschedule)
         d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
@@ -1555,14 +1558,15 @@ if page == 'Todays Games':
             plt.figure(figsize=(20, 12))
             ax1.set_title(AwayTeam)
             ax2.set_title(HomeTeam)
+            
             test1=get_team_info_from_gamesdf(Gamesdf,AwayTeam)
-            test1 = test1.reset_index(drop=True)
-            test1.drop(columns=test1.columns[0], axis=1,  inplace=True)
-            test1 = test1.drop_duplicates()
+            #test1 = test1.reset_index(drop=True)
+            #test1.drop(columns=test1.columns[0], axis=1,  inplace=True)
+            #test1 = test1.drop_duplicates()
             test2=get_team_info_from_gamesdf(Gamesdf,HomeTeam)
-            test2 = test2.reset_index(drop=True)
-            test2.drop(columns=test2.columns[0], axis=1,  inplace=True)
-            test2 = test2.drop_duplicates()
+            #test2 = test2.reset_index(drop=True)
+            #test2.drop(columns=test2.columns[0], axis=1,  inplace=True)
+            #test2 = test2.drop_duplicates()
             test1['New_ID'] = range(0, 0+len(test1))
             test2['New_ID'] = range(0, 0+len(test2))
             try:

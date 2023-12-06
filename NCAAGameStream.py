@@ -1556,9 +1556,9 @@ if page == 'Todays Games':
             ax1.set_title(AwayTeam)
             ax2.set_title(HomeTeam)
             test1=get_team_info_from_gamesdf(Gamesdf,AwayTeam)
-            test1 = test1.reset_index(drop=True)
+            test1 = test1.reset_index(drop=True).drop_duplicates()
             test2=get_team_info_from_gamesdf(Gamesdf,HomeTeam)
-            test2 = test2.reset_index(drop=True)
+            test2 = test2.reset_index(drop=True).drop_duplicates()
             test1['New_ID'] = range(0, 0+len(test1))
             test2['New_ID'] = range(0, 0+len(test2))
             try:

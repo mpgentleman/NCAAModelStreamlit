@@ -1403,14 +1403,18 @@ HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 MG_Rank=pd.read_csv("Data/MGRankings_2024_DB.csv")
 teams = MG_Rank['Tm_'].unique()
 #st.title('NCAA Head to Head Matchup')
-page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games'])
+page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games','Rankings Historical Charts'])
 
+if page == 'Rankings Historical Charts':
+    selected_teams = st.multiselect('Select teams:', teams)
+    st.header('NCAA ATS Net Rating Comp')
+    plot_line_chartLetsPlot(MG_Rank, selected_teams)
 if page == 'MG Rankings':
     #st.write('MG Rankings')
 
     import streamlit.components.v1 as components
     add_selectbox_start =st.sidebar.date_input('Pick date')
-    selected_teams = st.multiselect('Select teams:', teams)
+    
     dateString=str(add_selectbox_start)
     dateToday=dateString.replace('-', '')
     files = os.listdir('Data/MGRankings2024')
@@ -1433,13 +1437,13 @@ if page == 'MG Rankings':
     source_code = HtmlFile.read() 
     #print(source_code)
     if st.button('Run'):
-        col1, col2 = st.columns(2)
-        with col1:
-            components.html(source_code, height = 3000)
-        with col2:
+        components.html(source_code, height = 3000)
+        #col1, col2 = st.columns(2)
+        #with col1:
+        #    components.html(source_code, height = 3000)
+        #with col2:
             #plot_line_chart(MG_Rank, selected_teams)
-            st.header('NCAA ATS Net Rating Comp')
-            plot_line_chartLetsPlot(MG_Rank, selected_teams)
+            
 if page == 'Todays Games':
     st.title('NCAA Head to Head Matchup')
     season = st.sidebar.selectbox('Season Selection',['2024','2023'])
@@ -1597,7 +1601,7 @@ if page == 'Todays Games':
             st.subheader('Team Playing Over its Ranking')
             st.text('Blue bars are positive if the team played over its rating')
             st.text('The green and blue lines are cumulative moving averages')
-            st.dataframe(test1)
+            #st.dataframe(test1)
             getOverplayingChartBothTeamsDec4(pp,test1,test2,AwayTeam,HomeTeam)
             st.subheader('Adjusted Offense and the ATS spread')
             GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Tm_AdjO","Pomeroy_Tm_AdjEM","ATS")

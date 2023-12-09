@@ -1534,7 +1534,7 @@ if page == 'Todays Games':
                 ])
                 fig.update_layout(width=1200, height=800)
                 #st.plotly_chart(fig)
-                Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','DraftKings','BetMGM spreads','Caesars spreads','FanDuel','BetOnline.ag spreads','BetRivers spreads','VegasTotal','Reg_dif','Over_dif','Pomeroy_PointDiff','TRank_PointDiff','MG_PointDiff','MG_ATS_PointDiff','Daily_Reg_PointDiff','Dif_from_Vegas']]
+                Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','DraftKings','BetMGM spreads','Caesars spreads','FanDuel','commence_time','BetRivers spreads','VegasTotal','Reg_dif','Over_dif','Pomeroy_PointDiff','TRank_PointDiff','MG_PointDiff','MG_ATS_PointDiff','Daily_Reg_PointDiff','Dif_from_Vegas']]
                 Dailyschedule.DraftKings = Dailyschedule.DraftKings.astype(float).round(1)
                 Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
                 allcols=Dailyschedule.columns

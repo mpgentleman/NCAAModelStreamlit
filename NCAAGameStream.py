@@ -1489,6 +1489,7 @@ if page == 'Todays Games':
             HomeTeam = st.sidebar.selectbox('Home Team',HomeTeamAll)
         if 'Todays Games' in  Tables_Selection:
             Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
+            Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+dateToday+"Schedule.csv")
             if 'Alphabetical'in  Tables_Choice:
                 Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
             if 'Time' in Tables_Choice:
@@ -1533,7 +1534,7 @@ if page == 'Todays Games':
                 ])
                 fig.update_layout(width=1200, height=800)
                 #st.plotly_chart(fig)
-                Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','VegasSpread','VegasTotal','Reg_dif','Over_dif','Pomeroy_PointDiff','TRank_PointDiff','MG_PointDiff','MG_ATS_PointDiff','Daily_Reg_PointDiff']]
+                Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','DraftKings','BetMGM spreads','Caesars spreads','FanDuel','BetOnline.ag spreads','BetRivers','VegasTotal','Reg_dif','Over_dif','Pomeroy_PointDiff','TRank_PointDiff','MG_PointDiff','MG_ATS_PointDiff','Daily_Reg_PointDiff','Dif_from_Vegas]]
                 Dailyschedule.VegasSpread = Dailyschedule.VegasSpread.astype(float).round(1)
                 Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
                 allcols=Dailyschedule.columns

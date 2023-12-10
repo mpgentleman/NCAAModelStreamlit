@@ -1521,9 +1521,9 @@ if page == 'Todays Games':
         #MG_DF1=pd.read_csv("Data/MGRankings"+season+"/tm_seasons_stats_ranks"+dateforRankings5+" .csv")
         #MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
         #MG_DF1.set_index("updated", inplace=True)
-        #from matplotlib.backends.backend_pdf import PdfPages
+        from matplotlib.backends.backend_pdf import PdfPages
         #WhichFile='TeamDataFiles'+season
-        #pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
+        pp= PdfPages("Daily_Team_Charts_"+dateforRankings+".pdf")
 
                 
         st.header('Team Matchup')

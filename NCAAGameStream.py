@@ -1604,6 +1604,7 @@ if page == 'Team Matchup':
         #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
         TeamDatabase2.set_index("OldTRankName", inplace=True)
         from matplotlib.backends.backend_pdf import PdfPages
+        season =2024
         WhichFile='TeamDataFiles'+season
         pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
 

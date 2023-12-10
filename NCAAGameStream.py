@@ -1510,7 +1510,7 @@ if page == 'Todays Games':
     g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
     #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
     if st.button('Run'):
-        dateforRankings=dateToday
+        dateforRankings=today_date_format
         dateforRankings5=d2
         #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
         TeamDatabase2.set_index("OldTRankName", inplace=True)

@@ -1462,7 +1462,10 @@ if page == 'MG Rankings':
         #with col2:
             #plot_line_chart(MG_Rank, selected_teams)
 if page == 'Todays Games':
-    
+    Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
+    Gamesdf = Gamesdf.reset_index(drop=True)
+    Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
+    Gamesdf = Gamesdf.drop_duplicates()
     Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
     Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+today_date_format+"Schedule.csv")
     if 'Alphabetical'in  Tables_Choice:
@@ -1511,6 +1514,7 @@ if page == 'Todays Games':
     #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
     if st.button('Run'):
         dateforRankings=today_date_format
+        
         #dateforRankings5=d2
         #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
         TeamDatabase2.set_index("OldTRankName", inplace=True)

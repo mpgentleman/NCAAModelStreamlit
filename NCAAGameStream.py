@@ -1128,9 +1128,9 @@ def getHotColdTeams(df):
     dfs = []
 
     # Iterate over the unique teams
-    for team in df['Team].unique():
+    for team in df['Team'].unique():
         # Filter the rows for the current team
-        team_df = df[df['Team] == team]
+        team_df = df[df['Team'] == team]
         # Sort the dataframe by 'Date_zero'
         team_df = team_df.sort_values('Date_zero')
         # Calculate the change in performance

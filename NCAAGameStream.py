@@ -1167,7 +1167,7 @@ def plot_line_chartLetsPlotHot(df, teams):
         #st.pyplot(p)
     p = ggplot(df, aes(x='Date_zero', y='ATS_net_eff', group='Team')) + \
     geom_line(aes(color='Team'), size=1, alpha=0.5)+ggtitle("ATS Net Rating") + \
-    ggsize(500, 800)
+    ggsize(1000, 600)
     st_letsplot(p)
 
 def plot_line_chartLetsPlot(df, teams):
@@ -1485,9 +1485,10 @@ if page == 'MG Rankings':
     col1, col2 = st.columns(2)
     with col1:
         st.subheader('Who is Hot?')
-        gb = GridOptionsBuilder.from_dataframe(hot.head(10),groupable=True)
+        hot2 = hot.head(10)[['Team','ATS_net_eff','performance_change']]
+        gb = GridOptionsBuilder.from_dataframe(hot2,groupable=True)
         #gb.configure_columns(allcols, cellStyle=cellStyle)
-        csTotal=cellStyleDynamic(hot.head(10).	performance_change)
+        csTotal=cellStyleDynamic(hot2.performance_change)
         gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
         gb.configure_column('ATS_net_eff',valueFormatter=numberFormat(2))
         #csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
@@ -1498,14 +1499,15 @@ if page == 'MG Rankings':
                **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
         gb.configure_grid_options(**opts)
         keyname='Test 1'
-        g = _displayGrid(hot.head(10), gb, key=keyname, height=500)
+        g = _displayGrid(hot2, gb, key=keyname, height=500)
         #st.image('Data/hot-icon.jpg')
         plot_line_chartLetsPlotHot(MG_Rank2, hotlist)
     with col2:
         st.subheader('Who is Not?')
-        gb = GridOptionsBuilder.from_dataframe(cold.head(10),groupable=True)
+        cold2 = cold.head(10)[['Team','ATS_net_eff','performance_change']]
+        gb = GridOptionsBuilder.from_dataframe(cold.2,groupable=True)
         #gb.configure_columns(allcols, cellStyle=cellStyle)
-        csTotal=cellStyleDynamic(cold.head(10).performance_change)
+        csTotal=cellStyleDynamic(cold2.performance_change)
         #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
         gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
         gb.configure_column('ATS_net_eff',valueFormatter=numberFormat(2))
@@ -1518,7 +1520,7 @@ if page == 'MG Rankings':
                **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
         gb.configure_grid_options(**opts)
         keyname='Test '
-        g = _displayGrid(cold.head(10), gb, key=keyname, height=500)
+        g = _displayGrid(cold2, gb, key=keyname, height=500)
         #st.image('Data/cold-icon-3.jpg')
         plot_line_chartLetsPlotHot(MG_Rank2,coldlist)
     import streamlit.components.v1 as components

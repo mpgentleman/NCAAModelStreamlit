@@ -1128,9 +1128,9 @@ def getHotColdTeams(df):
     dfs = []
 
     # Iterate over the unique teams
-    for team in df['Tm_'].unique():
+    for team in df['Team].unique():
         # Filter the rows for the current team
-        team_df = df[df['Tm_'] == team]
+        team_df = df[df['Team] == team]
         # Sort the dataframe by 'Date_zero'
         team_df = team_df.sort_values('Date_zero')
         # Calculate the change in performance
@@ -1145,7 +1145,7 @@ def getHotColdTeams(df):
     return(hotteams,coldteams)
 def plot_line_chartLetsPlotHot(df, teams):
     # Filter the dataframe for the selected teams
-    df = df[df['Tm_'].isin(teams)]
+    df = df[df['Team'].isin(teams)]
 
     # Convert the 'Date_zero' column to datetime
     df['Date_zero'] = pd.to_datetime(df['Date_zero'])
@@ -1155,7 +1155,7 @@ def plot_line_chartLetsPlotHot(df, teams):
 
     # Create the line chart
     for team in teams:
-        df_team = df[df['Tm_'] == team]
+        df_team = df[df['Team'] == team]
         p = ggplot(df_team, aes(x='Date_zero', y='ATS_net_eff')) + \
             geom_line(color='red', size=1.5) + \
             ggtitle('Margin Net Over Time') + \
@@ -1464,6 +1464,7 @@ AllGames=pd.read_csv("Data/Season_GamesAll.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 MG_Rank=pd.read_csv("Data/MGRatings2024_Daily_All_DB.csv")
+#MG_Rank=pd.read_csv("Data/MGRatings2024_Daily_New_DB.csv
 hot,cold=  getHotColdTeams(MG_Rank)
 hotlist = hot.head(10)['Team'].to_list()
 coldlist = cold.head(10)['Team'].to_list()

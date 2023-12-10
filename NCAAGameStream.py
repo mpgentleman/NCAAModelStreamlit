@@ -1724,6 +1724,7 @@ if page == 'Past Games':
             #MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
             #MG_DF1.set_index("updated", inplace=True)
             from matplotlib.backends.backend_pdf import PdfPages
+            season =2024
             WhichFile='TeamDataFiles'+season
             pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
 

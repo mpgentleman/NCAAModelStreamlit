@@ -1511,15 +1511,15 @@ if page == 'Todays Games':
     #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
     if st.button('Run'):
         dateforRankings=today_date_format
-        dateforRankings5=d2
+        #dateforRankings5=d2
         #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
         TeamDatabase2.set_index("OldTRankName", inplace=True)
         #MG_DF1=pd.read_csv("Data/MGRankings"+season+"/tm_seasons_stats_ranks"+dateforRankings5+" .csv")
         #MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
         #MG_DF1.set_index("updated", inplace=True)
-        from matplotlib.backends.backend_pdf import PdfPages
-        WhichFile='TeamDataFiles'+season
-        pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
+        #from matplotlib.backends.backend_pdf import PdfPages
+        #WhichFile='TeamDataFiles'+season
+        #pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
 
                 
         st.header('Team Matchup')

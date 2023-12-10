@@ -1491,7 +1491,7 @@ if page == 'MG Rankings':
         gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
         gb.configure_column('ATS_net_eff',valueFormatter=numberFormat(2))
         #csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
-        z#gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+        #gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
         gb.configure_side_bar()
         gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
         opts= {**DEFAULT_GRID_OPTIONS,

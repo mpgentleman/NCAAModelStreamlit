@@ -1505,7 +1505,7 @@ if page == 'MG Rankings':
     with col2:
         st.subheader('Who is Not?')
         cold2 = cold.head(10)[['Team','ATS_net_eff','performance_change']]
-        gb = GridOptionsBuilder.from_dataframe(cold.2,groupable=True)
+        gb = GridOptionsBuilder.from_dataframe(cold2,groupable=True)
         #gb.configure_columns(allcols, cellStyle=cellStyle)
         csTotal=cellStyleDynamic(cold2.performance_change)
         #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))

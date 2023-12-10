@@ -1509,7 +1509,82 @@ if page == 'Todays Games':
     keyname='Test'
     g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
     #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
+    if st.button('Run'):
+        dateforRankings=dateToday
+        dateforRankings5=d2
+        #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
+        TeamDatabase2.set_index("OldTRankName", inplace=True)
+        #MG_DF1=pd.read_csv("Data/MGRankings"+season+"/tm_seasons_stats_ranks"+dateforRankings5+" .csv")
+        #MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
+        #MG_DF1.set_index("updated", inplace=True)
+        from matplotlib.backends.backend_pdf import PdfPages
+        WhichFile='TeamDataFiles'+season
+        pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
 
+                
+        st.header('Team Matchup')
+        plt.style.use('seaborn')
+        fig_dims = (15,10)
+        fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
+        plt.figure(figsize=(20, 12))
+        ax1.set_title(AwayTeam)
+        ax2.set_title(HomeTeam)
+            
+        test1=get_team_info_from_gamesdf(Gamesdf,AwayTeam)
+        #st.dataframe(test1)
+        test1 = test1.reset_index(drop=True)
+        #test1.drop(columns=test1.columns[0], axis=1,  inplace=True)
+        #test1 = test1.drop_duplicates()
+        test2=get_team_info_from_gamesdf(Gamesdf,HomeTeam)
+        test2 = test2.reset_index(drop=True)
+        #test2.drop(columns=test2.columns[0], axis=1,  inplace=True)
+        #test2 = test2.drop_duplicates()
+        test1['New_ID'] = range(0, 0+len(test1))
+        test2['New_ID'] = range(0, 0+len(test2))
+        try:
+            fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
+            fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green')
+        except:
+            fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=1, ax=ax1, color = 'blue')
+            fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=1, ax=ax1, color = 'green')
+        try: 
+            fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=2, ax=ax2, color = 'blue')
+            fig4=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test2,order=2, ax=ax2, color = 'green')
+        except:
+            fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=1, ax=ax2, color = 'blue')
+            fig4=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test2,order=1, ax=ax2, color = 'green')
+        #plt.show(fig)
+        st.pyplot(fig)
+        st.subheader('Polynomial Regression Charts')
+        st.text('Daily Pomeroy Rankings line in green for each game')
+        st.text('Polynomial Regression of actual game performance in blue for each game ')
+        st.text('If the blue line is above the green then the team is playing better than its ranking ')
+        st.pyplot(fig)
+        st.subheader('Pomeroy Ranking and ATS Record')
+        st.text('Pomeroy Rankings by game Line in Green')
+        st.text('Blue bars are positive if the team won against the spread')
+        GetTwoChartsTogether_EMA_2024(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
+        GetTwoChartsTogether_EMA_2024(test1,test2,AwayTeam,HomeTeam,"PlayingOverRating","PlayingOverRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
+        st.subheader('Team Playing Over its Ranking')
+        st.text('Blue bars are positive if the team played over its rating')
+        st.text('The green and blue lines are cumulative moving averages')
+        #st.dataframe(test1)
+        getOverplayingChartBothTeamsDec4(pp,test1,test2,AwayTeam,HomeTeam)
+        st.subheader('Adjusted Offense and the ATS spread')
+        GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Tm_AdjO","Pomeroy_Tm_AdjEM","ATS")
+        st.subheader('Adjusted Defense against the Over/Under')
+        GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Tm_AdjD","Pomeroy_Tm_AdjEM","OverUnder")
+        st.subheader('Estimated Pace against the Over/Under')
+        #GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Pace","PomTempo","OverUnder")
+    
+        st.subheader('Points per Possesion against the ATS')
+        GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_O_PPP","ATS")
+        st.subheader('Defensive Points per Possesion against the Over/Under')
+        GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_D_PPP","OverUnder")
+        #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
+        #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
+        getTeamDFTable2024(test1,AwayTeam)
+        getTeamDFTable2024(test2,HomeTeam)
 if page == 'Past Games':
     st.title('NCAA Head to Head Matchup')
     season = st.sidebar.selectbox('Season Selection',['2024','2023'])

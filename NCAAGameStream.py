@@ -1120,6 +1120,55 @@ def plot_line_chart(df, teams):
     # Show the plot
     st.pyplot(fig)
 
+def getHotColdTeams(df):
+    
+    df['Date_zero'] = pd.to_datetime(df['Date_zero'])
+    maxdate =df['Date_zero'].max()
+    # Create a list to store the dataframes
+    dfs = []
+
+    # Iterate over the unique teams
+    for team in df['Team'].unique():
+        # Filter the rows for the current team
+        team_df = df[df['Team'] == team]
+        # Sort the dataframe by 'Date_zero'
+        team_df = team_df.sort_values('Date_zero')
+        # Calculate the change in performance
+        team_df['performance_change'] = team_df['ATS_net_eff'].diff(periods=14)
+        # Append the dataframe to 'dfs'
+        dfs.append(team_df)
+
+    # Concatenate all the dataframes in 'dfs'
+    change_df = pd.concat(dfs)
+    hotteams = change_df[change_df['Date_zero']==maxdate].sort_values('performance_change',ascending=False)
+    coldteams = change_df[change_df['Date_zero']==maxdate].sort_values('performance_change',ascending=True)
+    return(hotteams,coldteams)
+def plot_line_chartLetsPlotHot(df, teams):
+    # Filter the dataframe for the selected teams
+    df = df[df['Tm_'].isin(teams)]
+
+    # Convert the 'Date_zero' column to datetime
+    df['Date_zero'] = pd.to_datetime(df['Date_zero'])
+
+    # Sort the dataframe by date
+    df = df.sort_values('Date_zero')
+
+    # Create the line chart
+    for team in teams:
+        df_team = df[df['Tm_'] == team]
+        p = ggplot(df_team, aes(x='Date_zero', y='ATS_net_eff')) + \
+            geom_line(color='red', size=1.5) + \
+            ggtitle('Margin Net Over Time') + \
+            xlab('Date') + \
+            ylab('Margin Net') + \
+            theme(axis_text_x=element_text(angle=45, hjust=1))
+        #st.write(p)
+        #st_letsplot(p)
+        #st.pyplot(p)
+    p = ggplot(df, aes(x='Date_zero', y='tm_margin_net_eff', group='Tm_')) + \
+    geom_line(aes(color='Tm_'), size=1, alpha=0.5)+ggtitle("ATS Net Rating") + \
+    ggsize(1000, 800)
+    st_letsplot(p)
 
 def plot_line_chartLetsPlot(df, teams):
     # Filter the dataframe for the selected teams
@@ -1415,6 +1464,9 @@ AllGames=pd.read_csv("Data/Season_GamesAll.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 MG_Rank=pd.read_csv("Data/MGRatings2024_Daily_All_DB.csv")
+hot,cold=  getHotColdTeams(MG_Rank)
+hotlist = hot.head(10)['Team'].to_list()
+coldlist = cold.head(10)['Team'].to_list()
 teams = MG_Rank['Tm_'].unique()
 #st.title('NCAA Head to Head Matchup')
 page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games','Team Matchup','Past Games','Rankings Historical Charts'])
@@ -1429,7 +1481,11 @@ if page == 'Rankings Historical Charts':
     plot_line_chartLetsPlot(MG_Rank, selected_teams)
 if page == 'MG Rankings':
     #st.write('MG Rankings')
-
+    col1, col2 = st.columns(2)
+    with col1:
+        plot_line_chartLetsPlotHot(MG_Rank, hotlist)
+    with col1:
+        plot_line_chartLetsPlotHot(MG_Rank,coldlist)
     import streamlit.components.v1 as components
     add_selectbox_start =st.sidebar.date_input('Pick date')
     

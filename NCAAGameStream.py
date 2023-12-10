@@ -1485,11 +1485,11 @@ if page == 'MG Rankings':
     col1, col2 = st.columns(2)
     with col1:
         st.write('Who is Hot?')
-        st.image('hot-icon.jpg')
+        st.image('Data/hot-icon.jpg')
         plot_line_chartLetsPlotHot(MG_Rank2, hotlist)
     with col2:
         st.write('Who is Not?')
-        st.image('cold-icon3.jpg')
+        st.image('Data/cold-icon3.jpg')
         plot_line_chartLetsPlotHot(MG_Rank2,coldlist)
     import streamlit.components.v1 as components
     add_selectbox_start =st.sidebar.date_input('Pick date')

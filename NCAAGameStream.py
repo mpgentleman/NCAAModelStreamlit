@@ -1464,8 +1464,8 @@ AllGames=pd.read_csv("Data/Season_GamesAll.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 MG_Rank=pd.read_csv("Data/MGRatings2024_Daily_All_DB.csv")
-#MG_Rank=pd.read_csv("Data/MGRatings2024_Daily_New_DB.csv
-hot,cold=  getHotColdTeams(MG_Rank)
+MG_Rank=2pd.read_csv("Data/MGRatings2024_Daily_New_DB.csv")
+hot,cold=  getHotColdTeams(MG_Rank2)
 hotlist = hot.head(10)['Team'].to_list()
 coldlist = cold.head(10)['Team'].to_list()
 teams = MG_Rank['Tm_'].unique()
@@ -1484,9 +1484,9 @@ if page == 'MG Rankings':
     #st.write('MG Rankings')
     col1, col2 = st.columns(2)
     with col1:
-        plot_line_chartLetsPlotHot(MG_Rank, hotlist)
+        plot_line_chartLetsPlotHot(MG_Rank2, hotlist)
     with col1:
-        plot_line_chartLetsPlotHot(MG_Rank,coldlist)
+        plot_line_chartLetsPlotHot(MG_Rank2,coldlist)
     import streamlit.components.v1 as components
     add_selectbox_start =st.sidebar.date_input('Pick date')
     

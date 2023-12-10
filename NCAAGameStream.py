@@ -1606,7 +1606,7 @@ if page == 'Team Matchup':
         from matplotlib.backends.backend_pdf import PdfPages
         season ='2024'
         WhichFile='TeamDataFiles'+season
-        pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
+        pp= PdfPages("Daily_Team_Charts_"+today_date_format+".pdf")
 
                 
         st.header('Team Matchup')

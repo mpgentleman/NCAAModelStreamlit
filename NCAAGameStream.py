@@ -1173,6 +1173,20 @@ def get_team_info_from_gamesdf(df,Team):
     AF["DifCumSumEMA"]=AF["DifCumSumEMA"].shift(1).fillna(0)
     #AF.reset.index()
     return(AF)
+def getTodaysDateFormat():
+    
+    from datetime import datetime
+    import pytz
+
+    # Create a timezone object for the Central Time Zone
+    central = pytz.timezone('US/Central')
+
+    # Get the current time in the Central Time Zone
+    central_time = datetime.now(central)
+
+    # Change the format to 'YYYYMMDD'
+    formatted_time = central_time.strftime('%Y%m%d')
+    return(formatted_time)
 def get2023Display(Dailyschedule,dateToday,d2,season):
     TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
     AllGames=pd.read_csv("Data/Season_GamesAll.csv")
@@ -1403,8 +1417,12 @@ HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 MG_Rank=pd.read_csv("Data/MGRatings2024_Daily_All_DB.csv")
 teams = MG_Rank['Tm_'].unique()
 #st.title('NCAA Head to Head Matchup')
-page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games','Rankings Historical Charts'])
-
+page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games','Past Games','Rankings Historical Charts'])
+TeamDatabase2=pd.read_csv("Data/TeamDatabase2024T.csv")
+AllGames=pd.read_csv("Data/Season_GamesAll_2024.csv")
+AwayTeamAll=list(TeamDatabase2['OldTRankName'])
+HomeTeamAll=list(TeamDatabase2['OldTRankName'])
+today_date_format = getTodaysDateFormat()
 if page == 'Rankings Historical Charts':
     selected_teams = st.multiselect('Select teams:', teams)
     st.header('NCAA ATS Net Rating Comp')
@@ -1443,8 +1461,56 @@ if page == 'MG Rankings':
         #    components.html(source_code, height = 3000)
         #with col2:
             #plot_line_chart(MG_Rank, selected_teams)
-            
 if page == 'Todays Games':
+    
+    Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
+    Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+today_date_format+"Schedule.csv")
+    if 'Alphabetical'in  Tables_Choice:
+        Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
+    if 'Time' in Tables_Choice:
+        Dailyschedule=Dailyschedule.sort_values(by=['commence_time'])   
+    if 'Regression_Difference' in Tables_Choice: 
+        Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
+    if 'OverPlaying' in Tables_Choice: 
+        Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
+    AwayList=list(Dailyschedule['AWAY'])
+    HomeList=list(Dailyschedule['HOME'])
+    AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
+    HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
+    st.header('Sortable NCAA Game Schedule')
+    st.text('Games can be sorted by columns. Click on column header to sort')
+    st.text('To sort by game time click the Time column.  ')
+    st.text('Low Negative values in the Reg Dif and Overplaying column mean the Home team is the pick  ') 
+    Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','DraftKings','BetMGM spreads','Caesars spreads','FanDuel','commence_time','BetRivers spreads','VegasTotal','Reg_dif','Over_dif','Pomeroy_PointDiff','TRank_PointDiff','MG_PointDiff','MG_ATS_PointDiff','Daily_Reg_PointDiff','Dif_from_Vegas']]
+    Dailyschedule.DraftKings = Dailyschedule.DraftKings.astype(float).round(1)
+    Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
+    allcols=Dailyschedule.columns
+    gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
+    gb.configure_columns(allcols, cellStyle=cellStyle)
+    csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
+    gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
+    gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_column('DraftKings',valueFormatter=numberFormat(1))
+    gb.configure_column('VegasTotal',valueFormatter=numberFormat(1))
+    gb.configure_column('Pomeroy_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('TRank_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('MG_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('MG_ATS_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('Daily_Reg_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('Dif_from_Vegas',cellStyle=csTotal,valueFormatter=numberFormat(2))
+    #gb.configure_pagination()
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    #gridOptions = gb.build()
+    opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+    gb.configure_grid_options(**opts)
+    keyname='Test'
+    g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
+    #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
+
+if page == 'Past Games':
     st.title('NCAA Head to Head Matchup')
     season = st.sidebar.selectbox('Season Selection',['2024','2023'])
     if season == '2024':
@@ -1467,10 +1533,7 @@ if page == 'Todays Games':
         theday=int(dateString.split('-')[2])
         theyear=dateString.split('-')[0]
         
-        TeamDatabase2=pd.read_csv("Data/TeamDatabase2024T.csv")
-        AllGames=pd.read_csv("Data/Season_GamesAll_2024.csv")
-        AwayTeamAll=list(TeamDatabase2['OldTRankName'])
-        HomeTeamAll=list(TeamDatabase2['OldTRankName'])
+        
         Tables_Selection=st.sidebar.selectbox('Any or Scheduled ',['Any', 'Todays Games','All Games'])
         if 'All Games' in  Tables_Selection:
             allcols=AllGames.columns
@@ -1487,21 +1550,8 @@ if page == 'Todays Games':
         if 'Any' in  Tables_Selection:
             AwayTeam = st.sidebar.selectbox('Away Team',AwayTeamAll)
             HomeTeam = st.sidebar.selectbox('Home Team',HomeTeamAll)
-        if 'Todays Games' in  Tables_Selection:
-            Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
-            Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+dateToday+"Schedule.csv")
-            if 'Alphabetical'in  Tables_Choice:
-                Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
-            if 'Time' in Tables_Choice:
-                Dailyschedule=Dailyschedule.sort_values(by=['Time'])   
-            if 'Regression_Difference' in Tables_Choice: 
-                Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
-            if 'OverPlaying' in Tables_Choice: 
-                Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
-            AwayList=list(Dailyschedule['AWAY'])
-            HomeList=list(Dailyschedule['HOME'])
-            AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
-            HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
+        #if 'Todays Games' in  Tables_Selection:
+           
 
         if st.button('Run'):
             dateforRankings=dateToday
@@ -1514,54 +1564,8 @@ if page == 'Todays Games':
             from matplotlib.backends.backend_pdf import PdfPages
             WhichFile='TeamDataFiles'+season
             pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
-            if 'Todays Games' in  Tables_Selection:
-                st.header('Sortable NCAA Game Schedule')
-                st.text('Games can be sorted by columns. Click on column header to sort')
-                st.text('To sort by game time click the Time column.  ')
-                st.text('Low Negative values in the Reg Dif and Overplaying column mean the Home team is the pick  ')  
-                lengthrows=int(len(Dailyschedule)/2)
-                rowEvenColor = 'lightgrey'
-                rowOddColor = 'white'
-                fig = go.Figure(data=[go.Table(
-                header=dict(values=list(Dailyschedule.columns),
-                    fill_color='grey',
-                    align='left'),
-                cells=dict(values=[Dailyschedule.AWAY, Dailyschedule.HOME, Dailyschedule.VegasSpread, Dailyschedule.VegasTotal, Dailyschedule.HomeAway,Dailyschedule.Reg_dif],
-                fill_color = [[rowOddColor,rowEvenColor]*lengthrows],
-                    align='left',
-                font_size=12,
-                height=30))
-                ])
-                fig.update_layout(width=1200, height=800)
-                #st.plotly_chart(fig)
-                Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','DraftKings','BetMGM spreads','Caesars spreads','FanDuel','commence_time','BetRivers spreads','VegasTotal','Reg_dif','Over_dif','Pomeroy_PointDiff','TRank_PointDiff','MG_PointDiff','MG_ATS_PointDiff','Daily_Reg_PointDiff','Dif_from_Vegas']]
-                Dailyschedule.DraftKings = Dailyschedule.DraftKings.astype(float).round(1)
-                Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
-                allcols=Dailyschedule.columns
-                gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
-                gb.configure_columns(allcols, cellStyle=cellStyle)
-                csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
-                gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
-                csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
-                gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
-                gb.configure_column('DraftKings',valueFormatter=numberFormat(1))
-                gb.configure_column('VegasTotal',valueFormatter=numberFormat(1))
-                gb.configure_column('Pomeroy_PointDiff',valueFormatter=numberFormat(1))
-                gb.configure_column('TRank_PointDiff',valueFormatter=numberFormat(1))
-                gb.configure_column('MG_PointDiff',valueFormatter=numberFormat(1))
-                gb.configure_column('MG_ATS_PointDiff',valueFormatter=numberFormat(1))
-                gb.configure_column('Daily_Reg_PointDiff',valueFormatter=numberFormat(1))
-                gb.configure_column('Dif_from_Vegas',cellStyle=csTotal,valueFormatter=numberFormat(2))
-                #gb.configure_pagination()
-                gb.configure_side_bar()
-                gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-                #gridOptions = gb.build()
-                opts= {**DEFAULT_GRID_OPTIONS,
-               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
-                gb.configure_grid_options(**opts)
-                keyname='Test'
-                g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
-                #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
+
+                
             st.header('Team Matchup')
             plt.style.use('seaborn')
             fig_dims = (15,10)

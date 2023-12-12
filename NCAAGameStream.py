@@ -1571,9 +1571,40 @@ seed_region = {i: 0 for i in range(1, 17)}
 
 if page == 'Bracketology Futures':
     BM = getBracketMatrixDataframe()
-    st.dataframe(BM)
+    st.subheader('Bracket Matrix Bracketology Projection')
+    BM1 = BM[['Seed,'east','midwest','south','west']]
+    gb = GridOptionsBuilder.from_dataframe(BM1,groupable=True)
+    #csTotal=cellStyleDynamic(hot2.performance_change)
+    #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_column('Seed',valueFormatter=numberFormat(0))
+    #csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
+    #gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+    gb.configure_grid_options(**opts)
+    keyname='Test BM'
+    g = _displayGrid(BM1, gb, key=keyname, height=500)
+    #st.dataframe(BM)
     TBracket = getTRankBracket()
-    st.dataframe(TBracket)
+    st.subheader('TRank Bracketology Projection')
+    TBracket1 = TBracket[['Seed,'east','midwest','south','west']]
+    gb = GridOptionsBuilder.from_dataframe(BM1,groupable=True)
+    #csTotal=cellStyleDynamic(hot2.performance_change)
+    #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_column('Seed',valueFormatter=numberFormat(0))
+    #csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
+    #gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+    gb.configure_grid_options(**opts)
+    keyname='Test TBracket'
+    g = _displayGrid(TBracket1, gb, key=keyname, height=500)
+    #st.dataframe(BM)
+    #st.dataframe(TBracket)
 
 if page == 'Rankings Historical Charts':
     selected_teams = st.multiselect('Select teams:', teams)

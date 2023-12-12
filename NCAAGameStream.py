@@ -1271,9 +1271,9 @@ def getBracketMatrixDataframe():
     dfe['region'] = dfe['Seed'].apply(get_next_region)
 
     dfe = keep_first_four(dfe)
-    st.dataframe(dfe)
+    #st.dataframe(dfe)
     dfp = dfe.sort_values('Seed')
-    st.dataframe(dfp)
+    #st.dataframe(dfp)
     BracketProjections= dfp.pivot(index='Seed', columns='region', values='Team')
 
     # Reset the index

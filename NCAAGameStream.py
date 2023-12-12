@@ -1236,6 +1236,86 @@ def getTodaysDateFormat():
     # Change the format to 'YYYYMMDD'
     formatted_time = central_time.strftime('%Y%m%d')
     return(formatted_time)
+
+def keep_first_four(df):
+    # Group the dataframe by 'Seed' and keep only the first 4 rows of each group
+    df = df.groupby('Seed').head(4)
+    return df
+def get_next_region(seed):
+    region_index = seed_region[seed]
+    region = regions[region_index]
+    seed_region[seed] = (region_index + 1) % len(regions)
+    return region
+def getBracketMatrixDataframe():
+    dfe = GetBracketMatrix()
+    dfe = dfe[:68]
+    dfe.columns = ['Seed', 'Team', 'Conference', 'Avg Seed']
+    regions = ['south', 'east', 'midwest', 'west']
+
+    # Create a dictionary to store the current region for each seed
+    seed_region = {i: 0 for i in range(1, 17)}
+
+    # Function to get the next region for a seed
+
+
+    # Apply the function to the 'Seed' column to create the 'region' column
+    dfe['region'] = dfe['Seed'].apply(get_next_region)
+
+    dfe = keep_first_four(dfe)
+    dfp = dfe.sort_values('Seed')
+
+    BracketProjections= dfp.pivot(index='Seed', columns='region', values='Team')
+
+    # Reset the index
+    BracketProjections.reset_index(inplace=True)
+
+    BracketProjections["seedings"]=(0,14,10,6,4,8,12,2,3,13,9,5,7,11,15,1)
+    thisBracketProjection=BracketProjections.sort_values(by=['seedings'])
+    return(thisBracketProjection)
+
+
+
+# working TR
+def getTRankBracket():
+    
+    response = requests.get('https://barttorvik.com/now_seeding.json#')
+    #response = requests.get('https://barttorvik.com/tranketology.php?&json=1')
+
+    text = response.text
+    start_index = text.find('[[')
+    end_index = text.rfind(']]') + 2
+    json_text = text[start_index:end_index]
+    #data = json.loads(json_text)
+    #df = pd.DataFrame(data)
+
+    json.loads(text)
+    data_dict = json.loads(text)
+
+    # Convert Python dictionary to pandas dataframe
+    df = pd.DataFrame(list(data_dict.items()), columns=['Team', 'Seed'])
+    seeds_to_drop = {11: 2, 16: 2}
+
+    for seed, drop_count in seeds_to_drop.items():
+        # Get the indices of the rows to drop
+        indices_to_drop = df[df['Seed'] == seed].index[:drop_count]
+        # Drop the rows
+        df = df.drop(indices_to_drop)
+    regions = ['south', 'east', 'midwest', 'west']
+
+    # Create a dictionary to store the current region for each seed
+    seed_region = {i: 0 for i in range(1, 17)}
+    # Apply the function to the 'Seed' column to create the 'region' column
+    df['region'] = df['Seed'].apply(get_next_region)
+
+    dfp = df.sort_values('Seed')
+    BracketProjections= dfp.pivot(index='Seed', columns='region', values='Team')
+
+    # Reset the index
+    BracketProjections.reset_index(inplace=True)
+
+    BracketProjections["seedings"]=(0,14,10,6,4,8,12,2,3,13,9,5,7,11,15,1)
+    thisBracketProjection=BracketProjections.sort_values(by=['seedings'])
+    return(thisBracketProjection)
 def get2023Display(Dailyschedule,dateToday,d2,season):
     TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
     AllGames=pd.read_csv("Data/Season_GamesAll.csv")
@@ -1470,12 +1550,18 @@ hotlist = hot.head(10)['Team'].to_list()
 coldlist = cold.head(10)['Team'].to_list()
 teams = MG_Rank['Tm_'].unique()
 #st.title('NCAA Head to Head Matchup')
-page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games','Team Matchup','Past Games','Rankings Historical Charts'])
+page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games','Team Matchup','Past Games','Rankings Historical Charts','Bracketology Futures'])
 TeamDatabase2=pd.read_csv("Data/TeamDatabase2024T.csv")
 AllGames=pd.read_csv("Data/Season_GamesAll_2024.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 today_date_format = getTodaysDateFormat()
+if page == 'Bracketology Futures':
+    BM = getBracketMatrixDataframe()
+    st.dataframe(BM)
+    TBracket = getTRankBracket()
+    st.dataframe(TBracket)
+
 if page == 'Rankings Historical Charts':
     selected_teams = st.multiselect('Select teams:', teams)
     st.header('NCAA ATS Net Rating Comp')

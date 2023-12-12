@@ -37,6 +37,14 @@ from streamlit_letsplot import st_letsplot
 import lets_plot
 from lets_plot import *
 
+def GetBracketMatrix():
+    BracketLookup="http://bracketmatrix.com"
+    res = requests.get(BracketLookup)
+    soup = BeautifulSoup(res.content,'lxml')
+    table = soup.find_all('table')[0] 
+    df = pd.read_html(str(table))[0]
+    df1=df.iloc[3:, 0:4]
+    return(df1)
 def getMGWinRecord(s):
     if (s['MG_SpreadWinATS'] == 1):
         return 3

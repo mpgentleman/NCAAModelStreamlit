@@ -1572,7 +1572,7 @@ seed_region = {i: 0 for i in range(1, 17)}
 if page == 'Bracketology Futures':
     BM = getBracketMatrixDataframe()
     st.subheader('Bracket Matrix Bracketology Projection')
-    BM1 = BM[['Seed,'east','midwest','south','west']]
+    BM1 = BM[['Seed','east','midwest','south','west']]
     gb = GridOptionsBuilder.from_dataframe(BM1,groupable=True)
     #csTotal=cellStyleDynamic(hot2.performance_change)
     #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
@@ -1589,7 +1589,7 @@ if page == 'Bracketology Futures':
     #st.dataframe(BM)
     TBracket = getTRankBracket()
     st.subheader('TRank Bracketology Projection')
-    TBracket1 = TBracket[['Seed,'east','midwest','south','west']]
+    TBracket1 = TBracket[['Seed','east','midwest','south','west']]
     gb = GridOptionsBuilder.from_dataframe(BM1,groupable=True)
     #csTotal=cellStyleDynamic(hot2.performance_change)
     #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))

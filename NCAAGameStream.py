@@ -1250,7 +1250,7 @@ def keep_first_four(df):
     df = df.groupby('Seed').head(4)
     return df
 def get_next_region(seed):
-    seed_region = {i: 0 for i in range(1, 17)}
+    
     region_index = seed_region[seed]
     region = regions[region_index]
     seed_region[seed] = (region_index + 1) % len(regions)
@@ -1567,6 +1567,7 @@ AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 today_date_format = getTodaysDateFormat()
 regions = ['south', 'east', 'midwest', 'west']
+seed_region = {i: 0 for i in range(1, 17)}
 
 if page == 'Bracketology Futures':
     BM = getBracketMatrixDataframe()

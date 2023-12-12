@@ -1565,6 +1565,8 @@ AllGames=pd.read_csv("Data/Season_GamesAll_2024.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 today_date_format = getTodaysDateFormat()
+regions = ['south', 'east', 'midwest', 'west']
+
 if page == 'Bracketology Futures':
     BM = getBracketMatrixDataframe()
     st.dataframe(BM)

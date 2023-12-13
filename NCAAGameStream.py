@@ -1585,7 +1585,7 @@ if page == 'Bracketology Futures':
                **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
     gb.configure_grid_options(**opts)
     keyname='Test BM'
-    g = _displayGrid(BM1, gb, key=keyname, height=500)
+    g = _displayGrid(BM1, gb, key=keyname, height=600)
     #st.dataframe(BM)
     TBracket = getTRankBracket()
     st.subheader('TRank Bracketology Projection')
@@ -1602,7 +1602,7 @@ if page == 'Bracketology Futures':
                **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
     gb.configure_grid_options(**opts)
     keyname='Test TBracket'
-    g = _displayGrid(TBracket1, gb, key=keyname, height=500)
+    g = _displayGrid(TBracket1, gb, key=keyname, height=600)
     #st.dataframe(BM)
     #st.dataframe(TBracket)
 
@@ -1769,6 +1769,8 @@ if page == 'Todays Games':
         #test2 = test2.drop_duplicates()
         test1['New_ID'] = range(0, 0+len(test1))
         test2['New_ID'] = range(0, 0+len(test2))
+        myteams = [AwayTeam,HomeTeam]
+        plot_line_chartLetsPlotHot(MG_Rank2, myteams)
         try:
             fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
             fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green')

@@ -37,7 +37,7 @@ from time import time
 
 from hashlib import md5
 from itertools import chain
-from __future__ import division
+#from __future__ import division
 from random import choice, shuffle
 from numpy.random import random #import only one function from somewhere
 from numpy.random import randint

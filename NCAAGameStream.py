@@ -2005,7 +2005,11 @@ def Past_Games(data):
             #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
             getTeamDFTable2024(test1,AwayTeam)
             getTeamDFTable2024(test2,HomeTeam)
-        
+def Team_Page(data):
+    st.title('NCAA Mens Basketball Team Pages')
+    team_selected = st.selectbox('Select a Team',data['teams']) 
+def Betting_Performance_Page(data):
+    st.title('Betting Performance')    
     #else:
     #    add_selectbox = st.sidebar.header("Select Todays Date")
     #    add_selectbox_start =st.sidebar.date_input('Pick date')
@@ -2041,6 +2045,8 @@ _CHOICES = {
     'Past Games': dict(func=Past_Games, icon='play-fill'),
     'Rankings Historical Charts': dict(func=Historical_Rankings_Page, icon='play-fill'),
     'Bracketology Page': dict(func=Bracketology_Page, icon='play-fill'),
+    'Team Pages': dict(func=Team_Page, icon='play-fill'),
+    'Betting Performance': dict(func=Betting_Performance_Page, icon='play-fill'),
    
 }
 

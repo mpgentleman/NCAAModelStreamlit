@@ -2008,18 +2008,18 @@ def Past_Games(data):
             getTeamDFTable2024(test1,AwayTeam)
             getTeamDFTable2024(test2,HomeTeam)
         
-    else:
-        add_selectbox = st.sidebar.header("Select Todays Date")
-        add_selectbox_start =st.sidebar.date_input('Pick date')
-        dateString=str(add_selectbox_start)
-        dateToday=dateString.replace('-', '')
-        #Dailyschedule=pd.read_csv("DailySchedules2023/"+dateToday+"Schedule.csv")
-        Dailyschedule=pd.read_csv("Data/DailySchedules2023/"+dateToday+"Schedule.csv")
-        d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
-        themonth=int(dateString.split('-')[1])
-        theday=int(dateString.split('-')[2])
-        theyear=dateString.split('-')[0]
-        get2023Display(Dailyschedule,dateToday,d2,season)  
+    #else:
+    #    add_selectbox = st.sidebar.header("Select Todays Date")
+    #    add_selectbox_start =st.sidebar.date_input('Pick date')
+    #    dateString=str(add_selectbox_start)
+    #    dateToday=dateString.replace('-', '')
+    #    #Dailyschedule=pd.read_csv("DailySchedules2023/"+dateToday+"Schedule.csv")
+    #    Dailyschedule=pd.read_csv("Data/DailySchedules2023/"+dateToday+"Schedule.csv")
+    #    d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
+    #    themonth=int(dateString.split('-')[1])
+    #    theday=int(dateString.split('-')[2])
+    #    theyear=dateString.split('-')[0]
+    #    get2023Display(Dailyschedule,dateToday,d2,season)  
 st.set_page_config(page_title="MG Rankings",layout="wide")
 _MENU_STYLE = {
     'container': {

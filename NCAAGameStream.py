@@ -1923,8 +1923,8 @@ def Past_Games(data):
             keyname='Test All 2024'
             g = _displayGrid(AllGames, gb, key=keyname, height=1200)
         if 'Any' in  Tables_Selection:
-            AwayTeam = st.sidebar.selectbox('Away Team',AwayTeamAll)
-            HomeTeam = st.sidebar.selectbox('Home Team',HomeTeamAll)
+            AwayTeam = st.selectbox('Away Team',AwayTeamAll)
+            HomeTeam = st.selectbox('Home Team',HomeTeamAll)
         #if 'Todays Games' in  Tables_Selection:
            
 

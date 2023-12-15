@@ -1804,8 +1804,8 @@ def Team_Matchup(data):
     AwayTeamAll = data['AwayTeamAll']
     HomeTeamAll = data['HomeTeamAll']
     st.title('NCAA Head to Head Matchup')
-    AwayTeam = st.sidebar.selectbox('Away Team',AwayTeamAll)
-    HomeTeam = st.sidebar.selectbox('Home Team',HomeTeamAll)
+    AwayTeam = st.selectbox('Away Team',AwayTeamAll)
+    HomeTeam = st.selectbox('Home Team',HomeTeamAll)
     Dailyschedule=pd.read_csv("Data/DailySchedules2024/SkedHistory.csv")
     Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
     Gamesdf = Gamesdf.reset_index(drop=True)

@@ -1887,11 +1887,11 @@ def Team_Matchup(data):
         getTeamDFTable2024(test2,HomeTeam)
 def Past_Games(data):
     st.title('NCAA Head to Head Matchup')
-    season = st.sidebar.selectbox('Season Selection',['2024','2023'])
+    season = st.selectbox('Season Selection',['2024','2023'])
     if season == '2024':
         #st.write('2024')
-        add_selectbox = st.sidebar.header("Select Todays Date")
-        add_selectbox_start =st.sidebar.date_input('Pick date')
+        add_selectbox = st.header("Select Todays Date")
+        add_selectbox_start =st.date_input('Pick date')
         dateString=str(add_selectbox_start)
         dateToday=dateString.replace('-', '')
         #Dailyschedule=pd.read_csv("DailySchedules2023/"+dateToday+"Schedule.csv")
@@ -1909,7 +1909,7 @@ def Past_Games(data):
         theyear=dateString.split('-')[0]
         
         
-        Tables_Selection=st.sidebar.selectbox('Any or Scheduled ',['Any', 'Todays Games','All Games'])
+        Tables_Selection=st.selectbox('Any or Scheduled ',['Any', 'Todays Games','All Games'])
         if 'All Games' in  Tables_Selection:
             allcols=AllGames.columns
             gb = GridOptionsBuilder.from_dataframe(AllGames,groupable=True)

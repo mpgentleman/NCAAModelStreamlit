@@ -2085,7 +2085,7 @@ data['Dailyschedule'] = Dailyschedule
 data['AwayTeamAll'] = AwayTeamAll
 data['HomeTeamAll'] = HomeTeamAll
 with st.sidebar:
-        choice = option_menu(
+    choice = option_menu(
             None,
             _MENU_ITEMS, 
             default_index=0,
@@ -2094,10 +2094,10 @@ with st.sidebar:
             key='credit_dash_choice'
         )
 if choice in _CHOICES:
-        func = _CHOICES[choice]['func']
-        func(data)
-    else:
-        st.error(f'Unknown choice: {choice}')
+    func = _CHOICES[choice]['func']
+    func(data)
+else:
+    st.error(f'Unknown choice: {choice}')
 #if page == 'Bracketology Futures':
 #   Bracketology_Page() 
 #if page == 'Rankings Historical Charts':

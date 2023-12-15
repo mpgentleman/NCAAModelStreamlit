@@ -44,7 +44,7 @@ ordereddict==1.1
 orderedmultidict==1.0.1
 packaging==20.4
 pandas==1.4.0
-
+streamlit_option_menu == 0.3.6
 plotly==4.10.0
 
 

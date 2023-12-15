@@ -1549,12 +1549,13 @@ def get2023Display(Dailyschedule,dateToday,d2,season):
         getTeamDFTable(test1,AwayTeam)
         getTeamDFTable(test2,HomeTeam)
 
-def Historical_Rankings_Page(MG_Rank):
+def Historical_Rankings_Page(data):
+    MG_Rank =data['MG_Rank']
     selected_teams = st.multiselect('Select teams:', teams)
     st.header('NCAA ATS Net Rating Comp')
     plot_line_chartLetsPlot(MG_Rank, selected_teams)
 
-def Bracketology_Page():
+def Bracketology_Page(data):
     BM = getBracketMatrixDataframe()
     st.subheader('Bracket Matrix Bracketology Projection')
     BM1 = BM[['Seed','east','midwest','south','west']]
@@ -1591,7 +1592,11 @@ def Bracketology_Page():
     #st.dataframe(BM)
     #st.dataframe(TBracket)
 
-def MG_Rankings(hot,cold,MG_Rank2,coldlist):
+def MG_Rankings(data):
+    hot = data['hot']
+    cold = data['cold']
+    MG_Rank2 = data['MG_Rank2']
+    coldlist = data['coldlist']
     col1, col2 = st.columns(2)
     with col1:
         st.subheader('Who is Hot?')
@@ -1665,7 +1670,9 @@ def MG_Rankings(hot,cold,MG_Rank2,coldlist):
         #    components.html(source_code, height = 3000)
         #with col2:
             #plot_line_chart(MG_Rank, selected_teams)
-def Todays_Games(today_date_format,Dailyschedule):
+def Todays_Games(data):
+    today_date_format = data['today_date_format']
+    Dailyschedule = data['Dailyschedule']
     Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
     Gamesdf = Gamesdf.reset_index(drop=True)
     Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
@@ -1795,7 +1802,9 @@ def Todays_Games(today_date_format,Dailyschedule):
         #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
         getTeamDFTable2024(test1,AwayTeam)
         getTeamDFTable2024(test2,HomeTeam)
-def Team_Matchup(AwayTeamAll,HomeTeamAll):
+def Team_Matchup(data):
+    AwayTeamAll = data['AwayTeamAll']
+    HomeTeamAll = data['HomeTeamAll']
     st.title('NCAA Head to Head Matchup')
     AwayTeam = st.sidebar.selectbox('Away Team',AwayTeamAll)
     HomeTeam = st.sidebar.selectbox('Home Team',HomeTeamAll)
@@ -1878,7 +1887,7 @@ def Team_Matchup(AwayTeamAll,HomeTeamAll):
         #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
         getTeamDFTable2024(test1,AwayTeam)
         getTeamDFTable2024(test2,HomeTeam)
-def Past_Games():
+def Past_Games(data):
     st.title('NCAA Head to Head Matchup')
     season = st.sidebar.selectbox('Season Selection',['2024','2023'])
     if season == '2024':
@@ -2012,8 +2021,39 @@ def Past_Games():
         theyear=dateString.split('-')[0]
         get2023Display(Dailyschedule,dateToday,d2,season)  
 st.set_page_config(page_title="MG Rankings",layout="wide")
+_MENU_STYLE = {
+    'container': {
+        'padding': '4px!important', 
+        'background-color': '#fafafa"',
+    },
+    'nav-link': {
+        '--hover-color': '#dfdfdf',
+        
+    },
+    'nav-link-selected': {
+        'background-color': '#131414',
+        'font-weight': '600'
+    },
+}
+
+_CHOICES = {
+    'MG Rankings': dict(func=MG_Rankings, icon='play-fill'),
+    'Todays Games': dict(func=Todays_Games, icon='play-fill'),
+    'Team Matchup': dict(func=Team_Matchup, icon='play-fill'),
+    'Past Games': dict(func=Past_Games, icon='play-fill'),
+    'Rankings Historical Charts': dict(func=Historical_Rankings_Page, icon='play-fill'),
+    'Bracketology Page': dict(func=Bracketology_Page, icon='play-fill'),
+   
+}
+
+_MENU_ITEMS = list(_CHOICES.keys())
+_ICONS = [d.get('icon', 'database') for d in _CHOICES.values()]
+
+data={}
 #TeamDatabase2=pd.read_csv("TeamDatabase.csv")
+
 TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
+
 AllGames=pd.read_csv("Data/Season_GamesAll.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
@@ -2032,18 +2072,43 @@ HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 today_date_format = getTodaysDateFormat()
 regions = ['south', 'east', 'midwest', 'west']
 seed_region = {i: 0 for i in range(1, 17)}
-
-if page == 'Bracketology Futures':
-   Bracketology_Page() 
-if page == 'Rankings Historical Charts':
-    Historical_Rankings_Page(MG_Rank)
-if page == 'MG Rankings':
-    MG_Rankings(hot,cold,MG_Rank2,coldlist)
-if page == 'Todays Games':
-    Todays_Games(today_date_format,Dailyschedule)
-if page == 'Team Matchup':
-    Team_Matchup(AwayTeamAll,HomeTeamAll)
+data['TeamDatabase2']=TeamDatabase2
+data['hot'] = hot
+data['cold']= cold
+data['hotlist']= hotlist
+data['coldlist'] = coldlist
+data['teams']= teams
+data['MG_Rank'] = MG_Rank
+data['MG_Rank2'] = MG_Rank_2
+data['today_date_format'] = today_date_format
+data['Dailyschedule'] = Dailyschedule
+data['AwayTeamAll'] = AwayTeamAll
+data['HomeTeamAll'] = HomeTeamAll
+with st.sidebar:
+        choice = option_menu(
+            None,
+            _MENU_ITEMS, 
+            default_index=0,
+            styles=_MENU_STYLE,
+            icons=_ICONS,
+            key='credit_dash_choice'
+        )
+if choice in _CHOICES:
+        func = _CHOICES[choice]['func']
+        func(data)
+    else:
+        st.error(f'Unknown choice: {choice}')
+#if page == 'Bracketology Futures':
+#   Bracketology_Page() 
+#if page == 'Rankings Historical Charts':
+#    Historical_Rankings_Page(MG_Rank)
+#if page == 'MG Rankings':
+#    MG_Rankings(hot,cold,MG_Rank2,coldlist)
+#if page == 'Todays Games':
+#    Todays_Games(today_date_format,Dailyschedule)
+#if page == 'Team Matchup':
+#    Team_Matchup(AwayTeamAll,HomeTeamAll)
   
-if page == 'Past Games':
-    Past_Games() 
+#if page == 'Past Games':
+#    Past_Games() 
     

@@ -1591,7 +1591,7 @@ def Bracketology_Page():
     #st.dataframe(BM)
     #st.dataframe(TBracket)
 
-def MG_Rankings(hot,cold,MGRank2,coldlist):
+def MG_Rankings(hot,cold,MG_Rank2,coldlist):
     col1, col2 = st.columns(2)
     with col1:
         st.subheader('Who is Hot?')
@@ -1696,7 +1696,7 @@ if page == 'Rankings Historical Charts':
 
 
 if page == 'MG Rankings':
-    MG_Rankings(hot,cold,MGRank2,coldlist)
+    MG_Rankings(hot,cold,MG_Rank2,coldlist)
 if page == 'Todays Games':
     Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
     Gamesdf = Gamesdf.reset_index(drop=True)

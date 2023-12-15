@@ -1672,7 +1672,7 @@ def MG_Rankings(data):
             #plot_line_chart(MG_Rank, selected_teams)
 def Todays_Games(data):
     today_date_format = data['today_date_format']
-    Dailyschedule = data['Dailyschedule']
+    #Dailyschedule = data['Dailyschedule']
     Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
     Gamesdf = Gamesdf.reset_index(drop=True)
     Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
@@ -2081,7 +2081,7 @@ data['teams']= teams
 data['MG_Rank'] = MG_Rank
 data['MG_Rank2'] = MG_Rank2
 data['today_date_format'] = today_date_format
-data['Dailyschedule'] = Dailyschedule
+#data['Dailyschedule'] = Dailyschedule
 data['AwayTeamAll'] = AwayTeamAll
 data['HomeTeamAll'] = HomeTeamAll
 with st.sidebar:

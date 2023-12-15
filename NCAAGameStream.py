@@ -1548,29 +1548,13 @@ def get2023Display(Dailyschedule,dateToday,d2,season):
         #getDistributionMatchupCharts(AwayTeam,HomeTeam)
         getTeamDFTable(test1,AwayTeam)
         getTeamDFTable(test2,HomeTeam)
-st.set_page_config(page_title="MG Rankings",layout="wide")
-#TeamDatabase2=pd.read_csv("TeamDatabase.csv")
-TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
-AllGames=pd.read_csv("Data/Season_GamesAll.csv")
-AwayTeamAll=list(TeamDatabase2['OldTRankName'])
-HomeTeamAll=list(TeamDatabase2['OldTRankName'])
-MG_Rank=pd.read_csv("Data/MGRatings2024_Daily_All_DB.csv")
-MG_Rank2=pd.read_csv("Data/MGRatings2024_Daily_New_DB.csv")
-hot,cold=  getHotColdTeams(MG_Rank2)
-hotlist = hot.head(10)['Team'].to_list()
-coldlist = cold.head(10)['Team'].to_list()
-teams = MG_Rank['Tm_'].unique()
-#st.title('NCAA Head to Head Matchup')
-page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games','Team Matchup','Past Games','Rankings Historical Charts','Bracketology Futures'])
-TeamDatabase2=pd.read_csv("Data/TeamDatabase2024T.csv")
-AllGames=pd.read_csv("Data/Season_GamesAll_2024.csv")
-AwayTeamAll=list(TeamDatabase2['OldTRankName'])
-HomeTeamAll=list(TeamDatabase2['OldTRankName'])
-today_date_format = getTodaysDateFormat()
-regions = ['south', 'east', 'midwest', 'west']
-seed_region = {i: 0 for i in range(1, 17)}
 
-if page == 'Bracketology Futures':
+def Historical_Rankings_Page(MG_Rank):
+    selected_teams = st.multiselect('Select teams:', teams)
+    st.header('NCAA ATS Net Rating Comp')
+    plot_line_chartLetsPlot(MG_Rank, selected_teams)
+
+def Bracketology_Page():
     BM = getBracketMatrixDataframe()
     st.subheader('Bracket Matrix Bracketology Projection')
     BM1 = BM[['Seed','east','midwest','south','west']]
@@ -1606,11 +1590,33 @@ if page == 'Bracketology Futures':
     g = _displayGrid(TBracket1, gb, key=keyname, height=600)
     #st.dataframe(BM)
     #st.dataframe(TBracket)
+st.set_page_config(page_title="MG Rankings",layout="wide")
+#TeamDatabase2=pd.read_csv("TeamDatabase.csv")
+TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
+AllGames=pd.read_csv("Data/Season_GamesAll.csv")
+AwayTeamAll=list(TeamDatabase2['OldTRankName'])
+HomeTeamAll=list(TeamDatabase2['OldTRankName'])
+MG_Rank=pd.read_csv("Data/MGRatings2024_Daily_All_DB.csv")
+MG_Rank2=pd.read_csv("Data/MGRatings2024_Daily_New_DB.csv")
+hot,cold=  getHotColdTeams(MG_Rank2)
+hotlist = hot.head(10)['Team'].to_list()
+coldlist = cold.head(10)['Team'].to_list()
+teams = MG_Rank['Tm_'].unique()
+#st.title('NCAA Head to Head Matchup')
+page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games','Team Matchup','Past Games','Rankings Historical Charts','Bracketology Futures'])
+TeamDatabase2=pd.read_csv("Data/TeamDatabase2024T.csv")
+AllGames=pd.read_csv("Data/Season_GamesAll_2024.csv")
+AwayTeamAll=list(TeamDatabase2['OldTRankName'])
+HomeTeamAll=list(TeamDatabase2['OldTRankName'])
+today_date_format = getTodaysDateFormat()
+regions = ['south', 'east', 'midwest', 'west']
+seed_region = {i: 0 for i in range(1, 17)}
+
+if page == 'Bracketology Futures':
+   Bracketology_Page() 
 
 if page == 'Rankings Historical Charts':
-    selected_teams = st.multiselect('Select teams:', teams)
-    st.header('NCAA ATS Net Rating Comp')
-    plot_line_chartLetsPlot(MG_Rank, selected_teams)
+    Historical_Rankings_Page(MG_Rank)
 if page == 'MG Rankings':
     #st.write('MG Rankings')
     col1, col2 = st.columns(2)

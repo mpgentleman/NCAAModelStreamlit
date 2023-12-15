@@ -1640,7 +1640,7 @@ def MG_Rankings(data):
         #st.image('Data/cold-icon-3.jpg')
         plot_line_chartLetsPlotHot(MG_Rank2,coldlist)
     import streamlit.components.v1 as components
-    add_selectbox_start =st.sidebar.date_input('Pick date')
+    add_selectbox_start =st.date_input('Pick date for Rankings')
     
     dateString=str(add_selectbox_start)
     dateToday=dateString.replace('-', '')
@@ -1678,7 +1678,7 @@ def Todays_Games(data):
     Gamesdf = Gamesdf.reset_index(drop=True)
     Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
     Gamesdf = Gamesdf.drop_duplicates()
-    Tables_Choice=st.sidebar.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
+    Tables_Choice=st.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'])
     Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+today_date_format+"Schedule.csv")
     if 'Alphabetical'in  Tables_Choice:
         Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
@@ -1690,8 +1690,8 @@ def Todays_Games(data):
         Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
     AwayList=list(Dailyschedule['AWAY'])
     HomeList=list(Dailyschedule['HOME'])
-    AwayTeam = st.sidebar.selectbox('Away Team',AwayList)
-    HomeTeam = st.sidebar.selectbox('Home Team',HomeList)
+    AwayTeam = st.selectbox('Away Team',AwayList)
+    HomeTeam = st.selectbox('Home Team',HomeList)
     st.header('Sortable NCAA Game Schedule')
     st.text('Games can be sorted by columns. Click on column header to sort')
     st.text('To sort by game time click the Time column.  ')

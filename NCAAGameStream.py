@@ -1795,43 +1795,7 @@ def Todays_Games(today_date_format,Dailyschedule):
         #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
         getTeamDFTable2024(test1,AwayTeam)
         getTeamDFTable2024(test2,HomeTeam)
-        
-st.set_page_config(page_title="MG Rankings",layout="wide")
-#TeamDatabase2=pd.read_csv("TeamDatabase.csv")
-TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
-AllGames=pd.read_csv("Data/Season_GamesAll.csv")
-AwayTeamAll=list(TeamDatabase2['OldTRankName'])
-HomeTeamAll=list(TeamDatabase2['OldTRankName'])
-MG_Rank=pd.read_csv("Data/MGRatings2024_Daily_All_DB.csv")
-MG_Rank2=pd.read_csv("Data/MGRatings2024_Daily_New_DB.csv")
-hot,cold=  getHotColdTeams(MG_Rank2)
-hotlist = hot.head(10)['Team'].to_list()
-coldlist = cold.head(10)['Team'].to_list()
-teams = MG_Rank['Tm_'].unique()
-#st.title('NCAA Head to Head Matchup')
-page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games','Team Matchup','Past Games','Rankings Historical Charts','Bracketology Futures'])
-TeamDatabase2=pd.read_csv("Data/TeamDatabase2024T.csv")
-AllGames=pd.read_csv("Data/Season_GamesAll_2024.csv")
-AwayTeamAll=list(TeamDatabase2['OldTRankName'])
-HomeTeamAll=list(TeamDatabase2['OldTRankName'])
-today_date_format = getTodaysDateFormat()
-regions = ['south', 'east', 'midwest', 'west']
-seed_region = {i: 0 for i in range(1, 17)}
-
-if page == 'Bracketology Futures':
-   Bracketology_Page() 
-
-if page == 'Rankings Historical Charts':
-    Historical_Rankings_Page(MG_Rank)
-
-
-if page == 'MG Rankings':
-    MG_Rankings(hot,cold,MG_Rank2,coldlist)
-
-if page == 'Todays Games':
-    Todays_Games(today_date_format,Dailyschedule):
-    
-if page == 'Team Matchup':
+def Team_Matchup(AwayTeamAll,HomeTeamAll):
     st.title('NCAA Head to Head Matchup')
     AwayTeam = st.sidebar.selectbox('Away Team',AwayTeamAll)
     HomeTeam = st.sidebar.selectbox('Home Team',HomeTeamAll)
@@ -1913,8 +1877,39 @@ if page == 'Team Matchup':
         #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
         #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
         getTeamDFTable2024(test1,AwayTeam)
-        getTeamDFTable2024(test2,HomeTeam)
-    
+        getTeamDFTable2024(test2,HomeTeam)        
+st.set_page_config(page_title="MG Rankings",layout="wide")
+#TeamDatabase2=pd.read_csv("TeamDatabase.csv")
+TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
+AllGames=pd.read_csv("Data/Season_GamesAll.csv")
+AwayTeamAll=list(TeamDatabase2['OldTRankName'])
+HomeTeamAll=list(TeamDatabase2['OldTRankName'])
+MG_Rank=pd.read_csv("Data/MGRatings2024_Daily_All_DB.csv")
+MG_Rank2=pd.read_csv("Data/MGRatings2024_Daily_New_DB.csv")
+hot,cold=  getHotColdTeams(MG_Rank2)
+hotlist = hot.head(10)['Team'].to_list()
+coldlist = cold.head(10)['Team'].to_list()
+teams = MG_Rank['Tm_'].unique()
+#st.title('NCAA Head to Head Matchup')
+page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games','Team Matchup','Past Games','Rankings Historical Charts','Bracketology Futures'])
+TeamDatabase2=pd.read_csv("Data/TeamDatabase2024T.csv")
+AllGames=pd.read_csv("Data/Season_GamesAll_2024.csv")
+AwayTeamAll=list(TeamDatabase2['OldTRankName'])
+HomeTeamAll=list(TeamDatabase2['OldTRankName'])
+today_date_format = getTodaysDateFormat()
+regions = ['south', 'east', 'midwest', 'west']
+seed_region = {i: 0 for i in range(1, 17)}
+
+if page == 'Bracketology Futures':
+   Bracketology_Page() 
+if page == 'Rankings Historical Charts':
+    Historical_Rankings_Page(MG_Rank)
+if page == 'MG Rankings':
+    MG_Rankings(hot,cold,MG_Rank2,coldlist)
+if page == 'Todays Games':
+    Todays_Games(today_date_format,Dailyschedule)
+if page == 'Team Matchup':
+    Team_Matchup(AwayTeamAll,HomeTeamAll)       
 if page == 'Past Games':
     st.title('NCAA Head to Head Matchup')
     season = st.sidebar.selectbox('Season Selection',['2024','2023'])

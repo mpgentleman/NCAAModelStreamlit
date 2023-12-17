@@ -2011,6 +2011,9 @@ def Team_Page(data):
     test1=get_team_info_from_gamesdf(data['Gamesdf'],team_selected)
     test1 = test1.reset_index(drop=True)
     st.dataframe(test1)
+    team_players = data[playerdata]
+    team_players = team_players[team_players['Team']==team_selected]
+    st.dataframe(team_players)
 def Betting_Performance_Page(data):
     st.title('Betting Performance')    
     #else:
@@ -2024,7 +2027,10 @@ def Betting_Performance_Page(data):
     #    themonth=int(dateString.split('-')[1])
     #    theday=int(dateString.split('-')[2])
     #    theyear=dateString.split('-')[0]
-    #    get2023Display(Dailyschedule,dateToday,d2,season)  
+    #    get2023Display(Dailyschedule,dateToday,d2,season)
+def read_csv_from_url(url):
+    df = pd.read_csv(url,sep=',',  header=None)
+    return df
 st.set_page_config(page_title="MG Rankings",layout="wide")
 _MENU_STYLE = {
     'container': {
@@ -2061,6 +2067,10 @@ data={}
 
 TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
 
+playerdata = read_csv_from_url('http://barttorvik.com/getadvstats.php?year=2024&csv=1')
+myc = ['Player','Team','Conference','Games','Min%','ORTG','USAGE','EFG','TS','OR','DR','Assists','TO','far 2 made','far 2 att','far 2 pct','FT made','FT Att','FT%','3pts made','3pts att','3PT%','Blocks','STL','FTR','Year','Height','Number','PRPG','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','BPM',' ',' ', '' ,' ',' ', 'Rebounds', 'Assists' ,'  ', ' ' ,'Points','Position','j']
+playerdata.columns=myc
+data['playerdata'] = playerdata
 AllGames=pd.read_csv("Data/Season_GamesAll.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])

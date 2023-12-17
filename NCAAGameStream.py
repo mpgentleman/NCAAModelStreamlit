@@ -2011,7 +2011,7 @@ def Team_Page(data):
     test1=get_team_info_from_gamesdf(data['Gamesdf'],team_selected)
     test1 = test1.reset_index(drop=True)
     st.dataframe(test1)
-    team_players = data[playerdata]
+    team_players = data['Players']
     team_players = team_players[team_players['Team']==team_selected]
     st.dataframe(team_players)
 def Betting_Performance_Page(data):

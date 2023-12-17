@@ -2008,6 +2008,9 @@ def Past_Games(data):
 def Team_Page(data):
     st.title('NCAA Mens Basketball Team Pages')
     team_selected = st.selectbox('Select a Team',data['teams']) 
+    test1=get_team_info_from_gamesdf(data['Gamesdf'],)
+    test1 = test1.reset_index(drop=True)
+    st.dataframe(test1)
 def Betting_Performance_Page(data):
     st.title('Betting Performance')    
     #else:

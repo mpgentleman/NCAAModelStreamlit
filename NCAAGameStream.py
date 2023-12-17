@@ -2068,7 +2068,7 @@ data={}
 TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
 
 playerdata = read_csv_from_url('http://barttorvik.com/getadvstats.php?year=2024&csv=1')
-myc = ['Player','Team','Conference','Games','Min%','ORTG','USAGE','EFG','TS','OR','DR','Assists','TO','far 2 made','far 2 att','far 2 pct','FT made','FT Att','FT%','3pts made','3pts att','3PT%','Blocks','STL','FTR','Year','Height','Number','PRPG','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','BPM',' ',' ', '' ,' ',' ', 'Rebounds', 'Assists' ,'  ', ' ' ,'Points','Position','j']
+myc = ['Player','Team','Conference','Games','Min%','ORTG','USAGE','EFG','TS','OR','DR','Assists','TO','far 2 made','far 2 att','far 2 pct','FT made','FT Att','FT%','3pts made','3pts att','3PT%','Blocks','STL','FTR','Year','Height','Number','PRPG','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','BPM',' 1',' 2', '3' ,' 4',' 5', 'Rebounds', 'Assists' ,' 6 ', '7 ' ,'Points','Position','j']
 playerdata.columns=myc
 st.dataframe(playerdata)
 data['playerdata'] = playerdata

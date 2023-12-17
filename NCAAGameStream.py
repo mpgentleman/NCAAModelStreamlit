@@ -2006,14 +2006,42 @@ def Past_Games(data):
             getTeamDFTable2024(test1,AwayTeam)
             getTeamDFTable2024(test2,HomeTeam)
 def Team_Page(data):
-    st.title('NCAA Mens Basketball Team Pages')
+    st.subheader('NCAA Mens Basketball Team Pages')
     team_selected = st.selectbox('Select a Team',data['teams']) 
     test1=get_team_info_from_gamesdf(data['Gamesdf'],team_selected)
     test1 = test1.reset_index(drop=True)
-    st.dataframe(test1)
+    
+    st.subheader(team_selected + ' Schedule/Results Data')
+    allcols=test1.columns
+    gb = GridOptionsBuilder.from_dataframe(test1,groupable=True)
+    gb.configure_columns(allcols, cellStyle=cellStyle)
+    csTotal=cellStyleDynamic(test1.EMRating)
+    gb.configure_column('EMRatingG',cellStyle=csTotal,valueFormatter=numberFormat(2))
+    csTotal=cellStyleDynamic(test1.ATSvalue)
+    gb.configure_column('ATSvalue',cellStyle=csTotal,valueFormatter=numberFormat(2))
+    gb.configure_column('PlayingOverRating',valueFormatter=numberFormat(2))
+    #gb.configure_column('OBPM',valueFormatter=numberFormat(2))
+    #gb.configure_column('DBPM',valueFormatter=numberFormat(2))
+    #gb.configure_column('USAGE',valueFormatter=numberFormat(1))
+    #gb.configure_column('Points',valueFormatter=numberFormat(2))
+    #gb.configure_column('EFG',valueFormatter=numberFormat(2))
+    #gb.configure_column('OR',valueFormatter=numberFormat(2))
+    #gb.configure_column('3PT%',cellStyle=csTotal,valueFormatter=numberFormat(2))
+    #gb.configure_pagination()
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    #gridOptions = gb.build()
+    opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+    gb.configure_grid_options(**opts)
+    keyname='Team D'+team_selected
+    g = _displayGrid(test1, gb, key=keyname, height=600)
+
+
+    
     team_players = data['Players']
     team_players = team_players[team_players['Team']==team_selected]
-    #st.dataframe(team_players)
+    st.subheader(team_selected + ' Player Data')
     allcols=team_players.columns
     gb = GridOptionsBuilder.from_dataframe(team_players,groupable=True)
     gb.configure_columns(allcols, cellStyle=cellStyle)

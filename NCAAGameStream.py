@@ -2013,13 +2013,13 @@ def Team_Page(data):
     st.dataframe(test1)
     team_players = data['Players']
     team_players = team_players[team_players['Team']==team_selected]
-    st.dataframe(team_players)
+    #st.dataframe(team_players)
     allcols=team_players.columns
     gb = GridOptionsBuilder.from_dataframe(team_players,groupable=True)
     gb.configure_columns(allcols, cellStyle=cellStyle)
     csTotal=cellStyleDynamic(team_players.PRPG)
     gb.configure_column('PRPG',cellStyle=csTotal,valueFormatter=numberFormat(2))
-    csTotal=cellStyleDynamic(Dailyschedule.ORTG)
+    csTotal=cellStyleDynamic(team_players.ORTG)
     gb.configure_column('ORTG',cellStyle=csTotal,valueFormatter=numberFormat(2))
     gb.configure_column('BPM',valueFormatter=numberFormat(2))
     gb.configure_column('OBPM',valueFormatter=numberFormat(2))

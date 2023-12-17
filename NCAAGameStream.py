@@ -2014,6 +2014,30 @@ def Team_Page(data):
     team_players = data['Players']
     team_players = team_players[team_players['Team']==team_selected]
     st.dataframe(team_players)
+    allcols=team_players.columns
+    gb = GridOptionsBuilder.from_dataframe(team_players,groupable=True)
+    gb.configure_columns(allcols, cellStyle=cellStyle)
+    csTotal=cellStyleDynamic(team_players.PRPG)
+    gb.configure_column('PRPG',cellStyle=csTotal,valueFormatter=numberFormat(2))
+    csTotal=cellStyleDynamic(Dailyschedule.ORTG)
+    gb.configure_column('ORTG',cellStyle=csTotal,valueFormatter=numberFormat(2))
+    gb.configure_column('BPM',valueFormatter=numberFormat(2))
+    gb.configure_column('OBPM',valueFormatter=numberFormat(2))
+    gb.configure_column('DBPM',valueFormatter=numberFormat(2))
+    gb.configure_column('USAGE',valueFormatter=numberFormat(1))
+    gb.configure_column('Points',valueFormatter=numberFormat(2))
+    gb.configure_column('EFG',valueFormatter=numberFormat(2))
+    gb.configure_column('OR',valueFormatter=numberFormat(2))
+    gb.configure_column('3PT%',cellStyle=csTotal,valueFormatter=numberFormat(2))
+    #gb.configure_pagination()
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    #gridOptions = gb.build()
+    opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+    gb.configure_grid_options(**opts)
+    keyname='Team P'+team_selected
+    g = _displayGrid(team_players, gb, key=keyname, height=600)
 def Betting_Performance_Page(data):
     st.title('Betting Performance')    
     #else:

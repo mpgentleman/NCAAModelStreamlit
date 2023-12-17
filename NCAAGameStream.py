@@ -2077,9 +2077,14 @@ AllGames=pd.read_csv("Data/Season_GamesAll_2024.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 today_date_format = getTodaysDateFormat()
+Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
+Gamesdf = Gamesdf.reset_index(drop=True)
+Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
+Gamesdf = Gamesdf.drop_duplicates()
 regions = ['south', 'east', 'midwest', 'west']
 seed_region = {i: 0 for i in range(1, 17)}
 data['TeamDatabase2']=TeamDatabase2
+data['Gamesdf'] = Gamesdf
 data['hot'] = hot
 data['cold']= cold
 data['hotlist']= hotlist

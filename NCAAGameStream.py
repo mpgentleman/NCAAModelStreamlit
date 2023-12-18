@@ -1207,6 +1207,7 @@ def plot_line_chartLetsPlot(df, teams):
     ggsize(1000, 800)
     st_letsplot(p)
 def displayTeamDistributions(Gamesdf,myteam):
+    import streamlit.components.v1 as components
     dff1 = Gamesdf[Gamesdf['Tm']==myteam][['Tm','Opp','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']]
     col = ['Tm','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']
 
@@ -1254,7 +1255,8 @@ def displayTeamDistributions(Gamesdf,myteam):
     density41 = ggplot(dff1, aes(x='Tempo', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Pace/Tempo")
     p2 = gggrid([density1,density2,density3,density4,density12,density22,density32,density42,density11,density21,density31,density41], ncol=4)+ ggsize(1000, 800)
     #st.write(p2)
-    st_letsplot(p2)
+    #st_letsplot(p2)
+    components.html(_as_html(p2), height=1000 + 20,width=1000 + 20,scrolling=True,)
 
 
 def get_team_info_from_gamesdf(df,Team):

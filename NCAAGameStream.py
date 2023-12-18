@@ -1208,6 +1208,24 @@ def plot_line_chartLetsPlot(df, teams):
     st_letsplot(p)
 def displayTeamDistributions(Gamesdf,myteam):
     dff1 = Gamesdf[Gamesdf['Tm']==myteam][['Tm','Opp','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']]
+    col = ['Tm','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']
+
+    dff1 = dff1.rename(columns={
+        'Tm': 'Team',
+        'Tm_AdjO': 'AdjO',
+        'Tm_AdjD': 'AdjD',
+    'Tm_O_EFG':'O_EFG%',
+    'Tm_D_EFG':'D_EFG%',
+        'Tm_O_PPP': 'O_PPP',
+        'Tm_O_TO': 'O_TO%',
+        'Tm_O_OR': 'O_OR%',
+        'Tm_O_FTR': 'O_FTR',
+     'Tm_D_PPP': 'D_PPP',
+        'Tm_D_TO': 'D_TO%',
+        'Tm_D_OR': 'D_OR%',
+        'Tm_D_FTR': 'D_FTR',
+        
+    })
     np.random.seed(12)
     data = dict(
     cond=np.repeat(['A','B'], 200),

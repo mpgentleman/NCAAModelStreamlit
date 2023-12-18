@@ -2064,7 +2064,7 @@ def Team_Page(data):
     team_selected = st.selectbox('Select a Team',data['teams']) 
     test1=get_team_info_from_gamesdf(data['Gamesdf'],team_selected)
     test1 = test1.reset_index(drop=True)
-    
+    displayRankingHistory(data,team_selected)
     st.subheader(team_selected + ' Schedule/Results Data')
     allcols=test1.columns
     gb = GridOptionsBuilder.from_dataframe(test1,groupable=True)
@@ -2137,6 +2137,21 @@ def Betting_Performance_Page(data):
 def read_csv_from_url(url):
     df = pd.read_csv(url,sep=',',  header=None)
     return df
+def displayRankingHistory(data,myteam):
+    MGG = data['MG_Rank2']
+    TR1 = data['TRank']
+    MGG['Date_zero'] = pd.to_datetime(MGG['Date_zero'])
+    TR1['Date_zero'] = pd.to_datetime(TR1['Date_zero'])
+    MGG = MGG[['Team', 'ATS_net_eff', 'MG_net_eff', 'Date_zero']]
+    TR1 = TR1[['Team', 'AdjEM', 'Date_zero']].rename(columns={'AdjEM': 'TRank_AdjEM'})
+    df = pd.merge(MGG, TR1, on=['Team', 'Date_zero'], how='outer')
+    df1=df[df['Team']==myteam].sort_values('Date_zero')[2:]
+    melted_df = df1.melt(id_vars=['Team', 'Date_zero'], value_vars=['ATS_net_eff', 'MG_net_eff', 'TRank_AdjEM'], var_name='Ranking Type', value_name='Rankings')
+
+    p = ggplot(melted_df, aes(x='Date_zero', y='Rankings', group='Ranking Type')) + geom_line(aes(color='Ranking Type'), size=1, alpha=0.5)+ggtitle("Ranking Comparison") + ggsize(1000, 800)
+    st_letsplot(p)
+
+
 st.set_page_config(page_title="MG Rankings",layout="wide")
 _MENU_STYLE = {
     'container': {
@@ -2185,6 +2200,7 @@ AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 MG_Rank=pd.read_csv("Data/MGRatings2024_Daily_All_DB.csv")
 MG_Rank2=pd.read_csv("Data/MGRatings2024_Daily_New_DB.csv")
+TR = pd.read_csv('Data/TRank_2024_DB.csv')
 hot,cold=  getHotColdTeams(MG_Rank2)
 hotlist = hot.head(10)['Team'].to_list()
 coldlist = cold.head(10)['Team'].to_list()
@@ -2202,6 +2218,7 @@ Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
 Gamesdf = Gamesdf.drop_duplicates()
 regions = ['south', 'east', 'midwest', 'west']
 seed_region = {i: 0 for i in range(1, 17)}
+data['TRank'] = TR
 data['TeamDatabase2']=TeamDatabase2
 data['Gamesdf'] = Gamesdf
 data['hot'] = hot

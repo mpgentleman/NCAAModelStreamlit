@@ -1226,6 +1226,7 @@ def displayTeamDistributions(Gamesdf,myteam):
     density41 = ggplot(dff1, aes(x='Tempo', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Pace/Tempo")
     p = gggrid([density1,density2,density3,density4,density12,density22,density32,density42,density11,density21,density31,density41], ncol=4)
     st_letsplot(p)
+    st_letsplot(density1)
 
 def get_team_info_from_gamesdf(df,Team):
     AF = df[df['Tm']==Team].sort_values('DateNew')

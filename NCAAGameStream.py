@@ -1210,7 +1210,8 @@ def displayTeamDistributions(Gamesdf,myteam):
     dff1 = Gamesdf[Gamesdf['Tm']==myteam][['Tm','Opp','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']]
 
 
-    density1  = ggplot(dff1, aes(x='O_EFG%', color='Team')) + geom_density(aes(fill='Team'), alpha=.3,color='dark_green') + scale_fill_brewer(type='seq')+ ggtitle("Offensive EFG%")+ ggsize(500, 500)
+    density1  = ggplot(dff1, aes(x='O_EFG%', color='Team')) + geom_density(aes(fill='Team'), alpha=.3,color='dark_green') + scale_fill_brewer(type='seq')+ ggtitle("Offensive EFG%")+ ggsize(1000, 800)
+    st_letsplot(density1)
     density2  = ggplot(dff1, aes(x='O_TO%', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive TO%")
     density3  = ggplot(dff1, aes(x='O_OR%', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive OR%")
     density4 = ggplot(dff1, aes(x='O_FTR', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive FTR")
@@ -1225,8 +1226,8 @@ def displayTeamDistributions(Gamesdf,myteam):
     density31  = ggplot(dff1, aes(x='EMRating', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Adjusted Efficiency Rating")
     density41 = ggplot(dff1, aes(x='Tempo', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Pace/Tempo")
     p2 = gggrid([density1,density2,density3,density4,density12,density22,density32,density42,density11,density21,density31,density41], ncol=4)+ ggsize(1000, 800)
-    st_letsplot(p2)
-    st_letsplot(density1)
+    #st_letsplot(p2)
+
 
 def get_team_info_from_gamesdf(df,Team):
     AF = df[df['Tm']==Team].sort_values('DateNew')

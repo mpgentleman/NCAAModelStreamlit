@@ -1208,7 +1208,15 @@ def plot_line_chartLetsPlot(df, teams):
     st_letsplot(p)
 def displayTeamDistributions(Gamesdf,myteam):
     dff1 = Gamesdf[Gamesdf['Tm']==myteam][['Tm','Opp','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']]
+    np.random.seed(12)
+    data = dict(
+    cond=np.repeat(['A','B'], 200),
+    rating=np.concatenate((np.random.normal(0, 1, 200), np.random.normal(1, 1.5, 200))))
 
+    a = ggplot(data, aes(x='rating', fill='cond')) + ggsize(500, 250) + geom_density(color='dark_green', alpha=.7) + scale_fill_brewer(type='seq')+ theme(axis_line_y='blank')
+
+    # plots any Let's Plot visualization object
+    st_letsplot(a)
 
     density1  = ggplot(dff1, aes(x='O_EFG%', color='Team')) + geom_density(aes(fill='Team'), alpha=.3,color='dark_green') + scale_fill_brewer(type='seq')+ ggtitle("Offensive EFG%")+ ggsize(1000, 800)
     st.write(density1)

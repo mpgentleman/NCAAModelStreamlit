@@ -39,6 +39,7 @@ from lets_plot import *
 import json
 import Bracketology as Bkt
 from streamlit_option_menu import option_menu
+from lets_plot.frontend_context._configuration import _as_html
 def GetBracketMatrix():
     BracketLookup="http://bracketmatrix.com"
     res = requests.get(BracketLookup)

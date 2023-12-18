@@ -2066,11 +2066,13 @@ def Team_Page(data):
     test1 = test1.reset_index(drop=True)
     displayRankingHistory(data,team_selected)
     st.subheader(team_selected + ' Schedule/Results Data')
+    test1 = test1[['Date','Tm','Opp','HomeAway','Result_x','EMRating','PlayingOverRating'	,'ATSvalue','Tempo','Lead','AvgLead','Tm_AdjO','Tm_AdjD','G-Score']]
+
     allcols=test1.columns
     gb = GridOptionsBuilder.from_dataframe(test1,groupable=True)
     gb.configure_columns(allcols, cellStyle=cellStyle)
     csTotal=cellStyleDynamic(test1.EMRating)
-    gb.configure_column('EMRatingG',cellStyle=csTotal,valueFormatter=numberFormat(2))
+    gb.configure_column('EMRating',cellStyle=csTotal,valueFormatter=numberFormat(2))
     csTotal=cellStyleDynamic(test1.ATSvalue)
     gb.configure_column('ATSvalue',cellStyle=csTotal,valueFormatter=numberFormat(2))
     gb.configure_column('PlayingOverRating',valueFormatter=numberFormat(2))
@@ -2096,6 +2098,7 @@ def Team_Page(data):
     team_players = data['Players']
     team_players = team_players[team_players['Team']==team_selected]
     st.subheader(team_selected + ' Player Data')
+    
     allcols=team_players.columns
     gb = GridOptionsBuilder.from_dataframe(team_players,groupable=True)
     gb.configure_columns(allcols, cellStyle=cellStyle)

@@ -1259,7 +1259,50 @@ def displayTeamDistributions(Gamesdf,myteam):
     #st_letsplot(p2)
     plot_dict = p2.as_dict()
     components.html(_as_html(plot_dict), height=1500 + 20,width=3000 + 20,scrolling=True,)
+def displayTeamDistributionsMatchup(Gamesdf,myteam,team2):
+    import streamlit.components.v1 as components
+    df = Gamesdf[Gamesdf['Tm']==myteam][['Tm','Opp','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']]
+    df1 = Gamesdf[Gamesdf['Tm']==myteam][['Tm','Opp','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']]
+    dff1 = pd.concat([df,df1])
+    col = ['Tm','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']
 
+    dff1 = dff1.rename(columns={
+        'Tm': 'Team',
+        'Tm_AdjO': 'AdjO',
+        'Tm_AdjD': 'AdjD',
+    'Tm_O_EFG':'O_EFG%',
+    'Tm_D_EFG':'D_EFG%',
+        'Tm_O_PPP': 'O_PPP',
+        'Tm_O_TO': 'O_TO%',
+        'Tm_O_OR': 'O_OR%',
+        'Tm_O_FTR': 'O_FTR',
+     'Tm_D_PPP': 'D_PPP',
+        'Tm_D_TO': 'D_TO%',
+        'Tm_D_OR': 'D_OR%',
+        'Tm_D_FTR': 'D_FTR',
+        
+    })
+    
+
+    density1  = ggplot(dff1, aes(x='O_EFG%', color='Team')) + geom_density(aes(fill='Team'), alpha=.3,color='dark_green') + scale_fill_brewer(type='seq')+ ggtitle("Offensive EFG%")+ ggsize(1000, 2000)
+    density2  = ggplot(dff1, aes(x='O_TO%', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive TO%")
+    density3  = ggplot(dff1, aes(x='O_OR%', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive OR%")
+    density4 = ggplot(dff1, aes(x='O_FTR', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive FTR")
+    
+    density12  = ggplot(dff1, aes(x='D_EFG%', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green') + scale_fill_brewer(type='seq')+ ggtitle("Defensive EFG%")
+    density22  = ggplot(dff1, aes(x='D_TO%', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Defensive TO%")
+    density32  = ggplot(dff1, aes(x='D_OR%', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Defensive OR%")
+    density42 = ggplot(dff1, aes(x='D_FTR', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("DEfensive FTR")
+
+    density11  = ggplot(dff1, aes(x='AdjO', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue') + scale_fill_brewer(type='seq')+ ggtitle("Adjusted Offensive Rating")
+    density21  = ggplot(dff1, aes(x='AdjD', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Adjusted Defensive Rating")
+    density31  = ggplot(dff1, aes(x='EMRating', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Adjusted Efficiency Rating")
+    density41 = ggplot(dff1, aes(x='Tempo', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Pace/Tempo")
+    p2 = gggrid([density1,density2,density3,density4,density12,density22,density32,density42,density11,density21,density31,density41], ncol=4)+ ggsize(2000, 1000)
+    st.subheader(' Distribution Charts')
+    #st_letsplot(p2)
+    plot_dict = p2.as_dict()
+    components.html(_as_html(plot_dict), height=1500 + 20,width=3000 + 20,scrolling=True,)
 
 def get_team_info_from_gamesdf(df,Team):
     AF = df[df['Tm']==Team].sort_values('DateNew')
@@ -1826,6 +1869,7 @@ def Todays_Games(data):
         GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_D_PPP","OverUnder")
         #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
         #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
+        displayTeamDistributionsMatchup(Gamesdf,AwayTeam,HomeTeam)
         getTeamDFTable2024(test1,AwayTeam)
         getTeamDFTable2024(test2,HomeTeam)
     allcols=Dailyschedule.columns

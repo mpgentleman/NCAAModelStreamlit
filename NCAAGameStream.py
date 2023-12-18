@@ -1211,7 +1211,7 @@ def displayTeamDistributions(Gamesdf,myteam):
 
 
     density1  = ggplot(dff1, aes(x='O_EFG%', color='Team')) + geom_density(aes(fill='Team'), alpha=.3,color='dark_green') + scale_fill_brewer(type='seq')+ ggtitle("Offensive EFG%")+ ggsize(1000, 800)
-    st.write(density)
+    st.write(density1)
     st_letsplot(density1)
     density2  = ggplot(dff1, aes(x='O_TO%', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive TO%")
     density3  = ggplot(dff1, aes(x='O_OR%', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive OR%")

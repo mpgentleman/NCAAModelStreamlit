@@ -1237,7 +1237,7 @@ def displayTeamDistributions(Gamesdf,myteam):
     st_letsplot(a)
 
     density1  = ggplot(dff1, aes(x='O_EFG%', color='Team')) + geom_density(aes(fill='Team'), alpha=.3,color='dark_green') + scale_fill_brewer(type='seq')+ ggtitle("Offensive EFG%")+ ggsize(1000, 800)
-    st.write(density1)
+    #st.write(density1)
     st_letsplot(density1)
     density2  = ggplot(dff1, aes(x='O_TO%', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive TO%")
     density3  = ggplot(dff1, aes(x='O_OR%', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive OR%")
@@ -1253,8 +1253,8 @@ def displayTeamDistributions(Gamesdf,myteam):
     density31  = ggplot(dff1, aes(x='EMRating', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Adjusted Efficiency Rating")
     density41 = ggplot(dff1, aes(x='Tempo', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Pace/Tempo")
     p2 = gggrid([density1,density2,density3,density4,density12,density22,density32,density42,density11,density21,density31,density41], ncol=4)+ ggsize(1000, 800)
-    st.write(p2)
-    #st_letsplot(p2)
+    #st.write(p2)
+    st_letsplot(p2)
 
 
 def get_team_info_from_gamesdf(df,Team):

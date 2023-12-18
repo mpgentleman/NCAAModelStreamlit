@@ -1258,7 +1258,7 @@ def displayTeamDistributions(Gamesdf,myteam):
     #st.write(p2)
     #st_letsplot(p2)
     plot_dict = p2.as_dict()
-    components.html(_as_html(plot_dict), height=1000 + 20,width=1000 + 20,scrolling=True,)
+    components.html(_as_html(plot_dict), height=1000 + 20,width=2000 + 20,scrolling=True,)
 
 
 def get_team_info_from_gamesdf(df,Team):

@@ -1257,7 +1257,8 @@ def displayTeamDistributions(Gamesdf,myteam):
     p2 = gggrid([density1,density2,density3,density4,density12,density22,density32,density42,density11,density21,density31,density41], ncol=4)+ ggsize(1000, 800)
     #st.write(p2)
     #st_letsplot(p2)
-    components.html(_as_html(p2), height=1000 + 20,width=1000 + 20,scrolling=True,)
+    plot_dict = p2.as_dict()
+    components.html(_as_html(plot_dict), height=1000 + 20,width=1000 + 20,scrolling=True,)
 
 
 def get_team_info_from_gamesdf(df,Team):

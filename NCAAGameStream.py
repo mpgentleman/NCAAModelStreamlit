@@ -1206,6 +1206,26 @@ def plot_line_chartLetsPlot(df, teams):
     geom_line(aes(color='Tm_'), size=1, alpha=0.5)+ggtitle("ATS Net Rating") + \
     ggsize(1000, 800)
     st_letsplot(p)
+def displayTeamDistributions(Gamesdf,myteam):
+    dff1 = Gamesdf[Gamesdf['Tm']==myteam][['Tm','Opp','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']]
+
+
+    density1  = ggplot(dff1, aes(x='O_EFG%', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green') + scale_fill_brewer(type='seq')+ ggtitle("Offensive EFG%")
+    density2  = ggplot(dff1, aes(x='O_TO%', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive TO%")
+    density3  = ggplot(dff1, aes(x='O_OR%', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive OR%")
+    density4 = ggplot(dff1, aes(x='O_FTR', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive FTR")
+    #gggrid([density1,density2,density3,density4], ncol=4)
+    density12  = ggplot(dff1, aes(x='D_EFG%', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green') + scale_fill_brewer(type='seq')+ ggtitle("Defensive EFG%")
+    density22  = ggplot(dff1, aes(x='D_TO%', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Defensive TO%")
+    density32  = ggplot(dff1, aes(x='D_OR%', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Defensive OR%")
+    density42 = ggplot(dff1, aes(x='D_FTR', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("DEfensive FTR")
+
+    density11  = ggplot(dff1, aes(x='AdjO', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue') + scale_fill_brewer(type='seq')+ ggtitle("Adjusted Offensive Rating")
+    density21  = ggplot(dff1, aes(x='AdjD', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Adjusted Defensive Rating")
+    density31  = ggplot(dff1, aes(x='EMRating', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Adjusted Efficiency Rating")
+    density41 = ggplot(dff1, aes(x='Tempo', color='Team')) + ggsize(500, 250)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Pace/Tempo")
+    p = gggrid([density1,density2,density3,density4,density12,density22,density32,density42,density11,density21,density31,density41], ncol=4)
+    st_letsplot(p)
 
 def get_team_info_from_gamesdf(df,Team):
     AF = df[df['Tm']==Team].sort_values('DateNew')
@@ -2036,7 +2056,7 @@ def Team_Page(data):
     gb.configure_grid_options(**opts)
     keyname='Team D'+team_selected
     g = _displayGrid(test1, gb, key=keyname, height=600)
-
+    displayTeamDistributions(data['Gamesdf'],team_selected)
 
     
     team_players = data['Players']

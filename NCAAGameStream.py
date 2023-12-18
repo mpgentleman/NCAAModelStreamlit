@@ -1262,7 +1262,7 @@ def displayTeamDistributions(Gamesdf,myteam):
 def displayTeamDistributionsMatchup(Gamesdf,myteam,team2):
     import streamlit.components.v1 as components
     df = Gamesdf[Gamesdf['Tm']==myteam][['Tm','Opp','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']]
-    df1 = Gamesdf[Gamesdf['Tm']==myteam][['Tm','Opp','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']]
+    df1 = Gamesdf[Gamesdf['Tm']==team2][['Tm','Opp','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']]
     dff1 = pd.concat([df,df1])
     col = ['Tm','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']
 

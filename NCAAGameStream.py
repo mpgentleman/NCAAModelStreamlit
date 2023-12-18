@@ -1254,7 +1254,7 @@ def displayTeamDistributions(Gamesdf,myteam):
     density21  = ggplot(dff1, aes(x='AdjD', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Adjusted Defensive Rating")
     density31  = ggplot(dff1, aes(x='EMRating', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Adjusted Efficiency Rating")
     density41 = ggplot(dff1, aes(x='Tempo', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Pace/Tempo")
-    p2 = gggrid([density1,density2,density3,density4,density12,density22,density32,density42,density11,density21,density31,density41], ncol=4)+ ggsize(1000, 3000)
+    p2 = gggrid([density1,density2,density3,density4,density12,density22,density32,density42,density11,density21,density31,density41], ncol=4)+ ggsize(3000, 1000)
     #st.write(p2)
     #st_letsplot(p2)
     plot_dict = p2.as_dict()

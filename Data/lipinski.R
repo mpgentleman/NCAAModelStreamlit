@@ -1,6 +1,6 @@
 library(ggplot2)
 library(cowplot)
-data = read.csv("lipinski.csv", header = TRUE)
+data = read.csv("Data/lipinski.csv", header = TRUE)
 d1 <- data.frame(a = c(1, 1,2, 2), b = c(720, 735, 735, 720))
 data$Activity <- factor(data$Activity, levels = c("Active", "Inactive"))
 p_1 <- ggplot(data, aes(factor(Activity), MW))
@@ -77,4 +77,4 @@ p_4 <- p_4 + theme(plot.title = element_text(margin = margin (b = -22)),
 p_4 <- p_4 + theme(plot.title = element_text(size = 20, face = "bold", hjust = 0.5))
 plot_grid(p_1, p_2, p_3, p_4, align = "hv")
 
-ggsave("lipinski.png", width = 8, height = 8)
+ggsave("Data/lipinski.png", width = 8, height = 8)

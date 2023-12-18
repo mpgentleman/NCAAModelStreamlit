@@ -1238,7 +1238,7 @@ def displayTeamDistributions(Gamesdf,myteam):
     # plots any Let's Plot visualization object
     #st_letsplot(a)
 
-    density1  = ggplot(dff1, aes(x='O_EFG%', color='Team')) + geom_density(aes(fill='Team'), alpha=.3,color='dark_green') + scale_fill_brewer(type='seq')+ ggtitle("Offensive EFG%")+ ggsize(1000, 800)
+    density1  = ggplot(dff1, aes(x='O_EFG%', color='Team')) + geom_density(aes(fill='Team'), alpha=.3,color='dark_green') + scale_fill_brewer(type='seq')+ ggtitle("Offensive EFG%")+ ggsize(1000, 2000)
     #st.write(density1)
     #st_letsplot(density1)
     density2  = ggplot(dff1, aes(x='O_TO%', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_green')+ scale_fill_brewer(type='seq')+ ggtitle("Offensive TO%")
@@ -1258,7 +1258,7 @@ def displayTeamDistributions(Gamesdf,myteam):
     #st.write(p2)
     #st_letsplot(p2)
     plot_dict = p2.as_dict()
-    components.html(_as_html(plot_dict), height=1000 + 20,width=2000 + 20,scrolling=True,)
+    components.html(_as_html(plot_dict), height=1500 + 20,width=3000 + 20,scrolling=True,)
 
 
 def get_team_info_from_gamesdf(df,Team):

@@ -2204,7 +2204,7 @@ st.set_page_config(page_title="MG Rankings",layout="wide")
 import streamlit as st
 import subprocess
 from PIL import Image
-process3 = subprocess.Popen(["Rscript", "lipinski.R"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+process3 = subprocess.Popen("lipinski.R", stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 result3 = process3.communicate()
 image = Image.open('lipinski.png')
 st.image(image)

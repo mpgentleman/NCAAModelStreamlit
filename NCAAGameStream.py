@@ -1284,10 +1284,10 @@ def displayTeamDistributionsMatchup(Gamesdf,myteam,team2):
     })
     
 
-    density1  = ggplot(dff1, aes(x='O_EFG%', color='Team')) + geom_density(aes(fill='Team'), alpha=.3) + scale_fill_brewer(type='seq')+ ggtitle("Offensive EFG%")+ ggsize(1000, 2000)
-    density2  = ggplot(dff1, aes(x='O_TO%', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,)+ scale_fill_brewer(type='seq')+ ggtitle("Offensive TO%")
-    density3  = ggplot(dff1, aes(x='O_OR%', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3)+ scale_fill_brewer(type='seq')+ ggtitle("Offensive OR%")
-    density4 = ggplot(dff1, aes(x='O_FTR', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3)+ scale_fill_brewer(type='seq')+ ggtitle("Offensive FTR")
+    density1  = ggplot(dff1, aes(x='O_EFG%', color='Team')) + geom_density(aes(fill='Team'), alpha=.6) + scale_fill_brewer(type='seq')+ ggtitle("Offensive EFG%")+ ggsize(1000, 2000)
+    density2  = ggplot(dff1, aes(x='O_TO%', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.6,)+ scale_fill_brewer(type='seq')+ ggtitle("Offensive TO%")
+    density3  = ggplot(dff1, aes(x='O_OR%', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.6)+ scale_fill_brewer(type='seq')+ ggtitle("Offensive OR%")
+    density4 = ggplot(dff1, aes(x='O_FTR', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.6)+ scale_fill_brewer(type='seq')+ ggtitle("Offensive FTR")
     
     density12  = ggplot(dff1, aes(x='D_EFG%', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3) + scale_fill_brewer(type='seq')+ ggtitle("Defensive EFG%")
     density22  = ggplot(dff1, aes(x='D_TO%', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3)+ scale_fill_brewer(type='seq')+ ggtitle("Defensive TO%")

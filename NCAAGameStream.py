@@ -1990,8 +1990,10 @@ def Todays_Games(data):
         plot_line_chartLetsPlotHot(MG_Rank2, myteams)
         col1, col2 = st.columns(2)
         with col1:
+            st.subheader(AwayTeam + ' Rankings')
             displayRankingHistory(data,AwayTeam)
         with col2:
+            st.subheader(HomeTeam + ' Rankings')
             displayRankingHistory(data,HomeTeam)
         col1, col2 = st.columns(2)
         with col1:
@@ -2121,8 +2123,10 @@ def Team_Matchup(data):
         plot_line_chartLetsPlotHot(MG_Rank2, myteams)
         col1, col2 = st.columns(2)
         with col1:
+            st.subheader(AwayTeam + ' Rankings')
             displayRankingHistory(data,AwayTeam)
         with col2:
+            st.subheader(HomeTeam + ' Rankings')
             displayRankingHistory(data,HomeTeam)
         col1, col2 = st.columns(2)
         with col1:

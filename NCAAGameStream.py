@@ -2269,7 +2269,14 @@ def Team_Page(data):
     team_selected = st.selectbox('Select a Team',data['teams']) 
     test1=get_team_info_from_gamesdf(data['Gamesdf'],team_selected)
     test1 = test1.reset_index(drop=True)
-    displayRankingHistory(data,team_selected)
+    col1, col2 = st.columns(2)
+    with col1:
+        displayRankingHistory(data,team_selected)
+    with col2:
+        team_players = data['Players']
+        team_players = team_players[team_players['Team']==team_selected]
+        st.subheader(team_selected + ' Player Data')
+        showPlayersTable(team_players)
     st.subheader(team_selected + ' Schedule/Results Data')
     test1 = test1[['Date','Tm','Opp','HomeAway','Result_x','EMRating','PlayingOverRating'	,'ATSvalue','Tempo','Lead','AvgLead','Tm_AdjO','Tm_AdjD','G-Score']]
 
@@ -2300,10 +2307,7 @@ def Team_Page(data):
     displayTeamDistributions(data['Gamesdf'],team_selected)
 
     
-    team_players = data['Players']
-    team_players = team_players[team_players['Team']==team_selected]
-    st.subheader(team_selected + ' Player Data')
-    showPlayersTable(team_players)
+
     allcols=team_players.columns
     gb = GridOptionsBuilder.from_dataframe(team_players,groupable=True)
     gb.configure_columns(allcols, cellStyle=cellStyle)

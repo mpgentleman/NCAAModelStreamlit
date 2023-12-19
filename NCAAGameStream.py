@@ -1992,7 +1992,7 @@ def Todays_Games(data):
         with col1:
             displayRankingHistory(data,AwayTeam)
         with col2:
-            displayRankingHistory(data,AwayTeam)
+            displayRankingHistory(data,HomeTeam)
         col1, col2 = st.columns(2)
         with col1:
             team_players = data['Players']

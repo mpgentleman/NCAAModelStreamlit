@@ -1954,10 +1954,61 @@ def Todays_Games(data):
     st.text('Games can be sorted by columns. Click on column header to sort')
     st.text('To sort by game time click the Time column.  ')
     st.text('Low Negative values in the Reg Dif and Overplaying column mean the Home team is the pick  ') 
-    Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','DraftKings','BetMGM spreads','Caesars spreads','FanDuel','commence_time','BetRivers spreads','VegasTotal','Reg_dif','Over_dif','Pomeroy_PointDiff','TRank_PointDiff','MG_PointDiff','MG_ATS_PointDiff','Daily_Reg_PointDiff','Dif_from_Vegas']]
+    Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','FanDuel','MG_ATS_PointDiff','commence_time','Reg_dif','Over_dif','Dif_from_Vegas','Pomeroy_PointDiff','TRank_PointDiff','MG_PointDiff','Daily_Reg_PointDiff''DraftKings','BetMGM spreads','Caesars spreads','BetRivers spreads','VegasTotal']]
     Dailyschedule.DraftKings = Dailyschedule.DraftKings.astype(float).round(1)
     Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
+    allcols=Dailyschedule.columns
+    gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
+    gb.configure_columns(allcols, cellStyle=cellStyle)
+    csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
+    gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
+    gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_column('DraftKings',valueFormatter=numberFormat(1))
+    gb.configure_column('VegasTotal',valueFormatter=numberFormat(1))
+    gb.configure_column('Pomeroy_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('TRank_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('MG_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('MG_ATS_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('Daily_Reg_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('Dif_from_Vegas',cellStyle=csTotal,valueFormatter=numberFormat(2))
+    #gb.configure_pagination()
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    #gridOptions = gb.build()
+    opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+    gb.configure_grid_options(**opts)
+    keyname='Test'
+    g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
+    #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
+    
     if st.button('Run'):
+        allcols=Dailyschedule.columns
+        gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
+        gb.configure_columns(allcols, cellStyle=cellStyle)
+        csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
+        gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+        csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
+        gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+        gb.configure_column('DraftKings',valueFormatter=numberFormat(1))
+        gb.configure_column('VegasTotal',valueFormatter=numberFormat(1))
+        gb.configure_column('Pomeroy_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('TRank_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('MG_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('MG_ATS_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('Daily_Reg_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('Dif_from_Vegas',cellStyle=csTotal,valueFormatter=numberFormat(2))
+        #gb.configure_pagination()
+        gb.configure_side_bar()
+        gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        #gridOptions = gb.build()
+        opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+        gb.configure_grid_options(**opts)
+        keyname='Test  '
+        g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
+        #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
         dateforRankings=today_date_format
         #dateforRankings5=d2
         #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
@@ -2052,31 +2103,7 @@ def Todays_Games(data):
         displayTeamDistributionsMatchup(Gamesdf,AwayTeam,HomeTeam)
         getTeamDFTable2024(test1,AwayTeam)
         getTeamDFTable2024(test2,HomeTeam)
-    allcols=Dailyschedule.columns
-    gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
-    gb.configure_columns(allcols, cellStyle=cellStyle)
-    csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
-    gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
-    csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
-    gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
-    gb.configure_column('DraftKings',valueFormatter=numberFormat(1))
-    gb.configure_column('VegasTotal',valueFormatter=numberFormat(1))
-    gb.configure_column('Pomeroy_PointDiff',valueFormatter=numberFormat(1))
-    gb.configure_column('TRank_PointDiff',valueFormatter=numberFormat(1))
-    gb.configure_column('MG_PointDiff',valueFormatter=numberFormat(1))
-    gb.configure_column('MG_ATS_PointDiff',valueFormatter=numberFormat(1))
-    gb.configure_column('Daily_Reg_PointDiff',valueFormatter=numberFormat(1))
-    gb.configure_column('Dif_from_Vegas',cellStyle=csTotal,valueFormatter=numberFormat(2))
-    #gb.configure_pagination()
-    gb.configure_side_bar()
-    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-    #gridOptions = gb.build()
-    opts= {**DEFAULT_GRID_OPTIONS,
-               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
-    gb.configure_grid_options(**opts)
-    keyname='Test'
-    g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
-    #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
+    
     
 def Team_Matchup(data):
     AwayTeamAll = data['AwayTeamAll']

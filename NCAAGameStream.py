@@ -2201,11 +2201,14 @@ def displayRankingHistory(data,myteam):
 
 st.set_page_config(page_title="MG Rankings",layout="wide")
 
-import streamlit as st
-import subprocess
+#import streamlit as st
+#import subprocess
 from PIL import Image
-process3 = subprocess.Popen("Data/lipinski.R", stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-result3 = process3.communicate()
+#process3 = subprocess.Popen("Data/lipinski.R", stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+#result3 = process3.communicate()
+import rpy2.robjects as robjects
+robjects.r.source("Data/lipinski.R")
+print(robjects.globalenv["a"])
 image = Image.open('lipinski.png')
 st.image(image)
 st.caption('**Figure 2.** A reproduction of Figure 3 from the [HCVpred](https://onlinelibrary.wiley.com/doi/abs/10.1002/jcc.26223) paper using code publicly available on [GitHub](https://github.com/chaninlab/hcvpred).')

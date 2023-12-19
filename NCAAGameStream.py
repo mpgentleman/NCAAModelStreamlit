@@ -1999,7 +1999,7 @@ def Todays_Games(data):
             team_players = team_players[team_players['Team']==AwayTeam]
             st.subheader(AwayTeam + ' Player Data')
             showPlayersTable(team_players)
-        with col2
+        with col2:
             team_players = data['Players']
             team_players = team_players[team_players['Team']==HomeTeam]
             st.subheader(HomeTeam + ' Player Data')

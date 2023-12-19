@@ -1988,6 +1988,23 @@ def Todays_Games(data):
         test2['New_ID'] = range(0, 0+len(test2))
         myteams = [AwayTeam,HomeTeam]
         plot_line_chartLetsPlotHot(MG_Rank2, myteams)
+        col1, col2 = st.columns(2)
+        with col1:
+            displayRankingHistory(data,AwayTeam)
+        with col2:
+            displayRankingHistory(data,AwayTeam)
+        col1, col2 = st.columns(2)
+        with col1:
+            team_players = data['Players']
+            team_players = team_players[team_players['Team']==AwayTeam]
+            st.subheader(AwayTeam + ' Player Data')
+            showPlayersTable(team_players)
+        with col2
+            team_players = data['Players']
+            team_players = team_players[team_players['Team']==HomeTeam]
+            st.subheader(HomeTeam + ' Player Data')
+            showPlayersTable(team_players)
+            
         try:
             fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
             fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green')

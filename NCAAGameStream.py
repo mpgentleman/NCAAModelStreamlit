@@ -40,6 +40,167 @@ import json
 import Bracketology as Bkt
 from streamlit_option_menu import option_menu
 from lets_plot.frontend_context._configuration import _as_html
+
+import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from matplotlib.colors import LinearSegmentedColormap
+
+from plottable import ColumnDefinition, Table
+from plottable.cmap import normed_cmap
+from plottable.formatters import decimal_to_percent
+from plottable.plots import circled_image # image
+
+def showPlayersTable(player_data):
+    cmap = LinearSegmentedColormap.from_list(
+    name="bugw", colors=["#ffffff", "#f2fbd2", "#c9ecb4", "#93d3ab", "#35b0ab"], N=256)
+    colors = [(0.6, 0.76, 0.98), (0, 0.21, 0.46)] # Experiment with this
+    cm1 = LinearSegmentedColormap.from_list('test', colors, N=256)
+    df = player_data[['Player','Number','Games','ORTG','BPM','OBPM','DBPM', 'PRPG','Points','EFG','3PT%','FT%','Min%','USAGE','Team']]
+
+    #df = player_data1[player_data1['Team']=='Purdue']   
+    df =df.sort_values('PRPG',ascending=False)
+    df = df[df['ORTG'] != 0]
+    df['EFG'] =df['EFG']/100
+    df['Min%'] =df['Min%']/100
+    df['USAGE'] =df['USAGE']/100
+
+    team_rating_cols = ['ORTG','BPM','OBPM','DBPM','PRPG']
+    depth_rating_cols = ['Min%','USAGE']
+    shooting_cols = ['Points','EFG','3PT%','FT%',]
+    col_defs = (
+    [
+        
+        ColumnDefinition(
+            name="Player",
+            textprops={"ha": "left", "weight": "bold"},
+            width=3,
+        ),
+
+        ColumnDefinition(
+            name="Number",
+            textprops={"ha": "center"},
+            width=1,
+        ),
+        ColumnDefinition(
+            name="ORTG",
+            group="Advanced Stats",
+            textprops={"ha": "center"},
+            cmap=normed_cmap(df["ORTG"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            width=1,
+        ),
+        ColumnDefinition(
+            name="BPM",
+            width=1,
+            textprops={
+                "ha": "center",
+               # "bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.1f}",
+            cmap=normed_cmap(df["BPM"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="Advanced Stats",
+        ),
+        ColumnDefinition(
+            name="OBPM",
+            width=1,
+            textprops={
+                "ha": "center",
+               # "bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.1f}",
+            cmap=normed_cmap(df["OBPM"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="Advanced Stats",
+        ),
+        ColumnDefinition(
+            name="DBPM",
+            width=1,
+            textprops={
+                "ha": "center",
+               # "bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.1f}",
+            cmap=normed_cmap(df["DBPM"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="Advanced Stats",
+        ),
+        ColumnDefinition(
+            name="PRPG",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.1f}",
+            cmap=normed_cmap(df["PRPG"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            #group="Advanced Stats",
+        ),
+    ]
+    + [
+        ColumnDefinition(
+            name=depth_rating_cols[0],
+            title=depth_rating_cols[0].replace(" ", "\n", 1),
+            #formatter=decimal_to_percent,
+           formatter= "{:.2%}",
+            cmap=cm1,
+            width=1.2,
+            group="Depth ",
+            #border="center",
+        )
+    ]
+    + [
+        ColumnDefinition(
+            name=col,
+            title=col.replace(" ", "\n", 1),
+            formatter= "{:.2%}",
+            cmap=cm1,
+            width=1.2,
+            #formatter=decimal_to_percent,
+            group="Depth ",
+        )
+        for col in depth_rating_cols[1:]
+    ]
+    + [
+        ColumnDefinition(
+            name=shooting_cols[0],
+            title=shooting_cols[0].replace(" ", "\n", 1),
+            formatter= " {:.2f}",
+            width=1.2,
+            #formatter=decimal_to_percent,
+            cmap=cmap,
+            group="Shooting Stats",
+           # border="center",
+        )
+    ]
+    + [
+        ColumnDefinition(
+            name=col,
+            title=col.replace(" ", "\n", 1),
+            formatter= " {:.2%}",
+            width=1.2,
+            #formatter=decimal_to_percent,
+            cmap=cmap,
+            group="Shooting Stats",
+        )
+        for col in shooting_cols[1:]
+    ]
+)
+    plt.rcParams["font.family"] = ["DejaVu Sans"]
+    plt.rcParams["savefig.bbox"] = "tight"
+    fig, ax = plt.subplots(figsize=(20, 8))
+ 
+    table = Table(
+    df,
+    column_definitions=col_defs,
+    row_dividers=True,
+    footer_divider=True,
+    ax=ax,
+    textprops={"fontsize": 14},
+    row_divider_kw={"linewidth": 1, "linestyle": (0, (1, 5))},
+    col_label_divider_kw={"linewidth": 1, "linestyle": "-"},
+    column_border_kw={"linewidth": 1, "linestyle": "-"},
+    ).autoset_fontcolors(colnames=["OBPM", "DBPM"])
+    st.pyplot(fig)
+    
 def GetBracketMatrix():
     BracketLookup="http://bracketmatrix.com"
     res = requests.get(BracketLookup)
@@ -2142,7 +2303,7 @@ def Team_Page(data):
     team_players = data['Players']
     team_players = team_players[team_players['Team']==team_selected]
     st.subheader(team_selected + ' Player Data')
-    
+    showPlayersTable(team_players)
     allcols=team_players.columns
     gb = GridOptionsBuilder.from_dataframe(team_players,groupable=True)
     gb.configure_columns(allcols, cellStyle=cellStyle)

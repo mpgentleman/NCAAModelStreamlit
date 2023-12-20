@@ -1936,7 +1936,7 @@ def Todays_Games(data):
     Gamesdf = Gamesdf.reset_index(drop=True)
     Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
     Gamesdf = Gamesdf.drop_duplicates()
-    Tables_Choice=st.selectbox('Sort Games By',[' ','Alphabetical', 'Time','Regression_Difference','OverPlaying'],index=0)
+    Tables_Choice=st.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'],index=0)
     Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+today_date_format+"Schedule.csv")
     if 'Alphabetical'in  Tables_Choice:
         Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
@@ -1946,10 +1946,10 @@ def Todays_Games(data):
         Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
     if 'OverPlaying' in Tables_Choice: 
         Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
-    AwayList=list(Dailyschedule['AWAY'])
-    HomeList=list(Dailyschedule['HOME'])
-    AwayTeam = st.selectbox('Away Team',AwayList)
-    HomeTeam = st.selectbox('Home Team',HomeList)
+    AwayList=list(' ',Dailyschedule['AWAY'])
+    HomeList=list(' ',Dailyschedule['HOME'])
+    AwayTeam = st.selectbox('Away Team',AwayList,index=0)
+    HomeTeam = st.selectbox('Home Team',HomeList,index=0)
     st.header('Sortable NCAA Game Schedule')
     st.text('Games can be sorted by columns. Click on column header to sort')
     st.text('To sort by game time click the Time column.  ')

@@ -1954,7 +1954,7 @@ def Todays_Games(data):
     st.text('Games can be sorted by columns. Click on column header to sort')
     st.text('To sort by game time click the Time column.  ')
     st.text('Low Negative values in the Reg Dif and Overplaying column mean the Home team is the pick  ') 
-    Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','FanDuel','MG_ATS_PointDiff','commence_time','Reg_dif','Over_dif','Dif_from_Vegas','Pomeroy_PointDiff','TRank_PointDiff','MG_PointDiff','Daily_Reg_PointDiff''DraftKings','BetMGM spreads','Caesars spreads','BetRivers spreads','VegasTotal']]
+    Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','FanDuel','MG_ATS_PointDiff','commence_time','Reg_dif','Over_dif','Dif_from_Vegas','Pomeroy_PointDiff','TRank_PointDiff','MG_PointDiff','Daily_Reg_PointDiff','DraftKings','BetMGM spreads','Caesars spreads','BetRivers spreads','VegasTotal']]
     Dailyschedule.DraftKings = Dailyschedule.DraftKings.astype(float).round(1)
     Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
     allcols=Dailyschedule.columns

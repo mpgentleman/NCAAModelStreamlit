@@ -2382,7 +2382,21 @@ def Team_Page(data):
     keyname='Team P'+team_selected
     g = _displayGrid(team_players, gb, key=keyname, height=600)
 def Betting_Performance_Page(data):
-    st.title('Betting Performance')    
+    st.title('Betting Performance')
+    df = data['SkedBetting']
+    gb = GridOptionsBuilder.from_dataframe(df,groupable=True)
+    #csTotal=cellStyleDynamic(hot2.performance_change)
+    #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    #gb.configure_column('Seed',valueFormatter=numberFormat(0))
+    #csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
+    #gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+    gb.configure_grid_options(**opts)
+    keyname='Test bet'
+    g = _displayGrid(df, gb, key=keyname, height=600)
     #else:
     #    add_selectbox = st.sidebar.header("Select Todays Date")
     #    add_selectbox_start =st.sidebar.date_input('Pick date')
@@ -2465,6 +2479,7 @@ AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 MG_Rank=pd.read_csv("Data/MGRatings2024_Daily_All_DB.csv")
 MG_Rank2=pd.read_csv("Data/MGRatings2024_Daily_New_DB.csv")
+SkedBetting = pd.read_csv("Data/SkedBetting.csv")
 TR = pd.read_csv('Data/TRank_2024_DB.csv')
 hot,cold=  getHotColdTeams(MG_Rank2)
 hotlist = hot.head(10)['Team'].to_list()
@@ -2484,6 +2499,7 @@ Gamesdf = Gamesdf.drop_duplicates()
 regions = ['south', 'east', 'midwest', 'west']
 seed_region = {i: 0 for i in range(1, 17)}
 data['TRank'] = TR
+data['SkedBetting'] = SkedBetting
 data['TeamDatabase2']=TeamDatabase2
 data['Gamesdf'] = Gamesdf
 data['hot'] = hot

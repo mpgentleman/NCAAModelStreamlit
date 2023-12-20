@@ -1946,8 +1946,8 @@ def Todays_Games(data):
         Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
     if 'OverPlaying' in Tables_Choice: 
         Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
-    AwayList=list(' ',Dailyschedule['AWAY'])
-    HomeList=list(' ',Dailyschedule['HOME'])
+    AwayList=[''] + Dailyschedule['AWAY'].tolist()
+    HomeList=[''] + Dailyschedule['HOME'].tolist()
     AwayTeam = st.selectbox('Away Team',AwayList,index=0)
     HomeTeam = st.selectbox('Home Team',HomeList,index=0)
     st.header('Sortable NCAA Game Schedule')

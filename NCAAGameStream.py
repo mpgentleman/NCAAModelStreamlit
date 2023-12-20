@@ -2388,7 +2388,7 @@ def Betting_Performance_Page(data):
      'Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS',
      'TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS',
      'MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS',
-     'Daily_Reg_PointDiffLossATS','VegasImpliedWinPercent','MG_ATS_ImpliedWinPercent','Dif_from_Vegas']
+     'Daily_Reg_PointDiffLossATS','VegasImpliedWinPercent','MG_ATS_ImpliedWinPercent','Dif_from_Vegas','MG_Reg_ATS_ImpliedWinPercent','Reg_Dif_Abs','Over_Dif_Abs']
     df = df[bcols]
     gb = GridOptionsBuilder.from_dataframe(df,groupable=True)
     #csTotal=cellStyleDynamic(hot2.performance_change)

@@ -2384,6 +2384,12 @@ def Team_Page(data):
 def Betting_Performance_Page(data):
     st.title('Betting Performance')
     df = data['SkedBetting']
+    bcols = ['Tm','Date_zero','Reg_dif','Over_dif','Daily_Reg_Tm_net_eff','Daily_Reg_Opp_net_eff','Pomeroy_PointDiffWinATS',
+     'Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS',
+     'TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS',
+     'MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS',
+     'Daily_Reg_PointDiffLossATS','VegasImpliedWinPercent','MG_ATS_ImpliedWinPercent','Dif_from_Vegas']
+    df = df[bcols]
     gb = GridOptionsBuilder.from_dataframe(df,groupable=True)
     #csTotal=cellStyleDynamic(hot2.performance_change)
     #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))

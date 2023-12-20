@@ -1936,7 +1936,7 @@ def Todays_Games(data):
     Gamesdf = Gamesdf.reset_index(drop=True)
     Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
     Gamesdf = Gamesdf.drop_duplicates()
-    Tables_Choice=st.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying']index=' ')
+    Tables_Choice=st.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'],index=' ')
     Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+today_date_format+"Schedule.csv")
     if 'Alphabetical'in  Tables_Choice:
         Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])

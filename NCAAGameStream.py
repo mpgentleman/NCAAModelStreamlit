@@ -2035,12 +2035,12 @@ def Todays_Games(data):
             team_players = data['Players']
             #team_players = team_players[team_players['Team']==AwayTeam]
             st.subheader(AwayTeam + ' Player Data')
-            showPlayersTable(team_players,team_selected)
+            showPlayersTable(team_players,AwayTeam)
         with col2:
             team_players = data['Players']
             #team_players = team_players[team_players['Team']==HomeTeam]
             st.subheader(HomeTeam + ' Player Data')
-            showPlayersTable(team_players,team_selected)
+            showPlayersTable(team_players,HomeTeam)
             
         try:
             fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
@@ -2144,12 +2144,12 @@ def Team_Matchup(data):
             team_players = data['Players']
             #team_players = team_players[team_players['Team']==AwayTeam]
             st.subheader(AwayTeam + ' Player Data')
-            showPlayersTable(team_players,team_selected)
+            showPlayersTable(team_players,AwayTeam)
         with col2:
             team_players = data['Players']
             #team_players = team_players[team_players['Team']==HomeTeam]
             st.subheader(HomeTeam + ' Player Data')
-            showPlayersTable(team_players,team_selected)
+            showPlayersTable(team_players,HomeTeam)
         try:
             fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
             fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green')
@@ -2304,14 +2304,14 @@ def Past_Games(data):
             col1, col2 = st.columns(2)
             with col1:
                 team_players = data['Players']
-                team_players = team_players[team_players['Team']==AwayTeam]
+                #team_players = team_players[team_players['Team']==AwayTeam]
                 st.subheader(AwayTeam + ' Player Data')
-                showPlayersTable(team_players)
+                showPlayersTable(team_players,AwayTeam)
             with col2:
                 team_players = data['Players']
-                team_players = team_players[team_players['Team']==HomeTeam]
+                #team_players = team_players[team_players['Team']==HomeTeam]
                 st.subheader(HomeTeam + ' Player Data')
-                showPlayersTable(team_players)
+                showPlayersTable(team_players,HomeTeam)
             
             try:
                 fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')

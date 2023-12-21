@@ -2246,7 +2246,7 @@ def Past_Games(data):
             #MG_DF1.set_index("updated", inplace=True)
             from matplotlib.backends.backend_pdf import PdfPages
             season =2024
-            WhichFile='TeamDataFiles'+season
+            WhichFile='TeamDataFiles'+str(season)
             pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
 
                 

@@ -2202,6 +2202,7 @@ def Past_Games(data):
         add_selectbox_start =st.date_input('Pick date')
         dateString=str(add_selectbox_start)
         dateToday=dateString.replace('-', '')
+        st.write(dateToday)
         Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+dateToday+".csv")
         Gamesdf = Gamesdf.reset_index(drop=True)
         Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
@@ -2429,7 +2430,7 @@ def Team_Page(data):
 def Betting_Performance_Page(data):
     st.title('Betting Performance')
     df = data['SkedBetting']
-    bcols = ['Tm','Date_zero','Reg_dif','Over_dif','Daily_Reg_Tm_net_eff','Daily_Reg_Opp_net_eff','Pomeroy_PointDiffWinATS',
+    bcols = ['Tm','Opp','AWAY','HOME','Date_zero','Reg_dif','Over_dif','Daily_Reg_Tm_net_eff','Daily_Reg_Opp_net_eff','MG_ATS_PointDiff','ATSVegas','Pomeroy_PointDiffWinATS',
      'Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS',
      'TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS',
      'MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS',

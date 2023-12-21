@@ -2202,62 +2202,83 @@ def Past_Games(data):
         add_selectbox_start =st.date_input('Pick date')
         dateString=str(add_selectbox_start)
         dateToday=dateString.replace('-', '')
-        #Dailyschedule=pd.read_csv("DailySchedules2023/"+dateToday+"Schedule.csv")
-        #Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+dateToday+"Schedule.csv")
-        Dailyschedule=pd.read_csv("Data/DailySchedules2024/SkedHistory.csv")
         Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+dateToday+".csv")
         Gamesdf = Gamesdf.reset_index(drop=True)
         Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
         Gamesdf = Gamesdf.drop_duplicates()
-        Dailyschedule = Dailyschedule[Dailyschedule['DateNew']==int(dateToday)]
-        #st.dataframe(Dailyschedule)
-        d2=dateString.split('-')[1]+'_'+dateString.split('-')[2]+'_'+dateString.split('-')[0]
-        themonth=int(dateString.split('-')[1])
-        theday=int(dateString.split('-')[2])
-        theyear=dateString.split('-')[0]
-        
-        
-        Tables_Selection=st.selectbox('Any or Scheduled ',['Any', 'Todays Games','All Games'])
-        if 'All Games' in  Tables_Selection:
-            allcols=AllGames.columns
-            gb = GridOptionsBuilder.from_dataframe(AllGames,groupable=True)
-            gb.configure_columns(allcols, cellStyle=cellStyle)
-            csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
-            gb.configure_side_bar()
-            gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-            opts= {**DEFAULT_GRID_OPTIONS,
+        Tables_Choice=st.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'],index=0)
+        Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+dateToday+"Schedule.csv")
+        if 'Alphabetical'in  Tables_Choice:
+            Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
+        if 'Time' in Tables_Choice:
+            Dailyschedule=Dailyschedule.sort_values(by=['commence_time'])   
+        if 'Regression_Difference' in Tables_Choice: 
+            Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
+        if 'OverPlaying' in Tables_Choice: 
+            Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
+        AwayList=[''] + Dailyschedule['AWAY'].tolist()
+        HomeList=[''] + Dailyschedule['HOME'].tolist()
+        AwayTeam = st.selectbox('Away Team',AwayList,index=0)
+        HomeTeam = st.selectbox('Home Team',HomeList,index=0)
+        st.header('Sortable NCAA Game Schedule')
+        st.text('Games can be sorted by columns. Click on column header to sort')
+        st.text('To sort by game time click the Time column.  ')
+        st.text('Low Negative values in the Reg Dif and Overplaying column mean the Home team is the pick  ') 
+        Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','FanDuel','MG_ATS_PointDiff','commence_time','Reg_dif','Over_dif','Dif_from_Vegas','Pomeroy_PointDiff','TRank_PointDiff','MG_PointDiff','Daily_Reg_PointDiff','DraftKings','BetMGM spreads','Caesars spreads','BetRivers spreads','VegasTotal']]
+        Dailyschedule.DraftKings = Dailyschedule.DraftKings.astype(float).round(1)
+        Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
+        Dailyschedule['commence_time'] = pd.to_datetime(Dailyschedule['commence_time'])
+        # Convert to US Central time
+        Dailyschedule['commence_time'] = Dailyschedule['commence_time'].dt.tz_convert('US/Central')
+        # Format time to display like 11:00AM, 2:00PM, etc.
+        Dailyschedule['commence_time'] = Dailyschedule['commence_time'].dt.strftime('%I:%M%p')
+        allcols=Dailyschedule.columns
+        gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
+        gb.configure_columns(allcols, cellStyle=cellStyle)
+        csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
+        gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+        csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
+        gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+        gb.configure_column('DraftKings',valueFormatter=numberFormat(1))
+        gb.configure_column('VegasTotal',valueFormatter=numberFormat(1))
+        gb.configure_column('Pomeroy_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('TRank_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('MG_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('MG_ATS_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('Daily_Reg_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('Dif_from_Vegas',cellStyle=csTotal,valueFormatter=numberFormat(2))
+        #gb.configure_pagination()
+        gb.configure_side_bar()
+        gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        #gridOptions = gb.build()
+        opts= {**DEFAULT_GRID_OPTIONS,
                **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
-            gb.configure_grid_options(**opts)
-            keyname='Test All 2024'
-            g = _displayGrid(AllGames, gb, key=keyname, height=1200)
-        if 'Any' in  Tables_Selection:
-            AwayTeam = st.selectbox('Away Team',AwayTeamAll)
-            HomeTeam = st.selectbox('Home Team',HomeTeamAll)
-        #if 'Todays Games' in  Tables_Selection:
-           
-
+        gb.configure_grid_options(**opts)
+        keyname='Test     '
+        g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
+        #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
+    
         if st.button('Run'):
-            dateforRankings=dateToday
-            dateforRankings5=d2
+        
+
+        
+            dateforRankings=today_date_format
+            #dateforRankings5=d2
             #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
             TeamDatabase2.set_index("OldTRankName", inplace=True)
             #MG_DF1=pd.read_csv("Data/MGRankings"+season+"/tm_seasons_stats_ranks"+dateforRankings5+" .csv")
             #MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
             #MG_DF1.set_index("updated", inplace=True)
             from matplotlib.backends.backend_pdf import PdfPages
-            season =2024
-            WhichFile='TeamDataFiles'+str(season)
-            pp= PdfPages("Daily_Team_Charts_"+dateToday+".pdf")
-
-                
+            #WhichFile='TeamDataFiles'+season
+            pp= PdfPages("Daily_Team_Charts_"+dateforRankings+".pdf")     
             st.header('Team Matchup')
             plt.style.use('seaborn')
             fig_dims = (15,10)
             fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
             plt.figure(figsize=(20, 12))
             ax1.set_title(AwayTeam)
-            ax2.set_title(HomeTeam)
-            
+            ax2.set_title(HomeTeam)  
             test1=get_team_info_from_gamesdf(Gamesdf,AwayTeam)
             #st.dataframe(test1)
             test1 = test1.reset_index(drop=True)
@@ -2269,6 +2290,27 @@ def Past_Games(data):
             #test2 = test2.drop_duplicates()
             test1['New_ID'] = range(0, 0+len(test1))
             test2['New_ID'] = range(0, 0+len(test2))
+            myteams = [AwayTeam,HomeTeam]
+            plot_line_chartLetsPlotHot(MG_Rank2, myteams)
+            col1, col2 = st.columns(2)
+            with col1:
+                st.subheader(AwayTeam + ' Rankings')
+                displayRankingHistory(data,AwayTeam)
+            with col2:
+                st.subheader(HomeTeam + ' Rankings')
+                displayRankingHistory(data,HomeTeam)
+            col1, col2 = st.columns(2)
+            with col1:
+                team_players = data['Players']
+                team_players = team_players[team_players['Team']==AwayTeam]
+                st.subheader(AwayTeam + ' Player Data')
+                showPlayersTable(team_players)
+            with col2:
+                team_players = data['Players']
+                team_players = team_players[team_players['Team']==HomeTeam]
+                st.subheader(HomeTeam + ' Player Data')
+                showPlayersTable(team_players)
+            
             try:
                 fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
                 fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green')
@@ -2311,8 +2353,11 @@ def Past_Games(data):
             GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_D_PPP","OverUnder")
             #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
             #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
+            displayTeamDistributionsMatchup(Gamesdf,AwayTeam,HomeTeam)
             getTeamDFTable2024(test1,AwayTeam)
             getTeamDFTable2024(test2,HomeTeam)
+        
+        
 def Team_Page(data):
     st.subheader('NCAA Mens Basketball Team Pages')
     team_selected = st.selectbox('Select a Team',data['teams']) 

@@ -66,7 +66,8 @@ def showPlayersTable(player_data,team_selected):
     df['Min%'] =df['Min%']/100
     df['USAGE'] =df['USAGE']/100
     df = df[df['Games']>2]
-    df1 = df[df['Team']==team_selected][['Player','Number','Games','ORTG','BPM','OBPM','DBPM', 'PRPG','Points','EFG','3PT%','FT%','Min%','USAGE','Team']]
+    df1 = df[df['Team']==team_selected]
+    df1 = df1[['Player','Number','Games','ORTG','BPM','OBPM','DBPM', 'PRPG','Points','EFG','3PT%','FT%','Min%','USAGE']]
     team_rating_cols = ['ORTG','BPM','OBPM','DBPM','PRPG']
     depth_rating_cols = ['Min%','USAGE']
     shooting_cols = ['Points','EFG','3PT%','FT%',]

@@ -57,7 +57,7 @@ def showPlayersTable(player_data,team_selected):
     name="bugw", colors=["#ffffff", "#f2fbd2", "#c9ecb4", "#93d3ab", "#35b0ab"], N=256)
     colors = [(0.6, 0.76, 0.98), (0, 0.21, 0.46)] # Experiment with this
     cm1 = LinearSegmentedColormap.from_list('test', colors, N=256)
-    df = player_data[['Player','Number','Games','ORTG','BPM','OBPM','DBPM', 'PRPG','Points','EFG','3PT%','FT%','Min%','USAGE']]
+    df = player_data[['Player','Number','Games','ORTG','BPM','OBPM','DBPM', 'PRPG','Points','EFG','3PT%','FT%','Min%','USAGE','Team']]
 
     #df = player_data1[player_data1['Team']=='Purdue']   
     df =df.sort_values('PRPG',ascending=False)

@@ -52,7 +52,7 @@ from plottable.cmap import normed_cmap
 from plottable.formatters import decimal_to_percent
 from plottable.plots import circled_image # image
 
-def showPlayersTable(player_data):
+def showPlayersTable(player_data,team_selected):
     cmap = LinearSegmentedColormap.from_list(
     name="bugw", colors=["#ffffff", "#f2fbd2", "#c9ecb4", "#93d3ab", "#35b0ab"], N=256)
     colors = [(0.6, 0.76, 0.98), (0, 0.21, 0.46)] # Experiment with this
@@ -65,7 +65,8 @@ def showPlayersTable(player_data):
     df['EFG'] =df['EFG']/100
     df['Min%'] =df['Min%']/100
     df['USAGE'] =df['USAGE']/100
-
+    df = df[df['Games']>2]
+    df1 = df[df['Team']==team_selected]
     team_rating_cols = ['ORTG','BPM','OBPM','DBPM','PRPG']
     depth_rating_cols = ['Min%','USAGE']
     shooting_cols = ['Points','EFG','3PT%','FT%',]
@@ -189,7 +190,7 @@ def showPlayersTable(player_data):
     fig, ax = plt.subplots(figsize=(20, 8))
  
     table = Table(
-    df,
+    df1,
     column_definitions=col_defs,
     row_dividers=True,
     footer_divider=True,
@@ -2032,14 +2033,14 @@ def Todays_Games(data):
         col1, col2 = st.columns(2)
         with col1:
             team_players = data['Players']
-            team_players = team_players[team_players['Team']==AwayTeam]
+            #team_players = team_players[team_players['Team']==AwayTeam]
             st.subheader(AwayTeam + ' Player Data')
-            showPlayersTable(team_players)
+            showPlayersTable(team_players,team_selected)
         with col2:
             team_players = data['Players']
-            team_players = team_players[team_players['Team']==HomeTeam]
+            #team_players = team_players[team_players['Team']==HomeTeam]
             st.subheader(HomeTeam + ' Player Data')
-            showPlayersTable(team_players)
+            showPlayersTable(team_players,team_selected)
             
         try:
             fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
@@ -2141,14 +2142,14 @@ def Team_Matchup(data):
         col1, col2 = st.columns(2)
         with col1:
             team_players = data['Players']
-            team_players = team_players[team_players['Team']==AwayTeam]
+            #team_players = team_players[team_players['Team']==AwayTeam]
             st.subheader(AwayTeam + ' Player Data')
-            showPlayersTable(team_players)
+            showPlayersTable(team_players,team_selected)
         with col2:
             team_players = data['Players']
-            team_players = team_players[team_players['Team']==HomeTeam]
+            #team_players = team_players[team_players['Team']==HomeTeam]
             st.subheader(HomeTeam + ' Player Data')
-            showPlayersTable(team_players)
+            showPlayersTable(team_players,team_selected)
         try:
             fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
             fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green')
@@ -2369,9 +2370,9 @@ def Team_Page(data):
         displayRankingHistory(data,team_selected)
     with col2:
         team_players = data['Players']
-        team_players = team_players[team_players['Team']==team_selected]
+        #team_players = team_players[team_players['Team']==team_selected]
         st.subheader(team_selected + ' Player Data')
-        showPlayersTable(team_players)
+        showPlayersTable(team_players,team_selected)
     st.subheader(team_selected + ' Schedule/Results Data')
     test1 = test1[['Date','Tm','Opp','HomeAway','Result_x','EMRating','PlayingOverRating'	,'ATSvalue','Tempo','Lead','AvgLead','Tm_AdjO','Tm_AdjD','G-Score']]
 

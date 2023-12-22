@@ -2091,9 +2091,11 @@ def Todays_Games(data):
     
     
 def Team_Matchup(data):
-    AwayTeamAll = data['AwayTeamAll']
-    HomeTeamAll = data['HomeTeamAll']
+    AwayTeamAll = [''] + data['AwayTeamAll'].tolist()
+    HomeTeamAll = [''] + data['HomeTeamAll'].tolist()
     st.title('NCAA Head to Head Matchup')
+    #AwayList=[''] + Dailyschedule['AWAY'].tolist()
+    #HomeList=[''] + Dailyschedule['HOME'].tolist()
     AwayTeam = st.selectbox('Away Team',AwayTeamAll)
     HomeTeam = st.selectbox('Home Team',HomeTeamAll)
     Dailyschedule=pd.read_csv("Data/DailySchedules2024/SkedHistory.csv")

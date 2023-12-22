@@ -2091,8 +2091,8 @@ def Todays_Games(data):
     
     
 def Team_Matchup(data):
-    AwayTeamAll = [''] + data['AwayTeamAll'].tolist()
-    HomeTeamAll = [''] + data['HomeTeamAll'].tolist()
+    AwayTeamAll = [''] + data['AwayTeamAll']
+    HomeTeamAll = [''] + data['HomeTeamAll']
     st.title('NCAA Head to Head Matchup')
     #AwayList=[''] + Dailyschedule['AWAY'].tolist()
     #HomeList=[''] + Dailyschedule['HOME'].tolist()

@@ -1989,7 +1989,11 @@ def Todays_Games(data):
     keyname='Test'
     g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
     #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
-    
+    st.text('MG_ATS_PointDif is the point spread using the ATS model')
+    st.text('Reg_dif is the differnce between both teams using a polynomial regression of current rankings')
+    st.text('Over_dif is the cumulative total of how both teams having played compared to their rankings')
+    st.text('A negative Over_dif means the Home teal has been overplaying relative to the away team')
+    st.text('Dif_from_Vegas is the difference between the ATS model and the current market. A large value indicates a divergence')
     if st.button('Run'):
         
 

@@ -1341,7 +1341,7 @@ def plot_line_chartLetsPlotHot(df, teams):
         #st.pyplot(p)
     p = ggplot(df, aes(x='Date_zero', y='ATS_net_eff', group='Team')) + \
     geom_line(aes(color='Team'), size=1, alpha=0.5)+ggtitle("ATS Net Rating") + \
-    ggsize(1000, 600)
+    ggsize(800, 600)
     st_letsplot(p)
 
 def plot_line_chartLetsPlot(df, teams):

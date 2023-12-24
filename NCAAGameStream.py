@@ -1421,7 +1421,7 @@ def displayTeamDistributions(Gamesdf,myteam):
     st.subheader(' Distribution Charts')
     #st_letsplot(p2)
     plot_dict = p2.as_dict()
-    components.html(_as_html(plot_dict), height=1500 + 20,width=3000 + 20,scrolling=True,)
+    components.html(_as_html(plot_dict), height=1500 + 20,width=2000 + 20,scrolling=True,)
 def displayTeamDistributionsMatchup(Gamesdf,myteam,team2):
     import streamlit.components.v1 as components
     df = Gamesdf[Gamesdf['Tm']==myteam][['Tm','Opp','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']]

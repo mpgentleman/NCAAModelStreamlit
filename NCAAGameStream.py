@@ -1417,11 +1417,11 @@ def displayTeamDistributions(Gamesdf,myteam):
     density21  = ggplot(dff1, aes(x='AdjD', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Adjusted Defensive Rating")
     density31  = ggplot(dff1, aes(x='EMRating', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Adjusted Efficiency Rating")
     density41 = ggplot(dff1, aes(x='Tempo', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3,color='dark_blue')+ scale_fill_brewer(type='seq')+ ggtitle("Pace/Tempo")
-    p2 = gggrid([density1,density2,density3,density4,density12,density22,density32,density42,density11,density21,density31,density41], ncol=4)+ ggsize(2000, 1000)
+    p2 = gggrid([density1,density2,density3,density4,density12,density22,density32,density42,density11,density21,density31,density41], ncol=4)+ ggsize(1500, 800)
     st.subheader(' Distribution Charts')
     #st_letsplot(p2)
     plot_dict = p2.as_dict()
-    components.html(_as_html(plot_dict), height=1500 + 20,width=2000 + 20,scrolling=True,)
+    components.html(_as_html(plot_dict), height=1500 + 20,width=1500 + 20,scrolling=True,)
 def displayTeamDistributionsMatchup(Gamesdf,myteam,team2):
     import streamlit.components.v1 as components
     df = Gamesdf[Gamesdf['Tm']==myteam][['Tm','Opp','Tm_AdjO','Tm_AdjD','Tm_O_PPP','Tm_O_EFG','Tm_O_TO','Tm_O_OR','Tm_O_FTR','Tm_D_PPP','Tm_D_EFG','Tm_D_TO','Tm_D_OR','Tm_D_FTR','Tempo','EMRating']]

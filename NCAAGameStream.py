@@ -1368,7 +1368,7 @@ def plot_line_chartLetsPlot(df, teams):
         #st.pyplot(p)
     p = ggplot(df, aes(x='Date_zero', y='tm_margin_net_eff', group='Tm_')) + \
     geom_line(aes(color='Tm_'), size=1, alpha=0.5)+ggtitle("ATS Net Rating") + \
-    ggsize(1000, 800)
+    ggsize(800, 800)
     st_letsplot(p)
 def displayTeamDistributions(Gamesdf,myteam):
     import streamlit.components.v1 as components
@@ -2483,7 +2483,7 @@ def displayRankingHistory(data,myteam):
     df1=df[df['Team']==myteam].sort_values('Date_zero')[2:]
     melted_df = df1.melt(id_vars=['Team', 'Date_zero'], value_vars=['ATS_net_eff', 'MG_net_eff', 'TRank_AdjEM'], var_name='Ranking Type', value_name='Rankings')
 
-    p = ggplot(melted_df, aes(x='Date_zero', y='Rankings', group='Ranking Type')) + geom_line(aes(color='Ranking Type'), size=1, alpha=0.5)+ggtitle("Ranking Comparison") + ggsize(800, 800)
+    p = ggplot(melted_df, aes(x='Date_zero', y='Rankings', group='Ranking Type')) + geom_line(aes(color='Ranking Type'), size=1, alpha=0.5)+ggtitle("Ranking Comparison") + ggsize(800, 600)
     st_letsplot(p)
 
 

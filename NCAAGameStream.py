@@ -1934,10 +1934,13 @@ def MG_Rankings(data):
 def Todays_Games(data):
     today_date_format = data['today_date_format']
     #Dailyschedule = data['Dailyschedule']
-    Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
-    Gamesdf = Gamesdf.reset_index(drop=True)
-    Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
-    Gamesdf = Gamesdf.drop_duplicates()
+    try:
+        Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
+        Gamesdf = Gamesdf.reset_index(drop=True)
+        Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
+        Gamesdf = Gamesdf.drop_duplicates()
+    except:
+        st.write(' No games today')
     Tables_Choice=st.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'],index=0)
     Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+today_date_format+"Schedule.csv")
     if 'Alphabetical'in  Tables_Choice:

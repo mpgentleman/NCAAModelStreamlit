@@ -2639,7 +2639,13 @@ MGDict = {}
 PomDict = getPomeroyDict()
 TRDict = getTRankDict()
 MGDict = getMGRatingsDict()
-strength = setStrength(TRDict)
+dfT = pd.DataFrame.from_dict(TRankDict, orient='index')
+dfT.reset_index(inplace=True)
+
+# Rename the index column to 'Team'
+dfT.rename(columns={'index': 'Team'}, inplace=True)
+
+strength = setStrength(dfT)
 with st.sidebar:
     choice = option_menu(
             None,

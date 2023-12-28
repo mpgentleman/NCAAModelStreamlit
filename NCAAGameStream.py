@@ -2520,7 +2520,7 @@ def getTRankDict():
     # Create a nested dictionary from the dataframe
     TRankDict= grouped_df.to_dict('index')
 
-    print(TRankDict)
+    return(TRankDict)
 
 def getMGRatingsDict():
     

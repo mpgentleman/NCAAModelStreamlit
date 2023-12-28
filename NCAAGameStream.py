@@ -1817,6 +1817,9 @@ def Historical_Rankings_Page(data):
     plot_line_chartLetsPlot(MG_Rank, selected_teams)
 
 def Bracketology_Page(data):
+    bracket_selected = st.selectbox('Select a Bracketology',['Bracket Matrix','TRank']) 
+    ranking_selected = st.selectbox('Select a Ranking for Sim',['TRank','Mg Rankings','Pomeroy'])
+    
     BM = getBracketMatrixDataframe()
     st.subheader('Bracket Matrix Bracketology Projection')
     BM1 = BM[['Seed','east','midwest','south','west']]
@@ -2639,7 +2642,7 @@ MGDict = {}
 PomDict = getPomeroyDict()
 TRDict = getTRankDict()
 MGDict = getMGRatingsDict()
-st.write(TRDict)
+#st.write(TRDict)
 dfT = pd.DataFrame.from_dict(TRDict, orient='index')
 dfT.reset_index(inplace=True)
 

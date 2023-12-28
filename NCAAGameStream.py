@@ -2639,7 +2639,7 @@ MGDict = {}
 PomDict = getPomeroyDict()
 TRDict = getTRankDict()
 MGDict = getMGRatingsDict()
-dfT = pd.DataFrame.from_dict(TRankDict, orient='index')
+dfT = pd.DataFrame.from_dict(TRDict, orient='index')
 dfT.reset_index(inplace=True)
 
 # Rename the index column to 'Team'

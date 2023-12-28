@@ -2486,7 +2486,66 @@ def displayRankingHistory(data,myteam):
 
     p = ggplot(melted_df, aes(x='Date_zero', y='Rankings', group='Ranking Type')) + geom_line(aes(color='Ranking Type'), size=1, alpha=0.5)+ggtitle("Ranking Comparison") + ggsize(800, 600)
     st_letsplot(p)
+def getPomeroyDict():
+    
+    df = pd.read_csv('Data/Pomeroy_2024_DB.csv')
+    df['Date_zero'] = pd.to_datetime(df['Date_zero'])
+    df = df[['Rk','Team','AdjEM','AdjO','AdjD','AdjT','Date_zero']]
+    df= df.rename(columns={
+        'AdjO': 'AdjOE',
+        'AdjD': 'AdjDE',
+        'AdjT': 'pace' 
 
+    })
+    # Filter the dataframe for the latest date
+    latest_df = df[df['Date_zero'] == df['Date_zero'].max()]
+    latest_df = latest_df.drop_duplicates()
+    grouped_df = latest_df.groupby('Team').mean()
+    # Create a nested dictionary from the dataframe
+    PomeroyDict= grouped_df.to_dict('index')
+    return(PomeroyDict)
+
+def getTRankDict():
+    
+    df = pd.read_csv('Data/TRank_2024_DB.csv')
+    df['Date_zero'] = pd.to_datetime(df['Date_zero'])
+    df = df[['Team','AdjOE','AdjDE','BARTHAG','AdjEM','Date_zero','ADJ. T']]
+    df= df.rename(columns={
+        'ADJ. T': 'pace'  
+    })
+    
+    latest_df = df[df['Date_zero'] == df['Date_zero'].max()]
+    latest_df = latest_df.drop_duplicates()
+    grouped_df = latest_df.groupby('Team').mean()
+    # Create a nested dictionary from the dataframe
+    TRankDict= grouped_df.to_dict('index')
+
+    print(TRankDict)
+
+def getMGRatingsDict():
+    
+    df = pd.read_csv('Data/MGRatings2024_Daily_New_DB.csv')
+    df['Date_zero'] = pd.to_datetime(df['Date_zero'])
+
+    df =df[['Team','ATS_net_eff','MG_net_eff','mod_AdjO','mod_AdjD','Date_zero','pace']]
+    df= df.rename(columns={
+        'mod_AdjO': 'AdjOE',
+        'mod_AdjD': 'AdjDE',
+        'MG_net_eff': 'AdjEM'
+
+    })
+    latest_df = df[df['Date_zero'] == df['Date_zero'].max()]
+    latest_df = latest_df.drop_duplicates()
+    grouped_df = latest_df.groupby('Team').mean()
+# Create a nested dictionary from the dataframe
+    MGDict= grouped_df.to_dict('index')
+    return(MGDict)
+
+def setStrength(latest_df):
+    lf = latest_df[['Team','AdjEM']]
+    lf.set_index('Team', inplace=True)
+    strength=lf['AdjEM'].to_dict()
+    return(strength)
 
 st.set_page_config(page_title="MG Rankings",layout="wide")
 
@@ -2574,6 +2633,13 @@ data['today_date_format'] = today_date_format
 #data['Dailyschedule'] = Dailyschedule
 data['AwayTeamAll'] = AwayTeamAll
 data['HomeTeamAll'] = HomeTeamAll
+PomDict = {}
+TRDict = {}
+MGDict = {}
+PomDict = getPomeroyDict()
+TRDict = getTRankDict()
+MGDict = getMGRatingsDict()
+strength = setStrength(TRDict)
 with st.sidebar:
     choice = option_menu(
             None,

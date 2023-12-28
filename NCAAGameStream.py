@@ -2639,6 +2639,7 @@ MGDict = {}
 PomDict = getPomeroyDict()
 TRDict = getTRankDict()
 MGDict = getMGRatingsDict()
+st.write(TRDict)
 dfT = pd.DataFrame.from_dict(TRDict, orient='index')
 dfT.reset_index(inplace=True)
 

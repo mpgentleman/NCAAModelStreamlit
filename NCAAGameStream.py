@@ -2285,9 +2285,9 @@ def Bracketology_Page(data):
     teamsdict['south'] =newsouth
     teamsdict['east'] = neweast
     teamsdict['west'] = newwest    
-    teamsdict['SweetSixteen']=list(BracketProjections["west"])[0:4]+list(BracketProjections["east"])[0:4]+list(BracketProjections["midwest"])[0:4]+list(BracketProjections["south"])[0:4]
-    teamsdict['EliteEight']=list(BracketProjections["west"])[0:2]+list(BracketProjections["east"])[0:2]+list(BracketProjections["midwest"])[0:2]+list(BracketProjections["south"])[0:2]
-    teamsdict['FinalFour']=list(BracketProjections["west"])[0:1]+list(BracketProjections["east"])[0:1]+list(BracketProjections["midwest"])[0:1]+list(BracketProjections["south"])[0:1]
+    teamsdict['SweetSixteen']=list(BM1["west"])[0:4]+list(BM1["east"])[0:4]+list(BM1["midwest"])[0:4]+list(BM1["south"])[0:4]
+    teamsdict['EliteEight']=list(BM1["west"])[0:2]+list(BM1["east"])[0:2]+list(BM1["midwest"])[0:2]+list(BM1["south"])[0:2]
+    teamsdict['FinalFour']=list(BM1["west"])[0:1]+list(BM1["east"])[0:1]+list(BM1["midwest"])[0:1]+list(BM1["south"])[0:1]
 
     # These are all listed in the same order:
     _rankings = [1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15]
@@ -2313,9 +2313,9 @@ def Bracketology_Page(data):
     #set_energy_function(My_energy_game)
     kenpom = {}
 
-    teams['SweetSixteen'] = list(BracketProjections["west"])[0:4]+list(BracketProjections["east"])[0:4]+list(BracketProjections["midwest"])[0:4]+list(BracketProjections["south"])[0:4]
+    teams['SweetSixteen'] = list(BM1["west"])[0:4]+list(BM1["east"])[0:4]+list(BM1["midwest"])[0:4]+list(BM1["south"])[0:4]
     teams['EliteEight'] = ['San Diego St.','Creighton','FAU','Kansas St.','Miami FL','Texas','Connecticut','Gonzaga']
-    teams['FinalFour'] = list(BracketProjections["west"])[0:1]+list(BracketProjections["east"])[0:1]+list(BracketProjections["midwest"])[0:1]+list(BracketProjections["south"])[0:1]
+    teams['FinalFour'] = list(BM1["west"])[0:1]+list(BM1["east"])[0:1]+list(BM1["midwest"])[0:1]+list(BM1["south"])[0:1]
     #all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']+teams['SweetSixteen']
     all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']
     #MoneyLine=pd.read_csv("C:/Users/mpgen/MoneyLineConversion.csv")

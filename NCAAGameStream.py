@@ -51,7 +51,7 @@ from plottable import ColumnDefinition, Table
 from plottable.cmap import normed_cmap
 from plottable.formatters import decimal_to_percent
 from plottable.plots import circled_image # image
-
+from numpy.random import random
 def bracket_to_string(all_winners):
     """ Cute version that prints out brackets for 2, 4, 8, 16, 32, 64, etc. """
     result = ''

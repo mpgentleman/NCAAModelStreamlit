@@ -2268,8 +2268,8 @@ def Bracketology_Page(data):
     #deltaU = energy_of_flipping
     LeagueTempo=69.1
     LeagueOE=104.6
-    now = datetime.datetime.now()
-    now.strftime("%Y-%m-%d")
+    #now = datetime.datetime.now()
+    #now.strftime("%Y-%m-%d")
     default_energy_function = None
     lineparts = ["Rank","Team","Conf","W-L","AdjEM","AdjO","AdjO-Rank","AdjD","AdjD-Rank","AdjT","AdjT-Rank","Luck","Luck-Rank",
              "SOSPyth","SOSPyth-Rank","SOSOppO","SOSOppO-Rank","SOSOppD","SOSOppD-Rank","NCOSPyth","NCOSPyth-Rank"]

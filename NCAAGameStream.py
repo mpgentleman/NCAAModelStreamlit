@@ -75,11 +75,11 @@ import datetime
 import math
 
 from collections import namedtuple
-def runbracket1(ntrials, T,Rankings):
+def runbracket1(Rankings,ntrials, T):
     results = {'all':simulate(ntrials,'all',T,Rankings)}
     return results
 
-def simulate(ntrials, region, T,Rankings, printonswap=False, printbrackets=True):
+def simulate(Rankings,ntrials, region, T, printonswap=False, printbrackets=True):
     """
     If region is "west" "midwest" "south" or "east" we'll run a bracket based 
     just on those teams.
@@ -105,7 +105,7 @@ def simulate(ntrials, region, T,Rankings, printonswap=False, printbrackets=True)
     else:
         teams = teamsdict[region]
     print(teams)
-    b = Bracket(teams, T,Rankings)
+    b = Bracket(Rankings,teams, T)
     energy = b.energy()
     ng = sum(b.games_in_rounds) # total number of games
     # Let's collect some statistics
@@ -158,7 +158,7 @@ class Bracket(object):
         self.T = T
         self.Rankings = Rankings
         if bracket is None:
-            self.bracket = runbracket(self.teams, self.T,Rankings)
+            self.bracket = runbracket(Rankings,self.teams, self.T)
         else:
             self.bracket = bracket
         self.games_in_rounds = [2**i for i in 
@@ -231,25 +231,25 @@ class Bracket(object):
         return result
     
     
-def runbracket(teams, T,Rankings):
+def runbracket(Rankings,teams, T):
     # How many rounds do we need?
     nrounds = int(np.log2(len(teams)))
     winners = teams #they won to get here!
     all_winners = [winners]
     for round in range(nrounds):
-        winners, losers = playround(winners, T,Rankings)
+        winners, losers = playround(Rankings,winners, T)
         all_winners.append(winners)
     return all_winners
-def playround(teams, T):
+def playround(Rankings,teams, T):
     winners = []
     losers = []
     for (team1, team2) in pairs(teams):
         #winner, loser = playgameCDF(team1,team2,T)
-        winner, loser = playgameCDF2024(team1,team2,T,Rankings)
+        winner, loser = playgameCDF2024(Rankings,team1,team2,T)
         winners.append(winner)
         losers.append(loser)
     return winners,losers
-def playgameCDF2024(team1, team2, T,Rankings):
+def playgameCDF2024(Rankings,team1, team2, T):
     """There's a difference between flipping a game in an existing
     bracket, and playing a game from scratch. If we're going to just
     use Boltzmann statistics to play a game from scratch, we can make
@@ -2576,7 +2576,7 @@ def Bracketology_Page(data):
             myranks = PomDict
         
 
-    results = runbracket1(ntrials=20000,T=.1,myranks)
+    results = runbracket1(myranks,ntrials=20000,T=.1)
     j=maketabletest(results)
     allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
     allrounds = ['Make','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win']

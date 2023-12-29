@@ -1815,7 +1815,9 @@ def Historical_Rankings_Page(data):
     selected_teams = st.multiselect('Select teams:', teams)
     st.header('NCAA ATS Net Rating Comp')
     plot_line_chartLetsPlot(MG_Rank, selected_teams)
-
+def set_energy_function(ef):
+    global default_energy_function
+    default_energy_function = ef
 def Bracketology_Page(data):
     bracket_selected = st.selectbox('Select a Bracketology',['Bracket Matrix','TRank']) 
     ranking_selected = st.selectbox('Select a Ranking for Sim',['TRank','Mg Rankings','Pomeroy'])
@@ -1855,6 +1857,73 @@ def Bracketology_Page(data):
     g = _displayGrid(TBracket1, gb, key=keyname, height=600)
     #st.dataframe(BM)
     #st.dataframe(TBracket)
+    if bracket_selected == 'Bracket Matrix':
+        newsouth=list(BM1["south"])
+        neweast=list(BM1["east"])
+        newmidwest=list(BM1["midwest"])
+        newwest=list(BM1["west"])
+    else:
+        newsouth=list(TBracket1["south"])
+        neweast=list(TBracket1["east"])
+        newmidwest=list(TBracket1["midwest"])
+        newwest=list(TBracket1["west"])
+    
+    maketable = Stats.maketable
+    #deltaU = energy_of_flipping
+    LeagueTempo=69.1
+    LeagueOE=104.6
+    now = datetime.datetime.now()
+    now.strftime("%Y-%m-%d")
+    default_energy_function = None
+    lineparts = ["Rank","Team","Conf","W-L","AdjEM","AdjO","AdjO-Rank","AdjD","AdjD-Rank","AdjT","AdjT-Rank","Luck","Luck-Rank",
+             "SOSPyth","SOSPyth-Rank","SOSOppO","SOSOppO-Rank","SOSOppD","SOSOppD-Rank","NCOSPyth","NCOSPyth-Rank"]
+    textparts = ["Team","Conf","W-L"]
+    kpomdata = {}
+    teamsdict = {}
+    teams={}
+    teams['midwest'] =newmidwest
+    teams['south'] = newsouth
+    teams['east'] = neweast
+    teams['west'] = newwest
+    teamsdict['midwest'] = newmidwest
+    teamsdict['south'] =newsouth
+    teamsdict['east'] = neweast
+    teamsdict['west'] = newwest    
+    teamsdict['SweetSixteen']=list(BracketProjections["west"])[0:4]+list(BracketProjections["east"])[0:4]+list(BracketProjections["midwest"])[0:4]+list(BracketProjections["south"])[0:4]
+    teamsdict['EliteEight']=list(BracketProjections["west"])[0:2]+list(BracketProjections["east"])[0:2]+list(BracketProjections["midwest"])[0:2]+list(BracketProjections["south"])[0:2]
+    teamsdict['FinalFour']=list(BracketProjections["west"])[0:1]+list(BracketProjections["east"])[0:1]+list(BracketProjections["midwest"])[0:1]+list(BracketProjections["south"])[0:1]
+
+    # These are all listed in the same order:
+    _rankings = [1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15]
+    regional_rankings = {}
+    #regional_rankings = regional_rankings
+    for region in teamsdict:
+        for (team,rank) in zip(teamsdict[region],_rankings):
+        # We use a random number here so that the south's number 2
+        # seed won't come out exactly the same rank as the west's.
+            regional_rankings[team] = rank + random()/10
+
+    regions = {}
+    for region in teamsdict:
+        for team in teamsdict[region]:
+            regions[team] = region
+
+    all_teams = teamsdict['midwest'] + teamsdict['south'] + teamsdict['west'] + teamsdict['east']
+    teamsdict['all'] = all_teams
+    regional_rankings = regional_rankings 
+    SimulationResults = namedtuple('SimulationResults','brackets unique_brackets lowest_bracket lowest_bracket_count most_common_bracket most_common_bracket_count')
+    set_energy_function = set_energy_function
+    set_energy_function(default_energy_game)
+    #set_energy_function(My_energy_game)
+    kenpom = {}
+
+    teams['SweetSixteen'] = list(BracketProjections["west"])[0:4]+list(BracketProjections["east"])[0:4]+list(BracketProjections["midwest"])[0:4]+list(BracketProjections["south"])[0:4]
+    teams['EliteEight'] = ['San Diego St.','Creighton','FAU','Kansas St.','Miami FL','Texas','Connecticut','Gonzaga']
+    teams['FinalFour'] = list(BracketProjections["west"])[0:1]+list(BracketProjections["east"])[0:1]+list(BracketProjections["midwest"])[0:1]+list(BracketProjections["south"])[0:1]
+    #all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']+teams['SweetSixteen']
+    all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']
+    #MoneyLine=pd.read_csv("C:/Users/mpgen/MoneyLineConversion.csv")
+    MoneyLine=pd.read_csv("Data/MoneyLineConversion.csv")
 
 def MG_Rankings(data):
     hot = data['hot']

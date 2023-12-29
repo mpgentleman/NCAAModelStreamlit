@@ -75,6 +75,27 @@ import datetime
 import math
 
 from collections import namedtuple
+def energy_of_flipping(current_winner, current_loser):
+    """Given the current winner and the current loser, this calculates
+    the energy of swapping, i.e. having the current winner lose.
+    """
+    return (default_energy_function(current_loser, current_winner) - 
+            default_energy_function(current_winner, current_loser))
+
+
+
+# Here are the "magic functions" I mentioned to get pairs of teams.
+
+#from itertools import zip_longest
+def grouper(n, iterable, fillvalue=None):
+    "Collect data into fixed-length chunks or blocks"
+    # grouper(3, 'ABCDEFG', 'x') --> ABC DEF Gxx
+    args = [iter(iterable)] * n
+    return zip_longest(fillvalue=fillvalue, *args)
+
+def pairs(iterable):
+    return grouper(2,iterable)
+
 def runbracket1(teamsdict,Rankings,ntrials, T):
     results = {'all':simulate(teamsdict,Rankings,ntrials,'all',T)}
     return results

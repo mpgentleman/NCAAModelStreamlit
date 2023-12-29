@@ -52,6 +52,402 @@ from plottable.cmap import normed_cmap
 from plottable.formatters import decimal_to_percent
 from plottable.plots import circled_image # image
 
+def bracket_to_string(all_winners):
+    """ Cute version that prints out brackets for 2, 4, 8, 16, 32, 64, etc. """
+    result = ''
+    aw = all_winners # save some typing later
+    nrounds = len(all_winners) #int(np.log2(len(teams)))
+    # We'll keep the results in a big array it turns out that arrays
+    # of strings have to know the max string size, otherwise things
+    # will just get truncated.
+    maxlen = max([len(s) for s in all_winners[0]])
+    dt = np.dtype([('name', np.str_, maxlen)])
+    results = array([['' for i in range(len(all_winners[0]))] for j in 
+                     range(nrounds)], dtype=dt['name'])
+    # First round, all of the spots are filled
+    results[0] = all_winners[0]
+    # all other rounds, we split the row in half and fill from the middle out.
+    for i in range(1, nrounds): # we've done the 1st and last already
+        # round 1 skips two, round 2 skips 4, etc.
+        these_winners = all_winners[i]
+        # Fill top half
+        idx = int(len(all_winners[0])/2 - 1)
+        for team in reversed(all_winners[i][:int(len(all_winners[i])/2)]):
+            results[i][idx] = team
+            idx -= 2**i
+        # Fill bottom half
+        idx = int(len(all_winners[0])/2)
+        for team in all_winners[i][int(len(all_winners[i])/2):]:
+            results[i][idx] = team
+            idx += 2**i
+
+    def tr(i,include_rank=False,maxlen=None):
+        """ Print out the team and ranking """
+        if maxlen is not None:
+            team = i[:maxlen]
+        else:
+            team = i
+        if include_rank:
+            try:
+                region = regions[i]
+                result = '%s (%s)'%(team,int(regional_rankings[i]))
+            except KeyError:
+                result = '%s'%(team)
+        return result
+    stub = '%-25s ' + ' '.join(['%-8s']*(nrounds-1))
+    for i in range(len(all_winners[0])):
+        these = results[:,i]
+        these = [tr(these[0], include_rank=True)] + \
+            [tr(i, maxlen=3, include_rank=True) for i in these[1:]]
+        result += stub % tuple(these)
+        result += '\n'
+    result += "Total bracket energy: %s"%bracket_energy(all_winners)
+    result += '\n'
+    return result
+
+def print_bracket(bracket):
+    print( bracket_to_string(bracket))
+
+
+def makehtmltable(tabledata,headers):
+    result = '<table>\n'
+    result += '<tr>'
+    for header in headers:
+        result += '<th>{h}</th>'.format(h=header)
+    result += '</tr>\n'
+    for row in tabledata:
+        result += '<tr>'
+        for col in row:
+            result += '<td>{c}</td>'.format(c=col)
+        result += '</tr>\n'
+    result += '</table>'
+    return result
+
+class Stats:
+    @staticmethod
+    def gather_uniquestats(brackets):
+        lb = Bracket(brackets[0].teams, T=0.0000001) # low bracket
+        low_hash = hash(lb)
+        cnt = Counter()
+        unique_brackets = []
+        lowest_sightings = []
+        brackets_by_hash = {}
+        for b in brackets:
+            h = hash(b)
+            cnt[h] += 1
+            unique_brackets.append(len(cnt))
+            lowest_sightings.append(cnt[low_hash])
+            brackets_by_hash[h] = b
+        h,c = cnt.most_common(1)[0]
+        mcb = brackets_by_hash[h] # most comon bracket
+        return lb, mcb, c, unique_brackets, lowest_sightings
+
+    @staticmethod
+    def maketable(results):
+        counts = defaultdict(Counter)
+        allrounds = ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
+        rounds1 = ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4']
+        rounds2 = ['Championship','Win']
+        if 'all' not in results:
+            for region in 'south midwest east west'.split():
+                for bracket in results[region].brackets:
+                    for (name,num) in zip(rounds1,[0,1,2,3,4]):
+                        for team in bracket.bracket[num]:
+                            counts[team][name] += 1
+            for bracket in results['final four'].brackets:
+                for (name,num) in zip(rounds2,[1,2]):
+                    for team in bracket.bracket[num]:
+                        counts[team][name] += 1
+            nt1 = len(results['south'].brackets)
+            nt2 = len(results['final four'].brackets)
+        else:
+            for bracket in results['all'].brackets:
+                for (name,num) in zip(allrounds,[0,1,2,3,4,5,6]):
+                    for team in bracket.bracket[num]:
+                        counts[team][name] += 1
+            nt1 = nt2 = len(results['all'].brackets)
+        # Now turn that into percentages
+        pct = {}
+        for team in counts:
+            pct[team] = {}
+            for r in ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4']:
+                pct[team][r] = 100*counts[team][r]/nt1
+            for r in ['Championship','Win']:
+                pct[team][r] = 100*counts[team][r]/nt2
+            pct[team]['Rank'] = int(regional_rankings[team])
+        def tablekey(d):
+            # gets teamname, pct
+            return [d[1][i] for i in reversed(allrounds)]
+        items = reversed(sorted(pct.items(),key=tablekey))
+        # make a table
+        headers = ['Team'] + ['Region','Rank'] + allrounds
+        tabledata = []
+        for (team,pcts) in items:
+            tabledata.append([team] + [pcts[i] for i in ['Region','Rank'] + allrounds])
+        #return tabulate(tabledata, headers=headers, tablefmt="html" )
+        return makehtmltable(tabledata, headers=headers)
+
+
+def tablekeytest(allrounds):
+        # gets teamname, pct
+    return [d[1][i] for i in reversed(allrounds)]
+
+
+def maketabletest(results):
+    counts = defaultdict(Counter)
+    allrounds = ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
+    rounds1 = ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4']
+    rounds2 = ['Championship','Win']
+    if 'all' not in results:
+        for region in 'south midwest east west'.split():
+            for bracket in results[region].brackets:
+                for (name,num) in zip(rounds1,[0,1,2,3,4]):
+                    for team in bracket.bracket[num]:
+                        counts[team][name] += 1
+        for bracket in results['final four'].brackets:
+            for (name,num) in zip(rounds2,[1,2]):
+                for team in bracket.bracket[num]:
+                    counts[team][name] += 1
+        nt1 = len(results['south'].brackets)
+        nt2 = len(results['final four'].brackets)
+    else:
+        for bracket in results['all'].brackets:
+            for (name,num) in zip(allrounds,[0,1,2,3,4,5,6]):
+                for team in bracket.bracket[num]:
+                    counts[team][name] += 1
+        nt1 = nt2 = len(results['all'].brackets)
+        # Now turn that into percentages
+    pct = {}
+    for team in counts:
+        pct[team] = {}
+        for r in ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4']:
+            pct[team][r] = 100*counts[team][r]/nt1
+        for r in ['Championship','Win']:
+            pct[team][r] = 100*counts[team][r]/nt2
+        pct[team]['Region'] = regions[team]
+        pct[team]['Rank'] = int(regional_rankings[team])
+    def tablekey(d):
+            # gets teamname, pct
+        return [d[1][i] for i in reversed(allrounds)]
+    items = reversed(sorted(pct.items(),key=tablekey))
+    # make a table
+    headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
+    tabledata = []
+    for (team,pcts) in items:
+        tabledata.append([team] + [pcts[i] for i in ['Region','Rank'] + allrounds])
+    for i in range(len(tabledata)):
+        if tabledata[i][9] == 0:
+            tabledata[i].append(0)
+        else:
+            tabledata[i].append((100-tabledata[i][9])/tabledata[i][9])
+   
+        #return tabulate(tabledata, headers=headers, tablefmt="html" )
+    return (tabledata)
+
+
+def maketabletestSweet16(results):
+    counts = defaultdict(Counter)
+    allrounds = ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
+    allrounds = ['Sweet 16','Elite 8','Final 4','Championship','Win']
+    
+    rounds1 = ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4']
+    rounds2 = ['Championship','Win']
+    if 'all' not in results:
+        for region in 'south midwest east west'.split():
+            for bracket in results[region].brackets:
+                for (name,num) in zip(rounds1,[0,1,2,3,4]):
+                    for team in bracket.bracket[num]:
+                        counts[team][name] += 1
+        for bracket in results['final four'].brackets:
+            for (name,num) in zip(rounds2,[1,2]):
+                for team in bracket.bracket[num]:
+                    counts[team][name] += 1
+        nt1 = len(results['south'].brackets)
+        nt2 = len(results['final four'].brackets)
+    else:
+        for bracket in results['all'].brackets:
+            for (name,num) in zip(allrounds,[0,1,2,3,4]):
+                for team in bracket.bracket[num]:
+                    counts[team][name] += 1
+        nt1 = nt2 = len(results['all'].brackets)
+        # Now turn that into percentages
+    pct = {}
+    for team in counts:
+        pct[team] = {}
+        for r in ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4']:
+            pct[team][r] = 100*counts[team][r]/nt1
+        for r in ['Championship','Win']:
+            pct[team][r] = 100*counts[team][r]/nt2
+        pct[team]['Region'] = regions[team]
+        pct[team]['Rank'] = int(regional_rankings[team])
+    def tablekey(d):
+            # gets teamname, pct
+        return [d[1][i] for i in reversed(allrounds)]
+    items = reversed(sorted(pct.items(),key=tablekey))
+    # make a table
+    headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
+    tabledata = []
+    for (team,pcts) in items:
+        tabledata.append([team] + [pcts[i] for i in ['Region','Rank'] + allrounds])
+    for i in range(len(tabledata)):
+        if tabledata[i][7] == 0:
+            tabledata[i].append(0)
+        else:
+            tabledata[i].append((100-tabledata[i][7])/tabledata[i][7])
+   
+        #return tabulate(tabledata, headers=headers, tablefmt="html" )
+    return (tabledata)
+
+def maketabletestElite8(results):
+    counts = defaultdict(Counter)
+    allrounds = ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
+    allrounds = ['Elite 8','Final 4','Championship','Win']
+    
+    rounds1 = ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4']
+    rounds2 = ['Championship','Win']
+    if 'all' not in results:
+        for region in 'south midwest east west'.split():
+            for bracket in results[region].brackets:
+                for (name,num) in zip(rounds1,[0,1,2,3,4]):
+                    for team in bracket.bracket[num]:
+                        counts[team][name] += 1
+        for bracket in results['final four'].brackets:
+            for (name,num) in zip(rounds2,[1,2]):
+                for team in bracket.bracket[num]:
+                    counts[team][name] += 1
+        nt1 = len(results['south'].brackets)
+        nt2 = len(results['final four'].brackets)
+    else:
+        for bracket in results['all'].brackets:
+            for (name,num) in zip(allrounds,[0,1,2,3]):
+                for team in bracket.bracket[num]:
+                    counts[team][name] += 1
+        nt1 = nt2 = len(results['all'].brackets)
+        # Now turn that into percentages
+    pct = {}
+    for team in counts:
+        pct[team] = {}
+        for r in ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4']:
+            pct[team][r] = 100*counts[team][r]/nt1
+        for r in ['Championship','Win']:
+            pct[team][r] = 100*counts[team][r]/nt2
+        pct[team]['Region'] = regions[team]
+        pct[team]['Rank'] = int(regional_rankings[team])
+    def tablekey(d):
+            # gets teamname, pct
+        return [d[1][i] for i in reversed(allrounds)]
+    items = reversed(sorted(pct.items(),key=tablekey))
+    # make a table
+    headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
+    tabledata = []
+    for (team,pcts) in items:
+        tabledata.append([team] + [pcts[i] for i in ['Region','Rank'] + allrounds])
+    for i in range(len(tabledata)):
+        if tabledata[i][6] == 0:
+            tabledata[i].append(0)
+        else:
+            tabledata[i].append((100-tabledata[i][6])/tabledata[i][6])
+   
+        #return tabulate(tabledata, headers=headers, tablefmt="html" )
+    return (tabledata)
+
+def maketabletestFinal4(results):
+    counts = defaultdict(Counter)
+    allrounds = ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
+    allrounds = ['Final 4','Championship','Win']
+    
+    rounds1 = ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4']
+    rounds2 = ['Championship','Win']
+    if 'all' not in results:
+        for region in 'south midwest east west'.split():
+            for bracket in results[region].brackets:
+                for (name,num) in zip(rounds1,[0,1,2,3,4]):
+                    for team in bracket.bracket[num]:
+                        counts[team][name] += 1
+        for bracket in results['final four'].brackets:
+            for (name,num) in zip(rounds2,[1,2]):
+                for team in bracket.bracket[num]:
+                    counts[team][name] += 1
+        nt1 = len(results['south'].brackets)
+        nt2 = len(results['final four'].brackets)
+    else:
+        for bracket in results['all'].brackets:
+            for (name,num) in zip(allrounds,[0,1,2,3]):
+                for team in bracket.bracket[num]:
+                    counts[team][name] += 1
+        nt1 = nt2 = len(results['all'].brackets)
+        # Now turn that into percentages
+    pct = {}
+    for team in counts:
+        pct[team] = {}
+        for r in ['2nd Round','3rd Round','Sweet 16','Elite 8','Final 4']:
+            pct[team][r] = 100*counts[team][r]/nt1
+        for r in ['Championship','Win']:
+            pct[team][r] = 100*counts[team][r]/nt2
+        pct[team]['Region'] = regions[team]
+        pct[team]['Rank'] = int(regional_rankings[team])
+    def tablekey(d):
+            # gets teamname, pct
+        return [d[1][i] for i in reversed(allrounds)]
+    items = reversed(sorted(pct.items(),key=tablekey))
+    # make a table
+    headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
+    tabledata = []
+    for (team,pcts) in items:
+        tabledata.append([team] + [pcts[i] for i in ['Region','Rank'] + allrounds])
+    for i in range(len(tabledata)):
+        if tabledata[i][5] == 0:
+            tabledata[i].append(0)
+        else:
+            tabledata[i].append((100-tabledata[i][5])/tabledata[i][5])
+   
+        #return tabulate(tabledata, headers=headers, tablefmt="html" )
+    return (tabledata)
+
+
+def alex_energy_game(winner, loser):
+    """def energy(A,B):
+     get AdjEM ("adjusted efficiency margin," not the other AdjEMs) for A and B from kenpom.com
+     energy = ln(AdjEM[A]/AdjEM[B])
+    """
+    result = kpomdata[winner]["AdjEM"]/kpomdata[loser]["AdjEM"]
+    #result = -(strength[winner] - strength[loser])
+    #np.log(adjem[loser]/adjem[winner])
+    return -result
+
+
+def getSweetSixteensOddsTable(BracketName,EnergyNumber):
+    r=simulate(10000,BracketName,EnergyNumber)
+    lb, mcb, mcb_count, unique_brackets, lowest_sightings = Stats.gather_uniquestats(r.brackets)
+    sr = SimulationResults(r.brackets,unique_brackets,lb,lowest_sightings,mcb,mcb_count)
+    trueresults = {'all':sr}
+    j=maketabletestSweet16(trueresults)
+    #allrounds = ['Sweet 16','Elite 8','Final 4','Championship','Win']
+    #headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
+    #l=HTML(makehtmltable(j, headers=headers))
+    return(j)
+
+
+def getEliteEightOddsTable(BracketName,EnergyNumber):
+    r=simulate(10000,BracketName,EnergyNumber)
+    lb, mcb, mcb_count, unique_brackets, lowest_sightings = Stats.gather_uniquestats(r.brackets)
+    sr = SimulationResults(r.brackets,unique_brackets,lb,lowest_sightings,mcb,mcb_count)
+    trueresults = {'all':sr}
+    j=maketabletestElite8(trueresults)
+    #allrounds = ['Sweet 16','Elite 8','Final 4','Championship','Win']
+    #headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
+    #l=HTML(makehtmltable(j, headers=headers))
+    return(j)
+def getFinalFourOddsTable(BracketName,EnergyNumber):
+    r=simulate(10000,BracketName,EnergyNumber)
+    lb, mcb, mcb_count, unique_brackets, lowest_sightings = Stats.gather_uniquestats(r.brackets)
+    sr = SimulationResults(r.brackets,unique_brackets,lb,lowest_sightings,mcb,mcb_count)
+    trueresults = {'all':sr}
+    j=maketabletestFinal4(trueresults)
+    #allrounds = ['Sweet 16','Elite 8','Final 4','Championship','Win']
+    #headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
+    #l=HTML(makehtmltable(j, headers=headers))
+    return(j)
 def showPlayersTable(player_data,team_selected):
     cmap = LinearSegmentedColormap.from_list(
     name="bugw", colors=["#ffffff", "#f2fbd2", "#c9ecb4", "#93d3ab", "#35b0ab"], N=256)

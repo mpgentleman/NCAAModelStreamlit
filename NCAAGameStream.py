@@ -52,6 +52,29 @@ from plottable.cmap import normed_cmap
 from plottable.formatters import decimal_to_percent
 from plottable.plots import circled_image # image
 from numpy.random import random
+
+from collections import Counter, OrderedDict, defaultdict
+
+#import os, os.path
+
+from functools import wraps
+from time import time
+
+from hashlib import md5
+from itertools import chain
+#from __future__ import division
+from random import choice, shuffle
+from numpy.random import random #import only one function from somewhere
+from numpy.random import randint
+#from numpy.random import random
+#from itertools import izip_longest
+from itertools import zip_longest
+import datetime
+#from numpy.random import randint
+
+import math
+
+from collections import namedtuple
 def bracket_to_string(all_winners):
     """ Cute version that prints out brackets for 2, 4, 8, 16, 32, 64, etc. """
     result = ''

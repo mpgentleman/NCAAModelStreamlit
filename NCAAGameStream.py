@@ -2575,7 +2575,7 @@ def Bracketology_Page(data):
         else:
             myranks = PomDict
         
-'
+
     results = runbracket1(ntrials=20000,T=.1,myranks)
     j=maketabletest(results)
     allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']

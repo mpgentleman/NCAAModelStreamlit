@@ -75,6 +75,200 @@ import datetime
 import math
 
 from collections import namedtuple
+def runbracket1(ntrials, T,Rankings):
+    results = {'all':simulate(ntrials,'all',T,Rankings)}
+    return results
+
+def simulate(ntrials, region, T,Rankings, printonswap=False, printbrackets=True):
+    """
+    If region is "west" "midwest" "south" or "east" we'll run a bracket based 
+    just on those teams.
+    If it's "all" we'll run a full bracket.
+    If it's a list of teams, we'll run a bracket based just on that list.
+    So, one way you might want to do things is to simulate 10000 runs for each 
+    of the four brackets,
+    then run your final four explicitly, e.g.
+    T = 1.5
+    simulate(10000,'midwest',T)
+    # record results
+    simulate(10000,'south',T)
+    # record results
+    simulate(10000,'west',T)
+    # record results
+    simulate(10000,'east',T)
+    # record results
+    simulate(10000,['Louisville','Kansas','Wisconsin','Indiana'],T)
+    """
+
+    if type(region)  in (type([]), type(())):
+        teams = region[:]
+    else:
+        teams = teamsdict[region]
+    print(teams)
+    b = Bracket(teams, T,Rankings)
+    energy = b.energy()
+    ng = sum(b.games_in_rounds) # total number of games
+    # Let's collect some statistics
+    brackets = []
+    for trial in range(ntrials):
+        g = randint(0, ng) # choose a random game to swap
+        #print "attempted swap for game",g#,"in round",round[g]
+        #newbracket = deepcopy(b)
+        newbracket = b.copy()
+        newbracket.swap(g)
+        newenergy = newbracket.energy()
+        ediff = newenergy - energy
+        if ediff <= 0:
+            b = newbracket
+            energy = newenergy
+            if printonswap:
+                print("LOWER")
+                print(b)
+        else:
+            if random() < exp(-ediff/T):
+                b = newbracket
+                energy = newenergy
+                if printonswap:
+                    print( "HIGHER")
+                    print(b)
+        brackets.append(b)
+
+
+    lb, mcb, mcb_count, unique_brackets, lowest_sightings = \
+        Stats.gather_uniquestats(brackets)
+    sr = SimulationResults(brackets,unique_brackets,lb,lowest_sightings,mcb,mcb_count)
+    if printbrackets:
+        print("Lowest energy bracket")
+        print(lb)
+        print("Most common bracket (%s)"%mcb_count)
+        print(mcb)
+    return sr
+
+
+
+class Bracket(object):
+    def __init__(self, teams, T,Rankings, bracket=None):
+        """
+        
+        Arguments:
+        - `teams`:
+        - `T`:
+        """
+        self.teams = teams
+        self.T = T
+        self.Rankings = Rankings
+        if bracket is None:
+            self.bracket = runbracket(self.teams, self.T,Rankings)
+        else:
+            self.bracket = bracket
+        self.games_in_rounds = [2**i for i in 
+                                reversed(range(len(self.bracket)-1))]
+        self.roundmap = getroundmap(self.bracket, include_game_number=False)
+        self.roundmap_with_game_numbers = getroundmap(self.bracket, 
+                                                      include_game_number=True)
+    def copy(self):
+        return self.__class__(self.teams, self.T,  
+                              bracket=[l[:] for l in self.bracket])
+    def energy(self):
+        return bracket_energy(self.bracket)
+    def __str__(self):
+        return bracket_to_string(self.bracket)
+    __repr__ = __str__
+    def __hash__(self):
+        return hash(tuple([tuple(aw) for aw in self.bracket]))
+    def game(self, g):
+        """Return (team1,team2,winner).
+        """
+        t1, t2, win = self._getgameidxs(g)
+        return (self.bracket[t1[0]][t1[1]], self.bracket[t2[0]][t2[1]],
+                self.bracket[win[0]][win[1]])
+
+    def _round_teaminround_to_game(self,r,gir):
+        return sum(self.games_in_rounds[:r]) + int(gir/2)
+
+    def _getgameidxs(self, g):
+        # we'll return (round,game) for each of team1, team2, winner
+        # 0 1 2 3 4 5 6 7 # teams 1
+        # 0 0 1 1 2 2 3 3 # games 1
+        # 0 2 4 6 # teams 2
+        # 0 0 1 1 # games 2
+        round, game_in_round = self.roundmap_with_game_numbers[g]
+        return ((round,2*game_in_round), (round,2*game_in_round+1), 
+                (round+1,game_in_round))
+    def _setwinner(self, g, winner):
+        """ JUST SETS THE WINNER, DOES NOT LOOK TO NEXT ROUND! USE SWAP FOR 
+        THAT! 
+        """
+        t1,t2,win = self._getgameidxs(g)
+        self.bracket[win[0]][win[1]] = winner
+    def swap(self, g):
+        """
+        NOTE: This does not check 
+        """
+        team1, team2, winner = self.game(g)
+        if team1 == winner:
+            self._setwinner(g, team2)
+        else:
+            self._setwinner(g, team1)
+        wr, wt = self._getgameidxs(g)[2]
+        ng = self._round_teaminround_to_game(wr, wt)
+        while ng < sum(self.games_in_rounds):
+            #print "Now need to check game",wr,wt,ng,self.game(ng)
+            winner, loser = playgame(self.game(ng)[0], self.game(ng)[1], self.T)
+            self._setwinner(ng, winner)
+            wr, wt = self._getgameidxs(ng)[2]
+            ng = self._round_teaminround_to_game(wr, wt)
+    def upsets(self):
+        result = 0
+        for g in range(sum(self.games_in_rounds)):
+            t1,t2,win = self.game(g)
+            if t1 == win:
+                los = t2
+            else:
+                los = t1
+            if energy_of_flipping(win,los) < 0:
+                result += 1
+        return result
+    
+    
+def runbracket(teams, T,Rankings):
+    # How many rounds do we need?
+    nrounds = int(np.log2(len(teams)))
+    winners = teams #they won to get here!
+    all_winners = [winners]
+    for round in range(nrounds):
+        winners, losers = playround(winners, T,Rankings)
+        all_winners.append(winners)
+    return all_winners
+def playround(teams, T):
+    winners = []
+    losers = []
+    for (team1, team2) in pairs(teams):
+        #winner, loser = playgameCDF(team1,team2,T)
+        winner, loser = playgameCDF2024(team1,team2,T,Rankings)
+        winners.append(winner)
+        losers.append(loser)
+    return winners,losers
+def playgameCDF2024(team1, team2, T,Rankings):
+    """There's a difference between flipping a game in an existing
+    bracket, and playing a game from scratch. If we're going to just
+    use Boltzmann statistics to play a game from scratch, we can make
+    life easy by using the Boltzmann factor to directly pick a
+    winner.
+    """
+    #print(team1,team2)
+    #ediff = deltaU(team1, team2)
+    #boltzmann_factor = exp(-ediff/T)
+    #PHomeTeamSpread=NewgetGamePredictionNeutralCourt(PomeroyDict[team1]["AdjO"],PomeroyDict[team1]["AdjD"],PomeroyDict[team1]["AdjT"],PomeroyDict[team2]["AdjO"],PomeroyDict[team2]["AdjD"],PomeroyDict[team2]["AdjT"],LeagueTempo,LeagueOE)
+    PHomeTeamSpread=NewgetGamePredictionNeutralCourt(Rankings[team1]["AdjOE"],Rankings[team1]["AdjDE"],Rankings[team1]["pace"],Rankings[team2]["AdjOE"],Rankings[team2]["AdjDE"],Rankings[team2]["pace"],LeagueTempo,LeagueOE)
+    
+    win_prob =scipy.stats.norm(0,10.5).cdf(PHomeTeamSpread)
+    #win_prob = boltzmann_factor/(1+boltzmann_factor) if boltzmann_factor < inf else 1
+    # So, prob of team 1 winning is then boltzmann_factor/(1+boltzmann_factor)
+    if random() >= win_prob:
+        return (team1,team2)
+    else:
+        return (team2,team1)
 def bracket_to_string(all_winners):
     """ Cute version that prints out brackets for 2, 4, 8, 16, 32, 64, etc. """
     result = ''
@@ -2359,6 +2553,37 @@ def Bracketology_Page(data):
     all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']
     #MoneyLine=pd.read_csv("C:/Users/mpgen/MoneyLineConversion.csv")
     MoneyLine=pd.read_csv("Data/MoneyLineConversion.csv")
+    PomDict = {}
+    TRDict = {}
+    MGDict = {}
+    PomDict = getPomeroyDict()
+    TRDict = getTRankDict()
+    MGDict = getMGRatingsDict()
+    #st.write(TRDict)
+    dfT = pd.DataFrame.from_dict(TRDict, orient='index')
+    dfT.reset_index(inplace=True)
+
+    # Rename the index column to 'Team'
+    dfT.rename(columns={'index': 'Team'}, inplace=True)
+
+    strength = setStrength(dfT)
+    if ranking_selected == 'TRank':
+        myranks = TRDict
+    else:
+        if ranking_selected == 'Mg Rankings':
+            myranks = MGDict
+        else:
+            myranks = PomDict
+        
+'
+    results = runbracket1(ntrials=20000,T=.1,myranks)
+    j=maketabletest(results)
+    allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
+    allrounds = ['Make','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
+
+    headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
+    l=HTML(makehtmltable(j, headers=headers))
+    st.write(l)
 
 def MG_Rankings(data):
     hot = data['hot']
@@ -3140,20 +3365,7 @@ data['today_date_format'] = today_date_format
 #data['Dailyschedule'] = Dailyschedule
 data['AwayTeamAll'] = AwayTeamAll
 data['HomeTeamAll'] = HomeTeamAll
-PomDict = {}
-TRDict = {}
-MGDict = {}
-PomDict = getPomeroyDict()
-TRDict = getTRankDict()
-MGDict = getMGRatingsDict()
-#st.write(TRDict)
-dfT = pd.DataFrame.from_dict(TRDict, orient='index')
-dfT.reset_index(inplace=True)
 
-# Rename the index column to 'Team'
-dfT.rename(columns={'index': 'Team'}, inplace=True)
-
-strength = setStrength(dfT)
 with st.sidebar:
     choice = option_menu(
             None,

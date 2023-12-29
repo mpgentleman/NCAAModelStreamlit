@@ -83,7 +83,15 @@ def energy_of_flipping(current_winner, current_loser):
             default_energy_function(current_winner, current_loser))
 
 
+def NewgetGamePredictionNeutralCourt(Team1AdjOff,Team1AdjDef,Team1AdjTempo,Team2AdjOff,Team2AdjDef,Team2AdjTempo,LeagueTempo,LeagueOE):
+  
+    GameTempo=(Team1AdjTempo/LeagueTempo*Team2AdjTempo/LeagueTempo)*LeagueTempo
 
+    Team1Score=(Team1AdjOff/LeagueOE*Team2AdjDef)*GameTempo/100
+    Team2Score=(Team2AdjOff/LeagueOE*Team1AdjDef)*GameTempo/100
+    OverUnder=Team1Score+Team2Score
+    PointDiff=Team1Score-Team2Score
+    return PointDiff
 # Here are the "magic functions" I mentioned to get pairs of teams.
 
 #from itertools import zip_longest

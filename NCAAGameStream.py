@@ -2331,8 +2331,9 @@ def Bracketology_Page(data):
     teamsdict['all'] = all_teams
     regional_rankings = regional_rankings 
     SimulationResults = namedtuple('SimulationResults','brackets unique_brackets lowest_bracket lowest_bracket_count most_common_bracket most_common_bracket_count')
-    set_energy_function = set_energy_function
+    
     set_energy_function(default_energy_game)
+    set_energy_function = set_energy_function
     #set_energy_function(My_energy_game)
     kenpom = {}
 

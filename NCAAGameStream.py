@@ -2237,6 +2237,21 @@ def Historical_Rankings_Page(data):
 def set_energy_function(ef):
     global default_energy_function
     default_energy_function = ef
+def default_energy_game(winner, loser):
+    """This is where you'll input your own energy functions. Here are
+    some of the things we talked about in class. Remember that you
+    want the energy of an "expected" outcome to be lower than that of
+    an upset.
+    """
+    #result = -(strength[winner] - strength[loser])
+    #result = regional_rankings[winner] - regional_rankings[loser]
+    #result = regional_rankings[winner]/regional_rankings[loser]
+    #result = -(strength[winner]/strength[loser])
+    result = -(strength[winner]-strength[loser])/200.0
+    #result = random()
+    #result = color of team 1 jersey better than color of team 2 jersey
+    #print "energy_game(",winner,loser,")",result
+    return result
 def Bracketology_Page(data):
     bracket_selected = st.selectbox('Select a Bracketology',['Bracket Matrix','TRank']) 
     ranking_selected = st.selectbox('Select a Ranking for Sim',['TRank','Mg Rankings','Pomeroy'])
@@ -2333,7 +2348,7 @@ def Bracketology_Page(data):
     SimulationResults = namedtuple('SimulationResults','brackets unique_brackets lowest_bracket lowest_bracket_count most_common_bracket most_common_bracket_count')
     
     set_energy_function(default_energy_game)
-    set_energy_function = set_energy_function
+    #set_energy_function = set_energy_function
     #set_energy_function(My_energy_game)
     kenpom = {}
 

@@ -75,8 +75,8 @@ import datetime
 import math
 
 from collections import namedtuple
-def runbracket1(Rankings,ntrials, T):
-    results = {'all':simulate(ntrials,'all',T,Rankings)}
+def runbracket1(teamsdict,Rankings,ntrials, T):
+    results = {'all':simulate(teamsdict,Rankings,ntrials,'all',T)}
     return results
 
 def simulate(teamsdict,Rankings,ntrials, region, T, printonswap=False, printbrackets=True):

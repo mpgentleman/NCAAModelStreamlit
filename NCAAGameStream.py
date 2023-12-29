@@ -79,7 +79,7 @@ def runbracket1(Rankings,ntrials, T):
     results = {'all':simulate(ntrials,'all',T,Rankings)}
     return results
 
-def simulate(Rankings,ntrials, region, T, printonswap=False, printbrackets=True):
+def simulate(teamsdict,Rankings,ntrials, region, T, printonswap=False, printbrackets=True):
     """
     If region is "west" "midwest" "south" or "east" we'll run a bracket based 
     just on those teams.
@@ -2576,7 +2576,7 @@ def Bracketology_Page(data):
             myranks = PomDict
         
 
-    results = runbracket1(myranks,ntrials=20000,T=.1)
+    results = runbracket1(teamsdict,myranks,ntrials=20000,T=.1)
     j=maketabletest(results)
     allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
     allrounds = ['Make','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win']

@@ -77,16 +77,16 @@ import math
 from collections import namedtuple
 
 
-def bracket_energy(all_winners,strength):
+def bracket_energy(all_winners):
     total_energy = 0.0
     for i in range(len(all_winners)-1):
         games = pairs(all_winners[i])
         winners = all_winners[i+1]
         for (team1, team2),winner in zip(games, winners):
             if winner == team1:
-                total_energy += default_energy_function(team1, team2,strength)
+                total_energy += default_energy_function(team1, team2)
             else:
-                total_energy += default_energy_function(team2, team1,strength)
+                total_energy += default_energy_function(team2, team1)
     return total_energy
 def getroundmap(bracket, include_game_number):
     games_in_rounds = [2**i for i in reversed(range(len(bracket)-1))]
@@ -104,8 +104,8 @@ def energy_of_flipping(current_winner, current_loser):
     """Given the current winner and the current loser, this calculates
     the energy of swapping, i.e. having the current winner lose.
     """
-    return (default_energy_function(current_loser, current_winner,strength) - 
-            default_energy_function(current_winner, current_loser,strength))
+    return (default_energy_function(current_loser, current_winner) - 
+            default_energy_function(current_winner, current_loser))
 
 
 def NewgetGamePredictionNeutralCourt(Team1AdjOff,Team1AdjDef,Team1AdjTempo,Team2AdjOff,Team2AdjDef,Team2AdjTempo,LeagueTempo,LeagueOE):
@@ -129,11 +129,11 @@ def grouper(n, iterable, fillvalue=None):
 def pairs(iterable):
     return grouper(2,iterable)
 
-def runbracket1(teamsdict,Rankings,strength,ntrials, T):
-    results = {'all':simulate(teamsdict,Rankings,strength,ntrials,'all',T)}
+def runbracket1(teamsdict,ntrials, T):
+    results = {'all':simulate(teamsdict,ntrials,'all',T)}
     return results
 
-def simulate(teamsdict,Rankings,strength,ntrials, region, T, printonswap=False, printbrackets=True):
+def simulate(teamsdict,ntrials, region, T, printonswap=False, printbrackets=True):
     """
     If region is "west" "midwest" "south" or "east" we'll run a bracket based 
     just on those teams.
@@ -159,8 +159,8 @@ def simulate(teamsdict,Rankings,strength,ntrials, region, T, printonswap=False, 
     else:
         teams = teamsdict[region]
     print(teams)
-    b = Bracket(Rankings,teams, strength,T)
-    energy = b.energy(strength)
+    b = Bracket(teams,T)
+    energy = b.energy()
     ng = sum(b.games_in_rounds) # total number of games
     # Let's collect some statistics
     brackets = []
@@ -201,7 +201,7 @@ def simulate(teamsdict,Rankings,strength,ntrials, region, T, printonswap=False, 
 
 #Rankings,teams, strength,T
 class Bracket(object):
-    def __init__(self,Rankings,  teams,strength, T,bracket=None):
+    def __init__(self, teams,T,bracket=None):
         """
         
         Arguments:
@@ -213,7 +213,7 @@ class Bracket(object):
         #self.Rankings = Rankings
         #self.strength = strength
         if bracket is None:
-            self.bracket = runbracket(Rankings,self.teams, self.T)
+            self.bracket = runbracket(self.teams, self.T)
         else:
             self.bracket = bracket
         self.games_in_rounds = [2**i for i in 
@@ -224,8 +224,8 @@ class Bracket(object):
     def copy(self):
         return self.__class__(self.teams, self.T,  
                               bracket=[l[:] for l in self.bracket])
-    def energy(self,strength):
-        return bracket_energy(self.bracket,strength)
+    def energy(self):
+        return bracket_energy(self.bracket)
     def __str__(self):
         return bracket_to_string(self.bracket)
     __repr__ = __str__
@@ -292,15 +292,15 @@ def runbracket(Rankings,teams, T):
     winners = teams #they won to get here!
     all_winners = [winners]
     for round in range(nrounds):
-        winners, losers = playround(Rankings,winners, T)
+        winners, losers = playround(winners, T)
         all_winners.append(winners)
     return all_winners
-def playround(Rankings,teams, T):
+def playround(teams, T):
     winners = []
     losers = []
     for (team1, team2) in pairs(teams):
         #winner, loser = playgameCDF(team1,team2,T)
-        winner, loser = playgameCDF2024(Rankings,team1,team2,T)
+        winner, loser = playgameCDF2024(team1,team2,T)
         winners.append(winner)
         losers.append(loser)
     return winners,losers
@@ -315,7 +315,7 @@ def playgameCDF2024(Rankings,team1, team2, T):
     #ediff = deltaU(team1, team2)
     #boltzmann_factor = exp(-ediff/T)
     #PHomeTeamSpread=NewgetGamePredictionNeutralCourt(PomeroyDict[team1]["AdjO"],PomeroyDict[team1]["AdjD"],PomeroyDict[team1]["AdjT"],PomeroyDict[team2]["AdjO"],PomeroyDict[team2]["AdjD"],PomeroyDict[team2]["AdjT"],LeagueTempo,LeagueOE)
-    PHomeTeamSpread=NewgetGamePredictionNeutralCourt(Rankings[team1]["AdjOE"],Rankings[team1]["AdjDE"],Rankings[team1]["pace"],Rankings[team2]["AdjOE"],Rankings[team2]["AdjDE"],Rankings[team2]["pace"],LeagueTempo,LeagueOE)
+    PHomeTeamSpread=NewgetGamePredictionNeutralCourt(MYRANKS[team1]["AdjOE"],MYRANKS[team1]["AdjDE"],MYRANKS[team1]["pace"],MYRANKS[team2]["AdjOE"],MYRANKS[team2]["AdjDE"],MYRANKS[team2]["pace"],LeagueTempo,LeagueOE)
     
     win_prob =scipy.stats.norm(0,10.5).cdf(PHomeTeamSpread)
     #win_prob = boltzmann_factor/(1+boltzmann_factor) if boltzmann_factor < inf else 1
@@ -2551,13 +2551,7 @@ def Bracketology_Page(data):
         newmidwest=list(TBracket1["midwest"])
         newwest=list(TBracket1["west"])
     
-    maketable = Stats.maketable
-    #deltaU = energy_of_flipping
-    LeagueTempo=69.1
-    LeagueOE=104.6
-    #now = datetime.datetime.now()
-    #now.strftime("%Y-%m-%d")
-    default_energy_function = None
+    
     lineparts = ["Rank","Team","Conf","W-L","AdjEM","AdjO","AdjO-Rank","AdjD","AdjD-Rank","AdjT","AdjT-Rank","Luck","Luck-Rank",
              "SOSPyth","SOSPyth-Rank","SOSOppO","SOSOppO-Rank","SOSOppD","SOSOppD-Rank","NCOSPyth","NCOSPyth-Rank"]
     textparts = ["Team","Conf","W-L"]
@@ -2604,35 +2598,10 @@ def Bracketology_Page(data):
     #all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']+teams['SweetSixteen']
     all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']
     #MoneyLine=pd.read_csv("C:/Users/mpgen/MoneyLineConversion.csv")
-    MoneyLine=pd.read_csv("Data/MoneyLineConversion.csv")
-    PomDict = {}
-    TRDict = {}
-    MGDict = {}
-    PomDict = getPomeroyDict()
-    TRDict = getTRankDict()
-    MGDict = getMGRatingsDict()
-    #st.write(TRDict)
-    dfT = pd.DataFrame.from_dict(TRDict, orient='index')
-    dfT.reset_index(inplace=True)
-
-    # Rename the index column to 'Team'
-    dfT.rename(columns={'index': 'Team'}, inplace=True)
-
-    strength = setStrength(dfT)
-    set_energy_function(default_energy_game,strength)
-    #set_energy_function = set_energy_function
-    #set_energy_function(My_energy_game)
-    kenpom = {}
-    if ranking_selected == 'TRank':
-        myranks = TRDict
-    else:
-        if ranking_selected == 'Mg Rankings':
-            myranks = MGDict
-        else:
-            myranks = PomDict
+    
         
     #st.write(myranks)
-    results = runbracket1(teamsdict,myranks,strength,ntrials=20000,T=.1)
+    results = runbracket1(teamsdict,ntrials=20000,T=.1)
     j=maketabletest(results)
     allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
     allrounds = ['Make','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
@@ -3369,6 +3338,33 @@ _CHOICES = {
 
 _MENU_ITEMS = list(_CHOICES.keys())
 _ICONS = [d.get('icon', 'database') for d in _CHOICES.values()]
+maketable = Stats.maketable
+#deltaU = energy_of_flipping
+LeagueTempo=69.1
+LeagueOE=104.6
+
+default_energy_function = None
+MoneyLine=pd.read_csv("Data/MoneyLineConversion.csv")
+PomDict = {}
+TRDict = {}
+MGDict = {}
+PomDict = getPomeroyDict()
+TRDict = getTRankDict()
+MGDict = getMGRatingsDict()
+
+dfT = pd.DataFrame.from_dict(TRDict, orient='index')
+dfT.reset_index(inplace=True)
+
+# Rename the index column to 'Team'
+dfT.rename(columns={'index': 'Team'}, inplace=True)
+
+strength = setStrength(dfT)
+set_energy_function(default_energy_game,strength)
+#set_energy_function = set_energy_function
+#set_energy_function(My_energy_game)
+kenpom = {}
+
+MYRANKS = TRDict
 
 data={}
 #TeamDatabase2=pd.read_csv("TeamDatabase.csv")

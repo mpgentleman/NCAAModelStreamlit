@@ -3408,9 +3408,10 @@ allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4',
 allrounds = ['Make','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
 
 headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
-l = makehtmltable(j, headers=headers)
+st.dataframe(pd.DataFrame(j, columns=headers))
+#l = makehtmltable(j, headers=headers)
 #l=HTML(makehtmltable(j, headers=headers))
-st.write(l)
+#st.write(l)
 data={}
 data['BM'] = BM 
 data['TBracket'] = TBracket

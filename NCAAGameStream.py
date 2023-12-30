@@ -129,7 +129,7 @@ def grouper(n, iterable, fillvalue=None):
 def pairs(iterable):
     return grouper(2,iterable)
 
-def runbracket1(teamsdict,Rankings,ntrials, T):
+def runbracket1(teamsdict,Rankings,strength,ntrials, T):
     results = {'all':simulate(teamsdict,Rankings,ntrials,strength,'all',T)}
     return results
 

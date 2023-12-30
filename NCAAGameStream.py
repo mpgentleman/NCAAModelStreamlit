@@ -3384,6 +3384,7 @@ maketable = Stats.maketable
 #deltaU = energy_of_flipping
 LeagueTempo=69.1
 LeagueOE=104.6
+SimulationResults = namedtuple('SimulationResults','brackets unique_brackets lowest_bracket lowest_bracket_count most_common_bracket most_common_bracket_count')
 
 default_energy_function = None
 MoneyLine=pd.read_csv("Data/MoneyLineConversion.csv")

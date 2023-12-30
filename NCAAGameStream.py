@@ -3359,7 +3359,7 @@ dfT.reset_index(inplace=True)
 dfT.rename(columns={'index': 'Team'}, inplace=True)
 
 strength = setStrength(dfT)
-set_energy_function(default_energy_game,strength)
+set_energy_function(default_energy_game)
 #set_energy_function = set_energy_function
 #set_energy_function(My_energy_game)
 kenpom = {}

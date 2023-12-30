@@ -176,7 +176,7 @@ def simulate(teamsdict,Rankings,ntrials, region, T, printonswap=False, printbrac
 
 
 class Bracket(object):
-    def __init__(self, teams, T,Rankings, bracket=None):
+    def __init__(self,Rankings,  teams, T,bracket=None):
         """
         
         Arguments:
@@ -2604,7 +2604,7 @@ def Bracketology_Page(data):
         else:
             myranks = PomDict
         
-    st.write(myranks)
+    #st.write(myranks)
     results = runbracket1(teamsdict,myranks,ntrials=20000,T=.1)
     j=maketabletest(results)
     allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']

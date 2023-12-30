@@ -2550,7 +2550,7 @@ def Bracketology_Page(data):
     TBracket = data['TBracket']
     
     st.subheader('Bracket Matrix Bracketology Projection')
-    BM1 = BM[['Seed','east','midwest','south','west']]
+    
     gb = GridOptionsBuilder.from_dataframe(BM1,groupable=True)
     #csTotal=cellStyleDynamic(hot2.performance_change)
     #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
@@ -2567,7 +2567,7 @@ def Bracketology_Page(data):
     #st.dataframe(BM)
     
     st.subheader('TRank Bracketology Projection')
-    TBracket1 = TBracket[['Seed','east','midwest','south','west']]
+
     gb = GridOptionsBuilder.from_dataframe(BM1,groupable=True)
     #csTotal=cellStyleDynamic(hot2.performance_change)
     #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
@@ -3341,14 +3341,16 @@ set_energy_function(default_energy_game)
 kenpom = {}
 deltaU = energy_of_flipping
 MYRANKS = TRDict
-
+    
+BM = getBracketMatrixDataframe()
+TBracket = getTRankBracket()
+TBracket1 = TBracket[['Seed','east','midwest','south','west']]
+BM1 = BM[['Seed','east','midwest','south','west']]
 newsouth=list(TBracket1["south"])
 neweast=list(TBracket1["east"])
 newmidwest=list(TBracket1["midwest"])
 newwest=list(TBracket1["west"])
-    
-BM = getBracketMatrixDataframe()
-TBracket = getTRankBracket()
+
 lineparts = ["Rank","Team","Conf","W-L","AdjEM","AdjO","AdjO-Rank","AdjD","AdjD-Rank","AdjT","AdjT-Rank","Luck","Luck-Rank",
              "SOSPyth","SOSPyth-Rank","SOSOppO","SOSOppO-Rank","SOSOppD","SOSOppD-Rank","NCOSPyth","NCOSPyth-Rank"]
 textparts = ["Team","Conf","W-L"]

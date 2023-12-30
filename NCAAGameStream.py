@@ -77,16 +77,16 @@ import math
 from collections import namedtuple
 
 
-def bracket_energy(all_winners):
+def bracket_energy(all_winners,strength):
     total_energy = 0.0
     for i in range(len(all_winners)-1):
         games = pairs(all_winners[i])
         winners = all_winners[i+1]
         for (team1, team2),winner in zip(games, winners):
             if winner == team1:
-                total_energy += default_energy_function(team1, team2)
+                total_energy += default_energy_function(team1, team2,strength)
             else:
-                total_energy += default_energy_function(team2, team1)
+                total_energy += default_energy_function(team2, team1,strength)
     return total_energy
 def getroundmap(bracket, include_game_number):
     games_in_rounds = [2**i for i in reversed(range(len(bracket)-1))]
@@ -104,8 +104,8 @@ def energy_of_flipping(current_winner, current_loser):
     """Given the current winner and the current loser, this calculates
     the energy of swapping, i.e. having the current winner lose.
     """
-    return (default_energy_function(current_loser, current_winner) - 
-            default_energy_function(current_winner, current_loser))
+    return (default_energy_function(current_loser, current_winner,strength) - 
+            default_energy_function(current_winner, current_loser,strength))
 
 
 def NewgetGamePredictionNeutralCourt(Team1AdjOff,Team1AdjDef,Team1AdjTempo,Team2AdjOff,Team2AdjDef,Team2AdjTempo,LeagueTempo,LeagueOE):
@@ -130,10 +130,10 @@ def pairs(iterable):
     return grouper(2,iterable)
 
 def runbracket1(teamsdict,Rankings,ntrials, T):
-    results = {'all':simulate(teamsdict,Rankings,ntrials,'all',T)}
+    results = {'all':simulate(teamsdict,Rankings,ntrials,strength,'all',T)}
     return results
 
-def simulate(teamsdict,Rankings,ntrials, region, T, printonswap=False, printbrackets=True):
+def simulate(teamsdict,Rankings,ntrials,strength, region, T, printonswap=False, printbrackets=True):
     """
     If region is "west" "midwest" "south" or "east" we'll run a bracket based 
     just on those teams.
@@ -159,8 +159,8 @@ def simulate(teamsdict,Rankings,ntrials, region, T, printonswap=False, printbrac
     else:
         teams = teamsdict[region]
     print(teams)
-    b = Bracket(Rankings,teams, T)
-    energy = b.energy()
+    b = Bracket(Rankings,teams, strength,T)
+    energy = b.energy(strength)
     ng = sum(b.games_in_rounds) # total number of games
     # Let's collect some statistics
     brackets = []
@@ -201,7 +201,7 @@ def simulate(teamsdict,Rankings,ntrials, region, T, printonswap=False, printbrac
 
 
 class Bracket(object):
-    def __init__(self,Rankings,  teams, T,bracket=None):
+    def __init__(self,Rankings,  teams,strength, T,bracket=None):
         """
         
         Arguments:
@@ -223,8 +223,8 @@ class Bracket(object):
     def copy(self):
         return self.__class__(self.teams, self.T,  
                               bracket=[l[:] for l in self.bracket])
-    def energy(self):
-        return bracket_energy(self.bracket)
+    def energy(self,strength):
+        return bracket_energy(self.bracket,strength)
     def __str__(self):
         return bracket_to_string(self.bracket)
     __repr__ = __str__
@@ -2482,10 +2482,10 @@ def Historical_Rankings_Page(data):
     selected_teams = st.multiselect('Select teams:', teams)
     st.header('NCAA ATS Net Rating Comp')
     plot_line_chartLetsPlot(MG_Rank, selected_teams)
-def set_energy_function(ef):
+def set_energy_function(ef,strength):
     global default_energy_function
     default_energy_function = ef
-def default_energy_game(winner, loser):
+def default_energy_game(winner, loser),strength:
     """This is where you'll input your own energy functions. Here are
     some of the things we talked about in class. Remember that you
     want the energy of an "expected" outcome to be lower than that of
@@ -2630,7 +2630,7 @@ def Bracketology_Page(data):
             myranks = PomDict
         
     #st.write(myranks)
-    results = runbracket1(teamsdict,myranks,ntrials=20000,T=.1)
+    results = runbracket1(teamsdict,myranks,strength,ntrials=20000,T=.1)
     j=maketabletest(results)
     allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
     allrounds = ['Make','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win']

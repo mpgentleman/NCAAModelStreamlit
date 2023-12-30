@@ -3401,14 +3401,15 @@ all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']
     
         
 #st.write(myranks)
-results = runbracket1(teamsdict,ntrials=5,T=.1)
-st.write(str(results['all'][0][0]))
+results = runbracket1(teamsdict,ntrials=1000,T=.15)
+#st.write(str(results['all'][0][0]))
 j=maketabletest(results)
 allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
 allrounds = ['Make','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
 
 headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
-l=HTML(makehtmltable(j, headers=headers))
+l = makehtmltable(j, headers=headers
+#l=HTML(makehtmltable(j, headers=headers))
 st.write(l)
 data={}
 data['BM'] = BM 

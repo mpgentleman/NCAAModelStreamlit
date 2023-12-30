@@ -75,6 +75,19 @@ import datetime
 import math
 
 from collections import namedtuple
+
+def getroundmap(bracket, include_game_number):
+    games_in_rounds = [2**i for i in reversed(range(len(bracket)-1))]
+    round = {}
+    g = 0
+    for (i,gir) in enumerate(games_in_rounds):
+        for j in range(gir):
+            if include_game_number:
+                round[g] = (i,j)
+            else:
+                round[g] = i
+            g += 1
+    return round
 def energy_of_flipping(current_winner, current_loser):
     """Given the current winner and the current loser, this calculates
     the energy of swapping, i.e. having the current winner lose.

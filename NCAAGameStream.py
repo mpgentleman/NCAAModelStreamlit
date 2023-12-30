@@ -199,7 +199,7 @@ def simulate(teamsdict,Rankings,strength,ntrials, region, T, printonswap=False, 
     return sr
 
 
-
+#Rankings,teams, strength,T
 class Bracket(object):
     def __init__(self,Rankings,  teams,strength, T,bracket=None):
         """
@@ -210,10 +210,10 @@ class Bracket(object):
         """
         self.teams = teams
         self.T = T
-        self.Rankings = Rankings
-        self.strength = strength
+        #self.Rankings = Rankings
+        #self.strength = strength
         if bracket is None:
-            self.bracket = runbracket(self.Rankings,self.teams, self.T)
+            self.bracket = runbracket(Rankings,self.teams, self.T)
         else:
             self.bracket = bracket
         self.games_in_rounds = [2**i for i in 
@@ -225,7 +225,7 @@ class Bracket(object):
         return self.__class__(self.teams, self.T,  
                               bracket=[l[:] for l in self.bracket])
     def energy(self,strength):
-        return bracket_energy(self.bracket,self.strength)
+        return bracket_energy(self.bracket,strength)
     def __str__(self):
         return bracket_to_string(self.bracket)
     __repr__ = __str__

@@ -3345,7 +3345,8 @@ _ICONS = [d.get('icon', 'database') for d in _CHOICES.values()]
 
 data={}
 #TeamDatabase2=pd.read_csv("TeamDatabase.csv")
-
+LeagueTempo=69.1
+LeagueOE=104.6
 TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
 
 player_data = read_csv_from_url('http://barttorvik.com/getadvstats.php?year=2024&csv=1')

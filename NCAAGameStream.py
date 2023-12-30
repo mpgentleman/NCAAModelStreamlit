@@ -168,7 +168,7 @@ def simulate(teamsdict,Rankings,strength,ntrials, region, T, printonswap=False, 
         g = randint(0, ng) # choose a random game to swap
         #print "attempted swap for game",g#,"in round",round[g]
         #newbracket = deepcopy(b)
-        newbracket = b.copy(strength,T)
+        newbracket = b.copy()
         newbracket.swap(g)
         newenergy = newbracket.energy()
         ediff = newenergy - energy

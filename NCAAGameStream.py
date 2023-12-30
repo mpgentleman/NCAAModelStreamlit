@@ -77,6 +77,48 @@ import math
 from collections import namedtuple
 
 
+def playgame(team1, team2, T):
+    """There's a difference between flipping a game in an existing
+    bracket, and playing a game from scratch. If we're going to just
+    use Boltzmann statistics to play a game from scratch, we can make
+    life easy by using the Boltzmann factor to directly pick a
+    winner.
+    """
+    ediff = deltaU(team1, team2)
+    boltzmann_factor = exp(-ediff/T)
+
+    win_prob = boltzmann_factor/(1+boltzmann_factor) if boltzmann_factor < inf else 1
+    # So, prob of team 1 winning is then boltzmann_factor/(1+boltzmann_factor)
+    if random() >= win_prob:
+        return (team1,team2)
+    else:
+        return (team2,team1)
+
+def playgamesfortesting(team1, team2, ntrials, T):
+    print("Boltzmann tells that the ratio of team1 winning to team 2"+ 
+          "winning should be")
+    print(exp(-deltaU(team1,team2)/T))
+    wins = {team1:0,team2:0}
+    for i in range(ntrials):
+        winner,loser = playgame(team1,team2,T)
+        wins[winner] = wins[winner] + 1
+    print("wins {} {} {} {} {}".format(wins, wins[team1]/wins[team2], 
+                                       wins[team2]/wins[team1], 
+                                       wins[team1]/ntrials, 
+                                       wins[team2]/ntrials))
+
+    
+# changed to playgameCDF from boltzman. boltzman favors underdogs too much
+def playround(teams, T):
+    winners = []
+    losers = []
+    for (team1, team2) in pairs(teams):
+        #winner, loser = playgameCDF(team1,team2,T)
+        winner, loser = playgameCDF2023(team1,team2,T)
+        winners.append(winner)
+        losers.append(loser)
+    return winners,losers
+
 def bracket_energy(all_winners):
     total_energy = 0.0
     for i in range(len(all_winners)-1):

@@ -76,6 +76,18 @@ import math
 
 from collections import namedtuple
 
+
+def bracket_energy(all_winners):
+    total_energy = 0.0
+    for i in range(len(all_winners)-1):
+        games = pairs(all_winners[i])
+        winners = all_winners[i+1]
+        for (team1, team2),winner in zip(games, winners):
+            if winner == team1:
+                total_energy += default_energy_function(team1, team2)
+            else:
+                total_energy += default_energy_function(team2, team1)
+    return total_energy
 def getroundmap(bracket, include_game_number):
     games_in_rounds = [2**i for i in reversed(range(len(bracket)-1))]
     round = {}

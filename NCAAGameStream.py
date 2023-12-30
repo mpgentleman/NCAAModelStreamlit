@@ -130,10 +130,10 @@ def pairs(iterable):
     return grouper(2,iterable)
 
 def runbracket1(teamsdict,Rankings,strength,ntrials, T):
-    results = {'all':simulate(teamsdict,Rankings,ntrials,strength,'all',T)}
+    results = {'all':simulate(teamsdict,Rankings,strength,ntrials'all',T)}
     return results
 
-def simulate(teamsdict,Rankings,ntrials,strength, region, T, printonswap=False, printbrackets=True):
+def simulate(teamsdict,Rankings,strength,ntrials, region, T, printonswap=False, printbrackets=True):
     """
     If region is "west" "midwest" "south" or "east" we'll run a bracket based 
     just on those teams.

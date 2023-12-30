@@ -2485,7 +2485,7 @@ def Historical_Rankings_Page(data):
 def set_energy_function(ef,strength):
     global default_energy_function
     default_energy_function = ef
-def default_energy_game(winner, loser),strength:
+def default_energy_game(winner, loser,strength):
     """This is where you'll input your own energy functions. Here are
     some of the things we talked about in class. Remember that you
     want the energy of an "expected" outcome to be lower than that of

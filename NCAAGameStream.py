@@ -3405,7 +3405,7 @@ set_energy_function(default_energy_game)
 #set_energy_function = set_energy_function
 #set_energy_function(My_energy_game)
 kenpom = {}
-
+deltaU = energy_of_flipping
 MYRANKS = TRDict
 
 data={}

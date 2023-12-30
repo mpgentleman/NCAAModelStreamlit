@@ -304,7 +304,7 @@ def playround(teams, T):
         winners.append(winner)
         losers.append(loser)
     return winners,losers
-def playgameCDF2024(Rankings,team1, team2, T):
+def playgameCDF2024(team1, team2, T):
     """There's a difference between flipping a game in an existing
     bracket, and playing a game from scratch. If we're going to just
     use Boltzmann statistics to play a game from scratch, we can make

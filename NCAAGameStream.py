@@ -211,6 +211,7 @@ class Bracket(object):
         self.teams = teams
         self.T = T
         self.Rankings = Rankings
+        self.strength = strength
         if bracket is None:
             self.bracket = runbracket(Rankings,self.teams, self.T)
         else:

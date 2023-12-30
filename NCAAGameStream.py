@@ -59,7 +59,7 @@ from collections import Counter, OrderedDict, defaultdict
 
 from functools import wraps
 from time import time
-
+import scipy
 from hashlib import md5
 from itertools import chain
 #from __future__ import division

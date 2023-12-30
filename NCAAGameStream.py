@@ -224,7 +224,7 @@ class Bracket(object):
     def copy(self):
         return self.__class__(self.teams, self.T,  
                               bracket=[l[:] for l in self.bracket])
-    def energy(self,self.strength):
+    def energy(self,strength):
         return bracket_energy(self.bracket,self.strength)
     def __str__(self):
         return bracket_to_string(self.bracket)

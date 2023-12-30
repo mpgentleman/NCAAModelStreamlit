@@ -233,7 +233,7 @@ def simulate(teamsdict,ntrials, region, T, printonswap=False, printbrackets=True
     lb, mcb, mcb_count, unique_brackets, lowest_sightings = \
         Stats.gather_uniquestats(brackets)
     sr = SimulationResults(brackets,unique_brackets,lb,lowest_sightings,mcb,mcb_count)
-    if printbrackets:
+    #if printbrackets:
         #print("Lowest energy bracket")
         #print(lb)
         #print("Most common bracket (%s)"%mcb_count)

@@ -2643,8 +2643,8 @@ def Bracketology_Page(data):
     
         
     #st.write(myranks)
-    results = runbracket1(teamsdict,ntrials=20000,T=.1)
-    #st.write(results)
+    results = runbracket1(teamsdict,ntrials=5,T=.1)
+    st.write(results['all'])
     j=maketabletest(results)
     allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
     allrounds = ['Make','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win']

@@ -26,7 +26,7 @@ from datetime import datetime,date,time
 
 import plotly.graph_objects as go
 import pandas as pd
-
+from numpy import exp,array,zeros,inf
 import requests
 import io
 from pandas.api.types import is_numeric_dtype

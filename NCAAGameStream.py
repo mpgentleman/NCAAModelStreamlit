@@ -2595,10 +2595,7 @@ def Bracketology_Page(data):
     regional_rankings = regional_rankings 
     SimulationResults = namedtuple('SimulationResults','brackets unique_brackets lowest_bracket lowest_bracket_count most_common_bracket most_common_bracket_count')
     
-    set_energy_function(default_energy_game,strength)
-    #set_energy_function = set_energy_function
-    #set_energy_function(My_energy_game)
-    kenpom = {}
+    
 
     teams['SweetSixteen'] = list(BM1["west"])[0:4]+list(BM1["east"])[0:4]+list(BM1["midwest"])[0:4]+list(BM1["south"])[0:4]
     teams['EliteEight'] = ['San Diego St.','Creighton','FAU','Kansas St.','Miami FL','Texas','Connecticut','Gonzaga']
@@ -2621,6 +2618,10 @@ def Bracketology_Page(data):
     dfT.rename(columns={'index': 'Team'}, inplace=True)
 
     strength = setStrength(dfT)
+    set_energy_function(default_energy_game,strength)
+    #set_energy_function = set_energy_function
+    #set_energy_function(My_energy_game)
+    kenpom = {}
     if ranking_selected == 'TRank':
         myranks = TRDict
     else:

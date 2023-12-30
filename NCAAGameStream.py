@@ -3318,7 +3318,8 @@ maketable = Stats.maketable
 LeagueTempo=69.1
 LeagueOE=104.6
 SimulationResults = namedtuple('SimulationResults','brackets unique_brackets lowest_bracket lowest_bracket_count most_common_bracket most_common_bracket_count')
-
+regions = ['south', 'east', 'midwest', 'west']
+seed_region = {i: 0 for i in range(1, 17)}
 default_energy_function = None
 MoneyLine=pd.read_csv("Data/MoneyLineConversion.csv")
 PomDict = {}
@@ -3443,8 +3444,7 @@ Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv"
 Gamesdf = Gamesdf.reset_index(drop=True)
 Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
 Gamesdf = Gamesdf.drop_duplicates()
-regions = ['south', 'east', 'midwest', 'west']
-seed_region = {i: 0 for i in range(1, 17)}
+
 data['TRank'] = TR
 data['SkedBetting'] = SkedBetting
 data['TeamDatabase2']=TeamDatabase2

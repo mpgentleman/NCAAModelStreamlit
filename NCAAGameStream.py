@@ -286,7 +286,7 @@ class Bracket(object):
         return result
     
     
-def runbracket(Rankings,teams, T):
+def runbracket(teams, T):
     # How many rounds do we need?
     nrounds = int(np.log2(len(teams)))
     winners = teams #they won to get here!

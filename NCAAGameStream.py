@@ -130,7 +130,7 @@ def pairs(iterable):
     return grouper(2,iterable)
 
 def runbracket1(teamsdict,Rankings,strength,ntrials, T):
-    results = {'all':simulate(teamsdict,Rankings,strength,ntrials'all',T)}
+    results = {'all':simulate(teamsdict,Rankings,strength,ntrials,'all',T)}
     return results
 
 def simulate(teamsdict,Rankings,strength,ntrials, region, T, printonswap=False, printbrackets=True):
@@ -2501,7 +2501,7 @@ def default_energy_game(winner, loser,strength):
     #print "energy_game(",winner,loser,")",result
     return result
 def Bracketology_Page(data):
-    bracket_selected = st.selectbox('Select a Bracketology',['Bracket Matrix','TRank']) 
+    bracket_selected = st.selectbox('Select a Bracketology',['TRank','Bracket Matrix']) 
     ranking_selected = st.selectbox('Select a Ranking for Sim',['TRank','Mg Rankings','Pomeroy'])
     
     BM = getBracketMatrixDataframe()

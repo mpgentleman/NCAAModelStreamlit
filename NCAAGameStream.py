@@ -2549,8 +2549,8 @@ def default_energy_game(winner, loser):
 def Bracketology_Page(data):
     #bracket_selected = st.selectbox('Select a Bracketology',['TRank','Bracket Matrix']) 
     #ranking_selected = st.selectbox('Select a Ranking for Sim',['TRank','Mg Rankings','Pomeroy'])
-    BM = data['BMI']
-    TBracket = data['TBracket']
+    BM1 = data['BM1']
+    TBracket1 = data['TBracket']
     
     st.subheader('Bracket Matrix Bracketology Projection')
     
@@ -3411,7 +3411,7 @@ allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4',
 allrounds = ['Make','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
 headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
 
-st.dataframe(pd.DataFrame(j, columns=headers))
+#st.dataframe(pd.DataFrame(j, columns=headers))
 #l = makehtmltable(j, headers=headers)
 #l=HTML(makehtmltable(j, headers=headers))
 #st.write(l)
@@ -3420,10 +3420,10 @@ MYRANKS = MGDict
 results = runbracket1(teamsdict,ntrials=1000,T=.15)
 #st.write(str(results['all'][0][0]))
 j1=maketabletest(results)
-st.dataframe(pd.DataFrame(j1, columns=headers))
+#st.dataframe(pd.DataFrame(j1, columns=headers))
 data['TSim'] = pd.DataFrame(j, columns=headers)
 data['MSim'] = pd.DataFrame(j1, columns=headers)
-data['BMI'] = BM1
+data['BM1'] = BM1
 data['TBracket'] = TBracket1
 TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
 

@@ -3423,7 +3423,7 @@ j1=maketabletest(results)
 st.dataframe(pd.DataFrame(j1, columns=headers))
 data['TSim'] = pd.DataFrame(j, columns=headers)
 data['MSim'] = pd.DataFrame(j1, columns=headers)
-data['BMI'] = BMI
+data['BMI'] = BM1
 data['TBracket'] = TBracket1
 TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
 

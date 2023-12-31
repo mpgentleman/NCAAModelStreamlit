@@ -177,7 +177,7 @@ def showBracketTable(df):
 )
     plt.rcParams["font.family"] = ["DejaVu Sans"]
     plt.rcParams["savefig.bbox"] = "tight"
-    fig, ax = plt.subplots(figsize=(40,20))
+    fig, ax = plt.subplots(figsize=(20,20))
  
     table = Table(
     df,
@@ -2700,8 +2700,13 @@ def Bracketology_Page(data):
     g = _displayGrid(TBracket1, gb, key=keyname, height=600)
     #st.dataframe(BM)
     #st.dataframe(TBracket)
-    df = data['TSim']
-    showBracketTable(df)
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader('Bracket Sim USing TRank Rankings')
+        df = data['TSim']
+        showBracketTable(df)
+    with col2:
+    st.subheader('Bracket Sim USing MG Rankings')
     df = data['MSim']
     showBracketTable(df)
 

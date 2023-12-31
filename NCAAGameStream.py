@@ -2706,9 +2706,9 @@ def Bracketology_Page(data):
         df = data['TSim']
         showBracketTable(df)
     with col2:
-    st.subheader('Bracket Sim USing MG Rankings')
-    df = data['MSim']
-    showBracketTable(df)
+        st.subheader('Bracket Sim USing MG Rankings')
+        df = data['MSim']
+        showBracketTable(df)
 
 def MG_Rankings(data):
     hot = data['hot']

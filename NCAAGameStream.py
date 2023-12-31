@@ -178,7 +178,7 @@ def showBracketTable(df):
 )
     plt.rcParams["font.family"] = ["DejaVu Sans"]
     plt.rcParams["savefig.bbox"] = "tight"
-    fig, ax = plt.subplots(figsize=(20,20))
+    fig, ax = plt.subplots(figsize=(30,20))
  
     table = Table(
     df,

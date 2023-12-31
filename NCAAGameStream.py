@@ -79,6 +79,7 @@ from collections import namedtuple
 def showBracketTable(df):
     
     df = df[['Team','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds']]
+    df = df.set_index("Team")
     cmap = LinearSegmentedColormap.from_list(
     name="bugw", colors=["#ffffff", "#f2fbd2", "#c9ecb4", "#93d3ab", "#35b0ab"], N=256)
     colors = [(0.6, 0.76, 0.98), (0, 0.21, 0.46)] # Experiment with this
@@ -93,7 +94,7 @@ def showBracketTable(df):
         ColumnDefinition(
             name="Team",
             textprops={"ha": "left"},
-            width=1,
+            width=1.5,
         ),
         
         ColumnDefinition(

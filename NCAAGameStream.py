@@ -94,7 +94,7 @@ def showBracketTable(df):
         ColumnDefinition(
             name="Team",
             textprops={"ha": "left"},
-            width=1.5,
+            width=1,
         ),
         
         ColumnDefinition(
@@ -178,7 +178,7 @@ def showBracketTable(df):
 )
     plt.rcParams["font.family"] = ["DejaVu Sans"]
     plt.rcParams["savefig.bbox"] = "tight"
-    fig, ax = plt.subplots(figsize=(30,20))
+    fig, ax = plt.subplots(figsize=(30,30))
  
     table = Table(
     df,

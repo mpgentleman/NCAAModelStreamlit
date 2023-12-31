@@ -76,7 +76,121 @@ import math
 
 from collections import namedtuple
 
-
+def showBracketTable(df):
+    
+    df = df[['Team','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds']]
+    cmap = LinearSegmentedColormap.from_list(
+    name="bugw", colors=["#ffffff", "#f2fbd2", "#c9ecb4", "#93d3ab", "#35b0ab"], N=256)
+    colors = [(0.6, 0.76, 0.98), (0, 0.21, 0.46)] # Experiment with this
+    cm1 = LinearSegmentedColormap.from_list('test', colors, N=256)
+    tourney_cols = ['2nd Round','Sweet 16','Elite 8','Final 4','Championship']
+    depth_rating_cols = ['Win','Odds']
+#shooting_cols = ['Points','EFG','3PT%','FT%',]
+#['eam','Region','Rank','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds']
+    col_defs = (
+    [
+        
+        ColumnDefinition(
+            name="Team",
+            textprops={"ha": "left"},
+            width=1,
+        ),
+        
+        ColumnDefinition(
+            name="2nd Round",
+            width=1,
+            textprops={
+                "ha": "center",
+               # "bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.2f}",
+            cmap=normed_cmap(df["2nd Round"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="By Round",
+        ),
+        ColumnDefinition(
+            name="Sweet 16",
+            width=1,
+            textprops={
+                "ha": "center",
+               # "bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.2f}",
+            cmap=normed_cmap(df["Sweet 16"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="By Round",
+        ),
+        ColumnDefinition(
+            name="Elite 8",
+            width=1,
+            textprops={
+                "ha": "center",
+               # "bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.2f}",
+            cmap=normed_cmap(df["Elite 8"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="By Round",
+        ),
+        ColumnDefinition(
+            name="Final 4",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.2f}",
+            cmap=normed_cmap(df["Final 4"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="By Round",
+        ),
+         ColumnDefinition(
+            name="Championship",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.2f}",
+            cmap=normed_cmap(df["Championship"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="By Round",
+        ),
+        ColumnDefinition(
+            name="Win",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.2f}",
+            cmap=normed_cmap(df["Win"], cmap=matplotlib.cm.PiYG, num_stds=5),
+            group="Winning Odds",
+        ),
+        ColumnDefinition(
+            name="Odds",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.1f}",
+            cmap=normed_cmap(df["Odds"].head(30), cmap=matplotlib.cm.coolwarm_r, num_stds=2),
+            group="Winning Odds",
+        ),
+    ]
+)
+    plt.rcParams["font.family"] = ["DejaVu Sans"]
+    plt.rcParams["savefig.bbox"] = "tight"
+    fig, ax = plt.subplots(figsize=(40,20))
+ 
+    table = Table(
+    df,
+    column_definitions=col_defs,
+    row_dividers=True,
+    footer_divider=True,
+    ax=ax,
+    textprops={"fontsize": 16},
+    row_divider_kw={"linewidth": 1, "linestyle": (0, (1, 5))},
+    col_label_divider_kw={"linewidth": 1, "linestyle": "-"},
+    column_border_kw={"linewidth": 1, "linestyle": "-"},
+    ).autoset_fontcolors(colnames=['2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds'])
+    st.pyplot(fig)
 def playgame(team1, team2, T):
     """There's a difference between flipping a game in an existing
     bracket, and playing a game from scratch. If we're going to just
@@ -2586,7 +2700,10 @@ def Bracketology_Page(data):
     g = _displayGrid(TBracket1, gb, key=keyname, height=600)
     #st.dataframe(BM)
     #st.dataframe(TBracket)
-
+    df = data['TSim']
+    showBracketTable(df)
+    df = data['MSim']
+    showBracketTable(df)
 
 def MG_Rankings(data):
     hot = data['hot']

@@ -357,8 +357,11 @@ def playgameCDF2024(team1, team2, T):
     #ediff = deltaU(team1, team2)
     #boltzmann_factor = exp(-ediff/T)
     #PHomeTeamSpread=NewgetGamePredictionNeutralCourt(PomeroyDict[team1]["AdjO"],PomeroyDict[team1]["AdjD"],PomeroyDict[team1]["AdjT"],PomeroyDict[team2]["AdjO"],PomeroyDict[team2]["AdjD"],PomeroyDict[team2]["AdjT"],LeagueTempo,LeagueOE)
-    PHomeTeamSpread=NewgetGamePredictionNeutralCourt(MYRANKS[team1]["AdjOE"],MYRANKS[team1]["AdjDE"],MYRANKS[team1]["pace"],MYRANKS[team2]["AdjOE"],MYRANKS[team2]["AdjDE"],MYRANKS[team2]["pace"],LeagueTempo,LeagueOE)
-    
+    #if MODEL == 'TRank':
+    #    PHomeTeamSpread=NewgetGamePredictionNeutralCourt(MYRANKS[team1]["AdjOE"],MYRANKS[team1]["AdjDE"],MYRANKS[team1]["pace"],MYRANKS[team2]["AdjOE"],MYRANKS[team2]["AdjDE"],MYRANKS[team2]["pace"],LeagueTempo,LeagueOE)
+    #else:
+    #    PHomeTeamSpread=NewgetGamePredictionNeutralCourt(MYRANKS[team1]["AdjOE"],MYRANKS[team1]["AdjDE"],MYRANKS[team1]["pace"],MYRANKS[team2]["AdjOE"],MYRANKS[team2]["AdjDE"],MYRANKS[team2]["pace"],LeagueTempo,LeagueOE)
+    PHomeTeamSpread=NewgetGamePredictionNeutralCourt(MYRANKS[team1]["AdjOE"],MYRANKS[team1]["AdjDE"],MYRANKS[team1]["pace"],MYRANKS[team2]["AdjOE"],MYRANKS[team2]["AdjDE"],MYRANKS[team2]["pace"],LeagueTempo,LeagueOE)    
     win_prob =scipy.stats.norm(0,10.5).cdf(PHomeTeamSpread)
     #win_prob = boltzmann_factor/(1+boltzmann_factor) if boltzmann_factor < inf else 1
     # So, prob of team 1 winning is then boltzmann_factor/(1+boltzmann_factor)
@@ -3331,17 +3334,16 @@ MGDict = getMGRatingsDict()
 
 dfT = pd.DataFrame.from_dict(TRDict, orient='index')
 dfT.reset_index(inplace=True)
-
 # Rename the index column to 'Team'
 dfT.rename(columns={'index': 'Team'}, inplace=True)
-
 strength = setStrength(dfT)
+
 set_energy_function(default_energy_game)
 #set_energy_function = set_energy_function
 #set_energy_function(My_energy_game)
 kenpom = {}
 deltaU = energy_of_flipping
-MYRANKS = TRDict
+
     
 BM = getBracketMatrixDataframe()
 TBracket = getTRankBracket()
@@ -3401,20 +3403,28 @@ all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']
     
         
 #st.write(myranks)
+MYRANKS = TRDict
 results = runbracket1(teamsdict,ntrials=1000,T=.15)
 #st.write(str(results['all'][0][0]))
 j=maketabletest(results)
 allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
 allrounds = ['Make','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
-
 headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
+
 st.dataframe(pd.DataFrame(j, columns=headers))
 #l = makehtmltable(j, headers=headers)
 #l=HTML(makehtmltable(j, headers=headers))
 #st.write(l)
 data={}
-data['BM'] = BM 
-data['TBracket'] = TBracket
+MYRANKS = MGDict
+results = runbracket1(teamsdict,ntrials=1000,T=.15)
+#st.write(str(results['all'][0][0]))
+j1=maketabletest(results)
+st.dataframe(pd.DataFrame(j1, columns=headers))
+data['TSim'] = pd.DataFrame(j, columns=headers)
+data['MSim'] = pd.DataFrame(j1, columns=headers)
+data['BMI'] = BMI
+data['TBracket'] = TBracket1
 TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
 
 player_data = read_csv_from_url('http://barttorvik.com/getadvstats.php?year=2024&csv=1')

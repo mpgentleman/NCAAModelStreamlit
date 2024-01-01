@@ -2330,10 +2330,11 @@ def getTodaysDateFormat():
 
     # Get the current time in the Central Time Zone
     central_time = datetime.now(central)
-
+    one_day_before = central_time - timedelta(days=1)
     # Change the format to 'YYYYMMDD'
     formatted_time = central_time.strftime('%Y%m%d')
-    return(formatted_time)
+    formatted_time_before = one_day_before.strftime('%Y%m%d')
+    return(formatted_time,formatted_time_before)
 
 def keep_first_four(df):
     # Group the dataframe by 'Seed' and keep only the first 4 rows of each group
@@ -3574,8 +3575,11 @@ TeamDatabase2=pd.read_csv("Data/TeamDatabase2024T.csv")
 AllGames=pd.read_csv("Data/Season_GamesAll_2024.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
-today_date_format = getTodaysDateFormat()
-Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
+today_date_format,yesterday_date_format = getTodaysDateFormat()
+try:
+    Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
+except:
+    Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+yesterday_date_format+".csv")
 Gamesdf = Gamesdf.reset_index(drop=True)
 Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
 Gamesdf = Gamesdf.drop_duplicates()

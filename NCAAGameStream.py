@@ -3070,7 +3070,7 @@ def Past_Games(data):
         add_selectbox_start =st.date_input('Pick date')
         dateString=str(add_selectbox_start)
         dateToday=dateString.replace('-', '')
-        st.write(dateToday)
+        #st.write(dateToday)
         Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+dateToday+".csv")
         Gamesdf = Gamesdf.reset_index(drop=True)
         Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)

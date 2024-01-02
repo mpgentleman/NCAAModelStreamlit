@@ -3497,7 +3497,7 @@ def Team_Page(data):
         st.subheader(team_selected + ' Player Data')
         showPlayersTable(team_players,team_selected)
     dfI =getIndividualPlayerData()
-    dfI_Team = dfI[dfI['Team'] == AwayTeam]
+    dfI_Team = dfI[dfI['Team'] == team_selected]
     tp = team_players[team_players['Team'] == team_selected].sort_values('PRPG', ascending=False)
     player1 = tp['Player'].head(8).to_list()
 

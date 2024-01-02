@@ -108,7 +108,191 @@ def showIndividualPlayerCharts(df,player):
 
     p2 =  gggrid([density1,density2,density3,density4,p1,p2,p3,p4], ncol=4)
     plot_dict = p2.as_dict()
-    components.html(_as_html(plot_dict), height=1500 + 20,width=1500 + 20,scrolling=True,)
+    st.subheader(player + ' Distribution Charts')
+    components.html(_as_html(plot_dict), height=1500 + 20,width=1000 + 20,scrolling=True,)
+    
+def showPlayerStatTables(df,player):
+    df1 = df[df['Player']==player]
+    cmap = LinearSegmentedColormap.from_list(
+    name="bugw", colors=["#ffffff", "#f2fbd2", "#c9ecb4", "#93d3ab", "#35b0ab"], N=256
+)
+    colors = [(0.6, 0.76, 0.98), (0, 0.21, 0.46)] # Experiment with this
+    cm1 = LinearSegmentedColormap.from_list('test', colors, N=256)
+    df2 = df1[['Date','Opponent','BPM','OPM','DPM','NET','Minutes','ORTG','Points','Rebounds','Assists','PTS+REB+AST','TO','Steals','Blocks']]
+    df2 = df2.set_index('Date')
+    team_rating_cols = ['ORTG','BPM','OPM','DPM',]
+    depth_rating_cols = ['Minutes','USAGE']
+    shooting_cols = ['Points','OR','DR','PTS+REB+AST','Assists','TO','Steals','Blocks']
+    col_defs = (
+    [
+        
+        ColumnDefinition(
+            name="Date",
+            textprops={"ha": "left", "weight": "bold"},
+            width=1,
+        ),
+
+        ColumnDefinition(
+            name="Opponent",
+            textprops={"ha": "center"},
+            width=3,
+        ),
+        ColumnDefinition(
+            name="ORTG",
+            group="Advanced Stats",
+            textprops={"ha": "center"},
+            cmap=normed_cmap(df["ORTG"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            width=1,
+        ),
+        ColumnDefinition(
+            name="Minutes",
+            group="Advanced Stats",
+            textprops={"ha": "center"},
+            formatter= "{:.0f}",
+            cmap=normed_cmap(df["Minutes"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            width=1,
+        ),
+        ColumnDefinition(
+            name="BPM",
+            width=1,
+            textprops={
+                "ha": "center",
+               # "bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.1f}",
+            cmap=normed_cmap(df["BPM"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="Advanced Stats",
+        ),
+        ColumnDefinition(
+            name="OPM",
+            width=1,
+            textprops={
+                "ha": "center",
+               # "bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.1f}",
+            cmap=normed_cmap(df["OPM"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="Advanced Stats",
+        ),
+        ColumnDefinition(
+            name="DPM",
+            width=1,
+            textprops={
+                "ha": "center",
+               # "bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.1f}",
+            cmap=normed_cmap(df["DPM"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="Advanced Stats",
+        ),
+        ColumnDefinition(
+            name="NET",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.1f}",
+            cmap=normed_cmap(df["NET"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            #group="Advanced Stats",
+        ),
+        ColumnDefinition(
+            name="Points",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.0f}",
+            cmap=normed_cmap(df["Points"], cmap=matplotlib.cm.coolwarm_r, num_stds=2.5),
+            group="Game Stats",
+        ),
+        
+        ColumnDefinition(
+            name="Rebounds",
+            width=1.1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.0f}",
+            cmap=normed_cmap(df["Rebounds"], cmap=matplotlib.cm.coolwarm_r, num_stds=2.5),
+            group="Game Stats",
+        ),
+        ColumnDefinition(
+            name="Assists",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.0f}",
+            cmap=normed_cmap(df["Assists"], cmap=matplotlib.cm.coolwarm_r, num_stds=2.5),
+            group="Game Stats",
+        ),
+        ColumnDefinition(
+            name="PTS+REB+AST",
+            width=1.5,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.0f}",
+            cmap=normed_cmap(df["PTS+REB+AST"], cmap=matplotlib.cm.coolwarm_r, num_stds=5),
+            group="Game Stats",
+        ),
+        ColumnDefinition(
+            name="TO",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.0f}",
+            cmap=normed_cmap(df["TO"], cmap=matplotlib.cm.coolwarm_r, num_stds=2.5),
+            group="Game Stats",
+        ),
+        ColumnDefinition(
+            name="Steals",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.0f}",
+            cmap=normed_cmap(df["Steals"], cmap=matplotlib.cm.coolwarm_r, num_stds=2.5),
+            group="Game Stats",
+        ),
+        ColumnDefinition(
+            name="Blocks",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.0f}",
+            cmap=normed_cmap(df["Blocks"], cmap=matplotlib.cm.coolwarm_r, num_stds=2.5),
+            group="Game Stats",
+        ),
+    ]
+    
+)
+    plt.rcParams["font.family"] = ["DejaVu Sans"]
+    plt.rcParams["savefig.bbox"] = "tight"
+    fig, ax = plt.subplots(figsize=(30, 10))
+
+    table = Table(
+    df2,
+    column_definitions=col_defs,
+    row_dividers=True,
+    footer_divider=True,
+    ax=ax,
+    textprops={"fontsize": 14},
+    row_divider_kw={"linewidth": 1, "linestyle": (0, (1, 5))},
+    col_label_divider_kw={"linewidth": 1, "linestyle": "-"},
+    column_border_kw={"linewidth": 1, "linestyle": "-"},
+    ).autoset_fontcolors(colnames=["OPM", "DPM"])
+    st.pyplot(fig)   
 def showBracketTable(df):
     
     df = df[['Team','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds']]
@@ -3330,6 +3514,7 @@ def Team_Page(data):
     g = _displayGrid(team_players, gb, key=keyname, height=600)
     dfI =getIndividualPlayerData()
     showIndividualPlayerCharts(dfI,'Zach Edey')
+    showPlayerStatTables(dfI,'Zach Edey')
 def Betting_Performance_Page(data):
     st.title('Betting Performance')
     df = data['SkedBetting']

@@ -73,7 +73,7 @@ import datetime
 #from numpy.random import randint
 
 import math
-
+import streamlit.components.v1 as components
 from collections import namedtuple
 from datetime import datetime, timedelta
 def getIndividualPlayerData():

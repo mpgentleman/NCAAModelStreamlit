@@ -232,7 +232,7 @@ def showPlayerStatTables(df,player):
         ),
         ColumnDefinition(
             name="PTS+REB+AST",
-            width=1.5,
+            width=2,
             textprops={
                 "ha": "center",
                 #"bbox": {"boxstyle": "circle", "pad": 0.35},
@@ -291,7 +291,7 @@ def showPlayerStatTables(df,player):
     row_divider_kw={"linewidth": 1, "linestyle": (0, (1, 5))},
     col_label_divider_kw={"linewidth": 1, "linestyle": "-"},
     column_border_kw={"linewidth": 1, "linestyle": "-"},
-    ).autoset_fontcolors(colnames=["OPM", "DPM"])
+    ).autoset_fontcolors(colnames=["OPM", "DPM",'NET','Minutes','ORTG','Points','Rebounds','Assists','PTS+REB+AST','TO','Steals','Blocks'])
     st.pyplot(fig)   
 def showBracketTable(df):
     

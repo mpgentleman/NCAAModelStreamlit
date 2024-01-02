@@ -109,7 +109,7 @@ def showIndividualPlayerCharts(df,player):
     p2 =  gggrid([density1,density2,density3,density4,p1,p2,p3,p4], ncol=4)
     plot_dict = p2.as_dict()
     st.subheader(player + ' Distribution Charts')
-    components.html(_as_html(plot_dict), height=1000 + 20,width=1000 + 20,scrolling=True,)
+    components.html(_as_html(plot_dict), height=500 + 20,width=500 + 20,scrolling=True,)
     
 def showPlayerStatTables(df,player):
     df1 = df[df['Player']==player]
@@ -279,7 +279,7 @@ def showPlayerStatTables(df,player):
 )
     plt.rcParams["font.family"] = ["DejaVu Sans"]
     plt.rcParams["savefig.bbox"] = "tight"
-    fig, ax = plt.subplots(figsize=(20, 8))
+    fig, ax = plt.subplots(figsize=(18, 8))
 
     table = Table(
     df2,
@@ -3232,14 +3232,20 @@ def Team_Matchup(data):
             st.subheader(AwayTeam + ' Player Data')
             showPlayersTable(team_players,AwayTeam)
             dfI_Team = dfI[dfI['Team']==AwayTeam]
-            
-            showIndividualPlayerCharts(dfI,'Zach Edey')
-            showPlayerStatTables(dfI,'Zach Edey')
+            tp = team_players[team_players['Team']==AwayTeam].sort_values('PRPG')
+            player1 = tp['Player'].head(5).to_list()
+            showIndividualPlayerCharts(dfI,player1[0])
+            showPlayerStatTables(dfI,player1[0])
         with col2:
             team_players = data['Players']
             #team_players = team_players[team_players['Team']==HomeTeam]
             st.subheader(HomeTeam + ' Player Data')
             showPlayersTable(team_players,HomeTeam)
+            dfI_Team = dfI[dfI['Team']==HomeTeam]
+            tp = team_players[team_players['Team']==HomeTeam].sort_values('PRPG')
+            player1 = tp['Player'].head(5).to_list()
+            showIndividualPlayerCharts(dfI,player1[0])
+            showPlayerStatTables(dfI,player1[0])
         try:
             fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
             fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green')

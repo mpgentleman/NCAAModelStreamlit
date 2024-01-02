@@ -76,6 +76,39 @@ import math
 
 from collections import namedtuple
 from datetime import datetime, timedelta
+def getIndividualPlayerData():
+    url = 'https://barttorvik.com/2024_all_advgames.json.gz'
+    response = requests.get(url)
+    text = response.text
+    start_index = text.find('[[')
+    end_index = text.rfind(']]') + 2
+    json_text = text[start_index:end_index]
+    data = json.loads(json_text)
+    col1 =['Date','date','1 ','2','6','Opponent','muid','7','Minutes','ORTG','USAGE','EFG','TS%','OR%','DR%','Assist%','TO%','Dunk mades','Dunk Att','Rim mades','Rim Att','Mid made','Mid Att','2 pt made','2 pt Att','3 Pt made','3 Pt Att','Ft Made','FT Att','BPM','OPM','DPM','NET ','Points','OR','DR','Assists','TO','Steals','Blocks','STL%','BLK%','PF','43','BPM round','NET','46','Team','Player','49','Year','PlayerNumber','Year']
+
+    df = pd.DataFrame(data,columns = col1)
+    df['Rebounds'] = df['OR'] +df['DR']
+    df['PTS+REB+AST'] = df['Rebounds']  + df['Points']  + df['Assists'] 
+    df['PtsAvg'] = df['Points'].mean()
+
+    return(df)
+
+def showIndividualPlayerCharts(df,player):
+    df1 = df[df['Player']==player]
+    density1 = ggplot(df1) + geom_density(aes("Points"), color="blue", fill="blue", alpha=0.1, size=1)
+    density2 = ggplot(df1) + geom_density(aes("Rebounds"), color="blue", fill="blue", alpha=0.1, size=1)
+    density3 = ggplot(df1) + geom_density(aes("Assists"), color="blue", fill="blue", alpha=0.1, size=1)
+    density4 = ggplot(df1) + geom_density(aes("PTS+REB+AST"), color="blue", fill="blue", alpha=0.1, size=1)
+    p1 = ggplot(df1, aes("Date", "Points")) +geom_path(size=1) +geom_point(size=5)+geom_hline(yintercept=df1['Points'].mean(), size=1, color="blue", linetype='longdash')
+    p2 = ggplot(df1, aes("Date", "Rebounds")) +geom_path(size=1) +geom_point(size=5)+geom_hline(yintercept=df1['Rebounds'].mean(), size=1, color="blue", linetype='longdash')
+    p3 = ggplot(df1, aes("Date", "Assists")) +geom_path(size=1) +geom_point(size=5)+geom_hline(yintercept=df1['Assists'].mean(), size=1, color="blue", linetype='longdash')
+    p4 = ggplot(df1, aes("Date", "PTS+REB+AST")) +geom_path(size=1) +geom_point(size=5)+geom_hline(yintercept=df1['PTS+REB+AST'].mean(), size=1, color="blue", linetype='longdash')
+
+
+
+    p2 =  gggrid([density1,density2,density3,density4,p1,p2,p3,p4], ncol=4)
+    plot_dict = p2.as_dict()
+    components.html(_as_html(plot_dict), height=1500 + 20,width=1500 + 20,scrolling=True,)
 def showBracketTable(df):
     
     df = df[['Team','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds']]
@@ -3295,6 +3328,8 @@ def Team_Page(data):
     gb.configure_grid_options(**opts)
     keyname='Team P'+team_selected
     g = _displayGrid(team_players, gb, key=keyname, height=600)
+    dfI =getIndividualPlayerData()
+    showIndividualPlayerCharts(dfI,'Zach Edey')
 def Betting_Performance_Page(data):
     st.title('Betting Performance')
     df = data['SkedBetting']

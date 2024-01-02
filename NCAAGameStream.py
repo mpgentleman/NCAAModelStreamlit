@@ -106,7 +106,7 @@ def showIndividualPlayerCharts(df,player):
 
 
 
-    p2 =  gggrid([density1,p1,density2,p2,density3,p3,density4,p4], ncol=2) + ggsize(1000, 1000)
+    p2 =  gggrid([density1,p1,density2,p2,density3,p3,density4,p4], ncol=2) + ggsize(1000, 800)
     plot_dict = p2.as_dict()
     st.subheader(player + ' Distribution Charts')
     components.html(_as_html(plot_dict), height=800 + 20,width=800 + 20,scrolling=True,)
@@ -204,7 +204,7 @@ def showPlayerStatTables(df,player):
                 #"bbox": {"boxstyle": "circle", "pad": 0.35},
             },
             formatter= "{:.0f}",
-            cmap=normed_cmap(df["Points"], cmap=matplotlib.cm.coolwarm_r, num_stds=2.5),
+            cmap=normed_cmap(df["Points"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
             group="Game Stats",
         ),
         
@@ -216,7 +216,7 @@ def showPlayerStatTables(df,player):
                 #"bbox": {"boxstyle": "circle", "pad": 0.35},
             },
             formatter= "{:.0f}",
-            cmap=normed_cmap(df["Rebounds"], cmap=matplotlib.cm.coolwarm_r, num_stds=2.5),
+            cmap=normed_cmap(df["Rebounds"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
             group="Game Stats",
         ),
         ColumnDefinition(
@@ -227,7 +227,7 @@ def showPlayerStatTables(df,player):
                 #"bbox": {"boxstyle": "circle", "pad": 0.35},
             },
             formatter= "{:.0f}",
-            cmap=normed_cmap(df["Assists"], cmap=matplotlib.cm.coolwarm_r, num_stds=2.5),
+            cmap=normed_cmap(df["Assists"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
             group="Game Stats",
         ),
         ColumnDefinition(
@@ -238,7 +238,7 @@ def showPlayerStatTables(df,player):
                 #"bbox": {"boxstyle": "circle", "pad": 0.35},
             },
             formatter= "{:.0f}",
-            cmap=normed_cmap(df["PTS+REB+AST"], cmap=matplotlib.cm.coolwarm_r, num_stds=5),
+            cmap=normed_cmap(df["PTS+REB+AST"], cmap=matplotlib.cm.PiYG, num_stds=5),
             group="Game Stats",
         ),
         ColumnDefinition(
@@ -249,7 +249,7 @@ def showPlayerStatTables(df,player):
                 #"bbox": {"boxstyle": "circle", "pad": 0.35},
             },
             formatter= "{:.0f}",
-            cmap=normed_cmap(df["TO"], cmap=matplotlib.cm.coolwarm_r, num_stds=2.5),
+            cmap=normed_cmap(df["TO"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
             group="Game Stats",
         ),
         ColumnDefinition(
@@ -260,7 +260,7 @@ def showPlayerStatTables(df,player):
                 #"bbox": {"boxstyle": "circle", "pad": 0.35},
             },
             formatter= "{:.0f}",
-            cmap=normed_cmap(df["Steals"], cmap=matplotlib.cm.coolwarm_r, num_stds=2.5),
+            cmap=normed_cmap(df["Steals"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
             group="Game Stats",
         ),
         ColumnDefinition(
@@ -271,7 +271,7 @@ def showPlayerStatTables(df,player):
                 #"bbox": {"boxstyle": "circle", "pad": 0.35},
             },
             formatter= "{:.0f}",
-            cmap=normed_cmap(df["Blocks"], cmap=matplotlib.cm.coolwarm_r, num_stds=2.5),
+            cmap=normed_cmap(df["Blocks"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
             group="Game Stats",
         ),
     ]

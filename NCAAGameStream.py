@@ -95,7 +95,7 @@ def getIndividualPlayerData():
 
 def showIndividualPlayerCharts(df,player):
     df1 = df[df['Player']==player]
-    density1 = ggplot(df1) + geom_density(aes("Points"), color="blue", fill="blue", alpha=0.1, size=1)
+    density1 = ggplot(df1) + geom_density(aes("Points"), color="blue", fill="blue", alpha=0.1, size=1)+ ggsize(1500, 800)
     density2 = ggplot(df1) + geom_density(aes("Rebounds"), color="blue", fill="blue", alpha=0.1, size=1)
     density3 = ggplot(df1) + geom_density(aes("Assists"), color="blue", fill="blue", alpha=0.1, size=1)
     density4 = ggplot(df1) + geom_density(aes("PTS+REB+AST"), color="blue", fill="blue", alpha=0.1, size=1)
@@ -106,10 +106,10 @@ def showIndividualPlayerCharts(df,player):
 
 
 
-    p2 =  gggrid([density1,density2,density3,density4,p1,p2,p3,p4], ncol=4)
+    p2 =  gggrid([density1,density2,density3,density4,p1,p2,p3,p4], ncol=4)+ ggsize(1500, 800)
     plot_dict = p2.as_dict()
     st.subheader(player + ' Distribution Charts')
-    components.html(_as_html(plot_dict), height=1000 + 20,width=1000 + 20,scrolling=True,)
+    components.html(_as_html(plot_dict), height=500 + 20,width=500 + 20,scrolling=True,)
     
 def showPlayerStatTables(df,player):
     df1 = df[df['Player']==player]

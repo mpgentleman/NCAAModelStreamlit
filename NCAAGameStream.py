@@ -109,7 +109,7 @@ def showIndividualPlayerCharts(df,player):
     p2 =  gggrid([density1,p1,density2,p2,density3,p3,density4,p4], ncol=2) + ggsize(1000, 1000)
     plot_dict = p2.as_dict()
     st.subheader(player + ' Distribution Charts')
-    components.html(_as_html(plot_dict), height=800 + 20,width=600 + 20,scrolling=True,)
+    components.html(_as_html(plot_dict), height=800 + 20,width=800 + 20,scrolling=True,)
     
 def showPlayerStatTables(df,player):
     df1 = df[df['Player']==player]

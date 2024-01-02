@@ -3232,12 +3232,14 @@ def Team_Matchup(data):
             showPlayersTable(team_players, AwayTeam)
             dfI_Team = dfI[dfI['Team'] == AwayTeam]
             tp = team_players[team_players['Team'] == AwayTeam].sort_values('PRPG', ascending=False)
-            player1 = tp['Player'].head(5).to_list()
+            player1 = tp['Player'].head(8).to_list()
 
             for player in player1:
                 with st.expander(player):
-                    showIndividualPlayerCharts(dfI_Team, player)
+                    st.subheader(player+' Game Stats')
                     showPlayerStatTables(dfI_Team, player)
+                    showIndividualPlayerCharts(dfI_Team, player)
+                    
         
             #team_players = data['Players']
             #team_players = team_players[team_players['Team']==AwayTeam]
@@ -3254,12 +3256,14 @@ def Team_Matchup(data):
             showPlayersTable(team_players, HomeTeam)
             dfI_Team = dfI[dfI['Team'] == HomeTeam]
             tp = team_players[team_players['Team'] == HomeTeam].sort_values('PRPG', ascending=False)
-            player1 = tp['Player'].head(5).to_list()
+            player1 = tp['Player'].head(8).to_list()
 
             for player in player1:
                 with st.expander(player):
-                    showIndividualPlayerCharts(dfI_Team, player)
+                    st.subheader(player+' Game Stats')
                     showPlayerStatTables(dfI_Team, player)
+                    showIndividualPlayerCharts(dfI_Team, player)
+                    
             #team_players = data['Players']
             #team_players = team_players[team_players['Team']==HomeTeam]
             #st.subheader(HomeTeam + ' Player Data')
@@ -3492,6 +3496,16 @@ def Team_Page(data):
         #team_players = team_players[team_players['Team']==team_selected]
         st.subheader(team_selected + ' Player Data')
         showPlayersTable(team_players,team_selected)
+    dfI =getIndividualPlayerData()
+    dfI_Team = dfI[dfI['Team'] == AwayTeam]
+    tp = team_players[team_players['Team'] == team_selected].sort_values('PRPG', ascending=False)
+    player1 = tp['Player'].head(8).to_list()
+
+    for player in player1:
+        with st.expander(player):
+            st.subheader(player+' Game Stats')
+            showPlayerStatTables(dfI_Team, player)
+            showIndividualPlayerCharts(dfI_Team, player)
     st.subheader(team_selected + ' Schedule/Results Data')
     test1 = test1[['Date','Tm','Opp','HomeAway','Result_x','EMRating','PlayingOverRating'	,'ATSvalue','Tempo','Lead','AvgLead','Tm_AdjO','Tm_AdjD','G-Score']]
 

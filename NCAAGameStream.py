@@ -3111,7 +3111,7 @@ def Todays_Games(data):
         with col2:
             st.subheader(HomeTeam + ' Rankings')
             displayRankingHistory(data,HomeTeam)
-            col1, col2 = st.columns(2)
+        col1, col2 = st.columns(2)
         with col1:
             team_players = data['Players']
             #team_players = team_players[team_players['Team']==AwayTeam]

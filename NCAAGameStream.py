@@ -3103,6 +3103,7 @@ def Todays_Games(data):
         test2['New_ID'] = range(0, 0+len(test2))
         myteams = [AwayTeam,HomeTeam]
         plot_line_chartLetsPlotHot(MG_Rank2, myteams)
+        dfI =getIndividualPlayerData()
         col1, col2 = st.columns(2)
         with col1:
             st.subheader(AwayTeam + ' Rankings')
@@ -3116,11 +3117,29 @@ def Todays_Games(data):
             #team_players = team_players[team_players['Team']==AwayTeam]
             st.subheader(AwayTeam + ' Player Data')
             showPlayersTable(team_players,AwayTeam)
+            dfI_Team = dfI[dfI['Team'] == AwayTeam]
+            tp = team_players[team_players['Team'] == AwayTeam].sort_values('PRPG', ascending=False)
+            player1 = tp['Player'].head(8).to_list()
+
+            for player in player1:
+                with st.expander(player):
+                    st.subheader(player+' Game Stats')
+                    showPlayerStatTables(dfI_Team, player)
+                    showIndividualPlayerCharts(dfI_Team, player)
         with col2:
             team_players = data['Players']
             #team_players = team_players[team_players['Team']==HomeTeam]
             st.subheader(HomeTeam + ' Player Data')
             showPlayersTable(team_players,HomeTeam)
+            dfI_Team = dfI[dfI['Team'] == HomeTeam]
+            tp = team_players[team_players['Team'] == HomeTeam].sort_values('PRPG', ascending=False)
+            player1 = tp['Player'].head(8).to_list()
+
+            for player in player1:
+                with st.expander(player):
+                    st.subheader(player+' Game Stats')
+                    showPlayerStatTables(dfI_Team, player)
+                    showIndividualPlayerCharts(dfI_Team, player)
             
         try:
             fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')

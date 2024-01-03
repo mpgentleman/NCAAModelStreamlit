@@ -1213,7 +1213,7 @@ def showPlayersTable(player_data,team_selected):
             formatter= " {:.2f}",
             width=1.2,
             #formatter=decimal_to_percent,
-            cmap=normed_cmap(df["Points"], cmap=matplotlib.cm.PiYG, num_stds=2.5)p,
+            cmap=normed_cmap(df["Points"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
             group="Shooting Stats",
            # border="center",
         )

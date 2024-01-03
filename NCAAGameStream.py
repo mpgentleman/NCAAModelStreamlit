@@ -1213,7 +1213,7 @@ def showPlayersTable(player_data,team_selected):
             formatter= " {:.2f}",
             width=1.2,
             #formatter=decimal_to_percent,
-            cmap=cmap,
+            cmap=normed_cmap(df["Points"], cmap=matplotlib.cm.PiYG, num_stds=2.5)p,
             group="Shooting Stats",
            # border="center",
         )
@@ -2937,6 +2937,8 @@ def MG_Rankings(data):
     col1, col2 = st.columns(2)
     with col1:
         st.subheader('Who is Hot?')
+        st.write('These teams have improved the most over the last two weeks in my rankings')
+        st.write('The ATS premium gives you credit for outperfoming the APS spread against a tough team')
         hot2 = hot.head(10)[['Team','ATS_net_eff','performance_change']]
         gb = GridOptionsBuilder.from_dataframe(hot2,groupable=True)
         #gb.configure_columns(allcols, cellStyle=cellStyle)
@@ -2953,9 +2955,12 @@ def MG_Rankings(data):
         keyname='Test 1'
         g = _displayGrid(hot2, gb, key=keyname, height=500)
         #st.image('Data/hot-icon.jpg')
+        st.write('Time Series Chart of the teams playing the hottest')
         plot_line_chartLetsPlotHot(MG_Rank2, hotlist)
     with col2:
         st.subheader('Who is Not?')
+        st.write('These teams have fallen the most over the last two weeks in my rankings')
+        st.write('The ATS premium or penalty means my rankings are more reactive than Pomeroy')
         cold2 = cold.head(10)[['Team','ATS_net_eff','performance_change']]
         gb = GridOptionsBuilder.from_dataframe(cold2,groupable=True)
         #gb.configure_columns(allcols, cellStyle=cellStyle)
@@ -2974,10 +2979,15 @@ def MG_Rankings(data):
         keyname='Test '
         g = _displayGrid(cold2, gb, key=keyname, height=500)
         #st.image('Data/cold-icon-3.jpg')
+        st.write('Time Series Chart of the teams underperforming the last two weeks')
         plot_line_chartLetsPlotHot(MG_Rank2,coldlist)
     import streamlit.components.v1 as components
     add_selectbox_start =st.date_input('Pick date for Rankings')
-    
+    st.write('Clicking on the headers will sort that column in ascending or descending order')
+    st.write('MG_NET_EFF is my rankings with no early season weighting and solely counting games played this year')
+    st.write('This leads a reactive ranking for hot and cold teams')
+    st.write('ATS_NET_EFF adds a premium for beating the spread against a weighted opponent ranking')
+    st.write('ATS_PREMIUM highlights that premium or deficit. It should correspond to teams ATS record')
     dateString=str(add_selectbox_start)
     dateToday=dateString.replace('-', '')
     files = os.listdir('Data/MGRankings2024')

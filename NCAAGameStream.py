@@ -3615,7 +3615,7 @@ def Betting_Performance_Page(data):
     gb.configure_grid_options(**opts)
     keyname='Test bet'
     g = _displayGrid(df, gb, key=keyname, height=600)
-    st.markdown("<div class="alert alert-success">Example text highlighted in green background.</div>")
+    #st.markdown("<div class="alert alert-success">Example text highlighted in green background.</div>")
     #else:
     #    add_selectbox = st.sidebar.header("Select Todays Date")
     #    add_selectbox_start =st.sidebar.date_input('Pick date')

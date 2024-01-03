@@ -2938,7 +2938,7 @@ def MG_Rankings(data):
     with col1:
         st.subheader('Who is Hot?')
         st.write('These teams have improved the most over the last two weeks in my rankings')
-        st.write('The ATS premium gives you credit for outperfoming the APS spread against a tough team')
+        st.write('The ATS premium gives you credit for outperfoming the ATS spread against a tough team')
         hot2 = hot.head(10)[['Team','ATS_net_eff','performance_change']]
         gb = GridOptionsBuilder.from_dataframe(hot2,groupable=True)
         #gb.configure_columns(allcols, cellStyle=cellStyle)
@@ -2984,8 +2984,8 @@ def MG_Rankings(data):
     import streamlit.components.v1 as components
     add_selectbox_start =st.date_input('Pick date for Rankings')
     st.write('Clicking on the headers will sort that column in ascending or descending order')
-    st.write('MG_NET_EFF is my rankings with no early season weighting and solely counting games played this year')
-    st.write('This leads a reactive ranking for hot and cold teams')
+    st.write('MG_NET_EFF is my rankings with no early season weighting and solely counting games played this year. This leads a reactive ranking for hot and cold teams')
+    #st.write('This leads a reactive ranking for hot and cold teams')
     st.write('ATS_NET_EFF adds a premium for beating the spread against a weighted opponent ranking')
     st.write('ATS_PREMIUM highlights that premium or deficit. It should correspond to teams ATS record')
     dateString=str(add_selectbox_start)

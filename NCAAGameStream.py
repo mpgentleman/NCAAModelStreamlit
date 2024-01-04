@@ -76,6 +76,37 @@ import math
 import streamlit.components.v1 as components
 from collections import namedtuple
 from datetime import datetime, timedelta
+
+
+
+def html(body):
+    st.markdown(body, unsafe_allow_html=True)
+
+
+def card_begin_str(header):
+    return (
+        "<style>div.card{background-color:lightblue;border-radius: 5px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;}</style>"
+        '<div class="card">'
+        '<div class="container">'
+        f"<h3><b>{header}</b></h3>"
+    )
+
+
+def card_end_str():
+    return "</div></div>"
+
+
+def card(header, body):
+    lines = [card_begin_str(header), f"<p>{body}</p>", card_end_str()]
+    html("".join(lines))
+
+
+def br(n):
+    html(n * "<br>")
+
+
+
+
 def getIndividualPlayerData():
     url = 'https://barttorvik.com/2024_all_advgames.json.gz'
     response = requests.get(url)
@@ -1102,7 +1133,7 @@ def showPlayersTable(player_data,team_selected):
     name="bugw", colors=["#ffffff", "#f2fbd2", "#c9ecb4", "#93d3ab", "#35b0ab"], N=256)
     colors = [(0.6, 0.76, 0.98), (0, 0.21, 0.46)] # Experiment with this
     cm1 = LinearSegmentedColormap.from_list('test', colors, N=256)
-    df = player_data[['Player','Number','Games','ORTG','BPM','OBPM','DBPM', 'PRPG','Points','EFG','3PT%','FT%','Min%','USAGE','Team']]
+    df = player_data[['Player','Number','Year','Height','Position','Games','ORTG','BPM','OBPM','DBPM', 'PRPG','Points','EFG','3PT%','FT%','Min%','USAGE','Team']]
 
     #df = player_data1[player_data1['Team']=='Purdue']   
     df =df.sort_values('PRPG',ascending=False)
@@ -1112,6 +1143,7 @@ def showPlayersTable(player_data,team_selected):
     df['USAGE'] =df['USAGE']/100
     df = df[df['Games']>2]
     df1 = df[df['Team']==team_selected]
+    df1 = df1.set_index('Player')
     df1 = df1[['Player','Number','Games','ORTG','BPM','OBPM','DBPM', 'PRPG','Points','EFG','3PT%','FT%','Min%','USAGE']]
     team_rating_cols = ['ORTG','BPM','OBPM','DBPM','PRPG']
     depth_rating_cols = ['Min%','USAGE']
@@ -3615,6 +3647,9 @@ def Betting_Performance_Page(data):
     gb.configure_grid_options(**opts)
     keyname='Test bet'
     g = _displayGrid(df, gb, key=keyname, height=600)
+    card("This works", "I can insert text inside a card")
+
+    br(2)
     #st.markdown("<div class="alert alert-success">Example text highlighted in green background.</div>")
     #else:
     #    add_selectbox = st.sidebar.header("Select Todays Date")

@@ -3372,7 +3372,7 @@ def Team_Matchup(data):
             fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=1, ax=ax2, color = 'blue')
             fig4=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test2,order=1, ax=ax2, color = 'green')
         #plt.show(fig)
-        st.pyplot(fig)
+        #st.pyplot(fig)
         st.subheader('Polynomial Regression Charts')
         st.text('Daily Pomeroy Rankings line in green for each game')
         st.text('Polynomial Regression of actual game performance in blue for each game ')

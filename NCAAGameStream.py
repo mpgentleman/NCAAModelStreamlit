@@ -1159,8 +1159,33 @@ def showPlayersTable(player_data,team_selected):
 
         ColumnDefinition(
             name="Number",
+            group="Basic Info",
             textprops={"ha": "center"},
             width=1,
+        ),
+        ColumnDefinition(
+            name="Position",
+            group="Basic Info",
+            textprops={"ha": "center"},
+            width=1.2,
+        ),
+        ColumnDefinition(
+            name="Height",
+            group="Basic Info",
+            textprops={"ha": "center"},
+            width=.9,
+        ),
+         ColumnDefinition(
+            name="Games",
+            group="Basic Info",
+            textprops={"ha": "center"},
+            width=.9,
+        ),
+         ColumnDefinition(
+            name="Year",
+            group="Basic Info",
+            textprops={"ha": "center"},
+            width=.9,
         ),
         ColumnDefinition(
             name="ORTG",

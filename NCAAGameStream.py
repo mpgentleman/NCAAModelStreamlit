@@ -1779,7 +1779,7 @@ def GetTwoChartsTogether_EMA_2024(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,Fi
     #AwayTeamInfo["EM10"]=AwayTeamInfo['AdjO10ExpMA']-AwayTeamInfo['AdjD10ExpMA']
     AwayTeamInfo["EMOver"]=AwayTeamInfo['PlayingOverRating'].rolling(5).mean()
     #st.dataframe(HomeTeamInfo)
-    f,(ax1, ax2) = plt.subplots(1, 2, figsize=(15,5))
+    f,(ax1, ax2) = plt.subplots(1, 2, figsize=(10,5))
     ChartTitleName=AwayTeam+" "+SecondStat+ " and "+VegasStat
     ax1.set_title(ChartTitleName)
     ax1.plot(AwayTeamInfo.index,AwayTeamInfo[SecondStat],color='black')
@@ -1915,7 +1915,7 @@ def GetTwoTeamChartsTogether2024(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,Fir
     AwayTeamInfo["Second 5 Game"]=AwayTeamInfo[FirstStat].rolling(5).mean()
     AwayTeamInfo["Second 10 Game"]=AwayTeamInfo[FirstStat].rolling(10).mean()
     
-    f, (ax1, ax2) = plt.subplots(1, 2, figsize=(15,5))
+    f, (ax1, ax2) = plt.subplots(1, 2, figsize=(10,5))
     ChartTitleName=AwayTeam+" "+FirstStat+ " and "+VegasStat
     ax1.set_title(ChartTitleName)
     ax1.scatter(AwayTeamInfo.index,AwayTeamInfo[FirstStat])
@@ -3152,9 +3152,9 @@ def Todays_Games(data):
         pp= PdfPages("Daily_Team_Charts_"+dateforRankings+".pdf")     
         st.header('Team Matchup')
         plt.style.use('seaborn')
-        fig_dims = (15,10)
+        fig_dims = (12,10)
         fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
-        plt.figure(figsize=(16, 12))
+        plt.figure(figsize=(16, 10))
         ax1.set_title(AwayTeam)
         ax2.set_title(HomeTeam)  
         test1=get_team_info_from_gamesdf(Gamesdf,AwayTeam)

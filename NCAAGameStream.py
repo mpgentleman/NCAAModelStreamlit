@@ -1779,7 +1779,7 @@ def GetTwoChartsTogether_EMA_2024(AwayTeamInfo,HomeTeamInfo,AwayTeam,HomeTeam,Fi
     #AwayTeamInfo["EM10"]=AwayTeamInfo['AdjO10ExpMA']-AwayTeamInfo['AdjD10ExpMA']
     AwayTeamInfo["EMOver"]=AwayTeamInfo['PlayingOverRating'].rolling(5).mean()
     #st.dataframe(HomeTeamInfo)
-    f,(ax1, ax2) = plt.subplots(1, 2, figsize=(10,5))
+    f,(ax1, ax2) = plt.subplots(1, 2, figsize=(8,5))
     ChartTitleName=AwayTeam+" "+SecondStat+ " and "+VegasStat
     ax1.set_title(ChartTitleName)
     ax1.plot(AwayTeamInfo.index,AwayTeamInfo[SecondStat],color='black')
@@ -3486,6 +3486,7 @@ def Past_Games(data):
             st.header('Team Matchup')
             plt.style.use('seaborn')
             fig_dims = (15,10)
+            plt.figure(figsize=(10,8))
             fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
             plt.figure(figsize=(20, 12))
             ax1.set_title(AwayTeam)

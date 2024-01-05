@@ -3175,9 +3175,12 @@ def Todays_Games(data):
         with col1:
             st.subheader(AwayTeam + ' Rankings')
             displayRankingHistory(data,AwayTeam)
+            getTeamDFTable2024(test1,AwayTeam)
+        
         with col2:
             st.subheader(HomeTeam + ' Rankings')
             displayRankingHistory(data,HomeTeam)
+            getTeamDFTable2024(test2,HomeTeam)
         col1, col2 = st.columns(2)
         with col1:
             team_players = data['Players']
@@ -3251,8 +3254,7 @@ def Todays_Games(data):
         #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
         #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
         displayTeamDistributionsMatchup(Gamesdf,AwayTeam,HomeTeam)
-        getTeamDFTable2024(test1,AwayTeam)
-        getTeamDFTable2024(test2,HomeTeam)
+
     #except:
         #st.write(' No games today')
     
@@ -3306,9 +3308,12 @@ def Team_Matchup(data):
         with col1:
             st.subheader(AwayTeam + ' Rankings')
             displayRankingHistory(data,AwayTeam)
+            getTeamDFTable2024(test1,AwayTeam)
+        
         with col2:
             st.subheader(HomeTeam + ' Rankings')
             displayRankingHistory(data,HomeTeam)
+            getTeamDFTable2024(test2,HomeTeam)
         col1, col2 = st.columns(2)
         dfI =getIndividualPlayerData()
         
@@ -3401,8 +3406,7 @@ def Team_Matchup(data):
         GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_D_PPP","OverUnder")
         #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
         #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
-        getTeamDFTable2024(test1,AwayTeam)
-        getTeamDFTable2024(test2,HomeTeam)
+        
 def Past_Games(data):
     st.title('NCAA Head to Head Matchup')
     season = st.selectbox('Season Selection',['2024','2023'])

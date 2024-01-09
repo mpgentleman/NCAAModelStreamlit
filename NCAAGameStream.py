@@ -2601,6 +2601,12 @@ def get_team_info_from_gamesdf(df,Team):
     AF["DifCumSumEMA"]=AF["DifCumSum"].ewm(span=5,adjust=False).mean()
     AF["DifCumSum"]=AF["DifCumSum"].shift(1).fillna(0)
     AF["DifCumSumEMA"]=AF["DifCumSumEMA"].shift(1).fillna(0)
+    AF["EMOver"]=AF['PlayingOverRating'].rolling(5).mean()
+    AF["PPP_3GameExpMA"]=AF["Tm_O_PPP"].ewm(span=3,adjust=False).mean()    
+    AF["PPP_10GameExpMA"]=AF["Tm_O_PPP"].ewm(span=10,adjust=False).mean()
+    AF["PPP_D_3GameExpMA"]=AF["Tm_D_PPP"].ewm(span=3,adjust=False).mean()    
+    AF["PPP_D_10GameExpMA"]=AF["Tm_D_PPP"].ewm(span=10,adjust=False).mean()    
+    
     #AF.reset.index()
     return(AF)
 def getTodaysDateFormat():
@@ -3342,6 +3348,11 @@ def Team_Matchup(data):
                     
             showTeamLetsPlotCharts2024(test1,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',AwayTeam)
             showTeamLetsPlotCharts2024(test1,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',AwayTeam)
+            showTeamLetsPlotCharts2024(test1,'ATSvalue','PPP_3GameExpMA','PPP_10GameExpMA','Tm_O_PPP','PPP  vs ATS',AwayTeam)
+            showTeamLetsPlotCharts2024(test1,'OverUnder','PPP_D_3GameExpMA','PPP_D_10GameExpMA','Tm_D_PPP','PPP Defense vs OverUnder',AwayTeam)
+
+
+        
             #team_players = data['Players']
             #team_players = team_players[team_players['Team']==AwayTeam]
             #st.subheader(AwayTeam + ' Player Data')
@@ -3365,7 +3376,10 @@ def Team_Matchup(data):
                     showPlayerStatTables(dfI_Team, player)
                     showIndividualPlayerCharts(dfI_Team, player)
             showTeamLetsPlotCharts2024(test2,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',HomeTeam)
-            showTeamLetsPlotCharts2024(test2,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',HomeTeam)        
+            showTeamLetsPlotCharts2024(test2,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',HomeTeam) 
+            showTeamLetsPlotCharts2024(test2,'ATSvalue','PPP_3GameExpMA','PPP_10GameExpMA','Tm_O_PPP','PPP  vs ATS',HomeTeam)
+            showTeamLetsPlotCharts2024(test2,'OverUnder','PPP_D_3GameExpMA','PPP_D_10GameExpMA','Tm_D_PPP','PPP Defense vs OverUnder',HomeTeam)
+        
             #team_players = data['Players']
             #team_players = team_players[team_players['Team']==HomeTeam]
             #st.subheader(HomeTeam + ' Player Data')

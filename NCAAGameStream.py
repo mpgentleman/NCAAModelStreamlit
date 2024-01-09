@@ -3341,7 +3341,7 @@ def Team_Matchup(data):
                     showIndividualPlayerCharts(dfI_Team, player)
                     
             showTeamLetsPlotCharts2024(test1,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',AwayTeam)
-            showTeamLetsPlotCharts2024(test1,'ATSvalue','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs ATS',AwayTeam)
+            showTeamLetsPlotCharts2024(test1,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',AwayTeam)
             #team_players = data['Players']
             #team_players = team_players[team_players['Team']==AwayTeam]
             #st.subheader(AwayTeam + ' Player Data')
@@ -3365,7 +3365,7 @@ def Team_Matchup(data):
                     showPlayerStatTables(dfI_Team, player)
                     showIndividualPlayerCharts(dfI_Team, player)
             showTeamLetsPlotCharts2024(test2,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',HomeTeam)
-            showTeamLetsPlotCharts2024(test2,'ATSvalue','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs ATS',HomeTeam)        
+            showTeamLetsPlotCharts2024(test2,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',HomeTeam)        
             #team_players = data['Players']
             #team_players = team_players[team_players['Team']==HomeTeam]
             #st.subheader(HomeTeam + ' Player Data')

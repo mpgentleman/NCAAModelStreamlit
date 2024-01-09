@@ -85,9 +85,9 @@ def showTeamLetsPlotCharts2024(test1,VegasMetric,shortMVA,longMVA,scoringMetric,
     result2 = pd.melt(test1, id_vars=["Opp"], value_vars=[scoringMetric], var_name="Metric", value_name="Value")
     chart1 = ggplot(resultT)+geom_line(aes(x='Opp', y='Value',color='Metric'),stat="identity")+geom_point(aes(x='Opp', y='Value'),stat="identity",data=result2)+ ggsize(700, 600)+ ylab(VegasMetric)+geom_bar(aes(x='Opp', y='Value'),stat="identity",data=result1)+ggtitle(myTeam+' '+mytitle)
     
-    p2 = gggrid([chart1], ncol=1)+ ggsize(800, 500)
+    p2 = gggrid([chart1], ncol=1)+ ggsize(500, 500)
     plot_dict = p2.as_dict()
-    components.html(_as_html(plot_dict), height=800 + 20,width=800 + 20,scrolling=True,)
+    components.html(_as_html(plot_dict), height=500 + 20,width=500 + 20,scrolling=True,)
 def html(body):
     st.markdown(body, unsafe_allow_html=True)
 

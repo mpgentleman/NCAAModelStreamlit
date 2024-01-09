@@ -139,14 +139,14 @@ def showIndividualPlayerCharts(df,player):
     density2 = ggplot(df1) + geom_density(aes("Rebounds"), color="blue", fill="blue", alpha=0.1, size=1)
     density3 = ggplot(df1) + geom_density(aes("Assists"), color="blue", fill="blue", alpha=0.1, size=1)
     density4 = ggplot(df1) + geom_density(aes("PTS+REB+AST"), color="blue", fill="blue", alpha=0.1, size=1)
-    p1 = ggplot(df1, aes("Date", "Points")) +geom_path(size=1) +geom_point(size=5)+geom_hline(yintercept=df1['Points'].mean(), size=1, color="blue", linetype='longdash')
-    p2 = ggplot(df1, aes("Date", "Rebounds")) +geom_path(size=1) +geom_point(size=5)+geom_hline(yintercept=df1['Rebounds'].mean(), size=1, color="blue", linetype='longdash')
-    p3 = ggplot(df1, aes("Date", "Assists")) +geom_path(size=1) +geom_point(size=5)+geom_hline(yintercept=df1['Assists'].mean(), size=1, color="blue", linetype='longdash')
-    p4 = ggplot(df1, aes("Date", "PTS+REB+AST")) +geom_path(size=1) +geom_point(size=5)+geom_hline(yintercept=df1['PTS+REB+AST'].mean(), size=1, color="blue", linetype='longdash')
+    p1 = ggplot(df1, aes("Date", "Points")) +geom_path(size=1) +geom_point(size=5)+geom_hline(yintercept=df1['Points'].median(), size=1, color="blue", linetype='longdash')
+    p2 = ggplot(df1, aes("Date", "Rebounds")) +geom_path(size=1) +geom_point(size=5)+geom_hline(yintercept=df1['Rebounds'].median(), size=1, color="blue", linetype='longdash')
+    p3 = ggplot(df1, aes("Date", "Assists")) +geom_path(size=1) +geom_point(size=5)+geom_hline(yintercept=df1['Assists'].median(), size=1, color="blue", linetype='longdash')
+    p4 = ggplot(df1, aes("Date", "PTS+REB+AST")) +geom_path(size=1) +geom_point(size=5)+geom_hline(yintercept=df1['PTS+REB+AST'].median(), size=1, color="blue", linetype='longdash')
 
 
 
-    p2 =  gggrid([density1,p1,density2,p2,density3,p3,density4,p4], ncol=2) + ggsize(1000, 800)
+    p2 =  gggrid([density1,p1,density2,p2,density3,p3,density4,p4], ncol=2) + ggsize(1000, 1000)
     plot_dict = p2.as_dict()
     st.subheader(player + ' Distribution Charts')
     components.html(_as_html(plot_dict), height=800 + 20,width=800 + 20,scrolling=True,)

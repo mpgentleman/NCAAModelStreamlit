@@ -2178,7 +2178,7 @@ def getTeamDFTable(team1,teamname):
     AgGrid(team1, gridOptions=gridOptions, enable_enterprise_modules=True,height=1000,allow_unsafe_jscode=True)
 
 def getTeamDFTable2024(team1,teamname):
-    colsM=['DateNew','Opp','Result_x','pace','ATSVegas','OverUnderVegas','ATS','EMRating','PlayingOverRating']
+    colsM=['DateNew','Opp','Result_x','ATS','EMRating','PlayingOverRating','pace','ATSVegas','OverUnderVegas']
     numeric=['numericColumn','numberColumnFilter']
     team1=team1[colsM]
     allcols=team1.columns

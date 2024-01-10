@@ -88,6 +88,27 @@ def showTeamLetsPlotCharts2024(test1,VegasMetric,shortMVA,longMVA,scoringMetric,
     p2 = gggrid([chart1], ncol=1)+ ggsize(800, 500)
     plot_dict = p2.as_dict()
     components.html(_as_html(plot_dict), height=500 + 20,width=800 + 20,scrolling=True,)
+def showTeamLetsPlotOverplayingCharts2024(test1,VegasMetric,shortMVA,longMVA,mytitle,myTeam):
+    
+    result1 = pd.melt(test1, id_vars=["Opp"], value_vars=[VegasMetric], var_name="Metric", value_name="Value")
+    resultT = pd.melt(test1, id_vars=["Opp"], value_vars=[longMVA, shortMVA], var_name="Metric", value_name="Value")
+    #result2 = pd.melt(test1, id_vars=["Opp"], value_vars=[scoringMetric], var_name="Metric", value_name="Value")
+    chart1 = ggplot(resultT)+geom_line(aes(x='Opp', y='Value',color='Metric'),stat="identity")+ ggsize(700, 600)+ ylab(VegasMetric)+geom_bar(aes(x='Opp', y='Value'),stat="identity",data=result1)+ggtitle(myTeam+' '+mytitle)
+    
+    p2 = gggrid([chart1], ncol=1)+ ggsize(800, 500)
+    plot_dict = p2.as_dict()
+    components.html(_as_html(plot_dict), height=500 + 20,width=800 + 20,scrolling=True,)
+    
+def showTeamLetsPlotMultiCharts2024(test1,VegasMetric,shortMVA,longMVA,ranking,scoringMetric,mytitle,myTeam):
+    
+    result1 = pd.melt(test1, id_vars=["Opp"], value_vars=[VegasMetric], var_name="Metric", value_name="Value")
+    resultT = pd.melt(test1, id_vars=["Opp"], value_vars=[longMVA, shortMVA,ranking], var_name="Metric", value_name="Value")
+    result2 = pd.melt(test1, id_vars=["Opp"], value_vars=[scoringMetric], var_name="Metric", value_name="Value")
+    chart1 = ggplot(resultT)+geom_line(aes(x='Opp', y='Value',color='Metric'),stat="identity")+geom_point(aes(x='Opp', y='Value'),stat="identity",data=result2)+ ggsize(700, 600)+ ylab(VegasMetric)+geom_bar(aes(x='Opp', y='Value'),stat="identity",data=result1)+ggtitle(myTeam+' '+mytitle)
+    
+    p2 = gggrid([chart1], ncol=1)+ ggsize(800, 500)
+    plot_dict = p2.as_dict()
+    components.html(_as_html(plot_dict), height=500 + 20,width=800 + 20,scrolling=True,)    
 def html(body):
     st.markdown(body, unsafe_allow_html=True)
 
@@ -3345,12 +3366,13 @@ def Team_Matchup(data):
                     st.subheader(player+' Game Stats')
                     showPlayerStatTables(dfI_Team, player)
                     showIndividualPlayerCharts(dfI_Team, player)
-                    
+            showTeamLetsPlotMultiCharts2024(test1,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',AwayTeam)  
+            
             showTeamLetsPlotCharts2024(test1,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',AwayTeam)
             showTeamLetsPlotCharts2024(test1,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',AwayTeam)
             showTeamLetsPlotCharts2024(test1,'ATSvalue','PPP_3GameExpMA','PPP_10GameExpMA','Tm_O_PPP','PPP  vs ATS',AwayTeam)
             showTeamLetsPlotCharts2024(test1,'OverUnder','PPP_D_3GameExpMA','PPP_D_10GameExpMA','Tm_D_PPP','PPP Defense vs OverUnder',AwayTeam)
-
+            showTeamLetsPlotOverplayingCharts2024(test1,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',AwayTeam)
 
         
             #team_players = data['Players']
@@ -3375,11 +3397,12 @@ def Team_Matchup(data):
                     st.subheader(player+' Game Stats')
                     showPlayerStatTables(dfI_Team, player)
                     showIndividualPlayerCharts(dfI_Team, player)
+            showTeamLetsPlotMultiCharts2024(test2,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',HomeTeam)
             showTeamLetsPlotCharts2024(test2,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',HomeTeam)
             showTeamLetsPlotCharts2024(test2,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',HomeTeam) 
             showTeamLetsPlotCharts2024(test2,'ATSvalue','PPP_3GameExpMA','PPP_10GameExpMA','Tm_O_PPP','PPP  vs ATS',HomeTeam)
             showTeamLetsPlotCharts2024(test2,'OverUnder','PPP_D_3GameExpMA','PPP_D_10GameExpMA','Tm_D_PPP','PPP Defense vs OverUnder',HomeTeam)
-        
+            showTeamLetsPlotOverplayingCharts2024(test2,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',HomeTeam)
             #team_players = data['Players']
             #team_players = team_players[team_players['Team']==HomeTeam]
             #st.subheader(HomeTeam + ' Player Data')

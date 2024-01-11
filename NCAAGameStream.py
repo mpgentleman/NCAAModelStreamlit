@@ -2591,8 +2591,8 @@ def displayTeamDistributionsMatchup(Gamesdf,myteam,team2):
 
     density11  = ggplot(dff1, aes(x='AdjO', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3) + scale_fill_brewer(type='seq')+ ggtitle("Adjusted Offensive Rating")
     density21  = ggplot(dff1, aes(x='AdjD', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3)+ scale_fill_brewer(type='seq')+ ggtitle("Adjusted Defensive Rating")
-    density31  = ggplot(dff1, aes(x='EMRating', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3)+ scale_fill_brewer(type='seq')+ ggtitle("Adjusted Efficiency Rating")+ geom_vline(xintercept=df1['EMRating'].median())+ geom_vline(xintercept=df['EMRating'].median(), color="red") + geomText(position = positionNudge(y = 0.2)) { label = "y" }
-    density41 = ggplot(dff1, aes(x='Tempo', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3)+ scale_fill_brewer(type='seq')+ ggtitle("Pace/Tempo")+ geom_vline(xintercept=df1['Tempo'].median())+ geom_vline(xintercept=df['Tempo'].median(), color="red") + geomText(position = positionNudge(y = 0.2)) { label = "y" }
+    density31  = ggplot(dff1, aes(x='EMRating', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3)+ scale_fill_brewer(type='seq')+ ggtitle("Adjusted Efficiency Rating")+ geom_vline(xintercept=df1['EMRating'].median())+ geom_vline(xintercept=df['EMRating'].median(), color="red")
+    density41 = ggplot(dff1, aes(x='Tempo', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3)+ scale_fill_brewer(type='seq')+ ggtitle("Pace/Tempo")+ geom_vline(xintercept=df1['Tempo'].median())+ geom_vline(xintercept=df['Tempo'].median(), color="red")
     p2 = gggrid([density1,density2,density3,density4,density12,density22,density32,density42,density11,density21,density31,density41], ncol=4)+ ggsize(2000, 1000)
     st.subheader(' Distribution Charts')
     #st_letsplot(p2)

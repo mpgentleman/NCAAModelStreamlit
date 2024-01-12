@@ -3433,10 +3433,10 @@ def Team_Matchup(data):
             #showIndividualPlayerCharts(dfI_Team,player1[0])
             #showPlayerStatTables(dfI_Team,player1[0])
         plt.style.use('seaborn')
-        sns.set(rc={"figure.figsize":(4, 4)})
-        fig_dims = (2,2)
+        #sns.set(rc={"figure.figsize":(4, 4)})
+        fig_dims = (8,8)
         fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
-        plt.figure(figsize=(6, 6))
+        #plt.figure(figsize=(6, 6))
         ax1.set_title(AwayTeam)
         ax2.set_title(HomeTeam)
         try:

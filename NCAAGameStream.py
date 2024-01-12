@@ -3322,9 +3322,9 @@ def Team_Matchup(data):
                 
         st.header('Team Matchup')
         plt.style.use('seaborn')
-        fig_dims = (15,10)
+        fig_dims = (8,8)
         fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
-        plt.figure(figsize=(8, 8))
+        plt.figure(figsize=(6, 6))
         ax1.set_title(AwayTeam)
         ax2.set_title(HomeTeam)
             

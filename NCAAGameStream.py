@@ -3433,7 +3433,7 @@ def Team_Matchup(data):
             #showIndividualPlayerCharts(dfI_Team,player1[0])
             #showPlayerStatTables(dfI_Team,player1[0])
         plt.style.use('seaborn')
-        #sns.set(rc={"figure.figsize":(4, 4)})
+        sns.set(rc={"figure.figsize":(6, 8)})
         fig_dims = (8,8)
         fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
         #plt.figure(figsize=(6, 6))

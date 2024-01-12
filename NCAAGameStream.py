@@ -3383,6 +3383,9 @@ def Team_Matchup(data):
             showTeamLetsPlotCharts2024(test1,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',AwayTeam)
             showTeamLetsPlotCharts2024(test1,'ATSvalue','PPP_3GameExpMA','PPP_10GameExpMA','Tm_O_PPP','PPP  vs ATS',AwayTeam)
             showTeamLetsPlotCharts2024(test1,'OverUnder','PPP_D_3GameExpMA','PPP_D_10GameExpMA','Tm_D_PPP','PPP Defense vs OverUnder',AwayTeam)
+            st.subheader('Team Playing Over its Ranking')
+            st.text('Blue bars are positive if the team played over its rating')
+            st.text('The green and blue lines are cumulative moving averages')
             showTeamLetsPlotOverplayingCharts2024(test1,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',AwayTeam)
 
         
@@ -3416,6 +3419,9 @@ def Team_Matchup(data):
             showTeamLetsPlotCharts2024(test2,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',HomeTeam) 
             showTeamLetsPlotCharts2024(test2,'ATSvalue','PPP_3GameExpMA','PPP_10GameExpMA','Tm_O_PPP','PPP  vs ATS',HomeTeam)
             showTeamLetsPlotCharts2024(test2,'OverUnder','PPP_D_3GameExpMA','PPP_D_10GameExpMA','Tm_D_PPP','PPP Defense vs OverUnder',HomeTeam)
+            st.subheader('Team Playing Over its Ranking')
+            st.text('Blue bars are positive if the team played over its rating')
+            st.text('The green and blue lines are cumulative moving averages')
             showTeamLetsPlotOverplayingCharts2024(test2,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',HomeTeam)
             #team_players = data['Players']
             #team_players = team_players[team_players['Team']==HomeTeam]
@@ -3428,14 +3434,14 @@ def Team_Matchup(data):
             #showPlayerStatTables(dfI_Team,player1[0])
         plt.style.use('seaborn')
         sns.set(rc={"figure.figsize":(4, 4)})
-        fig_dims = (8,8)
+        fig_dims = (2,2)
         fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
         plt.figure(figsize=(6, 6))
         ax1.set_title(AwayTeam)
         ax2.set_title(HomeTeam)
         try:
-            fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
-            fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green')
+            fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue' height=5, aspect=1.5)
+            fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green' height=5, aspect=1.5)
         except:
             fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=1, ax=ax1, color = 'blue')
             fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=1, ax=ax1, color = 'green')
@@ -3477,7 +3483,7 @@ def Team_Matchup(data):
         #showTeamLetsPlotCharts2024(test1,'ATSvalue','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs ATS',AwayTeam)
         #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
         #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
-        
+        displayTeamDistributionsMatchup(Gamesdf,AwayTeam,HomeTeam)
 def Past_Games(data):
     st.title('NCAA Head to Head Matchup')
     season = st.selectbox('Season Selection',['2024','2023'])

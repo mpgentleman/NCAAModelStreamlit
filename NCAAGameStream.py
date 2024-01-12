@@ -3233,6 +3233,12 @@ def Todays_Games(data):
                     st.subheader(player+' Game Stats')
                     showPlayerStatTables(dfI_Team, player)
                     showIndividualPlayerCharts(dfI_Team, player)
+            showTeamLetsPlotMultiCharts2024(test1,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',AwayTeam)              
+            showTeamLetsPlotCharts2024(test1,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',AwayTeam)
+            showTeamLetsPlotCharts2024(test1,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',AwayTeam)
+            showTeamLetsPlotCharts2024(test1,'ATSvalue','PPP_3GameExpMA','PPP_10GameExpMA','Tm_O_PPP','PPP  vs ATS',AwayTeam)
+            showTeamLetsPlotCharts2024(test1,'OverUnder','PPP_D_3GameExpMA','PPP_D_10GameExpMA','Tm_D_PPP','PPP Defense vs OverUnder',AwayTeam)
+            showTeamLetsPlotOverplayingCharts2024(test1,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',AwayTeam)
         with col2:
             team_players = data['Players']
             #team_players = team_players[team_players['Team']==HomeTeam]
@@ -3247,6 +3253,12 @@ def Todays_Games(data):
                     st.subheader(player+' Game Stats')
                     showPlayerStatTables(dfI_Team, player)
                     showIndividualPlayerCharts(dfI_Team, player)
+            showTeamLetsPlotMultiCharts2024(test2,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',HomeTeam)
+            showTeamLetsPlotCharts2024(test2,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',HomeTeam)
+            showTeamLetsPlotCharts2024(test2,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',HomeTeam) 
+            showTeamLetsPlotCharts2024(test2,'ATSvalue','PPP_3GameExpMA','PPP_10GameExpMA','Tm_O_PPP','PPP  vs ATS',HomeTeam)
+            showTeamLetsPlotCharts2024(test2,'OverUnder','PPP_D_3GameExpMA','PPP_D_10GameExpMA','Tm_D_PPP','PPP Defense vs OverUnder',HomeTeam)
+            showTeamLetsPlotOverplayingCharts2024(test2,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',HomeTeam)
             
         try:
             fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
@@ -3321,12 +3333,7 @@ def Team_Matchup(data):
 
                 
         st.header('Team Matchup')
-        plt.style.use('seaborn')
-        fig_dims = (8,8)
-        fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
-        plt.figure(figsize=(6, 6))
-        ax1.set_title(AwayTeam)
-        ax2.set_title(HomeTeam)
+        
             
         test1=get_team_info_from_gamesdf(Gamesdf,AwayTeam)
         #st.dataframe(test1)
@@ -3367,6 +3374,9 @@ def Team_Matchup(data):
                     st.subheader(player+' Game Stats')
                     showPlayerStatTables(dfI_Team, player)
                     showIndividualPlayerCharts(dfI_Team, player)
+            st.subheader('Pomeroy Ranking and ATS Record')
+            st.text('Pomeroy Rankings by game Line in Green')
+            st.text('Blue bars are positive if the team won against the spread')
             showTeamLetsPlotMultiCharts2024(test1,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',AwayTeam)  
             
             showTeamLetsPlotCharts2024(test1,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',AwayTeam)
@@ -3398,6 +3408,9 @@ def Team_Matchup(data):
                     st.subheader(player+' Game Stats')
                     showPlayerStatTables(dfI_Team, player)
                     showIndividualPlayerCharts(dfI_Team, player)
+            st.subheader('Pomeroy Ranking and ATS Record')
+            st.text('Pomeroy Rankings by game Line in Green')
+            st.text('Blue bars are positive if the team won against the spread')
             showTeamLetsPlotMultiCharts2024(test2,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',HomeTeam)
             showTeamLetsPlotCharts2024(test2,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',HomeTeam)
             showTeamLetsPlotCharts2024(test2,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',HomeTeam) 
@@ -3413,6 +3426,13 @@ def Team_Matchup(data):
             #player1 = tp['Player'].head(5).to_list()
             #showIndividualPlayerCharts(dfI_Team,player1[0])
             #showPlayerStatTables(dfI_Team,player1[0])
+        plt.style.use('seaborn')
+        sns.set(rc={"figure.figsize":(4, 4)})
+        fig_dims = (8,8)
+        fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
+        plt.figure(figsize=(6, 6))
+        ax1.set_title(AwayTeam)
+        ax2.set_title(HomeTeam)
         try:
             fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
             fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green')
@@ -3432,11 +3452,11 @@ def Team_Matchup(data):
         st.text('Polynomial Regression of actual game performance in blue for each game ')
         st.text('If the blue line is above the green then the team is playing better than its ranking ')
         st.pyplot(fig)
-        st.subheader('Pomeroy Ranking and ATS Record')
-        st.text('Pomeroy Rankings by game Line in Green')
-        st.text('Blue bars are positive if the team won against the spread')
-        GetTwoChartsTogether_EMA_2024(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
-        GetTwoChartsTogether_EMA_2024(test1,test2,AwayTeam,HomeTeam,"PlayingOverRating","PlayingOverRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
+        #st.subheader('Pomeroy Ranking and ATS Record')
+        #st.text('Pomeroy Rankings by game Line in Green')
+        #st.text('Blue bars are positive if the team won against the spread')
+        #GetTwoChartsTogether_EMA_2024(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
+        #GetTwoChartsTogether_EMA_2024(test1,test2,AwayTeam,HomeTeam,"PlayingOverRating","PlayingOverRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
         st.subheader('Team Playing Over its Ranking')
         st.text('Blue bars are positive if the team played over its rating')
         st.text('The green and blue lines are cumulative moving averages')

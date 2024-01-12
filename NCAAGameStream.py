@@ -3440,8 +3440,8 @@ def Team_Matchup(data):
         ax1.set_title(AwayTeam)
         ax2.set_title(HomeTeam)
         try:
-            fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue' height=5, aspect=1.5)
-            fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green' height=5, aspect=1.5)
+            fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue' ,height=5, aspect=1.5)
+            fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green', height=5, aspect=1.5)
         except:
             fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=1, ax=ax1, color = 'blue')
             fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=1, ax=ax1, color = 'green')

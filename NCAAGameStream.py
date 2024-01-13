@@ -3744,71 +3744,62 @@ def Betting_Performance_Page(data):
     df = df[bcols]
     mydates = df['Date_zero'].unique()
     Tables_Choice1=st.selectbox('Select a day',mydates,index=0)
-    dfSelect = df[df['Date_zero']==Tables_Choice1]
-    gb = GridOptionsBuilder.from_dataframe(dfSelect,groupable=True)
-    #csTotal=cellStyleDynamic(hot2.performance_change)
-    #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
-    #gb.configure_column('Seed',valueFormatter=numberFormat(0))
-    #csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
-    #gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
-    gb.configure_side_bar()
-    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-    opts= {**DEFAULT_GRID_OPTIONS,
+    if st.button('Run'):
+        dfSelect = df[df['Date_zero']==Tables_Choice1]
+        gb = GridOptionsBuilder.from_dataframe(dfSelect,groupable=True)
+        gb.configure_side_bar()
+        gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        opts= {**DEFAULT_GRID_OPTIONS,
                **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
-    gb.configure_grid_options(**opts)
-    keyname='Test betSelect'
-    g = _displayGrid(dfSelect, gb, key=keyname, height=900)
+        gb.configure_grid_options(**opts)
+        keyname='Test betSelect'
+        g = _displayGrid(dfSelect, gb, key=keyname, height=900)
 
     
-    gb = GridOptionsBuilder.from_dataframe(df,groupable=True)
-    #csTotal=cellStyleDynamic(hot2.performance_change)
-    #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
-    #gb.configure_column('Seed',valueFormatter=numberFormat(0))
-    #csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
-    #gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
-    gb.configure_side_bar()
-    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-    opts= {**DEFAULT_GRID_OPTIONS,
+        gb = GridOptionsBuilder.from_dataframe(df,groupable=True)
+        gb.configure_side_bar()
+        gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        opts= {**DEFAULT_GRID_OPTIONS,
                **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
-    gb.configure_grid_options(**opts)
-    keyname='Test bet'
-    g = _displayGrid(df, gb, key=keyname, height=600)
-    #df2 = data['SkedBetting']
-    df2 = df[['Date_zero','Pomeroy_PointDiffWinATS','Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS','TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS','MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS','Daily_Reg_PointDiffLossATS']]
-    pivot_df = df2.pivot_table(index='Date_zero',aggfunc='sum')
-    pivot_df.index = pd.to_datetime(pivot_df.index)
-    pivot_df = pivot_df.sort_index()
-    pivot_df = pivot_df.reset_index()
-    pivot_df['Date_zero'] = pivot_df['Date_zero'].dt.strftime('%m/%d/%Y')
-    gb = GridOptionsBuilder.from_dataframe(pivot_df,groupable=True)
-    gb.configure_side_bar()
-    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-    opts= {**DEFAULT_GRID_OPTIONS,
+        gb.configure_grid_options(**opts)
+        keyname='Test bet'
+        g = _displayGrid(df, gb, key=keyname, height=600)
+        #df2 = data['SkedBetting']
+        df2 = df[['Date_zero','Pomeroy_PointDiffWinATS','Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS','TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS','MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS','Daily_Reg_PointDiffLossATS']]
+        pivot_df = df2.pivot_table(index='Date_zero',aggfunc='sum')
+        pivot_df.index = pd.to_datetime(pivot_df.index)
+        pivot_df = pivot_df.sort_index()
+        pivot_df = pivot_df.reset_index()
+        pivot_df['Date_zero'] = pivot_df['Date_zero'].dt.strftime('%m/%d/%Y')
+        gb = GridOptionsBuilder.from_dataframe(pivot_df,groupable=True)
+        gb.configure_side_bar()
+        gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        opts= {**DEFAULT_GRID_OPTIONS,
                **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
-    gb.configure_grid_options(**opts)
-    keyname='Test betpivot_df'
-    g = _displayGrid(pivot_df, gb, key=keyname, height=600)
-    #card("This works", "I can insert text inside a card")
+        gb.configure_grid_options(**opts)
+        keyname='Test betpivot_df'
+        g = _displayGrid(pivot_df, gb, key=keyname, height=600)
+        #card("This works", "I can insert text inside a card")
     
-    dff=pivot_df[['Pomeroy_PointDiffWinATS','Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS','TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS','MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS','Daily_Reg_PointDiffLossATS']]
-    dff1 =dff
-    # Get the pairs of columns
-    pairs = [(dff1.columns[i], dff1.columns[i+1]) for i in range(0, len(dff1.columns), 2)]
+        dff=pivot_df[['Pomeroy_PointDiffWinATS','Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS','TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS','MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS','Daily_Reg_PointDiffLossATS']]
+        dff1 =dff
+        # Get the pairs of columns
+        pairs = [(dff1.columns[i], dff1.columns[i+1]) for i in range(0, len(dff1.columns), 2)]
 
-    # Calculate the win percentage and net money won for each pair
-    for win_col, loss_col in pairs:
-        total_games = dff1[win_col] + dff1[loss_col]
-        dff1[win_col + '_WinPercent'] = dff1[win_col] / total_games * 100
-        dff1[win_col + '_NetWon'] = dff1[win_col]*100 - dff1[loss_col]*110
-    dff1 ['Date_zero'] = pivot_df['Date_zero']
-    gb = GridOptionsBuilder.from_dataframe(dff1,groupable=True)
-    gb.configure_side_bar()
-    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-    opts= {**DEFAULT_GRID_OPTIONS,
+        # Calculate the win percentage and net money won for each pair
+        for win_col, loss_col in pairs:
+            total_games = dff1[win_col] + dff1[loss_col]
+            dff1[win_col + '_WinPercent'] = dff1[win_col] / total_games * 100
+            dff1[win_col + '_NetWon'] = dff1[win_col]*100 - dff1[loss_col]*110
+        dff1 ['Date_zero'] = pivot_df['Date_zero']
+        gb = GridOptionsBuilder.from_dataframe(dff1,groupable=True)
+        gb.configure_side_bar()
+        gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+        opts= {**DEFAULT_GRID_OPTIONS,
                **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
-    gb.configure_grid_options(**opts)
-    keyname='Test betpivot_dfdff1'
-    g = _displayGrid(dff1, gb, key=keyname, height=600)
+        gb.configure_grid_options(**opts)
+        keyname='Test betpivot_dfdff1'
+        g = _displayGrid(dff1, gb, key=keyname, height=600)
     #br(2)
     #st.markdown("<div class="alert alert-success">Example text highlighted in green background.</div>")
     #else:

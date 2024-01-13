@@ -3463,22 +3463,22 @@ def Team_Matchup(data):
         #st.text('Blue bars are positive if the team won against the spread')
         #GetTwoChartsTogether_EMA_2024(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
         #GetTwoChartsTogether_EMA_2024(test1,test2,AwayTeam,HomeTeam,"PlayingOverRating","PlayingOverRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
-        st.subheader('Team Playing Over its Ranking')
-        st.text('Blue bars are positive if the team played over its rating')
-        st.text('The green and blue lines are cumulative moving averages')
+        #st.subheader('Team Playing Over its Ranking')
+        #st.text('Blue bars are positive if the team played over its rating')
+        #st.text('The green and blue lines are cumulative moving averages')
         #st.dataframe(test1)
-        getOverplayingChartBothTeamsDec4(pp,test1,test2,AwayTeam,HomeTeam)
-        st.subheader('Adjusted Offense and the ATS spread')
-        GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Tm_AdjO","Pomeroy_Tm_AdjEM","ATS")
-        st.subheader('Adjusted Defense against the Over/Under')
-        GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Tm_AdjD","Pomeroy_Tm_AdjEM","OverUnder")
-        st.subheader('Estimated Pace against the Over/Under')
+        #getOverplayingChartBothTeamsDec4(pp,test1,test2,AwayTeam,HomeTeam)
+        #st.subheader('Adjusted Offense and the ATS spread')
+        #GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Tm_AdjO","Pomeroy_Tm_AdjEM","ATS")
+        #st.subheader('Adjusted Defense against the Over/Under')
+        #GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Tm_AdjD","Pomeroy_Tm_AdjEM","OverUnder")
+        #st.subheader('Estimated Pace against the Over/Under')
         #GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Pace","PomTempo","OverUnder")
     
-        st.subheader('Points per Possesion against the ATS')
-        GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_O_PPP","ATS")
-        st.subheader('Defensive Points per Possesion against the Over/Under')
-        GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_D_PPP","OverUnder")
+        #st.subheader('Points per Possesion against the ATS')
+        #GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_O_PPP","ATS")
+        #st.subheader('Defensive Points per Possesion against the Over/Under')
+        #GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_D_PPP","OverUnder")
         
         #showTeamLetsPlotCharts2024(test1,'ATSvalue','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs ATS',AwayTeam)
         #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
@@ -3755,9 +3755,30 @@ def Betting_Performance_Page(data):
     gb.configure_grid_options(**opts)
     keyname='Test bet'
     g = _displayGrid(df, gb, key=keyname, height=600)
-    card("This works", "I can insert text inside a card")
+    df2 = df[['Date_zero','Pomeroy_PointDiffWinATS','Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS','TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS','MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS','Daily_Reg_PointDiffLossATS']]
+    pivot_df = df2.pivot_table(index='Date_zero',aggfunc='sum')
+    pivot_df.index = pd.to_datetime(pivot_df.index)
+    pivot_df = pivot_df.sort_index()
+    gb = GridOptionsBuilder.from_dataframe(pivot_df,groupable=True)
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+    gb.configure_grid_options(**opts)
+    keyname='Test betpivot_df'
+    g = _displayGrid(pivot_df, gb, key=keyname, height=600)
+    #card("This works", "I can insert text inside a card")
+    dff=pivot_df[['Pomeroy_PointDiffWinATS','Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS','TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS','MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS','Daily_Reg_PointDiffLossATS']]
+    dff1 =dff
+    # Get the pairs of columns
+    pairs = [(dff1.columns[i], dff1.columns[i+1]) for i in range(0, len(dff1.columns), 2)]
 
-    br(2)
+    # Calculate the win percentage and net money won for each pair
+    for win_col, loss_col in pairs:
+        total_games = dff1[win_col] + dff1[loss_col]
+        dff1[win_col + '_WinPercent'] = dff1[win_col] / total_games * 100
+        dff1[win_col + '_NetWon'] = dff1[win_col]*100 - dff1[loss_col]*110
+    #br(2)
     #st.markdown("<div class="alert alert-success">Example text highlighted in green background.</div>")
     #else:
     #    add_selectbox = st.sidebar.header("Select Todays Date")

@@ -3742,6 +3742,24 @@ def Betting_Performance_Page(data):
      'MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS',
      'Daily_Reg_PointDiffLossATS','VegasImpliedWinPercent','MG_ATS_ImpliedWinPercent','Dif_from_Vegas','MG_Reg_ATS_ImpliedWinPercent','Reg_Dif_Abs','Over_Dif_Abs','Pt_Spread_Difference']
     df = df[bcols]
+    mydates = df['Date_zero'].unique()
+    Tables_Choice1=st.selectbox('Select a day',mydates,index=0)
+    dfSelect = df[df[Date_zero']==Tables_Choice1]
+    gb = GridOptionsBuilder.from_dataframe(dfSelect,groupable=True)
+    #csTotal=cellStyleDynamic(hot2.performance_change)
+    #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    #gb.configure_column('Seed',valueFormatter=numberFormat(0))
+    #csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
+    #gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+    gb.configure_grid_options(**opts)
+    keyname='Test betSelect'
+    g = _displayGrid(dfSelect, gb, key=keyname, height=900)
+
+    
     gb = GridOptionsBuilder.from_dataframe(df,groupable=True)
     #csTotal=cellStyleDynamic(hot2.performance_change)
     #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))

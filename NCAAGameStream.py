@@ -3768,6 +3768,7 @@ def Betting_Performance_Page(data):
     keyname='Test betpivot_df'
     g = _displayGrid(pivot_df, gb, key=keyname, height=600)
     #card("This works", "I can insert text inside a card")
+    
     dff=pivot_df[['Pomeroy_PointDiffWinATS','Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS','TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS','MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS','Daily_Reg_PointDiffLossATS']]
     dff1 =dff
     # Get the pairs of columns
@@ -3778,6 +3779,14 @@ def Betting_Performance_Page(data):
         total_games = dff1[win_col] + dff1[loss_col]
         dff1[win_col + '_WinPercent'] = dff1[win_col] / total_games * 100
         dff1[win_col + '_NetWon'] = dff1[win_col]*100 - dff1[loss_col]*110
+    gb = GridOptionsBuilder.from_dataframe(dff1,groupable=True)
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+    gb.configure_grid_options(**opts)
+    keyname='Test betpivot_dfdff1'
+    g = _displayGrid(dff1, gb, key=keyname, height=600)
     #br(2)
     #st.markdown("<div class="alert alert-success">Example text highlighted in green background.</div>")
     #else:

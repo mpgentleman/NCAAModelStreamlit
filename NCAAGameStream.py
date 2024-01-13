@@ -3434,7 +3434,7 @@ def Team_Matchup(data):
             #showPlayerStatTables(dfI_Team,player1[0])
         plt.style.use('seaborn')
         #sns.set(rc={"figure.figsize":(6, 8)})
-        fig_dims = (8,4)
+        fig_dims = (7,5)
         fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
         #plt.figure(figsize=(6, 6))
         ax1.set_title(AwayTeam)

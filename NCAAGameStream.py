@@ -3755,11 +3755,13 @@ def Betting_Performance_Page(data):
     gb.configure_grid_options(**opts)
     keyname='Test bet'
     g = _displayGrid(df, gb, key=keyname, height=600)
+    #df2 = data['SkedBetting']
     df2 = df[['Date_zero','Pomeroy_PointDiffWinATS','Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS','TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS','MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS','Daily_Reg_PointDiffLossATS']]
     pivot_df = df2.pivot_table(index='Date_zero',aggfunc='sum')
     pivot_df.index = pd.to_datetime(pivot_df.index)
     pivot_df = pivot_df.sort_index()
     pivot_df = pivot_df.reset_index()
+    pivot_df['Date_zero'] = pivot_df['Date_zero'].dt.strftime('%m/%d/%Y')
     gb = GridOptionsBuilder.from_dataframe(pivot_df,groupable=True)
     gb.configure_side_bar()
     gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
@@ -3780,6 +3782,7 @@ def Betting_Performance_Page(data):
         total_games = dff1[win_col] + dff1[loss_col]
         dff1[win_col + '_WinPercent'] = dff1[win_col] / total_games * 100
         dff1[win_col + '_NetWon'] = dff1[win_col]*100 - dff1[loss_col]*110
+    dff1 ['Date_zero'] = pivot_df['Date_zero']
     gb = GridOptionsBuilder.from_dataframe(dff1,groupable=True)
     gb.configure_side_bar()
     gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)

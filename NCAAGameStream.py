@@ -3759,6 +3759,7 @@ def Betting_Performance_Page(data):
     pivot_df = df2.pivot_table(index='Date_zero',aggfunc='sum')
     pivot_df.index = pd.to_datetime(pivot_df.index)
     pivot_df = pivot_df.sort_index()
+    pivot_df = pivot_df.reset_index()
     gb = GridOptionsBuilder.from_dataframe(pivot_df,groupable=True)
     gb.configure_side_bar()
     gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)

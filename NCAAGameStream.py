@@ -3744,7 +3744,7 @@ def Betting_Performance_Page(data):
     df = df[bcols]
     mydates = df['Date_zero'].unique()
     Tables_Choice1=st.selectbox('Select a day',mydates,index=0)
-    dfSelect = df[df[Date_zero']==Tables_Choice1]
+    dfSelect = df[df['Date_zero']==Tables_Choice1]
     gb = GridOptionsBuilder.from_dataframe(dfSelect,groupable=True)
     #csTotal=cellStyleDynamic(hot2.performance_change)
     #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))

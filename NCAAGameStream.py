@@ -3744,6 +3744,7 @@ def Betting_Performance_Page(data):
      'MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS',
      'Daily_Reg_PointDiffLossATS','VegasImpliedWinPercent','MG_ATS_ImpliedWinPercent','Dif_from_Vegas','MG_Reg_ATS_ImpliedWinPercent','Reg_Dif_Abs','Over_Dif_Abs','Pt_Spread_Difference','Pomeroy_PointDiffSelection','MG_ATS_PointDiffSelection']
     df = df[bcols]
+    df['Both'] = (df['Pomeroy_PointDiffSelection'] == df['MG_ATS_PointDiffSelection']).astype(int)
     mydates = df['Date_zero'].unique()
     Tables_Choice1=st.selectbox('Select a day',mydates,index=0)
     if st.button('Run'):

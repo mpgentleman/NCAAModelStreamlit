@@ -3089,7 +3089,7 @@ def MG_Rankings(data):
     files = [file for file in files if file.startswith('MG')]
 
     # Create a dictionary with the last 8 characters in the filename as the key and the filename as the value
-    file_dict = {file[-8:]: file for file in files}
+    file_dict = {file[-13:-5]: file for file in files}
     st.write(file_dict)
     st.write(dateToday)
     #st.header("test html import")

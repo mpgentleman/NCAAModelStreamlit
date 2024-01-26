@@ -3098,6 +3098,7 @@ def MG_Rankings(data):
         # If the date is not in the dictionary, select the filename with the latest date
         latest_date = max(file_dict.keys())
         myfilestring = file_dict[latest_date]
+    st.write(myfilestring)
     myfile = "Data/MGRankings2024/"+myfilestring
     HtmlFile = open(myfile, 'r', encoding='utf-8')
     source_code = HtmlFile.read() 

@@ -3090,6 +3090,8 @@ def MG_Rankings(data):
 
     # Create a dictionary with the last 8 characters in the filename as the key and the filename as the value
     file_dict = {file[-8:]: file for file in files}
+    st.write(file_dict)
+    st.write(dateToday)
     #st.header("test html import")
     if dateToday in file_dict:
         # If the date is in the dictionary, select the corresponding filename
@@ -3097,6 +3099,7 @@ def MG_Rankings(data):
     else:
         # If the date is not in the dictionary, select the filename with the latest date
         latest_date = max(file_dict.keys())
+        st.write(latest_date)
         myfilestring = file_dict[latest_date]
     st.write(myfilestring)
     myfile = "Data/MGRankings2024/"+myfilestring

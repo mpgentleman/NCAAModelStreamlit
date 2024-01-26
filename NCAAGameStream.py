@@ -3090,8 +3090,8 @@ def MG_Rankings(data):
 
     # Create a dictionary with the last 8 characters in the filename as the key and the filename as the value
     file_dict = {file[-13:-5]: file for file in files}
-    st.write(file_dict)
-    st.write(dateToday)
+    #st.write(file_dict)
+    #st.write(dateToday)
     #st.header("test html import")
     if dateToday in file_dict:
         # If the date is in the dictionary, select the corresponding filename
@@ -3101,7 +3101,7 @@ def MG_Rankings(data):
         latest_date = max(file_dict.keys())
         st.write(latest_date)
         myfilestring = file_dict[latest_date]
-    st.write(myfilestring)
+    #st.write(myfilestring)
     myfile = "Data/MGRankings2024/"+myfilestring
     HtmlFile = open(myfile, 'r', encoding='utf-8')
     source_code = HtmlFile.read() 

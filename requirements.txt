@@ -1,9 +1,9 @@
 adjustText==0.7.3
-altair==4.1.0
+#altair==4.1.0
 appdirs==1.4.4
 
 blinker==1.4
-bokeh==2.0.0
+#bokeh==2.0.0
 boltons==20.2.1
 boto3==1.20.8
 botocore==1.23.8
@@ -14,14 +14,14 @@ click==7.1.2
 click-plugins==1.1.1
 click-spinner==0.1.10
 cligj==0.5.0
-colorama==0.4.3
-colorlog==4.7.2
+#colorama==0.4.3
+#colorlog==4.7.2
 colorlover==0.3.0
 colormap==1.0.3
 configobj==5.0.6
 configparser==5.0.1
 crayons==0.4.0
-cryptography==3.1.1
+#cryptography==3.1.1
 cssselect==1.1.0
 cufflinks==0.17.3
 

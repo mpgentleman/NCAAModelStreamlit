@@ -43,8 +43,8 @@ import sys  # To find out the script name (in argv[0])
 key_="qQZveKizwAAUyk4gzMmB";
 
 import mechanicalsoup
-import kenpompy
-from kenpompy.utils import login
+#import kenpompy
+#from kenpompy.utils import login
 import requests
 #from selenium import webdriver
 #import webdriver_manager

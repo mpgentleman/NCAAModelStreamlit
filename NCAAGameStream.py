@@ -6,9 +6,9 @@ import datetime
 from datetime import datetime
 import requests
 import time
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 import streamlit as st
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 import re
 import requests
 import pandas as pd

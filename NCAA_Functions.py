@@ -98,8 +98,8 @@ def sample_wr(population, k):
 import random
 
 import mechanicalsoup
-import kenpompy
-from kenpompy.utils import login
+#import kenpompy
+#from kenpompy.utils import login
 
 LeagueTempo=70.3
 LeagueOE=100.5

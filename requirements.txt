@@ -29,7 +29,7 @@ cufflinks==0.17.3
 
 joypy==0.2.4
 
-kenpompy==0.2.1
+#kenpompy==0.2.1
 lets-plot==4.0.0
 marshmallow==3.14.1
 matplotlib==3.5.0

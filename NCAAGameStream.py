@@ -106,7 +106,7 @@ def showTeamLetsPlotMultiCharts2024(test1,VegasMetric,shortMVA,longMVA,ranking,s
     result1 = pd.melt(test1, id_vars=["Opp1"], value_vars=[VegasMetric], var_name="Metric", value_name="Value")
     resultT = pd.melt(test1, id_vars=["Opp1"], value_vars=[longMVA, shortMVA,ranking], var_name="Metric", value_name="Value")
     result2 = pd.melt(test1, id_vars=["Opp1"], value_vars=[scoringMetric], var_name="Metric", value_name="Value")
-    chart1 = ggplot(resultT)+geom_line(aes(x='Opp1', y='Value',color='Metric'),stat="identity")+geom_point(aes(x='Opp1', y='Value'),stat="identity",data=result2)+ ggsize(700, 600)+ ylab(VegasMetric)+geom_bar(aes(x='Opp', y='Value'),stat="identity",data=result1)+ggtitle(myTeam+' '+mytitle)
+    chart1 = ggplot(resultT)+geom_line(aes(x='Opp1', y='Value',color='Metric'),stat="identity")+geom_point(aes(x='Opp1', y='Value'),stat="identity",data=result2)+ ggsize(700, 600)+ ylab(VegasMetric)+geom_bar(aes(x='Opp1', y='Value'),stat="identity",data=result1)+ggtitle(myTeam+' '+mytitle)
     
     p2 = gggrid([chart1], ncol=1)+ ggsize(800, 500)
     plot_dict = p2.as_dict()

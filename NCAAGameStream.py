@@ -79,7 +79,7 @@ from datetime import datetime, timedelta
 
 
 def showTeamLetsPlotCharts2024(test1,VegasMetric,shortMVA,longMVA,scoringMetric,mytitle,myTeam):
-    test1['Opp1']=test['Opp']+' '+test1['Date']
+    test1['Opp1']=test1['Opp']+' '+test1['Date']
     st.dataframe(test1)
     
     result1 = pd.melt(test1, id_vars=["Opp1"], value_vars=[VegasMetric], var_name="Metric", value_name="Value")

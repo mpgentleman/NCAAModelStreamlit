@@ -3261,11 +3261,7 @@ def Todays_Games(data):
             showTeamLetsPlotCharts2024(test1,'ATSvalue','PPP_3GameExpMA','PPP_10GameExpMA','Tm_O_PPP','PPP  vs ATS',AwayTeam)
             showTeamLetsPlotCharts2024(test1,'OverUnder','PPP_D_3GameExpMA','PPP_D_10GameExpMA','Tm_D_PPP','PPP Defense vs OverUnder',AwayTeam)
             showTeamLetsPlotOverplayingCharts2024(test1,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',AwayTeam)
-            for player in player1:
-                with st.expander(player):
-                    st.subheader(player+' Game Stats')
-                    showPlayerStatTables(dfI_Team, player)
-                    showIndividualPlayerCharts(dfI_Team, player)
+            
         with col2:
             team_players = data['Players']
             #team_players = team_players[team_players['Team']==HomeTeam]
@@ -3273,7 +3269,7 @@ def Todays_Games(data):
             showPlayersTable(team_players,HomeTeam)
             dfI_Team = dfI[dfI['Team'] == HomeTeam]
             tp = team_players[team_players['Team'] == HomeTeam].sort_values('PRPG', ascending=False)
-            player1 = tp['Player'].head(8).to_list()
+            player11 = tp['Player'].head(8).to_list()
             
 
             showTeamLetsPlotMultiCharts2024(test2,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',HomeTeam)
@@ -3282,17 +3278,24 @@ def Todays_Games(data):
             showTeamLetsPlotCharts2024(test2,'ATSvalue','PPP_3GameExpMA','PPP_10GameExpMA','Tm_O_PPP','PPP  vs ATS',HomeTeam)
             showTeamLetsPlotCharts2024(test2,'OverUnder','PPP_D_3GameExpMA','PPP_D_10GameExpMA','Tm_D_PPP','PPP Defense vs OverUnder',HomeTeam)
             showTeamLetsPlotOverplayingCharts2024(test2,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',HomeTeam)
+            
+            
+        col1, col2 = st.columns(2)
+        with col1:
             for player in player1:
                 with st.expander(player):
                     st.subheader(player+' Game Stats')
                     showPlayerStatTables(dfI_Team, player)
                     showIndividualPlayerCharts(dfI_Team, player)
-            
-        
-        
+        with col2:
+            for player in player11:
+                with st.expander(player):
+                    st.subheader(player+' Game Stats')
+                    showPlayerStatTables(dfI_Team, player)
+                    showIndividualPlayerCharts(dfI_Team, player)
         #plt.show(fig)
         #st.pyplot(fig)
-        
+
         #st.subheader('Pomeroy Ranking and ATS Record')
         #st.text('Pomeroy Rankings by game Line in Green')
         #st.text('Blue bars are positive if the team won against the spread')

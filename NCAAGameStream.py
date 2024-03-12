@@ -3214,6 +3214,22 @@ def Todays_Games(data):
         test1['New_ID'] = range(0, 0+len(test1))
         test2['New_ID'] = range(0, 0+len(test2))
         myteams = [AwayTeam,HomeTeam]
+        try:
+            fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
+            fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green')
+        except:
+            fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=1, ax=ax1, color = 'blue')
+            fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=1, ax=ax1, color = 'green')
+        try: 
+            fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=2, ax=ax2, color = 'blue')
+            fig4=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test2,order=2, ax=ax2, color = 'green')
+        except:
+            fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=1, ax=ax2, color = 'blue')
+            fig4=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test2,order=1, ax=ax2, color = 'green')
+        st.text('Daily Pomeroy Rankings line in green for each game')
+        st.text('Polynomial Regression of actual game performance in blue for each game ')
+        st.text('If the blue line is above the green then the team is playing better than its ranking ')
+        st.pyplot(fig)
         plot_line_chartLetsPlotHot(MG_Rank2, myteams)
         dfI =getIndividualPlayerData()
         col1, col2 = st.columns(2)
@@ -3238,16 +3254,7 @@ def Todays_Games(data):
             st.subheader('Polynomial Regression Charts')
             
 
-            try:
-                fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
-                fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green')
-            except:
-                fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=1, ax=ax1, color = 'blue')
-                fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=1, ax=ax1, color = 'green')
-            st.text('Daily Pomeroy Rankings line in green for each game')
-            st.text('Polynomial Regression of actual game performance in blue for each game ')
-            st.text('If the blue line is above the green then the team is playing better than its ranking ')
-            st.pyplot(fig)
+            
             showTeamLetsPlotMultiCharts2024(test1,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',AwayTeam)              
             showTeamLetsPlotCharts2024(test1,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',AwayTeam)
             showTeamLetsPlotCharts2024(test1,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',AwayTeam)
@@ -3267,17 +3274,8 @@ def Todays_Games(data):
             dfI_Team = dfI[dfI['Team'] == HomeTeam]
             tp = team_players[team_players['Team'] == HomeTeam].sort_values('PRPG', ascending=False)
             player1 = tp['Player'].head(8).to_list()
-            try: 
-                fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=2, ax=ax2, color = 'blue')
-                ig4=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test2,order=2, ax=ax2, color = 'green')
-            except:
-                fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=1, ax=ax2, color = 'blue')
-                fig4=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test2,order=1, ax=ax2, color = 'green')
+            
 
-            st.text('Daily Pomeroy Rankings line in green for each game')
-            st.text('Polynomial Regression of actual game performance in blue for each game ')
-            st.text('If the blue line is above the green then the team is playing better than its ranking ')
-            st.pyplot(fig)
             showTeamLetsPlotMultiCharts2024(test2,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',HomeTeam)
             showTeamLetsPlotCharts2024(test2,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',HomeTeam)
             showTeamLetsPlotCharts2024(test2,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',HomeTeam) 

@@ -3250,7 +3250,7 @@ def Todays_Games(data):
             showPlayersTable(team_players,AwayTeam)
             dfI_TeamA = dfI[dfI['Team'] == AwayTeam]
             tp = team_players[team_players['Team'] == AwayTeam].sort_values('PRPG', ascending=False)
-            player1 = tp['Player'].head(8).to_list()
+            player1 = tp['Player'].head(6).to_list()
             st.subheader('Polynomial Regression Charts')
             
 
@@ -3269,7 +3269,7 @@ def Todays_Games(data):
             showPlayersTable(team_players,HomeTeam)
             dfI_TeamH = dfI[dfI['Team'] == HomeTeam]
             tp = team_players[team_players['Team'] == HomeTeam].sort_values('PRPG', ascending=False)
-            player11 = tp['Player'].head(8).to_list()
+            player11 = tp['Player'].head(6).to_list()
             
 
             showTeamLetsPlotMultiCharts2024(test2,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',HomeTeam)

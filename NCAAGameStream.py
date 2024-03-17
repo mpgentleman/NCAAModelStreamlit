@@ -3979,7 +3979,7 @@ TBracket1 = TBracket[['Seed','east','midwest','south','west']]
 BM1 = BM[['Seed','east','midwest','south','west']]
 st.dataframe(BM1)
 st.dataframe(TBracket1)
-TBracket1 = pd.read_csv("Data/Tourney2024.csv")
+BM1 = pd.read_csv("Data/Tourney2024.csv")
 newsouth=list(TBracket1["south"])
 neweast=list(TBracket1["east"])
 newmidwest=list(TBracket1["midwest"])

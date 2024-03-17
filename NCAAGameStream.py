@@ -2979,7 +2979,8 @@ def Bracketology_Page(data):
     #ranking_selected = st.selectbox('Select a Ranking for Sim',['TRank','Mg Rankings','Pomeroy'])
     BM1 = data['BM1']
     TBracket1 = data['TBracket']
-    
+    st.dataframe(data[BMI])
+    st.dataframe(data[TBracket1])
     st.subheader('Bracket Matrix Bracketology Projection')
     
     gb = GridOptionsBuilder.from_dataframe(BM1,groupable=True)
@@ -3976,6 +3977,7 @@ BM = getBracketMatrixDataframe()
 TBracket = getTRankBracket()
 TBracket1 = TBracket[['Seed','east','midwest','south','west']]
 BM1 = BM[['Seed','east','midwest','south','west']]
+
 newsouth=list(TBracket1["south"])
 neweast=list(TBracket1["east"])
 newmidwest=list(TBracket1["midwest"])

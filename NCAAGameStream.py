@@ -2979,8 +2979,8 @@ def Bracketology_Page(data):
     #ranking_selected = st.selectbox('Select a Ranking for Sim',['TRank','Mg Rankings','Pomeroy'])
     BM1 = data['BM1']
     TBracket1 = data['TBracket']
-    st.dataframe(data[BM1])
-    st.dataframe(data[TBracket1])
+    st.dataframe(BM1)
+    st.dataframe(TBracket1)
     st.subheader('Bracket Matrix Bracketology Projection')
     
     gb = GridOptionsBuilder.from_dataframe(BM1,groupable=True)

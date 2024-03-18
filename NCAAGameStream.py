@@ -3515,45 +3515,7 @@ def Team_Matchup(data):
             showTeamLetsPlotOverplayingCharts2024(test2,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',HomeTeam)
             
             
-        col1, col2 = st.columns(2)
-        with col1:
-            for player in player1:
-                with st.expander(player):
-                    st.subheader(player+' Game Stats')
-                    showPlayerStatTables(dfI_TeamA, player)
-                    showIndividualPlayerCharts(dfI_TeamA, player)
-        with col2:
-            for player in player11:
-                with st.expander(player):
-                    st.subheader(player+' Game Stats')
-                    showPlayerStatTables(dfI_TeamH, player)
-                    showIndividualPlayerCharts(dfI_TeamH, player)
-        #plt.show(fig)
-        #st.pyplot(fig)
-
-        #st.subheader('Pomeroy Ranking and ATS Record')
-        #st.text('Pomeroy Rankings by game Line in Green')
-        #st.text('Blue bars are positive if the team won against the spread')
-        #GetTwoChartsTogether_EMA_2024(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
-        #GetTwoChartsTogether_EMA_2024(test1,test2,AwayTeam,HomeTeam,"PlayingOverRating","PlayingOverRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
-        #st.subheader('Team Playing Over its Ranking')
-        #st.text('Blue bars are positive if the team played over its rating')
-        #st.text('The green and blue lines are cumulative moving averages')
-        #st.dataframe(test1)
-        #getOverplayingChartBothTeamsDec4(pp,test1,test2,AwayTeam,HomeTeam)
-        #st.subheader('Adjusted Offense and the ATS spread')
-        #GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Tm_AdjO","Pomeroy_Tm_AdjEM","ATS")
-        #st.subheader('Adjusted Defense against the Over/Under')
-        #GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Tm_AdjD","Pomeroy_Tm_AdjEM","OverUnder")
-        #st.subheader('Estimated Pace against the Over/Under')
-        #GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Pace","PomTempo","OverUnder")
-    
-        #st.subheader('Points per Possesion against the ATS')
-        #GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_O_PPP","ATS")
-        #st.subheader('Defensive Points per Possesion against the Over/Under')
-        #GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_D_PPP","OverUnder")
-        #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
-        #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
+        
         displayTeamDistributionsMatchup(Gamesdf,AwayTeam,HomeTeam)
                 
         

@@ -3486,7 +3486,7 @@ def Team_Matchup(data):
             dfI_TeamA = dfI[dfI['Team'] == AwayTeam]
             tp = team_players[team_players['Team'] == AwayTeam].sort_values('PRPG', ascending=False)
             player1 = tp['Player'].head(6).to_list()
-            st.subheader('Polynomial Regression Charts')
+            #st.subheader('Polynomial Regression Charts')
             
 
             

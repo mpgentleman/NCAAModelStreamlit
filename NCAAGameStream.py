@@ -3434,7 +3434,7 @@ def Team_Matchup(data):
         plt.style.use('seaborn')
         fig_dims = (12,10)
         fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
-        plt.figure(figsize=(16, 10))
+        plt.figure(figsize=(10, 10))
         ax1.set_title(AwayTeam)
         ax2.set_title(HomeTeam)  
         test1=get_team_info_from_gamesdf(Gamesdf,AwayTeam)

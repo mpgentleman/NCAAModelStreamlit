@@ -3325,7 +3325,89 @@ def Todays_Games(data):
     #except:
         #st.write(' No games today')
     
-    
+def Team_Player_Matchup(data):
+    AwayTeamAll = [''] + data['AwayTeamAll']
+    HomeTeamAll = [''] + data['HomeTeamAll']
+    st.title('NCAA Head to Head Matchup')
+    #AwayList=[''] + Dailyschedule['AWAY'].tolist()
+    #HomeList=[''] + Dailyschedule['HOME'].tolist()
+    AwayTeam = st.selectbox('Away Team',AwayTeamAll)
+    HomeTeam = st.selectbox('Home Team',HomeTeamAll)
+    Dailyschedule=pd.read_csv("Data/DailySchedules2024/SkedHistory.csv")
+    Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
+    Gamesdf = Gamesdf.reset_index(drop=True)
+    Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
+    Gamesdf = Gamesdf.drop_duplicates()
+    if st.button('Run'):
+        #dateforRankings=dateToday
+        #dateforRankings5=d2
+        #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
+        TeamDatabase2.set_index("OldTRankName", inplace=True)
+        from matplotlib.backends.backend_pdf import PdfPages
+        season ='2024'
+        WhichFile='TeamDataFiles'+season
+        pp= PdfPages("Daily_Team_Charts_"+today_date_format+".pdf")
+        st.header('Team Matchup')
+        plt.style.use('seaborn')
+        fig_dims = (12,10)
+        fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
+        plt.figure(figsize=(16, 10))
+        ax1.set_title(AwayTeam)
+        ax2.set_title(HomeTeam)  
+        test1=get_team_info_from_gamesdf(Gamesdf,AwayTeam)
+        #st.dataframe(test1)
+        test1 = test1.reset_index(drop=True)
+        #test1.drop(columns=test1.columns[0], axis=1,  inplace=True)
+         #test1 = test1.drop_duplicates()
+        test2=get_team_info_from_gamesdf(Gamesdf,HomeTeam)
+        test2 = test2.reset_index(drop=True)
+        #test2.drop(columns=test2.columns[0], axis=1,  inplace=True)
+        #test2 = test2.drop_duplicates()
+        test1['New_ID'] = range(0, 0+len(test1))
+        test2['New_ID'] = range(0, 0+len(test2))
+        myteams = [AwayTeam,HomeTeam]
+       
+        dfI =getIndividualPlayerData()
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            team_players = data['Players']
+            #team_players = team_players[team_players['Team']==AwayTeam]
+            st.subheader(AwayTeam + ' Player Data')
+            showPlayersTable(team_players,AwayTeam)
+            dfI_TeamA = dfI[dfI['Team'] == AwayTeam]
+            tp = team_players[team_players['Team'] == AwayTeam].sort_values('PRPG', ascending=False)
+            player1 = tp['Player'].head(6).to_list()
+            
+            
+        with col2:
+            team_players = data['Players']
+            #team_players = team_players[team_players['Team']==HomeTeam]
+            st.subheader(HomeTeam + ' Player Data')
+            showPlayersTable(team_players,HomeTeam)
+            dfI_TeamH = dfI[dfI['Team'] == HomeTeam]
+            tp = team_players[team_players['Team'] == HomeTeam].sort_values('PRPG', ascending=False)
+            player11 = tp['Player'].head(6).to_list()
+            
+
+            
+            
+            
+        col1, col2 = st.columns(2)
+        with col1:
+            for player in player1:
+                with st.expander(player):
+                    st.subheader(player+' Game Stats')
+                    showPlayerStatTables(dfI_TeamA, player)
+                    showIndividualPlayerCharts(dfI_TeamA, player)
+        with col2:
+            for player in player11:
+                with st.expander(player):
+                    st.subheader(player+' Game Stats')
+                    showPlayerStatTables(dfI_TeamH, player)
+                    showIndividualPlayerCharts(dfI_TeamH, player)
+        
+        
 def Team_Matchup(data):
     AwayTeamAll = [''] + data['AwayTeamAll']
     HomeTeamAll = [''] + data['HomeTeamAll']
@@ -3912,7 +3994,7 @@ _CHOICES = {
     'Bracketology Page': dict(func=Bracketology_Page, icon='play-fill'),
     'Team Pages': dict(func=Team_Page, icon='play-fill'),
     'Betting Performance': dict(func=Betting_Performance_Page, icon='play-fill'),
-   
+   'Team Player Matchup': dict(func=Team_Player_Matchup, icon='play-fill'),
 }
 
 _MENU_ITEMS = list(_CHOICES.keys())

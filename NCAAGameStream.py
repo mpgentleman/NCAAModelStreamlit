@@ -4053,7 +4053,7 @@ all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']
         
 #st.write(myranks)
 MYRANKS = TRDict
-results = runbracket1(teamsdict,ntrials=10000,T=.2)
+results = runbracket1(teamsdict,ntrials=1000,T=.2)
 #st.write(str(results['all'][0][0]))
 j=maketabletest(results)
 allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
@@ -4066,7 +4066,7 @@ headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
 #st.write(l)
 data={}
 MYRANKS = MGDict
-results = runbracket1(teamsdict,ntrials=10000,T=.2)
+results = runbracket1(teamsdict,ntrials=5000,T=.2)
 #st.write(str(results['all'][0][0]))
 j1=maketabletest(results)
 #st.dataframe(pd.DataFrame(j1, columns=headers))

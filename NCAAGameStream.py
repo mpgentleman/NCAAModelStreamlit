@@ -3281,19 +3281,19 @@ def Todays_Games(data):
             showTeamLetsPlotOverplayingCharts2024(test2,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',HomeTeam)
             
             
-        col1, col2 = st.columns(2)
-        with col1:
-            for player in player1:
-                with st.expander(player):
-                    st.subheader(player+' Game Stats')
-                    showPlayerStatTables(dfI_TeamA, player)
-                    showIndividualPlayerCharts(dfI_TeamA, player)
-        with col2:
-            for player in player11:
-                with st.expander(player):
-                    st.subheader(player+' Game Stats')
-                    showPlayerStatTables(dfI_TeamH, player)
-                    showIndividualPlayerCharts(dfI_TeamH, player)
+        #col1, col2 = st.columns(2)
+        #with col1:
+        #    for player in player1:
+        #        with st.expander(player):
+        #            st.subheader(player+' Game Stats')
+        #            showPlayerStatTables(dfI_TeamA, player)
+        #            showIndividualPlayerCharts(dfI_TeamA, player)
+        #with col2:
+        #    for player in player11:
+        #        with st.expander(player):
+        #            st.subheader(player+' Game Stats')
+         #           showPlayerStatTables(dfI_TeamH, player)
+        #            showIndividualPlayerCharts(dfI_TeamH, player)
         #plt.show(fig)
         #st.pyplot(fig)
 

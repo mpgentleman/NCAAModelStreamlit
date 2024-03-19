@@ -3990,10 +3990,10 @@ kenpom = {}
 deltaU = energy_of_flipping
 
     
-BM = getBracketMatrixDataframe()
+#BM = getBracketMatrixDataframe()
 TBracket = getTRankBracket()
 TBracket1 = TBracket[['Seed','east','midwest','south','west']]
-BM1 = BM[['Seed','east','midwest','south','west']]
+#BM1 = BM[['Seed','east','midwest','south','west']]
 #st.dataframe(BM1)
 #st.dataframe(TBracket1)
 BM1 = pd.read_csv("Data/Tourney2024.csv")

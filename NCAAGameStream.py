@@ -3034,7 +3034,7 @@ def MG_RankingsRecent(data):
     st.write('ATS_PREMIUM highlights that premium or deficit. It should correspond to teams ATS record')
     dateString=str(add_selectbox_start)
     dateToday=dateString.replace('-', '')
-    files = os.listdir('Data/MGRankings2024')
+    files = os.listdir('Data/MGRankings2024Recent')
 
     # Filter the list to include only files that start with 'MG'
     files = [file for file in files if file.startswith('MG')]

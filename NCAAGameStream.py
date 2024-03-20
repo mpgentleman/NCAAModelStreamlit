@@ -3024,7 +3024,42 @@ def Bracketology_Page(data):
         st.subheader('Bracket Sim USing MG Rankings')
         df = data['MSim']
         showBracketTable(df)
+def MG_RankingsRecent(data):
+    import streamlit.components.v1 as components
+    add_selectbox_start =st.date_input('Pick date for Rankings')
+    st.write('Clicking on the headers will sort that column in ascending or descending order')
+    st.write('MG_NET_EFF is my rankings with no early season weighting and solely counting games played this year. This leads a reactive ranking for hot and cold teams')
+    #st.write('This leads a reactive ranking for hot and cold teams')
+    st.write('ATS_NET_EFF adds a premium for beating the spread against a weighted opponent ranking')
+    st.write('ATS_PREMIUM highlights that premium or deficit. It should correspond to teams ATS record')
+    dateString=str(add_selectbox_start)
+    dateToday=dateString.replace('-', '')
+    files = os.listdir('Data/MGRankings2024')
 
+    # Filter the list to include only files that start with 'MG'
+    files = [file for file in files if file.startswith('MG')]
+
+    # Create a dictionary with the last 8 characters in the filename as the key and the filename as the value
+    file_dict = {file[-13:-5]: file for file in files}
+    #st.write(file_dict)
+    #st.write(dateToday)
+    #st.header("test html import")
+    if dateToday in file_dict:
+        # If the date is in the dictionary, select the corresponding filename
+        myfilestring = file_dict[dateToday]
+    else:
+        # If the date is not in the dictionary, select the filename with the latest date
+        latest_date = max(file_dict.keys())
+        st.write(latest_date)
+        myfilestring = file_dict[latest_date]
+    #st.write(myfilestring)
+    myfile = "Data/MGRankings2024Recent/"+myfilestring
+    HtmlFile = open(myfile, 'r', encoding='utf-8')
+    source_code = HtmlFile.read() 
+    #print(source_code)
+    components.html(source_code, height = 3000)
+    if st.button('Run'):
+        components.html(source_code, height = 3000)    
 def MG_Rankings(data):
     hot = data['hot']
     cold = data['cold']
@@ -3949,6 +3984,7 @@ _MENU_STYLE = {
 
 _CHOICES = {
     'MG Rankings': dict(func=MG_Rankings, icon='play-fill'),
+    'MG Rankings Recent': dict(func=MG_RankingsRecent, icon='play-fill'),
     'Todays Games': dict(func=Todays_Games, icon='play-fill'),
     'Team Matchup': dict(func=Team_Matchup, icon='play-fill'),
     'Past Games': dict(func=Past_Games, icon='play-fill'),

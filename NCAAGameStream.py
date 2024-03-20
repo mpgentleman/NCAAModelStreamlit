@@ -138,7 +138,7 @@ def br(n):
 
 
 
-
+@st.cache_data
 def getIndividualPlayerData():
     url = 'https://barttorvik.com/2024_all_advgames.json.gz'
     response = requests.get(url)

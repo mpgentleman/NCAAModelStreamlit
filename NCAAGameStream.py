@@ -565,7 +565,7 @@ def grouper(n, iterable, fillvalue=None):
 
 def pairs(iterable):
     return grouper(2,iterable)
-
+@st.cache
 def runbracket1(teamsdict,ntrials, T):
     results = {'all':simulate(teamsdict,ntrials,'all',T)}
     return results

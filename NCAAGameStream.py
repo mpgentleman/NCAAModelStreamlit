@@ -501,7 +501,7 @@ def showBracketTable2(df):
                # "bbox": {"boxstyle": "circle", "pad": 0.35},
             },
             formatter= "{:.2f}",
-            cmap=normed_cmap(df["2nd Round"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            cmap=normed_cmap(df["Rank"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
             group="By Round",
         ),
         ColumnDefinition(

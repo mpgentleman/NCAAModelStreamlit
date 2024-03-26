@@ -3015,15 +3015,17 @@ def Bracketology_Page(data):
     g = _displayGrid(TBracket1, gb, key=keyname, height=600)
     #st.dataframe(BM)
     #st.dataframe(TBracket)
-    col1, col2 = st.columns(2)
-    with col1:
-        st.subheader('Bracket Sim USing TRank Rankings')
-        df = data['TSim']
-        showBracketTable(df)
-    with col2:
-        st.subheader('Bracket Sim USing MG Rankings')
-        df = data['MSim']
-        showBracketTable(df)
+    df = data['Sweet16']
+    showBracketTable(df)
+    #col1, col2 = st.columns(2)
+    #with col1:
+    #    st.subheader('Bracket Sim USing TRank Rankings')
+    #    df = data['TSim']
+    #    showBracketTable(df)
+    #with col2:
+    #    st.subheader('Bracket Sim USing MG Rankings')
+    #    df = data['MSim']
+    #    showBracketTable(df)
 def MG_RankingsRecent(data):
     import streamlit.components.v1 as components
     add_selectbox_start =st.date_input('Pick date for Rankings')
@@ -4034,6 +4036,7 @@ TBracket1 = TBracket[['Seed','east','midwest','south','west']]
 #st.dataframe(TBracket1)
 BM1 = pd.read_csv("Data/Tourney2024.csv")
 TBracket1 = pd.read_csv("Data/TourneyBart2024.csv")
+Sweet16 = pd.read_csv("Data/Sweet16.csv")
 newsouth=list(TBracket1["south"])
 neweast=list(TBracket1["east"])
 newmidwest=list(TBracket1["midwest"])
@@ -4089,9 +4092,9 @@ all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']
         
 #st.write(myranks)
 MYRANKS = TRDict
-results = runbracket1(teamsdict,ntrials=100,T=.25)
+#results = runbracket1(teamsdict,ntrials=100,T=.25)
 #st.write(str(results['all'][0][0]))
-j=maketabletest(results)
+#j=maketabletest(results)
 allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
 allrounds = ['Make','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
 headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
@@ -4102,12 +4105,13 @@ headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
 #st.write(l)
 data={}
 MYRANKS = MGDict
-results = runbracket1(teamsdict,ntrials=100,T=.2)
+#results = runbracket1(teamsdict,ntrials=100,T=.2)
 #st.write(str(results['all'][0][0]))
-j1=maketabletest(results)
+#j1=maketabletest(results)
 #st.dataframe(pd.DataFrame(j1, columns=headers))
-data['TSim'] = pd.DataFrame(j, columns=headers)
-data['MSim'] = pd.DataFrame(j1, columns=headers)
+#data['TSim'] = pd.DataFrame(j, columns=headers)
+#data['MSim'] = pd.DataFrame(j1, columns=headers)
+data['Sweet16']=Sweet16
 data['BM1'] = BM1
 data['TBracket'] = TBracket1
 TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")

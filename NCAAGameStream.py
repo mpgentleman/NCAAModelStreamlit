@@ -357,8 +357,8 @@ def showPlayerStatTables(df,player):
     ).autoset_fontcolors(colnames=["OPM", "DPM",'NET','Minutes','ORTG','Points','Rebounds','Assists','PTS+REB+AST','TO','Steals','Blocks'])
     st.pyplot(fig)   
 def showBracketTable(df):
-    
-    df = df[['Team','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds']]
+    #['Team','Region','Rank',Sweet 16','Elite 8','Final 4','Championship','Win','Odds']
+    #df = df[['Team','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds']]
     df = df.set_index("Team")
     cmap = LinearSegmentedColormap.from_list(
     name="bugw", colors=["#ffffff", "#f2fbd2", "#c9ecb4", "#93d3ab", "#35b0ab"], N=256)
@@ -379,6 +379,122 @@ def showBracketTable(df):
         
         ColumnDefinition(
             name="2nd Round",
+            width=1,
+            textprops={
+                "ha": "center",
+               # "bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.2f}",
+            cmap=normed_cmap(df["2nd Round"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="By Round",
+        ),
+        ColumnDefinition(
+            name="Sweet 16",
+            width=1,
+            textprops={
+                "ha": "center",
+               # "bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.2f}",
+            cmap=normed_cmap(df["Sweet 16"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="By Round",
+        ),
+        ColumnDefinition(
+            name="Elite 8",
+            width=1,
+            textprops={
+                "ha": "center",
+               # "bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.2f}",
+            cmap=normed_cmap(df["Elite 8"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="By Round",
+        ),
+        ColumnDefinition(
+            name="Final 4",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.2f}",
+            cmap=normed_cmap(df["Final 4"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="By Round",
+        ),
+         ColumnDefinition(
+            name="Championship",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.2f}",
+            cmap=normed_cmap(df["Championship"], cmap=matplotlib.cm.PiYG, num_stds=2.5),
+            group="By Round",
+        ),
+        ColumnDefinition(
+            name="Win",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.2f}",
+            cmap=normed_cmap(df["Win"], cmap=matplotlib.cm.PiYG, num_stds=5),
+            group="Winning Odds",
+        ),
+        ColumnDefinition(
+            name="Odds",
+            width=1,
+            textprops={
+                "ha": "center",
+                #"bbox": {"boxstyle": "circle", "pad": 0.35},
+            },
+            formatter= "{:.1f}",
+            cmap=normed_cmap(df["Odds"].head(30), cmap=matplotlib.cm.coolwarm_r, num_stds=2),
+            group="Winning Odds",
+        ),
+    ]
+)
+    plt.rcParams["font.family"] = ["DejaVu Sans"]
+    plt.rcParams["savefig.bbox"] = "tight"
+    fig, ax = plt.subplots(figsize=(30,30))
+ 
+    table = Table(
+    df,
+    column_definitions=col_defs,
+    row_dividers=True,
+    footer_divider=True,
+    ax=ax,
+    textprops={"fontsize": 16},
+    row_divider_kw={"linewidth": 1, "linestyle": (0, (1, 5))},
+    col_label_divider_kw={"linewidth": 1, "linestyle": "-"},
+    column_border_kw={"linewidth": 1, "linestyle": "-"},
+    ).autoset_fontcolors(colnames=['2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds'])
+    st.pyplot(fig)
+def showBracketTable2(df):
+    #['Team','Region','Rank',Sweet 16','Elite 8','Final 4','Championship','Win','Odds']
+    #df = df[['Team','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds']]
+    df = df.set_index("Team")
+    cmap = LinearSegmentedColormap.from_list(
+    name="bugw", colors=["#ffffff", "#f2fbd2", "#c9ecb4", "#93d3ab", "#35b0ab"], N=256)
+    colors = [(0.6, 0.76, 0.98), (0, 0.21, 0.46)] # Experiment with this
+    cm1 = LinearSegmentedColormap.from_list('test', colors, N=256)
+    tourney_cols = ['2nd Round','Sweet 16','Elite 8','Final 4','Championship']
+    depth_rating_cols = ['Win','Odds']
+#shooting_cols = ['Points','EFG','3PT%','FT%',]
+#['eam','Region','Rank','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds']
+    col_defs = (
+    [
+        
+        ColumnDefinition(
+            name="Team",
+            textprops={"ha": "left"},
+            width=1,
+        ),
+        
+        ColumnDefinition(
+            name="Rank",
             width=1,
             textprops={
                 "ha": "center",
@@ -3016,7 +3132,7 @@ def Bracketology_Page(data):
     #st.dataframe(BM)
     #st.dataframe(TBracket)
     df = data['Sweet16']
-    showBracketTable(df)
+    showBracketTable2(df)
     #col1, col2 = st.columns(2)
     #with col1:
     #    st.subheader('Bracket Sim USing TRank Rankings')

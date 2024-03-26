@@ -364,7 +364,7 @@ def showBracketTable(df):
     name="bugw", colors=["#ffffff", "#f2fbd2", "#c9ecb4", "#93d3ab", "#35b0ab"], N=256)
     colors = [(0.6, 0.76, 0.98), (0, 0.21, 0.46)] # Experiment with this
     cm1 = LinearSegmentedColormap.from_list('test', colors, N=256)
-    tourney_cols = ['2nd Round','Sweet 16','Elite 8','Final 4','Championship']
+    tourney_cols = ["2nd Round",'Sweet 16','Elite 8','Final 4','Championship']
     depth_rating_cols = ['Win','Odds']
 #shooting_cols = ['Points','EFG','3PT%','FT%',]
 #['eam','Region','Rank','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds']
@@ -480,7 +480,7 @@ def showBracketTable2(df):
     name="bugw", colors=["#ffffff", "#f2fbd2", "#c9ecb4", "#93d3ab", "#35b0ab"], N=256)
     colors = [(0.6, 0.76, 0.98), (0, 0.21, 0.46)] # Experiment with this
     cm1 = LinearSegmentedColormap.from_list('test', colors, N=256)
-    tourney_cols = ['2nd Round','Sweet 16','Elite 8','Final 4','Championship']
+    tourney_cols = ['Sweet 16','Elite 8','Final 4','Championship']
     depth_rating_cols = ['Win','Odds']
 #shooting_cols = ['Points','EFG','3PT%','FT%',]
 #['eam','Region','Rank','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds']
@@ -586,7 +586,7 @@ def showBracketTable2(df):
     row_divider_kw={"linewidth": 1, "linestyle": (0, (1, 5))},
     col_label_divider_kw={"linewidth": 1, "linestyle": "-"},
     column_border_kw={"linewidth": 1, "linestyle": "-"},
-    ).autoset_fontcolors(colnames=['2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win','Odds'])
+    ).autoset_fontcolors(colnames=['Sweet 16','Elite 8','Final 4','Championship','Win','Odds'])
     st.pyplot(fig)
 def playgame(team1, team2, T):
     """There's a difference between flipping a game in an existing

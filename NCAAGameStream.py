@@ -3674,8 +3674,8 @@ def Team_Matchup(data):
         
 def Past_Games(data):
     st.title('NCAA Head to Head Matchup')
-    season = st.selectbox('Season Selection',['2024','2023'])
-    if season == '2024':
+    season = st.selectbox('Season Selection',['2025','2024','2023'])
+    if season == '2025':
         #st.write('2024')
         add_selectbox = st.header("Select Todays Date")
         add_selectbox_start =st.date_input('Pick date')
@@ -4021,7 +4021,7 @@ def displayRankingHistory(data,myteam):
     st_letsplot(p)
 def getPomeroyDict():
     
-    df = pd.read_csv('Data/Pomeroy_2024_DB.csv')
+    df = pd.read_csv('Data/Pomeroy_2025_DB.csv')
     df['Date_zero'] = pd.to_datetime(df['Date_zero'])
     df = df[['Rk','Team','AdjEM','AdjO','AdjD','AdjT','Date_zero']]
     df= df.rename(columns={
@@ -4040,7 +4040,7 @@ def getPomeroyDict():
 
 def getTRankDict():
     
-    df = pd.read_csv('Data/TRank_2024_DB.csv')
+    df = pd.read_csv('Data/TRank_2025_DB.csv')
     df['Date_zero'] = pd.to_datetime(df['Date_zero'])
     df = df[['Team','AdjOE','AdjDE','BARTHAG','AdjEM','Date_zero','ADJ. T']]
     df= df.rename(columns={
@@ -4057,7 +4057,7 @@ def getTRankDict():
 
 def getMGRatingsDict():
     
-    df = pd.read_csv('Data/MGRatings2024_Daily_New_DB.csv')
+    df = pd.read_csv('Data/MGRatings2025_Daily_New_DB.csv')
     df['Date_zero'] = pd.to_datetime(df['Date_zero'])
 
     df =df[['Team','ATS_net_eff','MG_net_eff','mod_AdjO','mod_AdjD','Date_zero','pace']]
@@ -4230,9 +4230,9 @@ MYRANKS = MGDict
 data['Sweet16']=Sweet16
 data['BM1'] = BM1
 data['TBracket'] = TBracket1
-TeamDatabase2=pd.read_csv("Data/TeamDatabase2023.csv")
+TeamDatabase2=pd.read_csv("Data/TeamDatabase2025T.csv")
 
-player_data = read_csv_from_url('http://barttorvik.com/getadvstats.php?year=2024&csv=1')
+player_data = read_csv_from_url('http://barttorvik.com/getadvstats.php?year=2025&csv=1')
 myc = ['Player','Team','Conference','Games','Min%','ORTG','USAGE','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Year','Height','Number','PRPG','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','BPM','OBPM','DBPM', '3' ,' 4',' 5', 'Rebounds', 'Assists1' ,' 6 ', '7 ' ,'Points','Position','j']
 player_data.columns=myc
 player_data1 = player_data[['Number','Player','Team','Games','Min%','ORTG','BPM','OBPM','DBPM', 'PRPG','USAGE','Height','Year','Points','Position','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Rebounds', 'Assists1' ]]
@@ -4242,17 +4242,17 @@ data['Players'] = player_data1
 AllGames=pd.read_csv("Data/Season_GamesAll.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
-MG_Rank=pd.read_csv("Data/MGRatings2024_Daily_All_DB.csv")
-MG_Rank2=pd.read_csv("Data/MGRatings2024_Daily_New_DB.csv")
+MG_Rank=pd.read_csv("Data/MGRatings2025_Daily_All_DB.csv")
+MG_Rank2=pd.read_csv("Data/MGRatings2025_Daily_New_DB.csv")
 SkedBetting = pd.read_csv("Data/SkedBetting.csv")
-TR = pd.read_csv('Data/TRank_2024_DB.csv')
+TR = pd.read_csv('Data/TRank_2025_DB.csv')
 hot,cold=  getHotColdTeams(MG_Rank2)
 hotlist = hot.head(10)['Team'].to_list()
 coldlist = cold.head(10)['Team'].to_list()
 teams = MG_Rank['Tm_'].unique()
 #st.title('NCAA Head to Head Matchup')
 #page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games','Team Matchup','Past Games','Rankings Historical Charts','Bracketology Futures'])
-TeamDatabase2=pd.read_csv("Data/TeamDatabase2024T.csv")
+TeamDatabase2=pd.read_csv("Data/TeamDatabase2025T.csv")
 AllGames=pd.read_csv("Data/Season_GamesAll_2024.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])

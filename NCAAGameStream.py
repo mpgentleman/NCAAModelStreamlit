@@ -140,7 +140,7 @@ def br(n):
 
 @st.cache
 def getIndividualPlayerData():
-    url = 'https://barttorvik.com/2024_all_advgames.json.gz'
+    url = 'https://barttorvik.com/2025_all_advgames.json.gz'
     response = requests.get(url)
     text = response.text
     start_index = text.find('[[')

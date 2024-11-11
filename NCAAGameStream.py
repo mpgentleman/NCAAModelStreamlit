@@ -155,7 +155,20 @@ def getIndividualPlayerData():
     df['PtsAvg'] = df['Points'].mean()
 
     return(df)
+def getIndividualPlayerData2():
+    url = 'https://barttorvik.com/2025_all_advgames.json.gz'
+    response = requests.get(url)
 
+    json_data = response.content.decode('utf-8')
+    data = json.loads(json_data) 
+    col1 =['Date','date','1 ','2','6','Opponent','muid','7','Minutes','ORTG','USAGE','EFG','TS%','OR%','DR%','Assist%','TO%','Dunk mades','Dunk Att','Rim mades','Rim Att','Mid made','Mid Att','2 pt made','2 pt Att','3 Pt made','3 Pt Att','Ft Made','FT Att','BPM','OPM','DPM','NET ','Points','OR','DR','Assists','TO','Steals','Blocks','STL%','BLK%','PF','43','BPM round','NET','46','Team','Player','49','Year','PlayerNumber','Year']
+
+    df = pd.DataFrame(data,columns = col1)
+    df['Rebounds'] = df['OR'] +df['DR']
+    df['PTS+REB+AST'] = df['Rebounds']  + df['Points']  + df['Assists'] 
+    df['PtsAvg'] = df['Points'].mean()
+
+    return(df)
 def showIndividualPlayerCharts(df,player):
     df1 = df[df['Player']==player]
     density1 = ggplot(df1) + geom_density(aes("Points"), color="blue", fill="blue", alpha=0.1, size=1)+ ggsize(1000, 1000)
@@ -3853,8 +3866,8 @@ def Team_Page(data):
         #team_players = team_players[team_players['Team']==team_selected]
         st.subheader(team_selected + ' Player Data')
         showPlayersTable(team_players,team_selected)
-    #dfI =getIndividualPlayerData()
-    dfI =data['Players']
+    dfI =getIndividualPlayerData2()
+    #dfI =data['Players']
     
     dfI_Team = dfI[dfI['Team'] == team_selected]
     tp = team_players[team_players['Team'] == team_selected].sort_values('PRPG', ascending=False)

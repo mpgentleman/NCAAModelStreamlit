@@ -1289,7 +1289,7 @@ def showPlayersTable(player_data,team_selected):
     df['EFG'] =df['EFG']/100
     df['Min%'] =df['Min%']/100
     df['USAGE'] =df['USAGE']/100
-    df = df[df['Games']>1]
+    #df = df[df['Games']>1]
     df1 = df[df['Team']==team_selected]
     df1 = df1.set_index('Player')
     df1 = df1[['Number','Year','Height','Position','Games','ORTG','BPM','OBPM','DBPM', 'PRPG','Points','EFG','3PT%','FT%','Min%','USAGE']]

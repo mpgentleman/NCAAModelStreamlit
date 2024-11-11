@@ -3853,7 +3853,9 @@ def Team_Page(data):
         #team_players = team_players[team_players['Team']==team_selected]
         st.subheader(team_selected + ' Player Data')
         showPlayersTable(team_players,team_selected)
-    dfI =getIndividualPlayerData()
+    #dfI =getIndividualPlayerData()
+    dfI =data['Players']
+    
     dfI_Team = dfI[dfI['Team'] == team_selected]
     tp = team_players[team_players['Team'] == team_selected].sort_values('PRPG', ascending=False)
     player1 = tp['Player'].head(8).to_list()
@@ -3918,7 +3920,7 @@ def Team_Page(data):
     gb.configure_grid_options(**opts)
     keyname='Team P'+team_selected
     g = _displayGrid(team_players, gb, key=keyname, height=600)
-    dfI =getIndividualPlayerData()
+    #dfI =getIndividualPlayerData()
     
     #showIndividualPlayerCharts(dfI,'Zach Edey')
     #showPlayerStatTables(dfI,'Zach Edey')

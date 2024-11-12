@@ -4032,7 +4032,7 @@ def displayRankingHistory(data,myteam):
     MGG = MGG[['Team', 'ATS_net_eff', 'MG_net_eff', 'Date_zero']]
     TR1 = TR1[['Team', 'AdjEM', 'Date_zero']].rename(columns={'AdjEM': 'TRank_AdjEM'})
     df = pd.merge(MGG, TR1, on=['Team', 'Date_zero'], how='outer')
-    df1=df[df['Team']==myteam].sort_values('Date_zero')[2:]
+    df1=df[df['Team']==myteam].sort_values('Date_zero')[1:]
     melted_df = df1.melt(id_vars=['Team', 'Date_zero'], value_vars=['ATS_net_eff', 'MG_net_eff', 'TRank_AdjEM'], var_name='Ranking Type', value_name='Rankings')
 
     p = ggplot(melted_df, aes(x='Date_zero', y='Rankings', group='Ranking Type')) + geom_line(aes(color='Ranking Type'), size=1, alpha=0.5)+ggtitle("Ranking Comparison") + ggsize(800, 600)

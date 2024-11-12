@@ -3535,8 +3535,8 @@ def Team_Player_Matchup(data):
         test2['New_ID'] = range(0, 0+len(test2))
         myteams = [AwayTeam,HomeTeam]
        
-        #dfI =getIndividualPlayerData()
-        dfI =data['Players']
+        dfI =getIndividualPlayerData()
+        #dfI =data['Players']
         col1, col2 = st.columns(2)
         with col1:
             team_players = data['Players']
@@ -3634,8 +3634,8 @@ def Team_Matchup(data):
         st.text('If the blue line is above the green then the team is playing better than its ranking ')
         st.pyplot(fig)
         plot_line_chartLetsPlotHot(MG_Rank2, myteams)
-        #dfI =getIndividualPlayerData()
-        dfI =data['Players']
+        dfI =getIndividualPlayerData()
+        #dfI =data['Players']
         col1, col2 = st.columns(2)
         with col1:
             st.subheader(AwayTeam + ' Rankings')
@@ -3868,7 +3868,7 @@ def Team_Page(data):
         #team_players = team_players[team_players['Team']==team_selected]
         st.subheader(team_selected + ' Player Data')
         showPlayersTable(team_players,team_selected)
-    dfI =getIndividualPlayerData2()
+    dfI =getIndividualPlayerData()
     #dfI =data['Players']
     
     dfI_Team = dfI[dfI['Team'] == team_selected]

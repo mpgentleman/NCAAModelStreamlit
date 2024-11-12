@@ -156,7 +156,7 @@ def getIndividualPlayerData():
 
     return(df)
 def getIndividualPlayerData2():
-    url = "https://barttorvik.com/2024_all_advgames.json.gz"
+    url = "https://barttorvik.com/2025_all_advgames.json.gz"
     response = requests.get(url)
     json_data = response.content.decode('utf-8')
 

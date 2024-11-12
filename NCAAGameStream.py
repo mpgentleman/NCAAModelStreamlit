@@ -156,11 +156,13 @@ def getIndividualPlayerData():
 
     return(df)
 def getIndividualPlayerData2():
-    url = 'https://barttorvik.com/2025_all_advgames.json.gz'
+    url = "https://barttorvik.com/2024_all_advgames.json.gz"
     response = requests.get(url)
-
     json_data = response.content.decode('utf-8')
-    data = json.loads(json_data) 
+
+    # Step 2: Load the JSON data into a pandas DataFrame
+    data = json.loads(json_data)
+    df = pd.DataFrame(data)
     col1 =['Date','date','1 ','2','6','Opponent','muid','7','Minutes','ORTG','USAGE','EFG','TS%','OR%','DR%','Assist%','TO%','Dunk mades','Dunk Att','Rim mades','Rim Att','Mid made','Mid Att','2 pt made','2 pt Att','3 Pt made','3 Pt Att','Ft Made','FT Att','BPM','OPM','DPM','NET ','Points','OR','DR','Assists','TO','Steals','Blocks','STL%','BLK%','PF','43','BPM round','NET','46','Team','Player','49','Year','PlayerNumber','Year']
 
     df = pd.DataFrame(data,columns = col1)

@@ -2573,7 +2573,7 @@ def getHotColdTeams(df):
         # Sort the dataframe by 'Date_zero'
         team_df = team_df.sort_values('Date_zero')
         # Calculate the change in performance
-        team_df['performance_change'] = team_df['ATS_net_eff'].diff(periods=14)
+        team_df['performance_change'] = team_df['ATS_net_eff'].diff(periods=5)
         # Append the dataframe to 'dfs'
         dfs.append(team_df)
 

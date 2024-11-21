@@ -170,7 +170,7 @@ def showSpreadChart(df):
 )
     fig.add_shape(
     type="path",
-    path="M 35 25 L 40 -40 L -35 -45 Z",
+    path="M 35 25 L 40 -45 L -35 -45 Z",
     fillcolor="LightBlue",
     line_color="Olive",
     opacity=0.2

@@ -77,7 +77,99 @@ import streamlit.components.v1 as components
 from collections import namedtuple
 from datetime import datetime, timedelta
 
+def showSpreadChart(df):
+    scatter_data = df
+    scatter_data = scatter_data.dropna(subset=["MG_ATS_PointDiff", "VegasSpread",'MG_ATS_PointDiffSelection'])
+    scatter_data["MG_ATS_PointDiff"] = pd.to_numeric(scatter_data["MG_ATS_PointDiff"], errors='coerce')
+    scatter_data["VegasSpread"] = pd.to_numeric(scatter_data["VegasSpread"], errors='coerce')
+    scatter_data["SpreadDif"] = scatter_data["MG_ATS_PointDiff"]-scatter_data["VegasSpread"]
+    fig = go.Figure()
 
+# Loop through all rows in the DataFrame
+    for index, row in scatter_data.iterrows():
+        name = row["MG_ATS_PointDiffSelection"] # Get the corresponding value for the name
+        teams = row["teams"]
+        fig.add_trace(
+            go.Scatter(
+            x=[row["MG_ATS_PointDiff"]],
+            y=[row["VegasSpread"]],
+            name=name,
+           
+            mode="markers",
+            marker=dict(size=10, opacity=0.7, color='blue'),  # Set color to blue
+            hovertemplate="Vegas Spread: %{y}<br>"
+                          "Model Spread: %{x}<br>"
+                          f"Model pick: {name}<br>"
+                          f"Teams: {teams}<br>"
+                          "<extra></extra>"
+        )
+    )
+    fig.update_layout(
+        xaxis=dict(
+        range=[min_axis, max_axis],
+        title="Model Spread",
+        # Hide the grid
+        showgrid=False,
+    ),
+        yaxis=dict(
+        range=[min_axis, max_axis],
+        title="Vegas Spread",
+        # Hide the grid
+        showgrid=False,
+    ),
+    # Background color
+        plot_bgcolor="white",
+        height=800
+    )
+    fig.add_hline(y=0, line=dict(color="#C0C0C0", dash="dashdot", width=1))
+    fig.add_vline(x=0, line=dict(color="#C0C0C0", dash="dashdot", width=1))
+    fig.add_shape(
+    type="line",
+    # starting coordinates
+    x0=min_axis, y0=min_axis,
+    # ending coordinates
+    x1=max_axis, y1=max_axis,
+    # Make sure the points are on top of the line
+    layer="below",
+    # Style it like the axis lines
+    line=dict(dash="dashdot", color="#C0C0C0", width=1)
+    )
+    min5 =min_axis-15
+    max5 = max_axis+15
+
+    fig.add_shape( type="line", x0=min_axis, y0=min_axis + 10, x1=max_axis, y1=max_axis + 10, layer="below", line=dict(dash="dashdot", color="lightblue", width=1)) # You can change the color and style as needed )
+    fig.add_shape( type="line", x0=min_axis, y0=min_axis - 10, x1=max_axis, y1=max_axis - 10, layer="below", line=dict(dash="dashdot", color="lightblue", width=1)) # You can change the color and style as needed )
+    fig.add_shape(
+    type="path",
+    path="M 25 35 L -45 35 L -45 -35 Z",
+    fillcolor="LightBlue",
+    line_color="Olive",
+    opacity=0.2
+)
+    fig.add_annotation(
+    x=-25,
+    y=25,
+    align="center",
+    text=f"Model likes favorites more than Vegas by 10 or more<br><b>Win Rate: {round(.57*100,2)}%</b>",
+    font=dict(size=12, color="gray"),
+    showarrow=False
+)
+    fig.add_shape(
+    type="path",
+    path="M 35 25 L 40 -40 L -35 -45 Z",
+    fillcolor="LightBlue",
+    line_color="Olive",
+    opacity=0.2
+)
+    fig.add_annotation(
+    x=15,
+    y=-25,
+    align="center",
+    text=f"Model likes underdogs more than Vegas by 10 or more<br><b>Win Rate: {round(.51*100,2)}%</b>",
+    font=dict(size=12, color="gray"),
+    showarrow=False
+)
+    st.pyplot(fig)
 def showTeamLetsPlotCharts2024(test1,VegasMetric,shortMVA,longMVA,scoringMetric,mytitle,myTeam):
     test1['Opp1']=test1['Opp']+' '+test1['Date']
     #st.dataframe(test1)
@@ -3312,6 +3404,7 @@ def Todays_Games(data):
     st.text('Games can be sorted by columns. Click on column header to sort')
     st.text('To sort by game time click the Time column.  ')
     st.text('Low Negative values in the Reg Dif and Overplaying column mean the Home team is the pick  ') 
+    Dailyschedule1 = Dailyschedule
     Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','FanDuel','MG_ATS_PointDiff','commence_time','Reg_dif','Over_dif','Dif_from_Vegas','Pomeroy_PointDiff',
                                    'TRank_PointDiff','MG_PointDiff','Daily_Reg_PointDiff','DraftKings','BetMGM spreads','VegasTotal',
                                    'Pt_Spread_Difference','Pomeroy_PointDiffSelection','MG_ATS_PointDiffSelection']]
@@ -3347,6 +3440,7 @@ def Todays_Games(data):
     gb.configure_grid_options(**opts)
     keyname='Test'
     g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
+    showSpreadChart(Dailyschedule1)
     #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
     st.text('MG_ATS_PointDif is the point spread using the ATS model')
     st.text('Reg_dif is the differnce between both teams using a polynomial regression of current rankings')

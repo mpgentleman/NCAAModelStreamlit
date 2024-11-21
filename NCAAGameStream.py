@@ -97,8 +97,8 @@ def showSpreadChart(df):
     max(scatter_data["VegasSpread"])
 ])
     max_axis = ceil(max_axis/5)*5
-    fig = go.Figure()
-
+    #fig = go.Figure()
+    fig, ax = plt.subplots()
 # Loop through all rows in the DataFrame
     for index, row in scatter_data.iterrows():
         name = row["MG_ATS_PointDiffSelection"] # Get the corresponding value for the name

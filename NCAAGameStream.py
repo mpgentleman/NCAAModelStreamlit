@@ -78,6 +78,124 @@ from collections import namedtuple
 from datetime import datetime, timedelta
 from math import floor
 from math import ceil
+def showYesterdaysChart(Betting):
+    #scatter_data = Betting[Betting['Date'].isin(mylist)]
+    scatter_data = Betting[Betting['Date']==new_date_str]
+    new_date_str
+    scatter_data = scatter_data.dropna(subset=["MG_ATS_PointDiff", "ATSVegas"])
+    scatter_data["MG_ATS_PointDiff"] = pd.to_numeric(scatter_data["MG_ATS_PointDiff"], errors='coerce')
+    scatter_data["ATSVegas"] = pd.to_numeric(scatter_data["ATSVegas"], errors='coerce')
+    scatter_data["SpreadDif"] = scatter_data["MG_ATS_PointDiff"]-scatter_data["ATSVegas"]
+    upperspread = scatter_data[scatter_data["SpreadDif"]<-10]['MG_ATS_PointDiffWinATS'].sum()/len(scatter_data[scatter_data["SpreadDif"]<-10])
+    lowerspread = scatter_data[scatter_data["SpreadDif"]>10]['MG_ATS_PointDiffWinATS'].sum()/len(scatter_data[scatter_data["SpreadDif"]>10])
+    import plotly.graph_objects as go
+    fig = go.Figure()
+    fig.add_trace(
+    go.Scatter(
+        x=scatter_data["MG_ATS_PointDiff"],
+        y=scatter_data["ATSVegas"],
+        # markers, lines, markers+lines
+        mode="markers"
+        )
+    )
+
+    fig.update_layout(
+    xaxis=dict(
+        range=[min_axis, max_axis],
+        title="Model Spread",
+        # Hide the grid
+        showgrid=False,
+    ),
+    yaxis=dict(
+        range=[min_axis, max_axis],
+        title="Vegas Spread",
+        # Hide the grid
+        showgrid=False,
+        ),
+    # Background color
+    plot_bgcolor="white",
+    height=800
+    )
+    fig.add_hline(y=0, line=dict(color="#C0C0C0", dash="dashdot", width=1))
+    fig.add_vline(x=0, line=dict(color="#C0C0C0", dash="dashdot", width=1))
+    fig.add_shape(
+    type="line",
+    # starting coordinates
+    x0=min_axis, y0=min_axis,
+    # ending coordinates
+    x1=max_axis, y1=max_axis,
+    # Make sure the points are on top of the line
+    layer="below",
+    # Style it like the axis lines
+    line=dict(dash="dashdot", color="#C0C0C0", width=1)
+    )
+    min5 =min_axis-15
+    max5 = max_axis+15
+    fig.add_shape( type="line", x0=min_axis, y0=min_axis + 10, x1=max_axis, y1=max_axis + 10, layer="below", line=dict(dash="dashdot", color="lightblue", width=1)) # You can change the color and style as needed )
+    fig.add_shape( type="line", x0=min_axis, y0=min_axis - 10, x1=max_axis, y1=max_axis - 10, layer="below", line=dict(dash="dashdot", color="lightblue", width=1)) # You can change the color and style as needed )
+
+    ats_outcome = {
+    1: {"name": "Win", "color": "blue"},
+    0: {"name": "Loss", "color": "red"}
+    }
+# Dictionary to loop over
+    ats_outcome = {
+    1: {"name": "Win", "color": "blue"},
+    0: {"name": "Loss", "color": "red"}
+    }
+
+# .items() returns the key (k) and value (v)
+    for k, v in ats_outcome.items():
+        data = scatter_data.loc[scatter_data["MG_ATS_PointDiffWinATS"] == k, :]
+        # The value (v) is also a dictionary, so we
+        #   can get the values of the name and color key
+        name = v.get("name")
+        color = v.get("color")
+        fig.add_trace(
+        go.Scatter(
+            x=data["MG_ATS_PointDiff"],
+            y=data["ATSVegas"],
+            name=name,
+            mode="markers",
+            marker=dict(size=10, opacity=0.7, color=color),
+            hovertemplate="Vegas Spread: %{y}<br>"
+                          "Model Spread: %{x}<br>"
+                          f"ATS Outcome: {name}<br>"
+                          "<extra></extra>"
+        )
+    )
+    fig.add_shape(
+    type="path",
+    path="M 25 35 L -45 35 L -45 -35 Z",
+    fillcolor="LightBlue",
+    line_color="Olive",
+    opacity=0.2
+    )
+    fig.add_annotation(
+    x=-25,
+    y=25,
+    align="center",
+    text=f"Model likes favorites more than Vegas by 10 or more<br><b>Win Rate: {round(upperspread*100,2)}%</b>",
+    font=dict(size=12, color="gray"),
+    showarrow=False
+    )
+    fig.add_shape(
+    type="path",
+    path="M 35 25 L 40 -45 L -35 -45 Z",
+    fillcolor="LightBlue",
+    line_color="Olive",
+    opacity=0.2
+    )
+    fig.add_annotation(
+    x=15,
+    y=-25,
+    align="center",
+    text=f"Model likes underdogs more than Vegas by 10 or more<br><b>Win Rate: {round(lowerspread*100,2)}%</b>",
+    font=dict(size=12, color="gray"),
+    showarrow=False
+    )
+
+    st.plotly_chart(fig) 
 def showSpreadChart(df):
     scatter_data = df
     scatter_data = scatter_data.dropna(subset=["MG_ATS_PointDiff", "VegasSpread",'MG_ATS_PointDiffSelection'])
@@ -4060,8 +4178,17 @@ def Betting_Performance_Page(data):
     df['Both'] = (df['Pomeroy_PointDiffSelection'] == df['MG_ATS_PointDiffSelection']).astype(int)
     mydates = df['Date_zero'].unique()
     Tables_Choice1=st.selectbox('Select a day',mydates,index=0)
+
+
+    # Convert to datetime object
+    date_obj = datetime.strptime(Tables_Choice1, "%m/%d/%Y")
+
+    # Convert to desired format
+    new_date_str = date_obj.strftime("%Y-%m-%d")
+
     if st.button('Run'):
         dfSelect = df[df['Date_zero']==Tables_Choice1]
+        showYesterdaysChart(dfSelect)
         gb = GridOptionsBuilder.from_dataframe(dfSelect,groupable=True)
         gb.configure_side_bar()
         gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)

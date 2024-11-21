@@ -76,13 +76,27 @@ import math
 import streamlit.components.v1 as components
 from collections import namedtuple
 from datetime import datetime, timedelta
-
+from math import floor
+from math import ceil
 def showSpreadChart(df):
     scatter_data = df
     scatter_data = scatter_data.dropna(subset=["MG_ATS_PointDiff", "VegasSpread",'MG_ATS_PointDiffSelection'])
     scatter_data["MG_ATS_PointDiff"] = pd.to_numeric(scatter_data["MG_ATS_PointDiff"], errors='coerce')
     scatter_data["VegasSpread"] = pd.to_numeric(scatter_data["VegasSpread"], errors='coerce')
     scatter_data["SpreadDif"] = scatter_data["MG_ATS_PointDiff"]-scatter_data["VegasSpread"]
+
+
+    min_axis = min([
+    min(scatter_data["MG_ATS_PointDiff"]),
+    min(scatter_data["ATSVegas"])
+])
+    min_axis = floor(min_axis/5)*5
+
+    max_axis = max([
+    max(scatter_data["MG_ATS_PointDiff"]),
+    max(scatter_data["ATSVegas"])
+])
+    max_axis = ceil(max_axis/5)*5
     fig = go.Figure()
 
 # Loop through all rows in the DataFrame

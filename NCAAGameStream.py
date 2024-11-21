@@ -97,8 +97,8 @@ def showSpreadChart(df):
     max(scatter_data["VegasSpread"])
 ])
     max_axis = ceil(max_axis/5)*5
-    #fig = go.Figure()
-    fig, ax = plt.subplots()
+    fig = go.Figure()
+    #fig, ax = plt.subplots()
 # Loop through all rows in the DataFrame
     for index, row in scatter_data.iterrows():
         name = row["MG_ATS_PointDiffSelection"] # Get the corresponding value for the name
@@ -183,7 +183,8 @@ def showSpreadChart(df):
     font=dict(size=12, color="gray"),
     showarrow=False
 )
-    st.pyplot(fig)
+    #st.pyplot(fig)
+    st.plotly_chart(fig) 
 def showTeamLetsPlotCharts2024(test1,VegasMetric,shortMVA,longMVA,scoringMetric,mytitle,myTeam):
     test1['Opp1']=test1['Opp']+' '+test1['Date']
     #st.dataframe(test1)

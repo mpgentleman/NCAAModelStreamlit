@@ -79,7 +79,7 @@ from datetime import datetime, timedelta
 from math import floor
 from math import ceil
 def showYesterdaysChart(Betting):
-    st.dataframe(Betting)
+    #st.dataframe(Betting)
     #scatter_data = Betting[Betting['Date'].isin(mylist)]
     #scatter_data = Betting[Betting['Date_zero']==new_date_str]
     #new_date_str
@@ -127,7 +127,7 @@ def showYesterdaysChart(Betting):
         ),
     # Background color
     plot_bgcolor="white",
-    height=800
+    height=1000,width=1800,
     )
     fig.add_hline(y=0, line=dict(color="#C0C0C0", dash="dashdot", width=1))
     fig.add_vline(x=0, line=dict(color="#C0C0C0", dash="dashdot", width=1))

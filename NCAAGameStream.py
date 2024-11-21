@@ -89,6 +89,18 @@ def showYesterdaysChart(Betting):
     scatter_data["SpreadDif"] = scatter_data["MG_ATS_PointDiff"]-scatter_data["ATSVegas"]
     upperspread = scatter_data[scatter_data["SpreadDif"]<-10]['MG_ATS_PointDiffWinATS'].sum()/len(scatter_data[scatter_data["SpreadDif"]<-10])
     lowerspread = scatter_data[scatter_data["SpreadDif"]>10]['MG_ATS_PointDiffWinATS'].sum()/len(scatter_data[scatter_data["SpreadDif"]>10])
+    
+    min_axis = min([
+    min(scatter_data["MG_ATS_PointDiff"]),
+    min(scatter_data["ATSVegas"])
+    ])
+    min_axis = floor(min_axis/5)*5
+
+    max_axis = max([
+    max(scatter_data["MG_ATS_PointDiff"]),
+    max(scatter_data["ATSVegas"])
+    ])
+    max_axis = ceil(max_axis/5)*5
     import plotly.graph_objects as go
     fig = go.Figure()
     fig.add_trace(

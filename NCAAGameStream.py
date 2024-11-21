@@ -88,13 +88,13 @@ def showSpreadChart(df):
 
     min_axis = min([
     min(scatter_data["MG_ATS_PointDiff"]),
-    min(scatter_data["ATSVegas"])
+    min(scatter_data["VegasSpread"])
 ])
     min_axis = floor(min_axis/5)*5
 
     max_axis = max([
     max(scatter_data["MG_ATS_PointDiff"]),
-    max(scatter_data["ATSVegas"])
+    max(scatter_data["VegasSpread"])
 ])
     max_axis = ceil(max_axis/5)*5
     fig = go.Figure()

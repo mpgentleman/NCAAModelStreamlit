@@ -82,7 +82,7 @@ def showYesterdaysChart(Betting):
     st.dataframe(Betting)
     #scatter_data = Betting[Betting['Date'].isin(mylist)]
     #scatter_data = Betting[Betting['Date_zero']==new_date_str]
-    new_date_str
+    #new_date_str
     scatter_data = scatter_data.dropna(subset=["MG_ATS_PointDiff", "ATSVegas"])
     scatter_data["MG_ATS_PointDiff"] = pd.to_numeric(scatter_data["MG_ATS_PointDiff"], errors='coerce')
     scatter_data["ATSVegas"] = pd.to_numeric(scatter_data["ATSVegas"], errors='coerce')

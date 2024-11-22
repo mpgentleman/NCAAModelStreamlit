@@ -215,7 +215,11 @@ def showSpreadChart(df):
     scatter_data["MG_ATS_PointDiff"] = pd.to_numeric(scatter_data["MG_ATS_PointDiff"], errors='coerce')
     scatter_data["VegasSpread"] = pd.to_numeric(scatter_data["VegasSpread"], errors='coerce')
     scatter_data["SpreadDif"] = scatter_data["MG_ATS_PointDiff"]-scatter_data["VegasSpread"]
-
+    scatter_data['commence_time'] = pd.to_datetime(scatter_data['commence_time'])
+    # Convert to US Central time
+    scatter_data['commence_time'] = scatter_data['commence_time'].dt.tz_convert('US/Central')
+    # Format time to display like 11:00AM, 2:00PM, etc.
+    scatter_data['commence_time'] = scatter_data['commence_time'].dt.strftime('%I:%M%p')
 
     min_axis = min([
     min(scatter_data["MG_ATS_PointDiff"]),

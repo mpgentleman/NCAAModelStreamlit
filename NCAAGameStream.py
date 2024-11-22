@@ -3556,12 +3556,13 @@ def Todays_Games(data):
                                    'Pt_Spread_Difference','Pomeroy_PointDiffSelection','MG_ATS_PointDiffSelection']]
     Dailyschedule.DraftKings = Dailyschedule.DraftKings.astype(float).round(1)
     Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
+    
     Dailyschedule['commence_time'] = pd.to_datetime(Dailyschedule['commence_time'])
     # Convert to US Central time
     Dailyschedule['commence_time'] = Dailyschedule['commence_time'].dt.tz_convert('US/Central')
     # Format time to display like 11:00AM, 2:00PM, etc.
     Dailyschedule['commence_time'] = Dailyschedule['commence_time'].dt.strftime('%I:%M%p')
-    Dailyschedule['divergence'] = (Dailyschedule['FanDuel'] * Dailyschedule['MG_ATS_PointDif'] < 0)
+    Dailyschedule['divergence'] = (Dailyschedule['FanDuel'] * Dailyschedule['MG_ATS_PointDiff'] < 0)
     allcols=Dailyschedule.columns
     gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
     gb.configure_columns(allcols, cellStyle=cellStyle)

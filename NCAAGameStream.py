@@ -3561,6 +3561,7 @@ def Todays_Games(data):
     Dailyschedule['commence_time'] = Dailyschedule['commence_time'].dt.tz_convert('US/Central')
     # Format time to display like 11:00AM, 2:00PM, etc.
     Dailyschedule['commence_time'] = Dailyschedule['commence_time'].dt.strftime('%I:%M%p')
+    Dailyschedule['divergence'] = (Dailyschedule['FanDuel'] * Dailyschedule['MG_ATS_PointDif'] < 0)
     allcols=Dailyschedule.columns
     gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
     gb.configure_columns(allcols, cellStyle=cellStyle)

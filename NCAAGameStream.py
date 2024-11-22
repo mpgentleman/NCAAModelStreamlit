@@ -211,7 +211,7 @@ def showYesterdaysChart(Betting):
     st.plotly_chart(fig) 
 def showSpreadChart(df):
     scatter_data = df
-    scatter_data = scatter_data.dropna(subset=["MG_ATS_PointDiff", "VegasSpread",'MG_ATS_PointDiffSelection'])
+    scatter_data = scatter_data.dropna(subset=["MG_ATS_PointDiff", "VegasSpread",'MG_ATS_PointDiffSelection',"commence_time"])
     scatter_data["MG_ATS_PointDiff"] = pd.to_numeric(scatter_data["MG_ATS_PointDiff"], errors='coerce')
     scatter_data["VegasSpread"] = pd.to_numeric(scatter_data["VegasSpread"], errors='coerce')
     scatter_data["SpreadDif"] = scatter_data["MG_ATS_PointDiff"]-scatter_data["VegasSpread"]
@@ -234,6 +234,7 @@ def showSpreadChart(df):
     for index, row in scatter_data.iterrows():
         name = row["MG_ATS_PointDiffSelection"] # Get the corresponding value for the name
         teams = row["teams"]
+        gametime = row["commence_time"]
         fig.add_trace(
             go.Scatter(
             x=[row["MG_ATS_PointDiff"]],
@@ -246,6 +247,7 @@ def showSpreadChart(df):
                           "Model Spread: %{x}<br>"
                           f"Model pick: {name}<br>"
                           f"Teams: {teams}<br>"
+                          f"Teams: {gametime}<br>"
                           "<extra></extra>"
         )
     )

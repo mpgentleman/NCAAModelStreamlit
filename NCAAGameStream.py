@@ -4289,7 +4289,8 @@ def Betting_Charts_Page(data):
     df = df[bcols]
     #df['Both'] = (df['Pomeroy_PointDiffSelection'] == df['MG_ATS_PointDiffSelection']).astype(int)
     mydates = df['Date_zero'].unique()
-    Tables_Choice1=st.multiselect('Select days',mydates,index=0)
+    st.write(mydates)
+    Tables_Choice1=st.multiselect('Select days',mydates)
     st.write(Tables_Choice1)
 
     # Convert to datetime object

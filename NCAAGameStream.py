@@ -4278,6 +4278,25 @@ def Betting_Performance_Page(data):
     #    theday=int(dateString.split('-')[2])
     #    theyear=dateString.split('-')[0]
     #    get2023Display(Dailyschedule,dateToday,d2,season)
+def Betting_Charts_Page(data):
+    st.title('Betting Charts')
+    df = data['SkedBetting']
+    bcols = ['Tm','AWAY','HOME','Date_zero','Reg_dif','Over_dif','Daily_Reg_Tm_net_eff','Daily_Reg_Opp_net_eff','MG_ATS_PointDiff','ATSVegas','Pomeroy_PointDiffWinATS',
+     'Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS',
+     'TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS',
+     'MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS',
+     'Daily_Reg_PointDiffLossATS','VegasImpliedWinPercent','MG_ATS_ImpliedWinPercent','Dif_from_Vegas','MG_Reg_ATS_ImpliedWinPercent','Reg_Dif_Abs','Over_Dif_Abs','Pt_Spread_Difference','Pomeroy_PointDiffSelection','MG_ATS_PointDiffSelection']
+    df = df[bcols]
+    #df['Both'] = (df['Pomeroy_PointDiffSelection'] == df['MG_ATS_PointDiffSelection']).astype(int)
+    mydates = df['Date_zero'].unique()
+    Tables_Choice1=st.multiselect('Select days',mydates,index=0)
+    st.write(Tables_Choice1)
+
+    # Convert to datetime object
+    date_obj = datetime.strptime(Tables_Choice1, "%m/%d/%Y")
+
+    # Convert to desired format
+    new_date_str = date_obj.strftime("%Y-%m-%d")
 def read_csv_from_url(url):
     df = pd.read_csv(url,sep=',',  header=None)
     return df
@@ -4385,7 +4404,9 @@ _CHOICES = {
     'Bracketology Page': dict(func=Bracketology_Page, icon='play-fill'),
     'Team Pages': dict(func=Team_Page, icon='play-fill'),
     'Betting Performance': dict(func=Betting_Performance_Page, icon='play-fill'),
+    'Betting Charts': dict(func=Betting_Charts_Page, icon='play-fill'),
    'Team Player Matchup': dict(func=Team_Player_Matchup, icon='play-fill'),
+    
 }
 
 _MENU_ITEMS = list(_CHOICES.keys())

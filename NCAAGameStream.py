@@ -78,9 +78,9 @@ from collections import namedtuple
 from datetime import datetime, timedelta
 from math import floor
 from math import ceil
-def showBettingZones(Betting,mylist):
+def showBettingZones(scatter_data,mylist):
     
-    scatter_data = Betting[Betting['Date'].isin(mylist)]
+    
     
     min_axis = min([
     min(scatter_data["MG_ATS_PointDiff"]),
@@ -4428,7 +4428,8 @@ def Betting_Charts_Page(data):
     Tables_Choice1=st.multiselect('Select days',mydates)
     #st.write(Tables_Choice1)
     if st.button('Run'):
-        showBettingZones(df,Tables_Choice1)
+        scatter_data1 = df[df['Date_zero'].isin(Tables_Choice1)]
+        showBettingZones(scatter_data1,Tables_Choice1)
 
 def read_csv_from_url(url):
     df = pd.read_csv(url,sep=',',  header=None)

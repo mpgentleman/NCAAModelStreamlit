@@ -214,10 +214,10 @@ def showBettingZones(scatter_data,mylist):
     fig.add_shape(
     type="rect",
     x0=min_axis,
-    x1=0,
+    x1=max_axis,
     y0=0,
-    y1=max_axis+10,
-    fillcolor="lightgreen",
+    y1=max_axis,
+    fillcolor="lightblue",
     line_color="Olive",
     opacity=0.1
     )

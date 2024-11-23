@@ -98,6 +98,7 @@ def showBettingZones(scatter_data,mylist):
     scatter_data["ATSVegas"] = pd.to_numeric(scatter_data["ATSVegas"], errors='coerce')
     rightwins =scatter_data[(scatter_data["MG_ATS_PointDiff"] >0)&(scatter_data["ATSVegas"] <0)]['MG_ATS_PointDiffWinATS'].sum()/len(scatter_data[(scatter_data["MG_ATS_PointDiff"] >0)&(scatter_data["ATSVegas"] <0)])
     leftwins =scatter_data[(scatter_data["MG_ATS_PointDiff"] <0)&(scatter_data["ATSVegas"] >0)]['MG_ATS_PointDiffWinATS'].sum()/len(scatter_data[(scatter_data["MG_ATS_PointDiff"] <0)&(scatter_data["ATSVegas"] >0)])
+    upperright = scatter_data[(scatter_data["MG_ATS_PointDiff"] >0)&(scatter_data["ATSVegas"] >0)]['MG_ATS_PointDiffWinATS'].sum()/len(scatter_data[(scatter_data["MG_ATS_PointDiff"] >0)&(scatter_data["ATSVegas"] >0)])
     import plotly.graph_objects as go
     fig = go.Figure()
     fig.add_trace(
@@ -144,7 +145,7 @@ def showBettingZones(scatter_data,mylist):
 
     fig.add_shape( type="line", x0=min_axis, y0=min_axis + 10, x1=max_axis, y1=max_axis + 10, layer="below", line=dict(dash="dashdot", color="lightblue", width=1)) # You can change the color and style as needed )
     fig.add_shape( type="line", x0=min_axis, y0=min_axis - 10, x1=max_axis, y1=max_axis - 10, layer="below", line=dict(dash="dashdot", color="lightblue", width=1)) # You can change the color and style as needed )
-
+    fig.add_shape( type="line", x0=min_axis, y0=min_axis , x1=max_axis+ 10, y1=max_axis + 10, layer="below", line=dict(dash="dashdot", color="lightgreen", width=1)) # You can change the color and style as needed )
     ats_outcome = {
     1: {"name": "Win", "color": "blue"},
     0: {"name": "Loss", "color": "red"}
@@ -207,6 +208,24 @@ def showBettingZones(scatter_data,mylist):
     y=-25,
     align="center",
     text=f"Model & Vegas Disagree<br><b>Win Rate: {round(rightwins*100,2)}%</b>",
+    font=dict(size=12, color="gray"),
+    showarrow=False
+    )
+    fig.add_shape(
+    type="rect",
+    x0=min_axis,
+    x1=0,
+    y0=0,
+    y1=max_axis+10,
+    fillcolor="lightgreen",
+    line_color="Olive",
+    opacity=0.1
+    )
+    fig.add_annotation(
+    x=20,
+    y=25,
+    align="center",
+    text=f"Model & Vegas Disagree<br><b>Win Rate: {round(upperright*100,2)}%</b>",
     font=dict(size=12, color="gray"),
     showarrow=False
     )

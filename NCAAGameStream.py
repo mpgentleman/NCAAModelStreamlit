@@ -298,8 +298,8 @@ def showYesterdaysChart(Betting,hurdle):
     )
     min5 =min_axis-15
     max5 = max_axis+15
-    fig.add_shape( type="line", x0=min_axis, y0=min_axis + 10, x1=max_axis, y1=max_axis + 10, layer="below", line=dict(dash="dashdot", color="lightblue", width=1)) # You can change the color and style as needed )
-    fig.add_shape( type="line", x0=min_axis, y0=min_axis - 10, x1=max_axis, y1=max_axis - 10, layer="below", line=dict(dash="dashdot", color="lightblue", width=1)) # You can change the color and style as needed )
+    fig.add_shape( type="line", x0=min_axis, y0=min_axis + hurdle, x1=max_axis, y1=max_axis + hurdle, layer="below", line=dict(dash="dashdot", color="lightblue", width=1)) # You can change the color and style as needed )
+    fig.add_shape( type="line", x0=min_axis, y0=min_axis - hurdle, x1=max_axis, y1=max_axis - hurdle, layer="below", line=dict(dash="dashdot", color="lightblue", width=1)) # You can change the color and style as needed )
 
     ats_outcome = {
     1: {"name": "Win", "color": "blue"},
@@ -348,7 +348,7 @@ def showYesterdaysChart(Betting,hurdle):
     )
     fig.add_shape(
     type="path",
-    path="M 35 25 L 40 -45 L -40 -45 Z",
+    path="M 35 25 L 35 -45 L -35 -45 Z",
     fillcolor="LightBlue",
     line_color="Olive",
     opacity=0.2

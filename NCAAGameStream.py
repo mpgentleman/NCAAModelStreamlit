@@ -4453,7 +4453,7 @@ def Betting_Charts_Page(data):
     #if st.button('Run'):
         scatter_data1 = df[df['Date_zero'].isin(Tables_Choice1)]
         showBettingZones(scatter_data1,Tables_Choice1)
-
+        showYesterdaysChart(scatter_data1)
 def read_csv_from_url(url):
     df = pd.read_csv(url,sep=',',  header=None)
     return df

@@ -4427,7 +4427,11 @@ def Betting_Charts_Page(data):
     #st.write(mydates)
     Tables_Choice1=st.multiselect('Select days',mydates)
     #st.write(Tables_Choice1)
-    if st.button('Run'):
+    if not Tables_Choice1:
+        st.write('Select Dates')
+    else:
+        #filtered_data = data.loc[data["event"].isin(options)]
+    #if st.button('Run'):
         scatter_data1 = df[df['Date_zero'].isin(Tables_Choice1)]
         showBettingZones(scatter_data1,Tables_Choice1)
 

@@ -232,7 +232,7 @@ def showBettingZones(scatter_data,mylist):
     st.plotly_chart(fig) 
 
 
-def showYesterdaysChart(Betting):
+def showYesterdaysChart(Betting,hurdle):
     #st.dataframe(Betting)
     #scatter_data = Betting[Betting['Date'].isin(mylist)]
     #scatter_data = Betting[Betting['Date_zero']==new_date_str]
@@ -241,8 +241,8 @@ def showYesterdaysChart(Betting):
     scatter_data["MG_ATS_PointDiff"] = pd.to_numeric(scatter_data["MG_ATS_PointDiff"], errors='coerce')
     scatter_data["ATSVegas"] = pd.to_numeric(scatter_data["ATSVegas"], errors='coerce')
     scatter_data["SpreadDif"] = scatter_data["MG_ATS_PointDiff"]-scatter_data["ATSVegas"]
-    upperspread = scatter_data[scatter_data["SpreadDif"]<-10]['MG_ATS_PointDiffWinATS'].sum()/len(scatter_data[scatter_data["SpreadDif"]<-10])
-    lowerspread = scatter_data[scatter_data["SpreadDif"]>10]['MG_ATS_PointDiffWinATS'].sum()/len(scatter_data[scatter_data["SpreadDif"]>10])
+    upperspread = scatter_data[scatter_data["SpreadDif"]<-hurdle]['MG_ATS_PointDiffWinATS'].sum()/len(scatter_data[scatter_data["SpreadDif"]<-hurdle])
+    lowerspread = scatter_data[scatter_data["SpreadDif"]>hurdle]['MG_ATS_PointDiffWinATS'].sum()/len(scatter_data[scatter_data["SpreadDif"]>hurdle])
     
     min_axis = min([
     min(scatter_data["MG_ATS_PointDiff"]),
@@ -348,7 +348,7 @@ def showYesterdaysChart(Betting):
     )
     fig.add_shape(
     type="path",
-    path="M 35 25 L 40 -45 L -35 -45 Z",
+    path="M 35 25 L 40 -45 L -40 -45 Z",
     fillcolor="LightBlue",
     line_color="Olive",
     opacity=0.2
@@ -4444,6 +4444,7 @@ def Betting_Charts_Page(data):
     #df['Both'] = (df['Pomeroy_PointDiffSelection'] == df['MG_ATS_PointDiffSelection']).astype(int)
     mydates = df['Date_zero'].unique()
     #st.write(mydates)
+    hurdle =  st.number_input('Enter Point spread Hurdle', min_value=1, max_value=15, value=5, step=1)
     Tables_Choice1=st.multiselect('Select days',mydates)
     #st.write(Tables_Choice1)
     if not Tables_Choice1:
@@ -4453,7 +4454,7 @@ def Betting_Charts_Page(data):
     #if st.button('Run'):
         scatter_data1 = df[df['Date_zero'].isin(Tables_Choice1)]
         showBettingZones(scatter_data1,Tables_Choice1)
-        showYesterdaysChart(scatter_data1)
+        showYesterdaysChart(scatter_data1,hurdle)
 def read_csv_from_url(url):
     df = pd.read_csv(url,sep=',',  header=None)
     return df

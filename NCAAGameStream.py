@@ -124,7 +124,7 @@ def showBettingZones(scatter_data,mylist):
     ),
     # Background color
     plot_bgcolor="white",
-    height=800
+    height=1000,width=1800,
     )
     fig.add_hline(y=0, line=dict(color="#C0C0C0", dash="dashdot", width=1))
     fig.add_vline(x=0, line=dict(color="#C0C0C0", dash="dashdot", width=1))

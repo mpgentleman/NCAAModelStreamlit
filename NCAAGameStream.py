@@ -4428,7 +4428,7 @@ def Betting_Charts_Page(data):
     Tables_Choice1=st.multiselect('Select days',mydates)
     #st.write(Tables_Choice1)
     if st.button('Run'):
-        showBettingZones(Betting,Tables_Choice1)
+        showBettingZones(df,Tables_Choice1)
 
 def read_csv_from_url(url):
     df = pd.read_csv(url,sep=',',  header=None)

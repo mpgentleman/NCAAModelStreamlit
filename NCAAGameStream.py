@@ -210,9 +210,7 @@ def showBettingZones(Betting,mylist):
     font=dict(size=12, color="gray"),
     showarrow=False
     )
-
-#fig.show()
-st.plotly_chart(fig) 
+    st.plotly_chart(fig) 
 
 
 def showYesterdaysChart(Betting):

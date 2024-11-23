@@ -78,6 +78,143 @@ from collections import namedtuple
 from datetime import datetime, timedelta
 from math import floor
 from math import ceil
+def showBettingZones(Betting,mylist):
+    
+    scatter_data = Betting[Betting['Date'].isin(mylist)]
+    
+    min_axis = min([
+    min(scatter_data["MG_ATS_PointDiff"]),
+    min(scatter_data["ATSVegas"])
+    ])
+    min_axis = floor(min_axis/5)*5
+
+    max_axis = max([
+    max(scatter_data["MG_ATS_PointDiff"]),
+    max(scatter_data["ATSVegas"])
+    ])
+    max_axis = ceil(max_axis/5)*5
+    scatter_data = scatter_data.dropna(subset=["MG_ATS_PointDiff", "ATSVegas"])
+    scatter_data["MG_ATS_PointDiff"] = pd.to_numeric(scatter_data["MG_ATS_PointDiff"], errors='coerce')
+    scatter_data["ATSVegas"] = pd.to_numeric(scatter_data["ATSVegas"], errors='coerce')
+    rightwins =scatter_data[(scatter_data["MG_ATS_PointDiff"] >0)&(scatter_data["ATSVegas"] <0)]['MG_ATS_PointDiffWinATS'].sum()/len(scatter_data[(scatter_data["MG_ATS_PointDiff"] >0)&(scatter_data["ATSVegas"] <0)])
+    leftwins =scatter_data[(scatter_data["MG_ATS_PointDiff"] <0)&(scatter_data["ATSVegas"] >0)]['MG_ATS_PointDiffWinATS'].sum()/len(scatter_data[(scatter_data["MG_ATS_PointDiff"] <0)&(scatter_data["ATSVegas"] >0)])
+    import plotly.graph_objects as go
+    fig = go.Figure()
+    fig.add_trace(
+    go.Scatter(
+        x=scatter_data["MG_ATS_PointDiff"],
+        y=scatter_data["ATSVegas"],
+        # markers, lines, markers+lines
+        mode="markers"
+        )
+    )
+
+    fig.update_layout(
+    xaxis=dict(
+        range=[min_axis, max_axis],
+        title="Model Spread",
+        # Hide the grid
+        showgrid=False,
+    ),
+    yaxis=dict(
+        range=[min_axis, max_axis],
+        title="Vegas Spread",
+        # Hide the grid
+        showgrid=False,
+    ),
+    # Background color
+    plot_bgcolor="white",
+    height=800
+    )
+    fig.add_hline(y=0, line=dict(color="#C0C0C0", dash="dashdot", width=1))
+    fig.add_vline(x=0, line=dict(color="#C0C0C0", dash="dashdot", width=1))
+    fig.add_shape(
+    type="line",
+    # starting coordinates
+    x0=min_axis, y0=min_axis,
+    # ending coordinates
+    x1=max_axis, y1=max_axis,
+    # Make sure the points are on top of the line
+    layer="below",
+    # Style it like the axis lines
+    line=dict(dash="dashdot", color="#C0C0C0", width=1)
+    )
+    min5 =min_axis-15
+    max5 = max_axis+15
+
+    fig.add_shape( type="line", x0=min_axis, y0=min_axis + 10, x1=max_axis, y1=max_axis + 10, layer="below", line=dict(dash="dashdot", color="lightblue", width=1)) # You can change the color and style as needed )
+    fig.add_shape( type="line", x0=min_axis, y0=min_axis - 10, x1=max_axis, y1=max_axis - 10, layer="below", line=dict(dash="dashdot", color="lightblue", width=1)) # You can change the color and style as needed )
+
+    ats_outcome = {
+    1: {"name": "Win", "color": "blue"},
+    0: {"name": "Loss", "color": "red"}
+    }
+    # Dictionary to loop over
+    ats_outcome = {
+    1: {"name": "Win", "color": "blue"},
+    0: {"name": "Loss", "color": "red"}
+   }
+    # .items() returns the key (k) and value (v)
+    for k, v in ats_outcome.items():
+        data = scatter_data.loc[scatter_data["MG_ATS_PointDiffWinATS"] == k, :]
+        # The value (v) is also a dictionary, so we
+        #   can get the values of the name and color key
+        name = v.get("name")
+        color = v.get("color")
+        fig.add_trace(
+        go.Scatter(
+            x=data["MG_ATS_PointDiff"],
+            y=data["ATSVegas"],
+            name=name,
+            mode="markers",
+            marker=dict(size=10, opacity=0.7, color=color),
+            hovertemplate="Vegas Spread: %{y}<br>"
+                          "Model Spread: %{x}<br>"
+                          f"ATS Outcome: {name}<br>"
+                          "<extra></extra>"
+            )
+        )
+    fig.add_shape(
+    type="rect",
+    x0=min_axis,
+    x1=0,
+    y0=0,
+    y1=max_axis,
+    fillcolor="Olive",
+    line_color="Olive",
+    opacity=0.1
+    )
+    fig.add_annotation(
+    x=-25,
+    y=25,
+    align="center",
+    text=f"Model & Vegas Disagree<br><b>Win Rate: {round(leftwins*100,2)}%</b>",
+    font=dict(size=12, color="gray"),
+    showarrow=False
+    )
+    fig.add_shape(
+    type="rect",
+    x0=-min_axis,
+    x1=0,
+    y0=0,
+    y1=-max_axis-10,
+    fillcolor="lightgreen",
+    line_color="Olive",
+    opacity=0.1
+    )
+    fig.add_annotation(
+    x=20,
+    y=-25,
+    align="center",
+    text=f"Model & Vegas Disagree<br><b>Win Rate: {round(rightwins*100,2)}%</b>",
+    font=dict(size=12, color="gray"),
+    showarrow=False
+    )
+
+#fig.show()
+st.plotly_chart(fig) 
+
+
 def showYesterdaysChart(Betting):
     #st.dataframe(Betting)
     #scatter_data = Betting[Betting['Date'].isin(mylist)]
@@ -4289,15 +4426,12 @@ def Betting_Charts_Page(data):
     df = df[bcols]
     #df['Both'] = (df['Pomeroy_PointDiffSelection'] == df['MG_ATS_PointDiffSelection']).astype(int)
     mydates = df['Date_zero'].unique()
-    st.write(mydates)
+    #st.write(mydates)
     Tables_Choice1=st.multiselect('Select days',mydates)
-    st.write(Tables_Choice1)
+    #st.write(Tables_Choice1)
+    if st.button('Run'):
+        showBettingZones(Betting,Tables_Choice1)
 
-    # Convert to datetime object
-    date_obj = datetime.strptime(Tables_Choice1, "%m/%d/%Y")
-
-    # Convert to desired format
-    new_date_str = date_obj.strftime("%Y-%m-%d")
 def read_csv_from_url(url):
     df = pd.read_csv(url,sep=',',  header=None)
     return df

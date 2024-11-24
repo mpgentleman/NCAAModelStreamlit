@@ -157,6 +157,7 @@ def showBettingZones(scatter_data,mylist):
    }
     # .items() returns the key (k) and value (v)
     #for k, v in ats_outcome.items():
+    st.dataframe(scatter_data)
     for index, row in scatter_data.iterrows():
         name = row["MG_ATS_PointDiffSelection"] # Get the corresponding value for the name
         teams = row["prediction"]

@@ -365,9 +365,10 @@ def showYesterdaysChart(Betting,hurdle):
     st.plotly_chart(fig) 
 def showSpreadChart(df):
     scatter_data = df
-    scatter_data = scatter_data.dropna(subset=["MG_ATS_PointDiff", "VegasSpread",'MG_ATS_PointDiffSelection',"commence_time"])
+    #scatter_data = scatter_data.dropna(subset=["MG_ATS_PointDiff", "VegasSpread",'MG_ATS_PointDiffSelection',"commence_time"])
+    scatter_data = scatter_data.dropna(subset=["MG_ATS_PointDiff", "FanDuel",'MG_ATS_PointDiffSelection',"commence_time"])
     scatter_data["MG_ATS_PointDiff"] = pd.to_numeric(scatter_data["MG_ATS_PointDiff"], errors='coerce')
-    scatter_data["VegasSpread"] = pd.to_numeric(scatter_data["VegasSpread"], errors='coerce')
+    scatter_data["FanDuel"] = pd.to_numeric(scatter_data["FanDuel"], errors='coerce')
     scatter_data["SpreadDif"] = scatter_data["MG_ATS_PointDiff"]-scatter_data["VegasSpread"]
     scatter_data['commence_time'] = pd.to_datetime(scatter_data['commence_time'])
     # Convert to US Central time
@@ -377,13 +378,13 @@ def showSpreadChart(df):
 
     min_axis = min([
     min(scatter_data["MG_ATS_PointDiff"]),
-    min(scatter_data["VegasSpread"])
+    min(scatter_data["FanDuel"])
 ])
     min_axis = floor(min_axis/5)*5
 
     max_axis = max([
     max(scatter_data["MG_ATS_PointDiff"]),
-    max(scatter_data["VegasSpread"])
+    max(scatter_data["FanDuel"])
 ])
     max_axis = ceil(max_axis/5)*5
     fig = go.Figure()

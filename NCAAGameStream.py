@@ -4445,7 +4445,7 @@ def Betting_Charts_Page(data):
     #df['Both'] = (df['Pomeroy_PointDiffSelection'] == df['MG_ATS_PointDiffSelection']).astype(int)
     mydates = df['Date_zero'].unique()
     #st.write(mydates)
-    hurdle =  st.number_input('Enter Point spread Hurdle', min_value=1, max_value=15, value=5, step=1)
+    hurdle =  st.number_input('Enter Point spread Hurdle', min_value=1, max_value=15, value=10, step=1)
     Tables_Choice1=st.multiselect('Select days',mydates)
     #st.write(Tables_Choice1)
     if not Tables_Choice1:

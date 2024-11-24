@@ -160,7 +160,7 @@ def showBettingZones(scatter_data,mylist):
     st.dataframe(scatter_data)
     for index, row in scatter_data.iterrows():
         name = row["MG_ATS_PointDiffSelection"] # Get the corresponding value for the name
-        teams = row["prediction"]
+        teams = row["matchup"]
         gametime = row["Date_zero"]
         winorlose = row["MG_ATS_PointDiffWinATS"]
         if winorlose == 1:
@@ -4452,7 +4452,7 @@ def Betting_Performance_Page(data):
 def Betting_Charts_Page(data):
     st.title('Betting Charts')
     df = data['SkedBetting']
-    bcols = ['Tm','AWAY','HOME','Date_zero','Reg_dif','Over_dif','Daily_Reg_Tm_net_eff','Daily_Reg_Opp_net_eff','MG_ATS_PointDiff','ATSVegas','Pomeroy_PointDiffWinATS',
+    bcols = ['Tm','AWAY','HOME','Date_zero','matchup','Reg_dif','Over_dif','Daily_Reg_Tm_net_eff','Daily_Reg_Opp_net_eff','MG_ATS_PointDiff','ATSVegas','Pomeroy_PointDiffWinATS',
      'Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS',
      'TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS',
      'MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS',

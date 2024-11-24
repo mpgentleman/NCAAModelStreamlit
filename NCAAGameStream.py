@@ -186,8 +186,8 @@ def showBettingZones(scatter_data,mylist):
     opacity=0.1
     )
     fig.add_annotation(
-    x=-25,
-    y=25,
+    x=-15,
+    y=15,
     align="center",
     text=f"Model & Vegas Disagree<br><b>Win Rate: {round(leftwins*100,2)}%</b>",
     font=dict(size=12, color="gray"),
@@ -204,7 +204,7 @@ def showBettingZones(scatter_data,mylist):
     opacity=0.1
     )
     fig.add_annotation(
-    x=20,
+    x=10,
     y=-25,
     align="center",
     text=f"Model & Vegas Disagree<br><b>Win Rate: {round(rightwins*100,2)}%</b>",
@@ -222,8 +222,8 @@ def showBettingZones(scatter_data,mylist):
     opacity=0.1
     )
     fig.add_annotation(
-    x=20,
-    y=25,
+    x=5,
+    y=15,
     align="center",
     text=f"Model & Vegas Disagree<br><b>Win Rate: {round(upperright*100,2)}%</b>",
     font=dict(size=12, color="gray"),
@@ -339,8 +339,8 @@ def showYesterdaysChart(Betting,hurdle):
     opacity=0.2
     )
     fig.add_annotation(
-    x=-25,
-    y=25,
+    x=-35,
+    y=15,
     align="center",
     text=f"Model likes favorites more than Vegas by 10 or more<br><b>Win Rate: {round(upperspread*100,2)}%</b>",
     font=dict(size=12, color="gray"),
@@ -354,8 +354,8 @@ def showYesterdaysChart(Betting,hurdle):
     opacity=0.2
     )
     fig.add_annotation(
-    x=15,
-    y=-25,
+    x=10,
+    y=-35,
     align="center",
     text=f"Model likes underdogs more than Vegas by 10 or more<br><b>Win Rate: {round(lowerspread*100,2)}%</b>",
     font=dict(size=12, color="gray"),

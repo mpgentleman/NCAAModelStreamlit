@@ -163,6 +163,7 @@ def showBettingZones(scatter_data,mylist):
         teams = row["matchup"]
         gametime = row["Date_zero"]
         winorlose = row["MG_ATS_PointDiffWinATS"]
+        result = row['result']
         if winorlose == 1:
             mycolor ='blue'
         else:
@@ -187,6 +188,7 @@ def showBettingZones(scatter_data,mylist):
                           "Model Spread: %{x}<br>"
                           f"ATS Outcome: {name}<br>"
                           f"Matchup: {teams}<br>"
+                          f"Matchup: {result}<br>"
                           f"Date: {gametime}<br>"
                           "<extra></extra>"
             )
@@ -4452,7 +4454,7 @@ def Betting_Performance_Page(data):
 def Betting_Charts_Page(data):
     st.title('Betting Charts')
     df = data['SkedBetting']
-    bcols = ['Tm','AWAY','HOME','Date_zero','matchup','Reg_dif','Over_dif','Daily_Reg_Tm_net_eff','Daily_Reg_Opp_net_eff','MG_ATS_PointDiff','ATSVegas','Pomeroy_PointDiffWinATS',
+    bcols = ['Tm','AWAY','HOME','Date_zero','matchup','result','Reg_dif','Over_dif','Daily_Reg_Tm_net_eff','Daily_Reg_Opp_net_eff','MG_ATS_PointDiff','ATSVegas','Pomeroy_PointDiffWinATS',
      'Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS',
      'TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS',
      'MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS',

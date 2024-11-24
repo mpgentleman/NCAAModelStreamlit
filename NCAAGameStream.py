@@ -156,22 +156,36 @@ def showBettingZones(scatter_data,mylist):
     0: {"name": "Loss", "color": "red"}
    }
     # .items() returns the key (k) and value (v)
-    for k, v in ats_outcome.items():
-        data = scatter_data.loc[scatter_data["MG_ATS_PointDiffWinATS"] == k, :]
+    #for k, v in ats_outcome.items():
+    for index, row in scatter_data.iterrows():
+        name = row["MG_ATS_PointDiffSelection"] # Get the corresponding value for the name
+        teams = row["teams"]
+        gametime = row["Date_zero"]
+        winorlose = row["MG_ATS_PointDiffWinATS"]
+        if winorlose == 1:
+            mycolor ='blue'
+        else:
+            mycolor ='red'
+        #data = scatter_data.loc[scatter_data["MG_ATS_PointDiffWinATS"] == k, :]
+        #MG_ATS_PointDiffWinATS
+        #Date_zero
         # The value (v) is also a dictionary, so we
         #   can get the values of the name and color key
-        name = v.get("name")
-        color = v.get("color")
+        #name = v.get("name")
+        #color = v.get("color")
         fig.add_trace(
         go.Scatter(
-            x=data["MG_ATS_PointDiff"],
-            y=data["ATSVegas"],
+            x=[row["MG_ATS_PointDiff"]],
+            y=[row["ATSVegas"]],
+            #x=data["MG_ATS_PointDiff"],
+            #y=data["ATSVegas"],
             name=name,
             mode="markers",
-            marker=dict(size=10, opacity=0.7, color=color),
+            marker=dict(size=10, opacity=0.7, color=mycolor),
             hovertemplate="Vegas Spread: %{y}<br>"
                           "Model Spread: %{x}<br>"
                           f"ATS Outcome: {name}<br>"
+                          f"Date: {gametime}<br>"
                           "<extra></extra>"
             )
         )

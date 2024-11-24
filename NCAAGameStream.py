@@ -397,7 +397,7 @@ def showSpreadChart(df):
         fig.add_trace(
             go.Scatter(
             x=[row["MG_ATS_PointDiff"]],
-            y=[row["VegasSpread"]],
+            y=[row["FanDuel"]],
             name=name,
            
             mode="markers",

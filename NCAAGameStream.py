@@ -159,7 +159,7 @@ def showBettingZones(scatter_data,mylist):
     #for k, v in ats_outcome.items():
     for index, row in scatter_data.iterrows():
         name = row["MG_ATS_PointDiffSelection"] # Get the corresponding value for the name
-        teams = row["teams"]
+        teams = row["prediction"]
         gametime = row["Date_zero"]
         winorlose = row["MG_ATS_PointDiffWinATS"]
         if winorlose == 1:
@@ -185,6 +185,7 @@ def showBettingZones(scatter_data,mylist):
             hovertemplate="Vegas Spread: %{y}<br>"
                           "Model Spread: %{x}<br>"
                           f"ATS Outcome: {name}<br>"
+                          f"Matchup: {teams}<br>"
                           f"Date: {gametime}<br>"
                           "<extra></extra>"
             )

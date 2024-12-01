@@ -4464,6 +4464,11 @@ def Betting_Charts_Page(data):
     mydates = df['Date_zero'].unique()
     #st.write(mydates)
     hurdle =  st.number_input('Enter Point spread Hurdle', min_value=1, max_value=15, value=10, step=1)
+    myranks = ['Pomeroy','TRank','MG','MG_ATS','ATSVegas','Daily_Reg']
+    
+    #'Pomeroy_PointDiffWinATS','TRank_PointDiffWinATS','MG_PointDiffWinATS','Daily_Reg_PointDiffWinATS'
+    myranksselect = st.multiselect('Select Ranking',myranks)
+    myranksagainst = st.multiselect('Select Versus System',myranks)
     Tables_Choice1=st.multiselect('Select days',mydates)
     #st.write(Tables_Choice1)
     if not Tables_Choice1:

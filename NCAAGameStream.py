@@ -4382,7 +4382,7 @@ def Betting_Performance_Page(data):
 
     if st.button('Run'):
         dfSelect = df[df['Date_zero']==Tables_Choice1]
-        showYesterdaysChart(dfSelect)
+        showYesterdaysChart(dfSelect,10)
         gb = GridOptionsBuilder.from_dataframe(dfSelect,groupable=True)
         gb.configure_side_bar()
         gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)

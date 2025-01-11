@@ -4305,7 +4305,7 @@ def Team_Page(data):
             showIndividualPlayerCharts(dfI_Team, player)
     st.subheader(team_selected + ' Schedule/Results Data')
     merged_df = pd.merge(test1, data['SkedBetting'][['muid', 'MG_ATS_PointDiffWinATS']], on='muid', how='left')
-    test1 = merged_df[['Date','Tm','Opp','HomeAway','Result_x','EMRating','PlayingOverRating'	,'ATSvalue','Tempo','Lead','AvgLead','Tm_AdjO','Tm_AdjD','G-Score']]
+    test1 = merged_df[['Date','Tm','Opp','HomeAway','Result_x','EMRating','PlayingOverRating'	,'ATSvalue','Tempo','Lead','AvgLead','Tm_AdjO','Tm_AdjD','G-Score','MG_ATS_PointDiffWinATS']]
 
     allcols=test1.columns
     gb = GridOptionsBuilder.from_dataframe(test1,groupable=True)

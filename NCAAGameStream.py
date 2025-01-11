@@ -2758,7 +2758,7 @@ def getTeamDFTable(team1,teamname):
     AgGrid(team1, gridOptions=gridOptions, enable_enterprise_modules=True,height=1000,allow_unsafe_jscode=True)
 
 def getTeamDFTable2024(team1,teamname):
-    colsM=['DateNew','Opp','Result_x','ATS','EMRating','PlayingOverRating','pace','ATSVegas','OverUnderVegas']
+    colsM=['DateNew','Opp','Result_x','ATS','EMRating','PlayingOverRating','pace','ATSVegas','OverUnderVegas','MG_ATS_PointDiffWinATS']
     numeric=['numericColumn','numberColumnFilter']
     team1=team1[colsM]
     allcols=team1.columns
@@ -3797,10 +3797,12 @@ def Todays_Games(data):
         test1=get_team_info_from_gamesdf(Gamesdf,AwayTeam)
         #st.dataframe(test1)
         test1 = test1.reset_index(drop=True)
+        test1 = pd.merge(test1, data['SkedBetting'][['muid', 'MG_ATS_PointDiffWinATS']], on='muid', how='left')
         #test1.drop(columns=test1.columns[0], axis=1,  inplace=True)
          #test1 = test1.drop_duplicates()
         test2=get_team_info_from_gamesdf(Gamesdf,HomeTeam)
         test2 = test2.reset_index(drop=True)
+        test2 = pd.merge(test2, data['SkedBetting'][['muid', 'MG_ATS_PointDiffWinATS']], on='muid', how='left')
         #test2.drop(columns=test2.columns[0], axis=1,  inplace=True)
         #test2 = test2.drop_duplicates()
         test1['New_ID'] = range(0, 0+len(test1))
@@ -4031,10 +4033,12 @@ def Team_Matchup(data):
         test1=get_team_info_from_gamesdf(Gamesdf,AwayTeam)
         #st.dataframe(test1)
         test1 = test1.reset_index(drop=True)
+        test1 = pd.merge(test1, data['SkedBetting'][['muid', 'MG_ATS_PointDiffWinATS']], on='muid', how='left')
         #test1.drop(columns=test1.columns[0], axis=1,  inplace=True)
          #test1 = test1.drop_duplicates()
         test2=get_team_info_from_gamesdf(Gamesdf,HomeTeam)
         test2 = test2.reset_index(drop=True)
+        test2 = pd.merge(test2, data['SkedBetting'][['muid', 'MG_ATS_PointDiffWinATS']], on='muid', how='left')
         #test2.drop(columns=test2.columns[0], axis=1,  inplace=True)
         #test2 = test2.drop_duplicates()
         test1['New_ID'] = range(0, 0+len(test1))

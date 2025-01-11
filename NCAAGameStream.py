@@ -3732,7 +3732,7 @@ def Todays_Games(data):
     Dailyschedule1 = Dailyschedule
     Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','FanDuel','MG_ATS_PointDiff','commence_time','Reg_dif','Over_dif','Dif_from_Vegas','Pomeroy_PointDiff',
                                    'TRank_PointDiff','MG_PointDiff','Daily_Reg_PointDiff','DraftKings','BetMGM spreads','VegasTotal',
-                                   'Pt_Spread_Difference','Pomeroy_PointDiffSelection','MG_ATS_PointDiffSelection']]
+                                   'Pt_Spread_Difference','Pomeroy_PointDiffSelection','MG_ATS_PointDiffSelection','Total_Diff']]
     Dailyschedule.DraftKings = Dailyschedule.DraftKings.astype(float).round(1)
     Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
     
@@ -3758,6 +3758,8 @@ def Todays_Games(data):
     gb.configure_column('Daily_Reg_PointDiff',valueFormatter=numberFormat(1))
     gb.configure_column('Dif_from_Vegas',cellStyle=csTotal,valueFormatter=numberFormat(2))
     gb.configure_column('Pt_Spread_Difference',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_column('Total_Diff',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    
     #gb.configure_pagination()
     gb.configure_side_bar()
     gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)

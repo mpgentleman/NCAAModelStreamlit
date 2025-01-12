@@ -4370,7 +4370,7 @@ def Team_Page(data):
 def Betting_Performance_Page(data):
     st.title('Betting Performance')
     df = data['SkedBetting']
-    bcols = ['Tm','AWAY','HOME','Date_zero','Reg_dif','Over_dif','Daily_Reg_Tm_net_eff','Daily_Reg_Opp_net_eff','MG_ATS_PointDiff','ATSVegas','Pomeroy_PointDiffWinATS',
+    bcols = ['Tm','AWAY','HOME','Date_zero','Reg_dif','Over_dif','Total_Diff','Daily_Reg_Tm_net_eff','Daily_Reg_Opp_net_eff','MG_ATS_PointDiff','ATSVegas','Pomeroy_PointDiffWinATS',
      'Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS',
      'TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS',
      'MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS',
@@ -4409,7 +4409,7 @@ def Betting_Performance_Page(data):
         keyname='Test bet'
         g = _displayGrid(df, gb, key=keyname, height=600)
         #df2 = data['SkedBetting']
-        df2 = df[['Date_zero','Pomeroy_PointDiffWinATS','Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS','TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS','MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS','Daily_Reg_PointDiffLossATS']]
+        df2 = df[['Date_zero','Total_Diff','Pomeroy_PointDiffWinATS','Pomeroy_PointDiffLossATS','Pomeroy_OverUnderWinTotal','Pomeroy_OverUnderLossTotal','TRank_PointDiffWinATS','TRank_PointDiffLossATS','TRank_OverUnderWinTotal','TRank_OverUnderLossTotal','MG_PointDiffWinATS','MG_PointDiffLossATS','MG_OverUnderWinTotal','MG_OverUnderLossTotal','MG_ATS_PointDiffWinATS','MG_ATS_PointDiffLossATS','Daily_Reg_PointDiffWinATS','Daily_Reg_PointDiffLossATS']]
         pivot_df = df2.pivot_table(index='Date_zero',aggfunc='sum')
         pivot_df.index = pd.to_datetime(pivot_df.index)
         pivot_df = pivot_df.sort_index()

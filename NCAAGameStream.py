@@ -4634,7 +4634,7 @@ def Todays_Charts(data):
         TeamDatabase2.set_index("OldTRankName", inplace=True)
         from matplotlib.backends.backend_pdf import PdfPages
         pp= PdfPages("Daily_Team_Charts_"+dateforRankings+".pdf")
-        for index, row in DailySchedule.iterrows():
+        for index, row in Dailyschedule.iterrows():
             AwayTeam = row['AWAY']
             HomeTeam = row['HOME']
             st.header('Team Matchup')

@@ -3164,7 +3164,7 @@ def displayTeamDistributionsMatchupSchedule(Gamesdf,myteam,team2):
 
 
 
-    density41 = ggplot(dff1, aes(x='EMRating', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3)+ scale_fill_brewer(type='seq')+ ggtitle("EMRating")+ geom_vline(xintercept=df1['EMRating'].median())+ geom_label(x=df1['EMRating']mean, y=.01, label=df1['EMRating'].median(), size=6)+ geom_vline(xintercept=df['Pomeroy_Tm_AdjEM'].iloc[-1], color="red") + geom_label(x=df['Pomeroy_Tm_AdjEM'].iloc[-1], y=0, label=df['Pomeroy_Tm_AdjEM'].iloc[-1], size=6, position=position_nudge(y=.1))
+    density41 = ggplot(dff1, aes(x='EMRating', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3)+ scale_fill_brewer(type='seq')+ ggtitle("EMRating")+ geom_vline(xintercept=df1['EMRating'].median())+ geom_label(x=df1['EMRating'].median(), y=.01, label=df1['EMRating'].median(), size=6)+ geom_vline(xintercept=df['Pomeroy_Tm_AdjEM'].iloc[-1], color="red") + geom_label(x=df['Pomeroy_Tm_AdjEM'].iloc[-1], y=0, label=df['Pomeroy_Tm_AdjEM'].iloc[-1], size=6, position=position_nudge(y=.1))
     p2 = gggrid([density41], ncol=1)+ ggsize(2000, 1000)
     st.subheader(' Distribution Charts')
     #st_letsplot(p2)

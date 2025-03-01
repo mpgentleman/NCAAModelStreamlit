@@ -3148,7 +3148,28 @@ def displayTeamDistributionsMatchup(Gamesdf,myteam,team2):
     #st_letsplot(p2)
     plot_dict = p2.as_dict()
     components.html(_as_html(plot_dict), height=1500 + 20,width=3000 + 20,scrolling=True,)
+def displayTeamDistributionsMatchupSchedule(Gamesdf,myteam,team2):
+    import streamlit.components.v1 as components
+    df = Gamesdf[Gamesdf['Tm']==myteam][['Tm','Opp','EMRating','Pomeroy_Tm_AdjEM']].tail(10)
+    df1 = Gamesdf[Gamesdf['Tm']==team2][['Tm','Opp','EMRating','Pomeroy_Tm_AdjEM']].tail(10)
+    dff1 = pd.concat([df,df1])
+    col = ['Tm','EMRating','Pomeroy']
 
+    dff1 = dff1.rename(columns={
+        'Tm': 'Team',
+
+        
+    })
+    
+
+
+
+    density41 = ggplot(dff1, aes(x='EMRating', color='Team')) + ggsize(800, 550)+ geom_density(aes(fill='Team'), alpha=.3)+ scale_fill_brewer(type='seq')+ ggtitle("EMRating")+ geom_vline(xintercept=df1['EMRating'].median())+ geom_label(x=df1['EMRating']mean, y=.01, label=df1['EMRating'].median(), size=6)+ geom_vline(xintercept=df['Pomeroy_Tm_AdjEM'].iloc[-1], color="red") + geom_label(x=df['Pomeroy_Tm_AdjEM'].iloc[-1], y=0, label=df['Pomeroy_Tm_AdjEM'].iloc[-1], size=6, position=position_nudge(y=.1))
+    p2 = gggrid([density41], ncol=1)+ ggsize(2000, 1000)
+    st.subheader(' Distribution Charts')
+    #st_letsplot(p2)
+    plot_dict = p2.as_dict()
+    components.html(_as_html(plot_dict), height=500 + 20,width=300 + 20,scrolling=True,)
 def get_team_info_from_gamesdf(df,Team):
     AF = df[df['Tm']==Team].sort_values('DateNew')
     
@@ -4659,6 +4680,7 @@ def Todays_Charts(data):
                 st.subheader(HomeTeam + '  Data')
                 showTeamLetsPlotMultiCharts2024(test2,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',HomeTeam)
                 showTeamLetsPlotOverplayingCharts2024(test2,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',HomeTeam)
+            displayTeamDistributionsMatchupSchedule(Gamesdf,AwayTeam,HomeTeam)
             
        
 

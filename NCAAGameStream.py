@@ -4602,7 +4602,7 @@ def Todays_Charts(data):
     Gamesdf = Gamesdf.reset_index(drop=True)
     Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
     Gamesdf = Gamesdf.drop_duplicates()
-    
+    Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+today_date_format+"Schedule.csv")
 
     Dailyschedule1 = Dailyschedule
     Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','FanDuel','MG_ATS_PointDiff','commence_time','Reg_dif','Over_dif','Dif_from_Vegas','Pomeroy_PointDiff',
@@ -4619,7 +4619,7 @@ def Todays_Charts(data):
     st.header('Sortable NCAA Game Schedule')
     st.text('Games can be sorted by columns. Click on column header to sort')
     st.text('Low Negative values in the Reg Dif and Overplaying column mean the Home team is the pick  ') 
-    Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+today_date_format+"Schedule.csv")
+    
     option = st.selectbox(
     "How would you like Schedule sorted?",
     ("Total_Diff", "commence_time"),

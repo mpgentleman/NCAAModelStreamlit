@@ -3169,7 +3169,7 @@ def displayTeamDistributionsMatchupSchedule(Gamesdf,myteam,team2):
     st.subheader(' Distribution Charts')
     #st_letsplot(p2)
     plot_dict = p2.as_dict()
-    components.html(_as_html(plot_dict), height=500 + 20,width=300 + 20,scrolling=True,)
+    components.html(_as_html(plot_dict), height=1500 + 20,width=3000 + 20,scrolling=True,)
 def get_team_info_from_gamesdf(df,Team):
     AF = df[df['Tm']==Team].sort_values('DateNew')
     

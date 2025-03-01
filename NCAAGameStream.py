@@ -4673,7 +4673,7 @@ def Todays_Charts(data):
         for index, row in Dailyschedule.iterrows():
             AwayTeam = row['AWAY']
             HomeTeam = row['HOME']
-            FanDuelSpread= row['Fanduel']
+            FanDuelSpread= row['FanDuel']
             MGSpread = row['MG_ATS_PointDiff']
             gametime = row['commence_time']
             mysubtitle= AwayTeam + ' ' + Hometeam + ' ' + FanDuelSpread+ ' ' + MGSpread + ' ' + gametime

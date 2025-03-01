@@ -4636,7 +4636,7 @@ def Todays_Charts(data):
         pp= PdfPages("Daily_Team_Charts_"+dateforRankings+".pdf")
         for index, row in DailySchedule.iterrows():
             AwayTeam = row['AWAY']
-            HomeTeam = row['HOME'
+            HomeTeam = row['HOME']
             st.header('Team Matchup')
             plt.style.use('seaborn')
 

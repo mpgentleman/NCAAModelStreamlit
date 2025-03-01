@@ -4649,7 +4649,7 @@ def Todays_Charts(data):
             test1['New_ID'] = range(0, 0+len(test1))
             test2['New_ID'] = range(0, 0+len(test2))
             myteams = [AwayTeam,HomeTeam]
-
+            col1, col2 = st.columns(2)
             with col1:
                 st.subheader(AwayTeam + '  Data')
                 showTeamLetsPlotMultiCharts2024(test1,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',AwayTeam)              
@@ -4657,8 +4657,8 @@ def Todays_Charts(data):
             
             with col2:
                 st.subheader(HomeTeam + '  Data')
-            showTeamLetsPlotMultiCharts2024(test2,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',HomeTeam)
-            showTeamLetsPlotOverplayingCharts2024(test2,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',HomeTeam)
+                showTeamLetsPlotMultiCharts2024(test2,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',HomeTeam)
+                showTeamLetsPlotOverplayingCharts2024(test2,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',HomeTeam)
             
        
 

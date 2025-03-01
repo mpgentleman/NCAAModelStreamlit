@@ -4676,7 +4676,7 @@ def Todays_Charts(data):
             FanDuelSpread= row['FanDuel']
             MGSpread = row['MG_ATS_PointDiff']
             gametime = row['commence_time']
-            mysubtitle= AwayTeam + ' ' + Hometeam + ' ' + FanDuelSpread+ ' ' + MGSpread + ' ' + gametime
+            mysubtitle= AwayTeam + ' ' + HomeTeam + ' ' + FanDuelSpread+ ' ' + MGSpread + ' ' + gametime
             st.header('Team Matchup')
             st.subheader(mysubtitle)
             plt.style.use('seaborn')

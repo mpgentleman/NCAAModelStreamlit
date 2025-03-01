@@ -4673,7 +4673,12 @@ def Todays_Charts(data):
         for index, row in Dailyschedule.iterrows():
             AwayTeam = row['AWAY']
             HomeTeam = row['HOME']
+            FanDuelSpread= row['Fanduel']
+            MGSpread = row['MG_ATS_PointDiff']
+            gametime = row['commence_time']
+            mysubtitle= AwayTeam + ' ' + Hometeam + ' ' + FanDuelSpread+ ' ' + MGSpread + ' ' + gametime
             st.header('Team Matchup')
+            st.subheader(mysubtitle)
             plt.style.use('seaborn')
 
             test1=get_team_info_from_gamesdf(Gamesdf,AwayTeam)

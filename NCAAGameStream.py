@@ -3734,7 +3734,7 @@ def MG_Rankings(data):
             #plot_line_chart(MG_Rank, selected_teams)
 
 def Future_Games(data):
-    mydates = ['20250318','20250319','20250320','20250321']
+    mydates = ['20250320','20250318','20250319','20250321']
     Tables_Choice1=st.selectbox('Select days',mydates)
     today_date_format = Tables_Choice1
     #Dailyschedule = data['Dailyschedule']

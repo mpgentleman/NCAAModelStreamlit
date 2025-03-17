@@ -3803,7 +3803,7 @@ def Future_Games(data):
     gb.configure_grid_options(**opts)
     keyname='Test'
     g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
-    showSpreadChart(Dailyschedule1)
+    #showSpreadChart(Dailyschedule1)
     #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
     st.text('MG_ATS_PointDif is the point spread using the ATS model')
     st.text('Reg_dif is the differnce between both teams using a polynomial regression of current rankings')

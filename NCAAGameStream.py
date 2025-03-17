@@ -3733,6 +3733,222 @@ def MG_Rankings(data):
         #with col2:
             #plot_line_chart(MG_Rank, selected_teams)
 
+def Future_Games(data):
+    mydates = ['20250318','20250319','20250320','20250321']
+    Tables_Choice1=st.multiselect('Select days',mydates)
+    today_date_format = Tables_Choice1
+    #Dailyschedule = data['Dailyschedule']
+    #try:
+    Gamesdf = data['Gamesdf']
+    #Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
+    #Gamesdf = Gamesdf.reset_index(drop=True)
+    #Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
+    #Gamesdf = Gamesdf.drop_duplicates()
+    
+    Tables_Choice=st.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'],index=0)
+    Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+today_date_format+"Schedule.csv")
+    if 'Alphabetical'in  Tables_Choice:
+        Dailyschedule=Dailyschedule.sort_values(by=['AWAY'])
+    if 'Time' in Tables_Choice:
+        Dailyschedule=Dailyschedule.sort_values(by=['commence_time'])   
+    if 'Regression_Difference' in Tables_Choice: 
+        Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
+    if 'OverPlaying' in Tables_Choice: 
+        Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
+    AwayList=[''] + Dailyschedule['AWAY'].tolist()
+    HomeList=[''] + Dailyschedule['HOME'].tolist()
+    AwayTeam = st.selectbox('Away Team',AwayList,index=0)
+    HomeTeam = st.selectbox('Home Team',HomeList,index=0)
+    st.header('Sortable NCAA Game Schedule')
+    st.text('Games can be sorted by columns. Click on column header to sort')
+    st.text('To sort by game time click the Time column.  ')
+    st.text('Low Negative values in the Reg Dif and Overplaying column mean the Home team is the pick  ') 
+    Dailyschedule1 = Dailyschedule
+    Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','FanDuel','MG_ATS_PointDiff','commence_time','Reg_dif','Over_dif','Dif_from_Vegas','Pomeroy_PointDiff',
+                                   'TRank_PointDiff','MG_PointDiff','Daily_Reg_PointDiff','DraftKings','BetMGM spreads','VegasTotal',
+                                   'Pt_Spread_Difference','Pomeroy_PointDiffSelection','MG_ATS_PointDiffSelection','Total_Diff']]
+    Dailyschedule.DraftKings = Dailyschedule.DraftKings.astype(float).round(1)
+    Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
+    
+    Dailyschedule['commence_time'] = pd.to_datetime(Dailyschedule['commence_time'])
+    # Convert to US Central time
+    Dailyschedule['commence_time'] = Dailyschedule['commence_time'].dt.tz_convert('US/Central')
+    # Format time to display like 11:00AM, 2:00PM, etc.
+    Dailyschedule['commence_time'] = Dailyschedule['commence_time'].dt.strftime('%I:%M%p')
+    Dailyschedule['divergence'] = (Dailyschedule['FanDuel'] * Dailyschedule['MG_ATS_PointDiff'] < 0)
+    allcols=Dailyschedule.columns
+    gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
+    gb.configure_columns(allcols, cellStyle=cellStyle)
+    csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
+    gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
+    gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_column('DraftKings',valueFormatter=numberFormat(1))
+    gb.configure_column('VegasTotal',valueFormatter=numberFormat(1))
+    gb.configure_column('Pomeroy_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('TRank_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('MG_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('MG_ATS_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('Daily_Reg_PointDiff',valueFormatter=numberFormat(1))
+    gb.configure_column('Dif_from_Vegas',cellStyle=csTotal,valueFormatter=numberFormat(2))
+    gb.configure_column('Pt_Spread_Difference',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_column('Total_Diff',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    
+    #gb.configure_pagination()
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    #gridOptions = gb.build()
+    opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+    gb.configure_grid_options(**opts)
+    keyname='Test'
+    g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
+    showSpreadChart(Dailyschedule1)
+    #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
+    st.text('MG_ATS_PointDif is the point spread using the ATS model')
+    st.text('Reg_dif is the differnce between both teams using a polynomial regression of current rankings')
+    st.text('Over_dif is the cumulative total of how both teams having played compared to their rankings')
+    st.text('A negative Over_dif means the Home teal has been overplaying relative to the away team')
+    st.text('Dif_from_Vegas is the difference between the ATS model and the current market. A large value indicates a divergence')
+    if st.button('Run'): 
+        dateforRankings=today_date_format
+         #dateforRankings5=d2
+        #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")
+        TeamDatabase2.set_index("OldTRankName", inplace=True)
+        #MG_DF1=pd.read_csv("Data/MGRankings"+season+"/tm_seasons_stats_ranks"+dateforRankings5+" .csv")
+        #MG_DF1["updated"]=update_type(MG_DF1.tm,TeamDatabase2.UpdatedTRankName)
+        #MG_DF1.set_index("updated", inplace=True)
+        from matplotlib.backends.backend_pdf import PdfPages
+        #WhichFile='TeamDataFiles'+season
+        pp= PdfPages("Daily_Team_Charts_"+dateforRankings+".pdf")     
+        st.header('Team Matchup')
+        plt.style.use('seaborn')
+        fig_dims = (12,10)
+        fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True,figsize=fig_dims)
+        plt.figure(figsize=(16, 10))
+        ax1.set_title(AwayTeam)
+        ax2.set_title(HomeTeam)  
+        test1=get_team_info_from_gamesdf(Gamesdf,AwayTeam)
+        #st.dataframe(test1)
+        test1 = test1.reset_index(drop=True)
+        test1 = pd.merge(test1, data['SkedBetting'][['muid', 'MG_ATS_PointDiffWinATS']], on='muid', how='left')
+        #test1.drop(columns=test1.columns[0], axis=1,  inplace=True)
+         #test1 = test1.drop_duplicates()
+        test2=get_team_info_from_gamesdf(Gamesdf,HomeTeam)
+        test2 = test2.reset_index(drop=True)
+        test2 = pd.merge(test2, data['SkedBetting'][['muid', 'MG_ATS_PointDiffWinATS']], on='muid', how='left')
+        #test2.drop(columns=test2.columns[0], axis=1,  inplace=True)
+        #test2 = test2.drop_duplicates()
+        test1['New_ID'] = range(0, 0+len(test1))
+        test2['New_ID'] = range(0, 0+len(test2))
+        myteams = [AwayTeam,HomeTeam]
+        try:
+            fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=2, ax=ax1, color = 'blue')
+            fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=2, ax=ax1, color = 'green')
+        except:
+            fig1=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test1,order=1, ax=ax1, color = 'blue')
+            fig2=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test1,order=1, ax=ax1, color = 'green')
+        try: 
+            fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=2, ax=ax2, color = 'blue')
+            fig4=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test2,order=2, ax=ax2, color = 'green')
+        except:
+            fig3=sns.regplot(x="New_ID", y="EMRating5GameExpMA", data=test2,order=1, ax=ax2, color = 'blue')
+            fig4=sns.regplot(x='New_ID', y='Pomeroy_Tm_AdjEM', data=test2,order=1, ax=ax2, color = 'green')
+        st.text('Daily Pomeroy Rankings line in green for each game')
+        st.text('Polynomial Regression of actual game performance in blue for each game ')
+        st.text('If the blue line is above the green then the team is playing better than its ranking ')
+        st.pyplot(fig)
+        plot_line_chartLetsPlotHot(MG_Rank2, myteams)
+        dfI =getIndividualPlayerData()
+        col1, col2 = st.columns(2)
+        with col1:
+            st.subheader(AwayTeam + ' Rankings')
+            displayRankingHistory(data,AwayTeam)
+            getTeamDFTable2024(test1,AwayTeam)
+        
+        with col2:
+            st.subheader(HomeTeam + ' Rankings')
+            displayRankingHistory(data,HomeTeam)
+            getTeamDFTable2024(test2,HomeTeam)
+        col1, col2 = st.columns(2)
+        with col1:
+            team_players = data['Players']
+            #team_players = team_players[team_players['Team']==AwayTeam]
+            st.subheader(AwayTeam + ' Player Data')
+            showPlayersTable(team_players,AwayTeam)
+            dfI_TeamA = dfI[dfI['Team'] == AwayTeam]
+            tp = team_players[team_players['Team'] == AwayTeam].sort_values('PRPG', ascending=False)
+            player1 = tp['Player'].head(6).to_list()
+            st.subheader('Polynomial Regression Charts')
+            
+
+            
+            showTeamLetsPlotMultiCharts2024(test1,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',AwayTeam)              
+            showTeamLetsPlotCharts2024(test1,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',AwayTeam)
+            showTeamLetsPlotCharts2024(test1,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',AwayTeam)
+            showTeamLetsPlotCharts2024(test1,'ATSvalue','PPP_3GameExpMA','PPP_10GameExpMA','Tm_O_PPP','PPP  vs ATS',AwayTeam)
+            showTeamLetsPlotCharts2024(test1,'OverUnder','PPP_D_3GameExpMA','PPP_D_10GameExpMA','Tm_D_PPP','PPP Defense vs OverUnder',AwayTeam)
+            showTeamLetsPlotOverplayingCharts2024(test1,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',AwayTeam)
+            
+        with col2:
+            team_players = data['Players']
+            #team_players = team_players[team_players['Team']==HomeTeam]
+            st.subheader(HomeTeam + ' Player Data')
+            showPlayersTable(team_players,HomeTeam)
+            dfI_TeamH = dfI[dfI['Team'] == HomeTeam]
+            tp = team_players[team_players['Team'] == HomeTeam].sort_values('PRPG', ascending=False)
+            player11 = tp['Player'].head(6).to_list()
+            
+
+            showTeamLetsPlotMultiCharts2024(test2,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',HomeTeam)
+            showTeamLetsPlotCharts2024(test2,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',HomeTeam)
+            showTeamLetsPlotCharts2024(test2,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',HomeTeam) 
+            showTeamLetsPlotCharts2024(test2,'ATSvalue','PPP_3GameExpMA','PPP_10GameExpMA','Tm_O_PPP','PPP  vs ATS',HomeTeam)
+            showTeamLetsPlotCharts2024(test2,'OverUnder','PPP_D_3GameExpMA','PPP_D_10GameExpMA','Tm_D_PPP','PPP Defense vs OverUnder',HomeTeam)
+            showTeamLetsPlotOverplayingCharts2024(test2,'ATSvalue',"DifCumSum", "DifCumSumEMA",'Overplaying vs ATS',HomeTeam)
+            
+            
+        #col1, col2 = st.columns(2)
+        #with col1:
+        #    for player in player1:
+        #        with st.expander(player):
+        #            st.subheader(player+' Game Stats')
+        #            showPlayerStatTables(dfI_TeamA, player)
+        #            showIndividualPlayerCharts(dfI_TeamA, player)
+        #with col2:
+        #    for player in player11:
+        #        with st.expander(player):
+        #            st.subheader(player+' Game Stats')
+         #           showPlayerStatTables(dfI_TeamH, player)
+        #            showIndividualPlayerCharts(dfI_TeamH, player)
+        #plt.show(fig)
+        #st.pyplot(fig)
+
+        #st.subheader('Pomeroy Ranking and ATS Record')
+        #st.text('Pomeroy Rankings by game Line in Green')
+        #st.text('Blue bars are positive if the team won against the spread')
+        #GetTwoChartsTogether_EMA_2024(test1,test2,AwayTeam,HomeTeam,"EMRating","EMRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
+        #GetTwoChartsTogether_EMA_2024(test1,test2,AwayTeam,HomeTeam,"PlayingOverRating","PlayingOverRating","Pomeroy_Tm_AdjEM","Pomeroy_Tm_AdjEM","ATS")
+        #st.subheader('Team Playing Over its Ranking')
+        #st.text('Blue bars are positive if the team played over its rating')
+        #st.text('The green and blue lines are cumulative moving averages')
+        #st.dataframe(test1)
+        #getOverplayingChartBothTeamsDec4(pp,test1,test2,AwayTeam,HomeTeam)
+        #st.subheader('Adjusted Offense and the ATS spread')
+        #GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Tm_AdjO","Pomeroy_Tm_AdjEM","ATS")
+        #st.subheader('Adjusted Defense against the Over/Under')
+        #GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Tm_AdjD","Pomeroy_Tm_AdjEM","OverUnder")
+        #st.subheader('Estimated Pace against the Over/Under')
+        #GetTwoTeamChartsTogetherDec6(pp,test1,test2,AwayTeam,HomeTeam,"Pace","PomTempo","OverUnder")
+    
+        #st.subheader('Points per Possesion against the ATS')
+        #GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_O_PPP","ATS")
+        #st.subheader('Defensive Points per Possesion against the Over/Under')
+        #GetTwoTeamChartsTogether2024(test1,test2,AwayTeam,HomeTeam,"Tm_D_PPP","OverUnder")
+        #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
+        #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
+        displayTeamDistributionsMatchup(Gamesdf,AwayTeam,HomeTeam)
+
 def Todays_Games(data):
     today_date_format = data['today_date_format']
     #Dailyschedule = data['Dailyschedule']
@@ -4729,6 +4945,7 @@ _CHOICES = {
     'MG Rankings': dict(func=MG_Rankings, icon='play-fill'),
     'MG Rankings Recent': dict(func=MG_RankingsRecent, icon='play-fill'),
     'Todays Games': dict(func=Todays_Games, icon='play-fill'),
+     'Future Games': dict(func=Future_Games, icon='play-fill'),
     'Team Matchup': dict(func=Team_Matchup, icon='play-fill'),
     'Past Games': dict(func=Past_Games, icon='play-fill'),
     'Rankings Historical Charts': dict(func=Historical_Rankings_Page, icon='play-fill'),

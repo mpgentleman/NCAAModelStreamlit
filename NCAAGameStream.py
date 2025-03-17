@@ -3741,9 +3741,9 @@ def Future_Games(data):
     #try:
     Gamesdf = data['Gamesdf']
     #Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
-    #Gamesdf = Gamesdf.reset_index(drop=True)
+    Gamesdf = Gamesdf.reset_index(drop=True)
     #Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
-    #Gamesdf = Gamesdf.drop_duplicates()
+    Gamesdf = Gamesdf.drop_duplicates()
     
     Tables_Choice=st.selectbox('Sort Games By',['Alphabetical', 'Time','Regression_Difference','OverPlaying'],index=0)
     Dailyschedule=pd.read_csv("Data/DailySchedules2024/"+today_date_format+"Schedule.csv")
@@ -3755,6 +3755,7 @@ def Future_Games(data):
         Dailyschedule=Dailyschedule.sort_values(by=['Reg_dif'])
     if 'OverPlaying' in Tables_Choice: 
         Dailyschedule=Dailyschedule.sort_values(by=['Over_dif'])
+    
     AwayList=[''] + Dailyschedule['AWAY'].tolist()
     HomeList=[''] + Dailyschedule['HOME'].tolist()
     AwayTeam = st.selectbox('Away Team',AwayList,index=0)
@@ -3763,54 +3764,54 @@ def Future_Games(data):
     st.text('Games can be sorted by columns. Click on column header to sort')
     st.text('To sort by game time click the Time column.  ')
     st.text('Low Negative values in the Reg Dif and Overplaying column mean the Home team is the pick  ') 
-    Dailyschedule1 = Dailyschedule
-    Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','FanDuel','MG_ATS_PointDiff','commence_time','Reg_dif','Over_dif','Dif_from_Vegas','Pomeroy_PointDiff',
+    if st.button('Run'):
+
+        Dailyschedule1 = Dailyschedule
+        Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','FanDuel','MG_ATS_PointDiff','commence_time','Reg_dif','Over_dif','Dif_from_Vegas','Pomeroy_PointDiff',
                                    'TRank_PointDiff','MG_PointDiff','Daily_Reg_PointDiff','DraftKings','BetMGM spreads','VegasTotal',
                                    'Pt_Spread_Difference','Pomeroy_PointDiffSelection','MG_ATS_PointDiffSelection','Total_Diff']]
-    Dailyschedule.DraftKings = Dailyschedule.DraftKings.astype(float).round(1)
-    Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
+        Dailyschedule.DraftKings = Dailyschedule.DraftKings.astype(float).round(1)
+        Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
     
-    Dailyschedule['commence_time'] = pd.to_datetime(Dailyschedule['commence_time'])
-    # Convert to US Central time
-    Dailyschedule['commence_time'] = Dailyschedule['commence_time'].dt.tz_convert('US/Central')
-    # Format time to display like 11:00AM, 2:00PM, etc.
-    Dailyschedule['commence_time'] = Dailyschedule['commence_time'].dt.strftime('%I:%M%p')
-    Dailyschedule['divergence'] = (Dailyschedule['FanDuel'] * Dailyschedule['MG_ATS_PointDiff'] < 0)
-    allcols=Dailyschedule.columns
-    gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
-    gb.configure_columns(allcols, cellStyle=cellStyle)
-    csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
-    gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
-    csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
-    gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
-    gb.configure_column('DraftKings',valueFormatter=numberFormat(1))
-    gb.configure_column('VegasTotal',valueFormatter=numberFormat(1))
-    gb.configure_column('Pomeroy_PointDiff',valueFormatter=numberFormat(1))
-    gb.configure_column('TRank_PointDiff',valueFormatter=numberFormat(1))
-    gb.configure_column('MG_PointDiff',valueFormatter=numberFormat(1))
-    gb.configure_column('MG_ATS_PointDiff',valueFormatter=numberFormat(1))
-    gb.configure_column('Daily_Reg_PointDiff',valueFormatter=numberFormat(1))
-    gb.configure_column('Dif_from_Vegas',cellStyle=csTotal,valueFormatter=numberFormat(2))
-    gb.configure_column('Pt_Spread_Difference',cellStyle=csTotal,valueFormatter=numberFormat(1))
-    gb.configure_column('Total_Diff',cellStyle=csTotal,valueFormatter=numberFormat(1))
-    
-    #gb.configure_pagination()
-    gb.configure_side_bar()
-    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-    #gridOptions = gb.build()
-    opts= {**DEFAULT_GRID_OPTIONS,
+        Dailyschedule['commence_time'] = pd.to_datetime(Dailyschedule['commence_time'])
+        # Convert to US Central time
+        Dailyschedule['commence_time'] = Dailyschedule['commence_time'].dt.tz_convert('US/Central')
+        # Format time to display like 11:00AM, 2:00PM, etc.
+        Dailyschedule['commence_time'] = Dailyschedule['commence_time'].dt.strftime('%I:%M%p')
+        Dailyschedule['divergence'] = (Dailyschedule['FanDuel'] * Dailyschedule['MG_ATS_PointDiff'] < 0)
+        allcols=Dailyschedule.columns
+        gb = GridOptionsBuilder.from_dataframe(Dailyschedule,groupable=True)
+        gb.configure_columns(allcols, cellStyle=cellStyle)
+        csTotal=cellStyleDynamic(Dailyschedule.Reg_dif)
+        gb.configure_column('Reg_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+        csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
+        gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+        gb.configure_column('DraftKings',valueFormatter=numberFormat(1))
+        gb.configure_column('VegasTotal',valueFormatter=numberFormat(1))
+        gb.configure_column('Pomeroy_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('TRank_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('MG_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('MG_ATS_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('Daily_Reg_PointDiff',valueFormatter=numberFormat(1))
+        gb.configure_column('Dif_from_Vegas',cellStyle=csTotal,valueFormatter=numberFormat(2))
+        gb.configure_column('Pt_Spread_Difference',cellStyle=csTotal,valueFormatter=numberFormat(1))
+        gb.configure_column('Total_Diff',cellStyle=csTotal,valueFormatter=numberFormat(1))
+        gb.configure_side_bar()
+        gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+         #gridOptions = gb.build()
+        opts= {**DEFAULT_GRID_OPTIONS,
                **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
-    gb.configure_grid_options(**opts)
-    keyname='Test'
-    g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
+        gb.configure_grid_options(**opts)
+        keyname='Test'
+        g = _displayGrid(Dailyschedule, gb, key=keyname, height=800)
     #showSpreadChart(Dailyschedule1)
     #AgGrid(Dailyschedule, gridOptions=gridOptions, enable_enterprise_modules=True,allow_unsafe_jscode=True,height=800)
-    st.text('MG_ATS_PointDif is the point spread using the ATS model')
-    st.text('Reg_dif is the differnce between both teams using a polynomial regression of current rankings')
-    st.text('Over_dif is the cumulative total of how both teams having played compared to their rankings')
-    st.text('A negative Over_dif means the Home teal has been overplaying relative to the away team')
-    st.text('Dif_from_Vegas is the difference between the ATS model and the current market. A large value indicates a divergence')
-    if st.button('Run'): 
+        st.text('MG_ATS_PointDif is the point spread using the ATS model')
+        st.text('Reg_dif is the differnce between both teams using a polynomial regression of current rankings')
+        st.text('Over_dif is the cumulative total of how both teams having played compared to their rankings')
+        st.text('A negative Over_dif means the Home teal has been overplaying relative to the away team')
+        st.text('Dif_from_Vegas is the difference between the ATS model and the current market. A large value indicates a divergence')
+     
         dateforRankings=today_date_format
          #dateforRankings5=d2
         #TeamDatabase2=pd.read_csv("Data/TeamDatabase.csv")

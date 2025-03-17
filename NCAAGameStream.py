@@ -3735,7 +3735,7 @@ def MG_Rankings(data):
 
 def Future_Games(data):
     mydates = ['20250318','20250319','20250320','20250321']
-    Tables_Choice1=st.multiselect('Select days',mydates)
+    Tables_Choice1=st.selectbox('Select days',mydates)
     today_date_format = Tables_Choice1
     #Dailyschedule = data['Dailyschedule']
     #try:

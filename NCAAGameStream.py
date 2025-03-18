@@ -3181,7 +3181,7 @@ def displayTeamDistributionsMatchupSchedule(Gamesdf,myteam,team2):
     components.html(_as_html(plot_dict), height=1500 + 20,width=3000 + 20,scrolling=True,)
 def get_team_info_from_gamesdf(df,Team):
     AF = df[df['Tm']==Team].sort_values('DateNew')
-    
+    AF = AF.drop_duplicates(subset=['Date'])
 
 
     AF["EMRating3GameExpMA"]=AF["EMRating"].ewm(span=3,adjust=False).mean()

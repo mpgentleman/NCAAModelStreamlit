@@ -4283,7 +4283,7 @@ def Team_Matchup(data):
         test1 = test1.reset_index(drop=True)
         test1 = pd.merge(test1, data['SkedBetting'][['muid', 'MG_ATS_PointDiffWinATS']], on='muid', how='left')
         test1.drop(columns=test1.columns[0], axis=1,  inplace=True)
-         test1 = test1.drop_duplicates()
+        test1 = test1.drop_duplicates()
         test2=get_team_info_from_gamesdf(Gamesdf,HomeTeam)
         test2 = test2.reset_index(drop=True)
         test2 = pd.merge(test2, data['SkedBetting'][['muid', 'MG_ATS_PointDiffWinATS']], on='muid', how='left')

@@ -3865,6 +3865,7 @@ def Future_Games(data):
         with col1:
             st.subheader(AwayTeam + ' Rankings')
             displayRankingHistory(data,AwayTeam)
+            st.dataframe(test1)
             getTeamDFTable2024(test1,AwayTeam)
         
         with col2:
@@ -3883,7 +3884,7 @@ def Future_Games(data):
             st.subheader('Polynomial Regression Charts')
             
 
-            
+            st.dataframe(test1)
             showTeamLetsPlotMultiCharts2024(test1,'ATSvalue',"EMRating10GameExpMA", "EMRating3GameExpMA","Pomeroy_Tm_AdjEM","EMRating",'EMRating vs ATS',AwayTeam)              
             showTeamLetsPlotCharts2024(test1,'ATSvalue','AdjO3GameExpMA','AdjO10GameExpMA','Tm_AdjO','Adj Offense vs ATS',AwayTeam)
             showTeamLetsPlotCharts2024(test1,'OverUnder','AdjD3GameExpMA','AdjD10GameExpMA','Tm_AdjD','Adj Defense vs OverUnder',AwayTeam)

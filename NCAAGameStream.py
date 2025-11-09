@@ -2776,8 +2776,25 @@ def getTeamDFTable2024(team1,teamname):
     gridOptions = gb.build()
 
     AgGrid(team1, gridOptions=gridOptions, enable_enterprise_modules=True,height=1000,allow_unsafe_jscode=True)
+def getTeamDFTable2025(team1,teamname):
+    colsM=['DateNew','Opp','Result','ATS','EMRating','PlayingOverRating','pace','ATSVegas','OverUnderVegas','MG_ATS_PointDiffWinATS']
+    numeric=['numericColumn','numberColumnFilter']
+    team1=team1[colsM]
+    allcols=team1.columns
+    header1=teamname+' Game History'
+    st.subheader(header1)
+    csTotal=cellStyleDynamic(team1.PlayingOverRating)
+    gb = GridOptionsBuilder.from_dataframe(team1)
+    #gb.configure_columns('PlayingOverRating', type=numeric, valueFormatter=numberFormat(1))
+    gb.configure_columns(allcols, cellStyle=cellStyle)
+    gb.configure_column('PlayingOverRating',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_column('ATS',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_column('EMRating',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    gridOptions = gb.build()
 
-    
+    AgGrid(team1, gridOptions=gridOptions, enable_enterprise_modules=True,height=1000,allow_unsafe_jscode=True)  
 def getTodaysGamesData(Dailyschedule,TeamDatabase,PomeroyDF1,BartDF1,MG_DF1):
     
     MonteCarloNumberofGames=5
@@ -4079,12 +4096,12 @@ def Todays_Games(data):
         with col1:
             st.subheader(AwayTeam + ' Rankings')
             displayRankingHistory(data,AwayTeam)
-            getTeamDFTable2024(test1,AwayTeam)
+            getTeamDFTable2025(test1,AwayTeam)
         
         with col2:
             st.subheader(HomeTeam + ' Rankings')
             displayRankingHistory(data,HomeTeam)
-            getTeamDFTable2024(test2,HomeTeam)
+            getTeamDFTable2025(test2,HomeTeam)
         col1, col2 = st.columns(2)
         with col1:
             team_players = data['Players']
@@ -5155,4 +5172,5 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 

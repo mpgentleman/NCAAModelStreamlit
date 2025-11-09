@@ -3883,12 +3883,12 @@ def Future_Games(data):
             st.subheader(AwayTeam + ' Rankings')
             displayRankingHistory(data,AwayTeam)
             #st.dataframe(test1)
-            getTeamDFTable2024(test1,AwayTeam)
+            getTeamDFTable2025(test1,AwayTeam)
         
         with col2:
             st.subheader(HomeTeam + ' Rankings')
             displayRankingHistory(data,HomeTeam)
-            getTeamDFTable2024(test2,HomeTeam)
+            getTeamDFTable2025(test2,HomeTeam)
         col1, col2 = st.columns(2)
         with col1:
             team_players = data['Players']
@@ -4333,12 +4333,12 @@ def Team_Matchup(data):
         with col1:
             st.subheader(AwayTeam + ' Rankings')
             displayRankingHistory(data,AwayTeam)
-            getTeamDFTable2024(test1,AwayTeam)
+            getTeamDFTable2025(test1,AwayTeam)
         
         with col2:
             st.subheader(HomeTeam + ' Rankings')
             displayRankingHistory(data,HomeTeam)
-            getTeamDFTable2024(test2,HomeTeam)
+            getTeamDFTable2025(test2,HomeTeam)
         col1, col2 = st.columns(2)
         with col1:
             team_players = data['Players']
@@ -4544,8 +4544,8 @@ def Past_Games(data):
             #getDistributionMatchupChartsNew(AwayTeam,HomeTeam)
             #getDistributionMatchupCharts2024(AwayTeam,HomeTeam,test1,test2)
             displayTeamDistributionsMatchup(Gamesdf,AwayTeam,HomeTeam)
-            getTeamDFTable2024(test1,AwayTeam)
-            getTeamDFTable2024(test2,HomeTeam)
+            getTeamDFTable2025(test1,AwayTeam)
+            getTeamDFTable2025(test2,HomeTeam)
         
         
 def Team_Page(data):
@@ -5172,5 +5172,6 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 

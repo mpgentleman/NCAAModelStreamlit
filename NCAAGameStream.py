@@ -3741,7 +3741,7 @@ def MG_Rankings(data):
     HtmlFile = open(myfile, 'r', encoding='utf-8')
     source_code = HtmlFile.read() 
     #print(source_code)
-    components.html(source_code, height = 3000)
+    #components.html(source_code, height = 3000)
     if st.button('Run'):
         components.html(source_code, height = 3000)
         #col1, col2 = st.columns(2)
@@ -5172,6 +5172,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

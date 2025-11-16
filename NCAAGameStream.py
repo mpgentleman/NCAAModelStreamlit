@@ -4980,8 +4980,8 @@ _MENU_ITEMS = list(_CHOICES.keys())
 _ICONS = [d.get('icon', 'database') for d in _CHOICES.values()]
 maketable = Stats.maketable
 #deltaU = energy_of_flipping
-LeagueTempo=69.1
-LeagueOE=104.6
+LeagueTempo=71
+LeagueOE=106.4
 SimulationResults = namedtuple('SimulationResults','brackets unique_brackets lowest_bracket lowest_bracket_count most_common_bracket most_common_bracket_count')
 regions = ['south', 'east', 'midwest', 'west']
 seed_region = {i: 0 for i in range(1, 17)}
@@ -5172,6 +5172,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

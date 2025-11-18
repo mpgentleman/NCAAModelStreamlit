@@ -4987,109 +4987,110 @@ regions = ['south', 'east', 'midwest', 'west']
 seed_region = {i: 0 for i in range(1, 17)}
 default_energy_function = None
 MoneyLine=pd.read_csv("Data/MoneyLineConversion.csv")
-PomDict = {}
-TRDict = {}
-MGDict = {}
-PomDict = getPomeroyDict()
-TRDict = getTRankDict()
-MGDict = getMGRatingsDict()
+#PomDict = {}
+#TRDict = {}
+#MGDict = {}
+#PomDict = getPomeroyDict()
+#TRDict = getTRankDict()
+#MGDict = getMGRatingsDict()
 
-dfT = pd.DataFrame.from_dict(TRDict, orient='index')
-dfT.reset_index(inplace=True)
+#dfT = pd.DataFrame.from_dict(TRDict, orient='index')
+#dfT.reset_index(inplace=True)
 # Rename the index column to 'Team'
-dfT.rename(columns={'index': 'Team'}, inplace=True)
-strength = setStrength(dfT)
+#dfT.rename(columns={'index': 'Team'}, inplace=True)
+#strength = setStrength(dfT)
 
-set_energy_function(default_energy_game)
+#set_energy_function(default_energy_game)
 #set_energy_function = set_energy_function
 #set_energy_function(My_energy_game)
-kenpom = {}
-deltaU = energy_of_flipping
+#kenpom = {}
+#deltaU = energy_of_flipping
 
     
 #BM = getBracketMatrixDataframe()
-TBracket = getTRankBracket()
-TBracket1 = TBracket[['Seed','east','midwest','south','west']]
+#TBracket = getTRankBracket()
+#TBracket1 = TBracket[['Seed','east','midwest','south','west']]
 #BM1 = BM[['Seed','east','midwest','south','west']]
 #st.dataframe(BM1)
 #st.dataframe(TBracket1)
-BM1 = pd.read_csv("Data/Tourney2025.csv")
-TBracket1 = pd.read_csv("Data/TourneyBart2025.csv")
-Sweet16 = pd.read_csv("Data/Sweet16.csv")
-newsouth=list(TBracket1["south"])
-neweast=list(TBracket1["east"])
-newmidwest=list(TBracket1["midwest"])
-newwest=list(TBracket1["west"])
 
-lineparts = ["Rank","Team","Conf","W-L","AdjEM","AdjO","AdjO-Rank","AdjD","AdjD-Rank","AdjT","AdjT-Rank","Luck","Luck-Rank",
-             "SOSPyth","SOSPyth-Rank","SOSOppO","SOSOppO-Rank","SOSOppD","SOSOppD-Rank","NCOSPyth","NCOSPyth-Rank"]
-textparts = ["Team","Conf","W-L"]
-kpomdata = {}
-teamsdict = {}
-teams={}
-teams['midwest'] =newmidwest
-teams['south'] = newsouth
-teams['east'] = neweast
-teams['west'] = newwest
-teamsdict['midwest'] = newmidwest
-teamsdict['south'] =newsouth
-teamsdict['east'] = neweast
-teamsdict['west'] = newwest    
-teamsdict['SweetSixteen']=list(BM1["west"])[0:4]+list(BM1["east"])[0:4]+list(BM1["midwest"])[0:4]+list(BM1["south"])[0:4]
-teamsdict['EliteEight']=list(BM1["west"])[0:2]+list(BM1["east"])[0:2]+list(BM1["midwest"])[0:2]+list(BM1["south"])[0:2]
-teamsdict['FinalFour']=list(BM1["west"])[0:1]+list(BM1["east"])[0:1]+list(BM1["midwest"])[0:1]+list(BM1["south"])[0:1]
+#newsouth=list(TBracket1["south"])
+#neweast=list(TBracket1["east"])
+#newmidwest=list(TBracket1["midwest"])
+#newwest=list(TBracket1["west"])
+
+#lineparts = ["Rank","Team","Conf","W-L","AdjEM","AdjO","AdjO-Rank","AdjD","AdjD-Rank","AdjT","AdjT-Rank","Luck","Luck-Rank",
+#             "SOSPyth","SOSPyth-Rank","SOSOppO","SOSOppO-Rank","SOSOppD","SOSOppD-Rank","NCOSPyth","NCOSPyth-Rank"]
+#textparts = ["Team","Conf","W-L"]
+#kpomdata = {}
+#teamsdict = {}
+#teams={}
+#teams['midwest'] =newmidwest
+#teams['south'] = newsouth
+#teams['east'] = neweast
+#teams['west'] = newwest
+#teamsdict['midwest'] = newmidwest
+#teamsdict['south'] =newsouth
+#teamsdict['east'] = neweast
+#teamsdict['west'] = newwest    
+#teamsdict['SweetSixteen']=list(BM1["west"])[0:4]+list(BM1["east"])[0:4]+list(BM1["midwest"])[0:4]+list(BM1["south"])[0:4]
+#teamsdict['EliteEight']=list(BM1["west"])[0:2]+list(BM1["east"])[0:2]+list(BM1["midwest"])[0:2]+list(BM1["south"])[0:2]
+#teamsdict['FinalFour']=list(BM1["west"])[0:1]+list(BM1["east"])[0:1]+list(BM1["midwest"])[0:1]+list(BM1["south"])[0:1]
 
 # These are all listed in the same order:
-_rankings = [1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15]
-regional_rankings = {}
+#_rankings = [1,16,8,9,5,12,4,13,6,11,3,14,7,10,2,15]
+#regional_rankings = {}
 #regional_rankings = regional_rankings
-for region in teamsdict:
-    for (team,rank) in zip(teamsdict[region],_rankings):
+#for region in teamsdict:
+#    for (team,rank) in zip(teamsdict[region],_rankings):
     # We use a random number here so that the south's number 2
     # seed won't come out exactly the same rank as the west's.
-        regional_rankings[team] = rank + random()/10
+#        regional_rankings[team] = rank + random()/10
 
-regions = {}
-for region in teamsdict:
-    for team in teamsdict[region]:
-        regions[team] = region
+#regions = {}
+#for region in teamsdict:
+#    for team in teamsdict[region]:
+#        regions[team] = region
 
-all_teams = teamsdict['midwest'] + teamsdict['south'] + teamsdict['west'] + teamsdict['east']
-teamsdict['all'] = all_teams
-regional_rankings = regional_rankings 
-SimulationResults = namedtuple('SimulationResults','brackets unique_brackets lowest_bracket lowest_bracket_count most_common_bracket most_common_bracket_count')
+#all_teams = teamsdict['midwest'] + teamsdict['south'] + teamsdict['west'] + teamsdict['east']
+#teamsdict['all'] = all_teams
+#regional_rankings = regional_rankings 
+#SimulationResults = namedtuple('SimulationResults','brackets unique_brackets lowest_bracket lowest_bracket_count most_common_bracket most_common_bracket_count')
     
     
 
-teams['SweetSixteen'] = list(BM1["west"])[0:4]+list(BM1["east"])[0:4]+list(BM1["midwest"])[0:4]+list(BM1["south"])[0:4]
-teams['EliteEight'] = ['San Diego St.','Creighton','FAU','Kansas St.','Miami FL','Texas','Connecticut','Gonzaga']
-teams['FinalFour'] = list(BM1["west"])[0:1]+list(BM1["east"])[0:1]+list(BM1["midwest"])[0:1]+list(BM1["south"])[0:1]
+#teams['SweetSixteen'] = list(BM1["west"])[0:4]+list(BM1["east"])[0:4]+list(BM1["midwest"])[0:4]+list(BM1["south"])[0:4]
+#teams['EliteEight'] = ['San Diego St.','Creighton','FAU','Kansas St.','Miami FL','Texas','Connecticut','Gonzaga']
+#teams['FinalFour'] = list(BM1["west"])[0:1]+list(BM1["east"])[0:1]+list(BM1["midwest"])[0:1]+list(BM1["south"])[0:1]
 #all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']+teams['SweetSixteen']
-all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']
+#all_teams = teams['midwest'] + teams['south'] + teams['west'] + teams['east']
 #MoneyLine=pd.read_csv("C:/Users/mpgen/MoneyLineConversion.csv")
     
         
 #st.write(myranks)
-MYRANKS = TRDict
+#MYRANKS = TRDict
 #results = runbracket1(teamsdict,ntrials=100,T=.25)
 #st.write(str(results['all'][0][0]))
 #j=maketabletest(results)
-allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
-allrounds = ['Make','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
-headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
+#allrounds = ['1st Round','2nd Round','3rd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
+#allrounds = ['Make','2nd Round','Sweet 16','Elite 8','Final 4','Championship','Win']
+#headers = ['Team'] + ['Region','Rank'] + allrounds+['Odds']
 
 #st.dataframe(pd.DataFrame(j, columns=headers))
 #l = makehtmltable(j, headers=headers)
 #l=HTML(makehtmltable(j, headers=headers))
 #st.write(l)
-data={}
-MYRANKS = MGDict
+#data={}
+#MYRANKS = MGDict
 #results = runbracket1(teamsdict,ntrials=100,T=.2)
 #st.write(str(results['all'][0][0]))
 #j1=maketabletest(results)
 #st.dataframe(pd.DataFrame(j1, columns=headers))
 #data['TSim'] = pd.DataFrame(j, columns=headers)
 #data['MSim'] = pd.DataFrame(j1, columns=headers)
+BM1 = pd.read_csv("Data/Tourney2025.csv")
+TBracket1 = pd.read_csv("Data/TourneyBart2025.csv")
+Sweet16 = pd.read_csv("Data/Sweet16.csv")
 data['Sweet16']=Sweet16
 data['BM1'] = BM1
 data['TBracket'] = TBracket1
@@ -5172,6 +5173,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

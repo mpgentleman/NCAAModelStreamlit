@@ -5080,7 +5080,7 @@ MoneyLine=pd.read_csv("Data/MoneyLineConversion.csv")
 #l = makehtmltable(j, headers=headers)
 #l=HTML(makehtmltable(j, headers=headers))
 #st.write(l)
-#data={}
+data={}
 #MYRANKS = MGDict
 #results = runbracket1(teamsdict,ntrials=100,T=.2)
 #st.write(str(results['all'][0][0]))
@@ -5173,6 +5173,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

@@ -5102,7 +5102,7 @@ myc = ['Player','Team','Conference','Games','Min%','ORTG','USAGE','EFG','TS','OR
 
 player_data.columns=myc
 #player_data1 = player_data[['Number','Player','Team','Games','Min%','ORTG','BPM','OBPM','DBPM', 'PRPG','USAGE','Height','Year','Points','Position','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Rebounds', 'Assists1' ]]
-player_data1 = player_data[['Number','Player','Team','Games','Min%','ORTG','BPM','OBPM','DBPM', 'PRPG','USAGE','Height','Year','Points','Position','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Rebounds', 'Assists1', 'Assists2' ]]
+player_data1 = player_data[['Number','Player','Team','Games','Min%','ORTG','BPM','OBPM','DBPM', 'PRPG','USAGE','Height','Year','Points','Position','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Rebounds', 'Assists1', 'k' ]]
 
 #st.dataframe(player_data)
 data['Players'] = player_data1
@@ -5176,6 +5176,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

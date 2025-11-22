@@ -3570,27 +3570,21 @@ def default_energy_game(winner, loser):
     #print "energy_game(",winner,loser,")",result
     return result
 def Bracketology_Page(data):
+    today_date_format = data['today_date_format']
+
+    TBracket1 = pd.read_csv("Data/DailySchedules2024/TRankBracket"+today_date_format+".csv")
+    TRankOdds = pd.read_csv("Data/DailySchedules2024/TournamentOddsTrank"+today_date_format+".csv")
+    MGRankOdds = pd.read_csv("Data/DailySchedules2024/TournamentOddsMG"+today_date_format+".csv")
     #bracket_selected = st.selectbox('Select a Bracketology',['TRank','Bracket Matrix']) 
     #ranking_selected = st.selectbox('Select a Ranking for Sim',['TRank','Mg Rankings','Pomeroy'])
     BM1 = data['BM1']
-    TBracket1 = data['TBracket']
+    #TBracket1 = data['TBracket']
+    
     #st.dataframe(BM1)
     #st.dataframe(TBracket1)
     st.subheader('Bracket Matrix Bracketology Projection')
     
-    gb = GridOptionsBuilder.from_dataframe(BM1,groupable=True)
-    #csTotal=cellStyleDynamic(hot2.performance_change)
-    #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
-    gb.configure_column('Seed',valueFormatter=numberFormat(0))
-    #csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
-    #gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
-    gb.configure_side_bar()
-    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
-    opts= {**DEFAULT_GRID_OPTIONS,
-               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
-    gb.configure_grid_options(**opts)
-    keyname='Test BM'
-    g = _displayGrid(BM1, gb, key=keyname, height=600)
+
     #st.dataframe(BM)
     
     st.subheader('TRank Bracketology Projection')
@@ -3611,7 +3605,24 @@ def Bracketology_Page(data):
     #st.dataframe(BM)
     #st.dataframe(TBracket)
     df = data['Sweet16']
-    showBracketTable2(df)
+    st.subheader('TRank Tourney Odds')
+    showBracketTable2(TRankOdds)
+    st.subheader('MG Tourney Odds')
+    showBracketTable2(MGRankOdds)
+    
+    gb = GridOptionsBuilder.from_dataframe(BM1,groupable=True)
+    #csTotal=cellStyleDynamic(hot2.performance_change)
+    #gb.configure_column('performance_change',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_column('Seed',valueFormatter=numberFormat(0))
+    #csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
+    #gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
+    gb.configure_side_bar()
+    gb.configure_default_column(groupable=True, value=True, enableRowGroup=True, aggFunc="sum", editable=True)
+    opts= {**DEFAULT_GRID_OPTIONS,
+               **dict(rowGroupPanelShow='always',getContextMenuItems=agContextMenuItemsDeluxe,)}
+    gb.configure_grid_options(**opts)
+    keyname='Test BM'
+    g = _displayGrid(BM1, gb, key=keyname, height=600)
     #col1, col2 = st.columns(2)
     #with col1:
     #    st.subheader('Bracket Sim USing TRank Rankings')
@@ -5128,6 +5139,7 @@ try:
     Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+today_date_format+".csv")
 except:
     Gamesdf = pd.read_csv("Data/DailySchedules2024/Gamesdf"+yesterday_date_format+".csv")
+
 Gamesdf = Gamesdf.reset_index(drop=True)
 Gamesdf.drop(columns=Gamesdf.columns[0], axis=1,  inplace=True)
 Gamesdf = Gamesdf.drop_duplicates()
@@ -5176,6 +5188,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

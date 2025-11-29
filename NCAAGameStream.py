@@ -4027,6 +4027,7 @@ def Todays_Games(data):
     csTotal=cellStyleDynamic(Dailyschedule.Over_dif)
     gb.configure_column('Over_dif',cellStyle=csTotal,valueFormatter=numberFormat(1))
     gb.configure_column('DraftKings',valueFormatter=numberFormat(1))
+    gb.configure_column('MG_ATS_ImpliedWinPercent',valueFormatter=numberFormat(1))
     gb.configure_column('VegasTotal',valueFormatter=numberFormat(1))
     gb.configure_column('Pomeroy_PointDiff',valueFormatter=numberFormat(1))
     gb.configure_column('TRank_PointDiff',valueFormatter=numberFormat(1))
@@ -5188,6 +5189,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

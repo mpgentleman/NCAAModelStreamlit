@@ -4009,7 +4009,7 @@ def Todays_Games(data):
     Dailyschedule1 = Dailyschedule
     Dailyschedule = Dailyschedule[['AWAY','HOME','HomeAway','FanDuel','MG_ATS_PointDiff','commence_time','Reg_dif','Over_dif','Dif_from_Vegas','Pomeroy_PointDiff',
                                    'TRank_PointDiff','MG_PointDiff','Daily_Reg_PointDiff','DraftKings','BetMGM spreads','VegasTotal',
-                                   'Pt_Spread_Difference','Pomeroy_PointDiffSelection','MG_ATS_PointDiffSelection','Total_Diff']]
+                                   'Pt_Spread_Difference','Pomeroy_PointDiffSelection','MG_ATS_PointDiffSelection','Total_Diff','MG_ATS_ImpliedWinPercent']]
     Dailyschedule.DraftKings = Dailyschedule.DraftKings.astype(float).round(1)
     Dailyschedule.VegasTotal = Dailyschedule.VegasTotal.astype(float).round(1)
     
@@ -5188,6 +5188,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

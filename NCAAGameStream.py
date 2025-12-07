@@ -5132,7 +5132,7 @@ teams = MG_Rank['Tm_'].unique()
 #st.title('NCAA Head to Head Matchup')
 #page = st.sidebar.selectbox('Select page',['MG Rankings','Todays Games','Team Matchup','Past Games','Rankings Historical Charts','Bracketology Futures'])
 TeamDatabase2=pd.read_csv("Data/TeamDatabase2026T.csv")
-AllGames=pd.read_csv("Data/Season_GamesAll_2024.csv")
+#AllGames=pd.read_csv("Data/Season_GamesAll_2024.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
 today_date_format,yesterday_date_format = getTodaysDateFormat()
@@ -5189,6 +5189,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

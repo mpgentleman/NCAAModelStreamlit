@@ -557,7 +557,7 @@ def br(n):
 
 @st.cache
 def getIndividualPlayerData():
-    url = 'https://barttorvik.com/2025_all_advgames.json.gz'
+    url = 'https://barttorvik.com/2026_all_advgames.json.gz'
     response = requests.get(url)
     text = response.text
     start_index = text.find('[[')
@@ -573,7 +573,7 @@ def getIndividualPlayerData():
 
     return(df)
 def getIndividualPlayerData2():
-    url = "https://barttorvik.com/2025_all_advgames.json.gz"
+    url = "https://barttorvik.com/2026_all_advgames.json.gz"
     response = requests.get(url)
     json_data = response.content.decode('utf-8')
 
@@ -4578,7 +4578,7 @@ def Team_Page(data):
     
     dfI_Team = dfI[dfI['Team'] == team_selected]
     tp = team_players[team_players['Team'] == team_selected].sort_values('PRPG', ascending=False)
-    player1 = tp['Player'].head(8).to_list()
+    player1 = tp['Player'].head(12).to_list()
 
     for player in player1:
         with st.expander(player):
@@ -5189,6 +5189,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

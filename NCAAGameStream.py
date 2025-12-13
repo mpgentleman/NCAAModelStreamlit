@@ -3667,7 +3667,8 @@ def MG_RankingsRecent(data):
     #print(source_code)
     components.html(source_code, height = 3000)
     if st.button('Run'):
-        components.html(source_code, height = 3000)    
+        components.html(source_code, height = 3000)
+@st.cache
 def MG_Rankings(data):
     hot = data['hot']
     cold = data['cold']
@@ -5189,6 +5190,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

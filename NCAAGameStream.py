@@ -5110,16 +5110,16 @@ data['BM1'] = BM1
 data['TBracket'] = TBracket1
 TeamDatabase2=pd.read_csv("Data/TeamDatabase2026T.csv")
 
-player_data = read_csv_from_url('http://barttorvik.com/getadvstats.php?year=2026&csv=1')
+#player_data = read_csv_from_url('http://barttorvik.com/getadvstats.php?year=2026&csv=1')
 myc = ['Player','Team','Conference','Games','Min%','ORTG','USAGE','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Year','Height','Number','PRPG','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','BPM','OBPM','DBPM', '3' ,' 4',' 5', 'Rebounds', 'Assists1' ,' 6 ', '7 ' ,'Points','Position','j']
 myc = ['Player','Team','Conference','Games','Min%','ORTG','USAGE','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Year','Height','Number','PRPG','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','BPM','OBPM','DBPM', '3' ,' 4',' 5', 'Rebounds', 'Assists1' ,' 6 ', '7 ' ,'Points','Position','j','k']
 
-player_data.columns=myc
+#player_data.columns=myc
 #player_data1 = player_data[['Number','Player','Team','Games','Min%','ORTG','BPM','OBPM','DBPM', 'PRPG','USAGE','Height','Year','Points','Position','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Rebounds', 'Assists1' ]]
-player_data1 = player_data[['Number','Player','Team','Games','Min%','ORTG','BPM','OBPM','DBPM', 'PRPG','USAGE','Height','Year','Points','Position','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Rebounds', 'Assists1', 'k' ]]
+#player_data1 = player_data[['Number','Player','Team','Games','Min%','ORTG','BPM','OBPM','DBPM', 'PRPG','USAGE','Height','Year','Points','Position','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Rebounds', 'Assists1', 'k' ]]
 
 #st.dataframe(player_data)
-data['Players'] = player_data1
+#data['Players'] = player_data1
 AllGames=pd.read_csv("Data/Season_GamesAll.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
@@ -5191,6 +5191,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

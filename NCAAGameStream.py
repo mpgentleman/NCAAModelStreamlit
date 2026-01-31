@@ -5199,7 +5199,8 @@ TeamDatabase2=pd.read_csv("Data/TeamDatabase2026T.csv")
 #player_data1 = player_data[['Number','Player','Team','Games','Min%','ORTG','BPM','OBPM','DBPM', 'PRPG','USAGE','Height','Year','Points','Position','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Rebounds', 'Assists1', 'k' ]]
 
 #st.dataframe(player_data)
-data['Players'] = get2026TRankPlayers()
+data['Players'] = pd.read_csv("Data/DailySchedules2024/todaysplayers.csv")
+#data['Players'] = get2026TRankPlayers()
 AllGames=pd.read_csv("Data/Season_GamesAll.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
@@ -5271,6 +5272,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

@@ -4953,7 +4953,87 @@ def Todays_Charts(data):
             
        
 
+def get2026TRankPlayers():
+    
 
+    # --- YOUR chromedriver.exe PATH ---
+    DRIVER_PATH = r"C:\chromedriver\chromedriver.exe"
+
+    if not os.path.isfile(DRIVER_PATH):
+        raise FileNotFoundError(f"Missing: {DRIVER_PATH}")
+
+    # --- Selenium: Get cookies only ---
+    opts = Options()
+    opts.add_argument("--headless")
+    opts.add_argument("--no-sandbox")
+    opts.add_argument("--disable-blink-features=AutomationControlled")
+    opts.add_experimental_option("excludeSwitches", ["enable-automation"])
+    opts.add_experimental_option("useAutomationExtension", False)
+
+    service = Service(DRIVER_PATH)
+    driver = webdriver.Chrome(service=service, options=opts)
+
+    session = requests.Session()
+    session.headers.update({
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+})
+
+    try:
+        print("Step 1: Opening Bart Torvik with Selenium...")
+        myurl = "http://barttorvik.com/getadvstats.php?year=2026&csv=1"
+        driver.get(myurl)
+        time.sleep(6)  # Let JS run
+
+        # Submit verification form
+        try:
+            form = driver.find_element(By.NAME, "js_test")
+            form.submit()
+            print("Submitted JS form")
+            time.sleep(5)
+        except:
+            print("No JS form found")
+
+        # --- Extract cookies ---
+        cookies = driver.get_cookies()
+        for cookie in cookies:
+            session.cookies.set(cookie['name'], cookie['value'])
+
+        print("Step 2: Downloading CSV with requests...")
+        response = session.get(myurl)
+    
+        if "Verifying Browser" in response.text:
+            print("Still blocked. Dumping response:")
+            print(response.text[:1000])
+            raise ValueError("Blocked by JS")
+
+        # --- Parse CSV ---
+        soup = BeautifulSoup(response.text, "html.parser")
+        
+
+        raw_text = soup.text  # or response.text
+        lines = raw_text.strip().split('\n')
+        myc = ['Player','Team','Conference','Games','Min%','ORTG','USAGE','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Year','Height','Number','PRPG','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','BPM','OBPM','DBPM', '3' ,' 4',' 5', 'Rebounds', 'Assists1' ,' 6 ', '7 ' ,'Points','Position','j','k']
+
+
+        # Skip first row (it's the old header or junk)
+        if len(lines) > 1:
+            csv_string = '\n'.join(lines[1:])
+        else:
+            raise ValueError("No data lines found")
+
+        # --- Load with custom headers ---
+        df1 = pd.read_csv(StringIO(csv_string), header=None,names=myc)
+        player_data1 = df1[['Number','Player','Team','Games','Min%','ORTG','BPM','OBPM','DBPM', 'PRPG','USAGE','Height','Year','Points','Position','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Rebounds', 'Assists1', 'k' ]]
+
+
+
+
+        driver.quit()
+        #df['AdjEM'] = df['AdjOE'] - df['AdjDE']
+    finally:
+        df = player_data1
+        
+    return(df)
 st.set_page_config(page_title="MG Rankings",layout="wide")
 
 
@@ -5110,16 +5190,16 @@ data['BM1'] = BM1
 data['TBracket'] = TBracket1
 TeamDatabase2=pd.read_csv("Data/TeamDatabase2026T.csv")
 
-player_data = read_csv_from_url('http://barttorvik.com/getadvstats.php?year=2026&csv=1')
-myc = ['Player','Team','Conference','Games','Min%','ORTG','USAGE','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Year','Height','Number','PRPG','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','BPM','OBPM','DBPM', '3' ,' 4',' 5', 'Rebounds', 'Assists1' ,' 6 ', '7 ' ,'Points','Position','j']
-myc = ['Player','Team','Conference','Games','Min%','ORTG','USAGE','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Year','Height','Number','PRPG','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','BPM','OBPM','DBPM', '3' ,' 4',' 5', 'Rebounds', 'Assists1' ,' 6 ', '7 ' ,'Points','Position','j','k']
+#player_data = read_csv_from_url('http://barttorvik.com/getadvstats.php?year=2026&csv=1')
+#myc = ['Player','Team','Conference','Games','Min%','ORTG','USAGE','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Year','Height','Number','PRPG','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','BPM','OBPM','DBPM', '3' ,' 4',' 5', 'Rebounds', 'Assists1' ,' 6 ', '7 ' ,'Points','Position','j']
+#myc = ['Player','Team','Conference','Games','Min%','ORTG','USAGE','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Year','Height','Number','PRPG','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','BPM','OBPM','DBPM', '3' ,' 4',' 5', 'Rebounds', 'Assists1' ,' 6 ', '7 ' ,'Points','Position','j','k']
 
-player_data.columns=myc
+#player_data.columns=myc
 #player_data1 = player_data[['Number','Player','Team','Games','Min%','ORTG','BPM','OBPM','DBPM', 'PRPG','USAGE','Height','Year','Points','Position','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Rebounds', 'Assists1' ]]
-player_data1 = player_data[['Number','Player','Team','Games','Min%','ORTG','BPM','OBPM','DBPM', 'PRPG','USAGE','Height','Year','Points','Position','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Rebounds', 'Assists1', 'k' ]]
+#player_data1 = player_data[['Number','Player','Team','Games','Min%','ORTG','BPM','OBPM','DBPM', 'PRPG','USAGE','Height','Year','Points','Position','EFG','TS','OR','DR','Assists','TO','FT made','FT Att','FT%','far 2 made','far 2 att','far 2 pct','3pts made','3pts att','3PT%','Blocks','STL','FTR','Rebounds', 'Assists1', 'k' ]]
 
 #st.dataframe(player_data)
-data['Players'] = player_data1
+data['Players'] = get2026TRankPlayers()
 AllGames=pd.read_csv("Data/Season_GamesAll.csv")
 AwayTeamAll=list(TeamDatabase2['OldTRankName'])
 HomeTeamAll=list(TeamDatabase2['OldTRankName'])
@@ -5191,6 +5271,7 @@ else:
 #if page == 'Past Games':
 #    Past_Games() 
     
+
 
 
 

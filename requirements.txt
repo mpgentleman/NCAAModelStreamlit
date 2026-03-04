@@ -1,3 +1,4 @@
+setuptools<81
 adjustText==0.7.3
 altair==4.1.0
 appdirs==1.4.4
@@ -69,6 +70,7 @@ streamlit-aggrid==0.2.1
 streamlit-echarts==0.4.0
 
 streamlit_letsplot==0.0.3
+
 
 
 
